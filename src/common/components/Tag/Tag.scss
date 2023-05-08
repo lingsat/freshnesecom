@@ -1,0 +1,19 @@
+@import "@/assets/styles/_variables.scss";
+
+.tag {
+  padding: 4px 10px;
+  background: $bg-tag-color;
+  border-radius: 12px;
+  border: none;
+  font-family: $title-text-font;
+  font-weight: 600;
+  font-size: 0.75rem;
+  line-height: 1.125rem;
+  color: $text-black-color;
+  text-decoration: none;
+  transition: all 0.1s linear;
+
+  &:hover {
+    background-color: #d2d2d4;
+  }
+}

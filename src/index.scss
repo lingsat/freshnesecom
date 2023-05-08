@@ -1,14 +1,31 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans&family=Poppins:wght@500;600;700&display=swap");
+@import "./assets/styles/variables";
+
 *,
 *::before,
 *::after {
   box-sizing: border-box;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+ol,
+li {
+  padding: 0;
+  margin: 0;
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family: $main-text-font;
+  background-color: $bg-white-color;
+  color: $text-black-color;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
