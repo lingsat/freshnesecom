@@ -7,10 +7,10 @@ const ProductsListPage: FC = () => {
       <ul>
         Product List
         <li>
-          <Link to="/product/1">Product 1</Link>
+          <Link to="/products/1">Product 1</Link>
         </li>
         <li>
-          <Link to="/product/2">Product 2</Link>
+          <Link to="/products/2">Product 2</Link>
         </li>
       </ul>
       <Link to="/cart">To cart page</Link>

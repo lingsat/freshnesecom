@@ -7,7 +7,7 @@ const ProductItemPage: FC = () => {
   return (
     <div>
       <h2>Product {id}</h2>
-      <Link to="/">Back to product list</Link>
+      <Link to="/products">Back to product list</Link>
     </div>
   );
 };
