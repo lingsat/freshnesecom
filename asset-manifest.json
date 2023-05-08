@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/freshnesecom/static/css/main.501042e5.css",
-    "main.js": "/freshnesecom/static/js/main.b130f9c2.js",
+    "main.css": "/freshnesecom/static/css/main.c42e6aaa.css",
+    "main.js": "/freshnesecom/static/js/main.f44029d9.js",
     "index.html": "/freshnesecom/index.html",
-    "main.501042e5.css.map": "/freshnesecom/static/css/main.501042e5.css.map",
-    "main.b130f9c2.js.map": "/freshnesecom/static/js/main.b130f9c2.js.map"
+    "main.c42e6aaa.css.map": "/freshnesecom/static/css/main.c42e6aaa.css.map",
+    "main.f44029d9.js.map": "/freshnesecom/static/js/main.f44029d9.js.map"
   },
   "entrypoints": [
-    "static/css/main.501042e5.css",
-    "static/js/main.b130f9c2.js"
+    "static/css/main.c42e6aaa.css",
+    "static/js/main.f44029d9.js"
   ]
 }
