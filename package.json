@@ -4,12 +4,13 @@
   "homepage": "https://lingsat.github.io/freshnesecom",
   "private": true,
   "dependencies": {
+    "@craco/craco": "^7.1.0",
     "@reduxjs/toolkit": "^1.9.5",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^27.5.2",
-    "@types/node": "^16.18.26",
+    "@types/node": "^20.1.0",
     "@types/react": "^18.2.6",
     "@types/react-dom": "^18.2.4",
     "@types/react-redux": "^7.1.25",
@@ -22,7 +23,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "craco start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
@@ -52,6 +53,7 @@
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.59.2",
     "@typescript-eslint/parser": "^5.59.2",
+    "craco-alias": "^3.0.1",
     "eslint": "^8.40.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-prettier": "^4.2.1",
