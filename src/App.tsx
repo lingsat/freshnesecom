@@ -1,7 +1,8 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import ProductsList from "@/features/products/pages/productsList/ProductsList";
-import ProductItem from "@/features/products/pages/productItem/ProductItem";
+import ProductsListPage from "@/features/products/pages/productsListPage/ProductsListPage";
+import ProductItemPage from "@/features/products/pages/productItemPage/ProductItemPage";
+import CartPage from "@/features/products/pages/CartPage/CartPage";
 import "./App.scss";
 
 const App = () => {
@@ -10,8 +11,9 @@ const App = () => {
       <header>Header</header>
       <main>
         <Routes>
-          <Route path="/" element={<ProductsList />} />
-          <Route path="/:id" element={<ProductItem />} />
+          <Route path="/" element={<ProductsListPage />} />
+          <Route path="/product/:id" element={<ProductItemPage />} />
+          <Route path="/cart" element={<CartPage />} />
         </Routes>
       </main>
       <footer>Footer</footer>

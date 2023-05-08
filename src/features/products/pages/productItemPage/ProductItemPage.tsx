@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import { Link, useParams } from "react-router-dom";
 
-const ProductItem: FC = () => {
+const ProductItemPage: FC = () => {
   const { id } = useParams();
 
   return (
@@ -12,4 +12,4 @@ const ProductItem: FC = () => {
   );
 };
 
-export default ProductItem;
+export default ProductItemPage;
