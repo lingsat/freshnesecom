@@ -1,13 +1,20 @@
 {
   "files": {
-    "main.css": "/freshnesecom/static/css/main.c42e6aaa.css",
-    "main.js": "/freshnesecom/static/js/main.f44029d9.js",
+    "main.css": "/freshnesecom/static/css/main.b3188ee0.css",
+    "main.js": "/freshnesecom/static/js/main.adca5519.js",
+    "static/media/logo.svg": "/freshnesecom/static/media/logo.b57d9120996d735aac5f2a6415103304.svg",
+    "static/media/basket.svg": "/freshnesecom/static/media/basket.f36e95a3d1c8056884aec6eb03b5ee45.svg",
+    "static/media/search.svg": "/freshnesecom/static/media/search.3c2bb39a767a15b43d3ae5c3c7fa19b2.svg",
+    "static/media/close.svg": "/freshnesecom/static/media/close.6af010327c10a01672900f26b9d06c67.svg",
+    "static/media/user.svg": "/freshnesecom/static/media/user.017ec8163c9bf429444293abcb7bcbd0.svg",
     "index.html": "/freshnesecom/index.html",
-    "main.c42e6aaa.css.map": "/freshnesecom/static/css/main.c42e6aaa.css.map",
-    "main.f44029d9.js.map": "/freshnesecom/static/js/main.f44029d9.js.map"
+    "static/media/arrow_down_thin.svg": "/freshnesecom/static/media/arrow_down_thin.8f8d320f7e18d0ea34cd393b345b1b24.svg",
+    "static/media/arrow_down.svg": "/freshnesecom/static/media/arrow_down.dbbcab8d2d7a8c90c435fc9908cb1d03.svg",
+    "main.b3188ee0.css.map": "/freshnesecom/static/css/main.b3188ee0.css.map",
+    "main.adca5519.js.map": "/freshnesecom/static/js/main.adca5519.js.map"
   },
   "entrypoints": [
-    "static/css/main.c42e6aaa.css",
-    "static/js/main.f44029d9.js"
+    "static/css/main.b3188ee0.css",
+    "static/js/main.adca5519.js"
   ]
 }
