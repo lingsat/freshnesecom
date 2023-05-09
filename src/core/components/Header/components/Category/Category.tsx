@@ -2,6 +2,8 @@ import React, { FC, useState } from "react";
 import arrowDownThin from "@/assets/images/arrow_down_thin.svg";
 import "./Category.scss";
 
+const brands = ["Samsung", "Sony", "Apple"];
+
 interface CategoryProps {
   title: string;
 }
@@ -31,21 +33,13 @@ const Category: FC<CategoryProps> = ({ title }) => {
         />
       </button>
       <ul className={`category__menu ${showMenu && "category__menu--show"}`}>
-        <li>
-          <a className="category__link" href="/">
-            Samsung
-          </a>
-        </li>
-        <li>
-          <a className="category__link" href="/">
-            Sony
-          </a>
-        </li>
-        <li>
-          <a className="category__link" href="/">
-            Apple
-          </a>
-        </li>
+        {brands.map((brand, index) => (
+          <li key={`brand-${brand}-${index}`}>
+            <a className="category__link" href="/">
+              {brand}
+            </a>
+          </li>
+        ))}
       </ul>
     </div>
   );

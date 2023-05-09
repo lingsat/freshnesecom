@@ -1,6 +1,6 @@
+import React, { FC } from "react";
 import LinkItem from "@/common/components/LInkItem/LinkItem";
 import Tag from "@/common/components/Tag/Tag";
-import React, { FC } from "react";
 import "./Footer.scss";
 
 const tags = [

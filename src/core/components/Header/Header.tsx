@@ -1,5 +1,7 @@
-import LinkItem from "@/common/components/LInkItem/LinkItem";
 import React, { ChangeEvent, FC, useState } from "react";
+import LinkItem from "@/common/components/LInkItem/LinkItem";
+import Category from "./components/Category/Category";
+import Selector from "./components/Selector/Selector";
 import logo from "@/assets/images/logo.svg";
 import arrowDown from "@/assets/images/arrow_down.svg";
 import searchIcon from "@/assets/images/search.svg";
@@ -7,8 +9,6 @@ import closeIcon from "@/assets/images/close.svg";
 import userIcon from "@/assets/images/user.svg";
 import cartIcon from "@/assets/images/basket.svg";
 import "./Header.scss";
-import Category from "./components/Category/Category";
-import Selector from "./components/Selector/Selector";
 
 const categories = [
   "Electronics",
