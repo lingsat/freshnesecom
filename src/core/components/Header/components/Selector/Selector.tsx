@@ -26,17 +26,14 @@ const Selector: FC<SelectorProps> = ({ title, setSearchCategory }) => {
 
   return (
     <div className="selector" onMouseLeave={handleHideMenu}>
-      <button
-        className="selector__btn"
-        type="button"
-        onMouseEnter={handleShowMenu}>
+      <div className="selector__btn" onMouseEnter={handleShowMenu}>
         {title}
         <img
           className={`${showMenu && "reverse__icon"}`}
           src={arrowDown}
           alt="DownArrow"
         />
-      </button>
+      </div>
       <ul className={`selector__menu ${showMenu && "selector__menu--show"}`}>
         <li
           className="selector__link"
