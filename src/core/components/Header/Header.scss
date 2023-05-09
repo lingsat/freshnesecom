@@ -210,8 +210,12 @@
   .search {
     order: 3;
     width: 100%;
-    max-width: 495px;
+    max-width: 520px;
     margin: 0 auto;
+
+    &__input {
+      width: 280px;
+    }
   }
 
   .header__categories {
@@ -222,7 +226,6 @@
 
 @media (max-width: 699.98px) {
   .header__links {
-    padding-bottom: 0;
     flex-wrap: wrap;
     justify-content: center;
     row-gap: 0.5rem;
@@ -230,7 +233,17 @@
 }
 
 @media (max-width: 575.98px) {
-  .header__links {
+  .header__contacts {
+    width: 100%;
+    justify-content: space-around;
+    gap: 1rem;
+
+    & > a:first-child {
+      display: none;
+    }
+  }
+
+  .header__pages {
     display: none;
   }
 

@@ -58,7 +58,7 @@ const Header: FC = () => {
         </div>
       </div>
       <div className="header__main">
-        <a href="/">
+        <a href="/#">
           <img src={logo} alt="Freshnesecom" />
         </a>
         <div className="search">

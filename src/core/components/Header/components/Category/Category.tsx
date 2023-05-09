@@ -35,7 +35,7 @@ const Category: FC<CategoryProps> = ({ title }) => {
       <ul className={`category__menu ${showMenu && "category__menu--show"}`}>
         {brands.map((brand, index) => (
           <li key={`brand-${brand}-${index}`}>
-            <a className="category__link" href="/">
+            <a className="category__link" href="/#">
               {brand}
             </a>
           </li>

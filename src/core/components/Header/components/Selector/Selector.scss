@@ -5,6 +5,7 @@
 }
 
 .selector__btn {
+  width: 180px;
   margin-right: 1.5rem;
   font-family: $title-text-font;
   font-weight: 700;
@@ -12,6 +13,7 @@
   line-height: 1.375rem;
   color: $text-black-color;
   display: flex;
+  justify-content: flex-end;
   align-items: center;
   gap: 0.5rem;
   border: none;
@@ -66,5 +68,6 @@
 @media (max-width: 575.98px) {
   .selector__btn {
     margin-right: 0;
+    justify-content: center;
   }
 }
