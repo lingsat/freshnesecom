@@ -2,12 +2,12 @@ import LinkItem from "@/common/components/LInkItem/LinkItem";
 import React, { ChangeEvent, FC, useState } from "react";
 import logo from "@/assets/images/logo.svg";
 import arrowDown from "@/assets/images/arrow_down.svg";
-import arrowDownThin from "@/assets/images/arrow_down_thin.svg";
 import searchIcon from "@/assets/images/search.svg";
 import closeIcon from "@/assets/images/close.svg";
 import userIcon from "@/assets/images/user.svg";
 import cartIcon from "@/assets/images/basket.svg";
 import "./Header.scss";
+import Category from "./components/Category/Category";
 
 const categories = [
   "Electronics",
@@ -22,6 +22,11 @@ const categories = [
 
 const Header: FC = () => {
   const [searchValue, setSearchValue] = useState<string>("");
+  const [showCategories, setShowCategories] = useState<boolean>(true);
+
+  const toggleShowCategories = () => {
+    setShowCategories((prev) => !prev);
+  };
 
   const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(event.target.value);
@@ -90,15 +95,23 @@ const Header: FC = () => {
           </button>
         </div>
       </div>
-      <div className="header__categories">
+      <button
+        className="category__hider"
+        type="button"
+        onClick={toggleShowCategories}>
+        Categories
+        <img
+          className={`${!showCategories && "rotate__icon"}`}
+          src={arrowDown}
+          alt="DownArrow"
+        />
+      </button>
+      <div
+        className={`header__categories ${
+          showCategories && "header__categories--hide"
+        }`}>
         {categories.map((category, index) => (
-          <button
-            key={`cat-${category}-${index}`}
-            className="header__categories-btn"
-            type="button">
-            {category}
-            <img src={arrowDownThin} alt="DownArrow" />
-          </button>
+          <Category key={`cat-${category}-${index}`} title={category} />
         ))}
       </div>
     </header>
