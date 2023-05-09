@@ -8,6 +8,7 @@ import userIcon from "@/assets/images/user.svg";
 import cartIcon from "@/assets/images/basket.svg";
 import "./Header.scss";
 import Category from "./components/Category/Category";
+import Selector from "./components/Selector/Selector";
 
 const categories = [
   "Electronics",
@@ -22,6 +23,8 @@ const categories = [
 
 const Header: FC = () => {
   const [searchValue, setSearchValue] = useState<string>("");
+  const [searchCategory, setSearchCategory] =
+    useState<string>("All categories");
   const [showCategories, setShowCategories] = useState<boolean>(true);
 
   const toggleShowCategories = () => {
@@ -59,10 +62,11 @@ const Header: FC = () => {
           <img src={logo} alt="Freshnesecom" />
         </a>
         <div className="search">
-          <button className="search__btn" type="button">
-            All categories
-            <img src={arrowDown} alt="DownArrow" />
-          </button>
+          <Selector
+            title={searchCategory}
+            setSearchCategory={setSearchCategory}
+            categories={categories}
+          />
           <form>
             <label className="search__label">
               <input

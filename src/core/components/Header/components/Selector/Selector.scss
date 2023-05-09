@@ -1,0 +1,70 @@
+@import "@/assets/styles/_variables.scss";
+
+.selector {
+  position: relative;
+}
+
+.selector__btn {
+  margin-right: 1.5rem;
+  font-family: $title-text-font;
+  font-weight: 700;
+  font-size: 0.95rem;
+  line-height: 1.375rem;
+  color: $text-black-color;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: none;
+  border-radius: 12px;
+  background: inherit;
+  cursor: pointer;
+  transition: all 0.1s linear;
+
+  &:hover {
+    background-color: $bg-button-hover-color;
+  }
+
+  img {
+    transition: all 0.3s linear;
+  }
+}
+
+.selector__menu {
+  display: none;
+  width: 136px;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1;
+  background-color: $bg-white-color;
+  list-style: none;
+  border: 1px solid $header-search-border-color;
+
+  &--show {
+    display: block;
+  }
+}
+
+.selector__link {
+  display: block;
+  padding: 5px;
+  font-family: $main-text-font;
+  font-size: 0.8rem;
+  line-height: 1rem;
+  color: $text-black-color;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.reverse__icon {
+  transform: rotate(180deg);
+}
+
+@media (max-width: 575.98px) {
+  .selector__btn {
+    margin-right: 0;
+  }
+}
