@@ -5,11 +5,18 @@ import "./LinkItem.scss";
 interface LinkItemProps {
   title: string;
   hrefPath?: string;
+  type?: "normal" | "small";
 }
 
-const LinkItem: FC<LinkItemProps> = ({ title, hrefPath = "/" }) => {
+const LinkItem: FC<LinkItemProps> = ({
+  title,
+  hrefPath = "/",
+  type = "normal",
+}) => {
   return (
-    <Link to={hrefPath} className="link">
+    <Link
+      to={hrefPath}
+      className={`link ${type === "small" ? "link--small" : ""}`}>
       {title}
     </Link>
   );
