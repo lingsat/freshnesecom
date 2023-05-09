@@ -2,9 +2,23 @@ import LinkItem from "@/common/components/LInkItem/LinkItem";
 import React, { ChangeEvent, FC, useState } from "react";
 import logo from "@/assets/images/logo.svg";
 import arrowDown from "@/assets/images/arrow_down.svg";
+import arrowDownThin from "@/assets/images/arrow_down_thin.svg";
 import searchIcon from "@/assets/images/search.svg";
 import closeIcon from "@/assets/images/close.svg";
+import userIcon from "@/assets/images/user.svg";
+import cartIcon from "@/assets/images/basket.svg";
 import "./Header.scss";
+
+const categories = [
+  "Electronics",
+  "Food",
+  "Clothes",
+  "Skin and care",
+  "Toys",
+  "Special nutrition",
+  "Sports and outdors",
+  "Books",
+];
 
 const Header: FC = () => {
   const [searchValue, setSearchValue] = useState<string>("");
@@ -66,7 +80,26 @@ const Header: FC = () => {
             </label>
           </form>
         </div>
-        <div>123</div>
+        <div className="controls">
+          <button type="button" className="controls__btn">
+            <img src={userIcon} alt="User" />
+          </button>
+          <button type="button" className="controls__btn">
+            <img src={cartIcon} alt="Cart" />
+            <span>4</span>
+          </button>
+        </div>
+      </div>
+      <div className="header__categories">
+        {categories.map((category, index) => (
+          <button
+            key={`cat-${category}-${index}`}
+            className="header__categories-btn"
+            type="button">
+            {category}
+            <img src={arrowDownThin} alt="DownArrow" />
+          </button>
+        ))}
       </div>
     </header>
   );
