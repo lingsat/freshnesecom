@@ -14,7 +14,7 @@ const Footer: FC = () => {
         {linksBlockArr.map((block, index) => (
           <LinksBlock
             key={`block-${block}-${index}`}
-            title="Get in touch"
+            title={block}
             links={footerLinks[block as keyof typeof footerLinks]}
           />
         ))}

@@ -73,16 +73,16 @@ const Header: FC = () => {
           alt="DownArrow"
         />
       </button>
-      <ul
-        className={`header__categories ${
-          showCategories && "header__categories--hide"
-        }`}>
-        {categories.map((category, index) => (
-          <li key={`cat-${category}-${index}`}>
-            <Category title={category} />
-          </li>
-        ))}
-      </ul>
+      <nav>
+        <ul
+          className={`header__categories ${
+            showCategories && "header__categories--hide"
+          }`}>
+          {categories.map((category, index) => (
+            <Category key={`cat-${category}-${index}`} title={category} />
+          ))}
+        </ul>
+      </nav>
     </header>
   );
 };

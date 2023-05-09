@@ -20,18 +20,15 @@ const Category: FC<CategoryProps> = ({ title }) => {
   };
 
   return (
-    <div className="category" onMouseLeave={handleHideMenu}>
-      <button
-        className="category__btn"
-        type="button"
-        onMouseEnter={handleShowMenu}>
+    <li className="category" onMouseLeave={handleHideMenu}>
+      <div className="category__item" onMouseEnter={handleShowMenu}>
         {title}
         <img
           className={`${showMenu && "reverse__icon"}`}
           src={arrowDownThin}
           alt="DownArrow"
         />
-      </button>
+      </div>
       <ul className={`category__menu ${showMenu && "category__menu--show"}`}>
         {brands.map((brand, index) => (
           <li key={`brand-${brand}-${index}`}>
@@ -41,7 +38,7 @@ const Category: FC<CategoryProps> = ({ title }) => {
           </li>
         ))}
       </ul>
-    </div>
+    </li>
   );
 };
 

@@ -1,11 +1,13 @@
 @import "@/assets/styles/_variables.scss";
 
 .category {
+  list-style: none;
   padding: 1rem 0;
   position: relative;
 }
 
-.category__btn {
+.category__item {
+  padding: 0 10px;
   font-family: $title-text-font;
   font-weight: 500;
   font-size: 0.95rem;
@@ -14,9 +16,7 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  border: none;
   border-radius: 12px;
-  background: inherit;
   cursor: pointer;
   transition: all 0.1s linear;
 

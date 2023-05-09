@@ -22,10 +22,6 @@
   cursor: pointer;
   transition: all 0.1s linear;
 
-  &:hover {
-    background-color: $bg-button-hover-color;
-  }
-
   img {
     transition: all 0.3s linear;
   }
@@ -33,11 +29,12 @@
 
 .selector__menu {
   display: none;
-  width: 136px;
+  width: 150px;
   position: absolute;
   top: 100%;
-  left: 0;
+  left: 50%;
   z-index: 1;
+  transform: translateX(-50%);
   background-color: $bg-white-color;
   list-style: none;
   border: 1px solid $header-search-border-color;
