@@ -13,6 +13,7 @@
   }
 
   &__contacts {
+    list-style: none;
     display: flex;
     align-items: center;
     gap: 2rem;
@@ -31,6 +32,7 @@
   }
 
   &__pages {
+    list-style: none;
     display: flex;
     align-items: center;
     gap: 2rem;
@@ -44,78 +46,12 @@
   }
 
   &__categories {
+    list-style: none;
     padding: 0 45px;
     background-color: $bg-header-categories-color;
     display: flex;
     justify-content: space-between;
     align-items: center;
-  }
-}
-
-.search {
-  padding: 0.5rem 1rem;
-  display: flex;
-  align-items: center;
-  background: $bg-search-color;
-  border: 1px solid $header-search-border-color;
-  border-radius: 12px;
-
-  &__label {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  &__icon {
-    padding: 5px;
-    position: absolute;
-    top: 50%;
-    right: 0;
-    z-index: 1;
-    cursor: pointer;
-    transform: translateY(-50%);
-  }
-
-  &__input {
-    margin: 0;
-    padding: 0 1.5rem;
-    width: 300px;
-    border: none;
-    border-left: 1px solid $header-search-border-color;
-    outline: none;
-    font-family: $main-text-font;
-    font-weight: 400;
-    font-size: 0.875rem;
-    line-height: 1.185rem;
-    background: inherit;
-    color: $search-field-color;
-  }
-
-  &__clear {
-    padding: 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    top: 50%;
-    right: 0;
-    z-index: 1;
-    transform: translateY(-50%);
-    border: none;
-    border-radius: 50%;
-    background: inherit;
-    cursor: pointer;
-    transition: all 0.1s linear;
-
-    &:hover {
-      background-color: $bg-button-hover-color;
-    }
-
-    img {
-      width: 14px;
-      height: 14px;
-    }
   }
 }
 
@@ -207,17 +143,6 @@
     }
   }
 
-  .search {
-    order: 3;
-    width: 100%;
-    max-width: 520px;
-    margin: 0 auto;
-
-    &__input {
-      width: 280px;
-    }
-  }
-
   .header__categories {
     flex-wrap: wrap;
     justify-content: center;
@@ -238,7 +163,7 @@
     justify-content: space-around;
     gap: 1rem;
 
-    & > a:first-child {
+    & > li:first-child {
       display: none;
     }
   }

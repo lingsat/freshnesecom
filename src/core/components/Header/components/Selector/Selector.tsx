@@ -1,18 +1,14 @@
 import React, { FC, useState } from "react";
 import arrowDown from "@/assets/images/arrow_down.svg";
+import { categories } from "@/mock/categories";
 import "./Selector.scss";
 
 interface SelectorProps {
   title: string;
   setSearchCategory: React.Dispatch<React.SetStateAction<string>>;
-  categories: string[];
 }
 
-const Selector: FC<SelectorProps> = ({
-  title,
-  setSearchCategory,
-  categories,
-}) => {
+const Selector: FC<SelectorProps> = ({ title, setSearchCategory }) => {
   const [showMenu, setShowMenu] = useState<boolean>(false);
 
   const handleHideMenu = () => {
@@ -25,7 +21,7 @@ const Selector: FC<SelectorProps> = ({
 
   const handleSetCategory = (newCategory: string) => () => {
     setSearchCategory(newCategory);
-    setShowMenu(false);
+    handleHideMenu();
   };
 
   return (

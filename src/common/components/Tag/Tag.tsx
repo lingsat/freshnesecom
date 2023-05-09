@@ -9,9 +9,11 @@ interface TagProps {
 
 const Tag: FC<TagProps> = ({ title, hrefPath = "/" }) => {
   return (
-    <Link to={hrefPath} className="tag">
-      {title}
-    </Link>
+    <li>
+      <Link to={hrefPath} className="tag">
+        {title}
+      </Link>
+    </li>
   );
 };
 

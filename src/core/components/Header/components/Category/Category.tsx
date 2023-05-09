@@ -1,8 +1,8 @@
 import React, { FC, useState } from "react";
+import { Link } from "react-router-dom";
 import arrowDownThin from "@/assets/images/arrow_down_thin.svg";
+import { brands } from "@/mock/brands";
 import "./Category.scss";
-
-const brands = ["Samsung", "Sony", "Apple"];
 
 interface CategoryProps {
   title: string;
@@ -35,9 +35,9 @@ const Category: FC<CategoryProps> = ({ title }) => {
       <ul className={`category__menu ${showMenu && "category__menu--show"}`}>
         {brands.map((brand, index) => (
           <li key={`brand-${brand}-${index}`}>
-            <a className="category__link" href="/#">
+            <Link className="category__link" to="/">
               {brand}
-            </a>
+            </Link>
           </li>
         ))}
       </ul>
