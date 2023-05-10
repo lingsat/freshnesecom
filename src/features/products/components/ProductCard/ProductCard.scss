@@ -26,11 +26,7 @@
 }
 
 .info__left {
-  width: 50%;
-}
-
-.info__right {
-  width: 35%;
+  width: 270px;
 }
 
 .info__title {
@@ -165,5 +161,151 @@
   &:hover {
     transition: all 0.1s linear;
     background-color: $bg-button-hover-color;
+  }
+}
+
+@media (max-width: 1199.98px) {
+  .card > a {
+    height: 100%;
+  }
+
+  .card__info {
+    padding: 1rem;
+  }
+
+  .info__left {
+    width: 230px;
+  }
+
+  .subinfo__row {
+    column-gap: 1.3rem;
+  }
+
+  .info__btn {
+    width: 150px;
+    font-size: 0.85rem;
+  }
+
+  .info__wish-btn {
+    width: 150px;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 1059.98px) {
+  .card__image {
+    width: 200px;
+  }
+}
+
+@media (max-width: 991.98px) {
+  .card__image {
+    width: 268px;
+  }
+
+  .card__info {
+    padding: 2rem;
+  }
+}
+
+@media (max-width: 799.98px) {
+  .card__info {
+    padding: 2rem 1.5rem;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .card__image {
+    width: 200px;
+  }
+
+  .card__info {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 679.98px) {
+  .card__info {
+    flex-direction: column;
+  }
+
+  .card__image {
+    width: 268px;
+  }
+
+  .info__left {
+    width: 100%;
+  }
+
+  .info__stars {
+    margin-bottom: 1rem;
+  }
+
+  .info__shipping,
+  .info__delivery,
+  .subinfo {
+    display: none;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .card__image {
+    width: 200px;
+  }
+}
+
+@media (max-width: 449.98px) {
+  .card {
+    min-height: 230px;
+    position: relative;
+  }
+
+  .info__left {
+    position: absolute;
+    left: 0;
+    top: 130px;
+    z-index: 1;
+    text-align: center;
+  }
+
+  .info__stars {
+    justify-content: center;
+  }
+
+  .card__info {
+    padding: 0.5rem;
+  }
+
+  .card__image {
+    width: 120px;
+    border-radius: 0 0 12px 0;
+  }
+
+  .card > a {
+    height: 123px;
+  }
+
+  .info__right {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .info__price {
+    font-size: 0.9rem;
+    line-height: 1;
+  }
+
+  .info__old-price {
+    margin-bottom: 0.3rem;
+    font-size: 0.6rem;
+  }
+
+  .info__btn {
+    padding: 5px 3px 5px 12px;
+  }
+
+  .info__wish-btn {
+    padding: 4px 8px;
   }
 }

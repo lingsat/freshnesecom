@@ -42,6 +42,17 @@
   display: grid;
   grid-template-columns: 270px 1fr;
   column-gap: 2rem;
+  position: relative;
+}
+
+@media (max-width: 991.98px) {
+  .products-list__main {
+    grid-template-columns: 1fr;
+  }
+
+  .products-list__header {
+    margin-bottom: 0.5rem;
+  }
 }
 
 @media (max-width: 575.98px) {
