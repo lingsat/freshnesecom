@@ -1,0 +1,38 @@
+[
+  {
+    "title": "Garlic Pasta",
+    "category": "Food",
+    "shortDescription": "A simple garlic and tomato pasta",
+    "image": "https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F43%2F2022%2F11%2F07%2F11691-tomato-and-garlic-pasta-ddmfs-3x4-1.jpg&q=60&c=sc&orient=true&poi=auto&h=512",
+    "stars": 4,
+    "votes": 1,
+    "price": 36.99,
+    "oldPrice": 48.56,
+    "freeShipping": true,
+    "deliveryTime": 1,
+    "deliveryFrom": "Ukraine",
+    "tags": ["Food", "Pasta", "Meal", "Tomatoes"],
+    "freshness": "New",
+    "farm": "Grocery Tarm Fields",
+    "stock": 320,
+    "id": "1"
+  },
+  {
+    "title": "Pizza Quesadilla Chicken",
+    "category": "Food",
+    "shortDescription": "Prepared with quesadilla",
+    "image": "https://www.webfoodstore.com/cdn/shop/products/kwxmhiw9doo9hpjshtfl_500x.jpg?v=1639083360",
+    "stars": 5,
+    "votes": 4,
+    "price": 44.99,
+    "oldPrice": 52.48,
+    "freeShipping": true,
+    "deliveryTime": 1,
+    "deliveryFrom": "Ukraine",
+    "tags": ["Food", "Meal", "Pizza", "Cheese"],
+    "freshness": "New",
+    "farm": "Web Food Store",
+    "stock": 12,
+    "id": "2"
+  }
+]
