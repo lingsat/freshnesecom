@@ -1,0 +1,40 @@
+@import "@/assets/styles/_variables.scss";
+
+.list-nav {
+  list-style: none;
+  margin-bottom: 1rem;
+  display: flex;
+  gap: 1.3rem;
+
+  &__item {
+    position: relative;
+
+    &::after {
+      content: "";
+      width: 0;
+      height: 10px;
+      border-right: 1px solid $listNav-border-color;
+      position: absolute;
+      right: -10px;
+      bottom: 4px;
+      z-index: 1;
+      transform: skewX(-15deg);
+    }
+
+    &:last-of-type::after {
+      display: none;
+    }
+  }
+
+  &__link {
+    text-decoration: none;
+    font-family: $main-text-font;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    color: $search-field-color;
+
+    &--active {
+      color: $text-black-color;
+    }
+  }
+}
