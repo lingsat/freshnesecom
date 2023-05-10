@@ -1,0 +1,17 @@
+@import "@/assets/styles/_variables.scss";
+
+.link {
+  font-size: 0.875rem;
+  line-height: 1.184rem;
+  color: $link-main-color;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &--small {
+    font-size: 0.75rem;
+    line-height: 1rem;
+  }
+}
