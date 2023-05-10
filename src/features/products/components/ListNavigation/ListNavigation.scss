@@ -33,6 +33,10 @@
     line-height: 1rem;
     color: $search-field-color;
 
+    &:hover {
+      text-decoration: underline;
+    }
+
     &--active {
       color: $text-black-color;
     }
