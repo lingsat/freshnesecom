@@ -1,9 +1,9 @@
 import React, { FC, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store/store";
-import { fetchProducts } from "@features/products/productsSlice";
-import ProductCard from "../ProductCard/ProductCard";
-import { IProduct } from "../../types/product.interface";
+import { fetchProducts } from "@products/productsSlice";
+import ProductCard from "@products/components/ProductCard/ProductCard";
+import { IProduct } from "@products/types/product.interface";
 import "./ProductsList.scss";
 
 const ProductsList: FC = () => {

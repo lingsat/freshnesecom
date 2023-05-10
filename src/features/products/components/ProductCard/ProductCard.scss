@@ -256,49 +256,22 @@
 
 @media (max-width: 449.98px) {
   .card {
-    min-height: 230px;
-    position: relative;
-  }
-
-  .info__left {
-    position: absolute;
-    left: 0;
-    top: 130px;
-    z-index: 1;
-    text-align: center;
-  }
-
-  .info__stars {
-    justify-content: center;
-  }
-
-  .card__info {
-    padding: 0.5rem;
+    flex-direction: column;
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
   }
 
   .card__image {
-    width: 120px;
-    border-radius: 0 0 12px 0;
+    width: 100%;
+    border-radius: 0 0 12px 12px;
   }
 
-  .card > a {
-    height: 123px;
-  }
-
+  .info__left,
   .info__right {
     display: flex;
     flex-direction: column;
     align-items: center;
-  }
-
-  .info__price {
-    font-size: 0.9rem;
-    line-height: 1;
-  }
-
-  .info__old-price {
-    margin-bottom: 0.3rem;
-    font-size: 0.6rem;
   }
 
   .info__btn {

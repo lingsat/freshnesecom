@@ -5,7 +5,7 @@ import star from "@/assets/images/star.svg";
 import checkedStar from "@/assets/images/star_checked.svg";
 import arrowRightIcon from "@/assets/images/arrow_right.svg";
 import heartIcon from "@/assets/images/heart.svg";
-import { IProduct } from "@features/products/types/product.interface";
+import { IProduct } from "@products/types/product.interface";
 import "./ProductCard.scss";
 
 interface ProductCardProps {
