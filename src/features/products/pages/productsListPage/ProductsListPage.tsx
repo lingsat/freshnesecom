@@ -2,7 +2,6 @@ import React, { FC } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import ListNavigation from "@products/components/ListNavigation/ListNavigation";
-import ListSort from "@products/components/ListSort/ListSort";
 import ListFilter from "@products/components/ListFilter/ListFilter";
 import ProductsList from "@products/components/ProductsList/ProductsList";
 import { IProduct } from "@products/types/product.interface";
@@ -23,7 +22,6 @@ const ProductsListPage: FC = () => {
           <span>Products</span>
         </div>
       </div>
-      <ListSort />
       <div className="products-list__main">
         <ListFilter />
         <ProductsList />

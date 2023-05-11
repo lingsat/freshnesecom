@@ -73,7 +73,7 @@
   &__row {
     display: flex;
     align-items: center;
-    column-gap: 2rem;
+    column-gap: 30px;
     font-size: 0.875rem;
     line-height: 1.185rem;
     color: $search-field-color;
@@ -86,7 +86,7 @@
 
   &__value {
     @include text-overflow-hide;
-    width: calc(100% - 80px);
+    width: calc(100% - 110px);
 
     span {
       color: $link-main-color;

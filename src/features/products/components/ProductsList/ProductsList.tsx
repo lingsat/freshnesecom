@@ -1,20 +1,24 @@
 import React, { FC, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store/store";
-import { fetchProducts } from "@products/productsSlice";
+import { fetchProducts, IProductsState } from "@products/productsSlice";
 import ProductCard from "@products/components/ProductCard/ProductCard";
-import { IProduct } from "@products/types/product.interface";
+import LoadinSpinner from "@/common/components/LoadingSpinner/LoadingSpinner";
 import "./ProductsList.scss";
 
 const ProductsList: FC = () => {
-  const products = useSelector<RootState, IProduct[]>(
-    (state) => state.products.products
+  const { products, loading } = useSelector<RootState, IProductsState>(
+    (state) => state.products
   );
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
     dispatch(fetchProducts());
   }, []);
+
+  if (loading) {
+    return <LoadinSpinner />;
+  }
 
   return (
     <ul className="list">

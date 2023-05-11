@@ -3,12 +3,14 @@ import axios from "axios";
 import { RootState } from "@/store/store";
 import { IProduct } from "@features/products/types/product.interface";
 
-interface ProductsState {
+export interface IProductsState {
   products: IProduct[];
+  loading: boolean;
 }
 
-const initialState: ProductsState = {
+const initialState: IProductsState = {
   products: [],
+  loading: false,
 };
 
 export const fetchProducts = createAsyncThunk("products/fetchProducts", () => {
@@ -22,7 +24,11 @@ export const productsSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
+    builder.addCase(fetchProducts.pending, (state) => {
+      state.loading = true;
+    });
     builder.addCase(fetchProducts.fulfilled, (state, action) => {
+      state.loading = false;
       state.products = action.payload;
     });
   },
