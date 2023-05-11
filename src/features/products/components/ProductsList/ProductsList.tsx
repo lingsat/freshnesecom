@@ -13,11 +13,19 @@ const ProductsList: FC = () => {
     IProductsState
   >((state) => state.products);
 
+  const filteredProducts = getFilteredProducts(products, category, searchValue);
+
   if (loading) {
     return <LoadinSpinner />;
   }
 
-  const filteredProducts = getFilteredProducts(products, category, searchValue);
+  if (!filteredProducts.length) {
+    return (
+      <p className="not-found">
+        {`No "${searchValue.trim()}" found in ${category || "All categories"}!`}
+      </p>
+    );
+  }
 
   return (
     <ul className="list">
