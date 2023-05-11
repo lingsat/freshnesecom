@@ -1,30 +1,34 @@
 import React, { FC } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
+import { IProductsState } from "../../productsSlice";
+import { getFilteredProducts } from "@/utils/products.utils";
 import ListNavigation from "@products/components/ListNavigation/ListNavigation";
 import ListFilter from "@products/components/ListFilter/ListFilter";
 import ProductsList from "@products/components/ProductsList/ProductsList";
-import { IProduct } from "@products/types/product.interface";
 import "./ProductsListPage.scss";
 
 const ProductsListPage: FC = () => {
-  const products = useSelector<RootState, IProduct[]>(
-    (state) => state.products.products
-  );
+  const { products, searchValue, category } = useSelector<
+    RootState,
+    IProductsState
+  >((state) => state.products);
+
+  const filteredProducts = getFilteredProducts(products, category, searchValue);
 
   return (
     <div className="products-list">
       <ListNavigation />
       <div className="products-list__header">
-        <h2 className="products-list__title">All Products</h2>
+        <h2 className="products-list__title">{category || "All Products"}</h2>
         <div className="products-list__stat">
-          <p>{products.length}</p>
+          <p>{filteredProducts.length}</p>
           <span>Products</span>
         </div>
       </div>
       <div className="products-list__main">
         <ListFilter />
-        <ProductsList />
+        <ProductsList filteredProducts={filteredProducts} />
       </div>
     </div>
   );
