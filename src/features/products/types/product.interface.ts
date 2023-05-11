@@ -13,6 +13,6 @@ export interface IProduct {
   deliveryFrom: string;
   tags: string[];
   freshness: string;
-  farm: string;
+  brand: string;
   stock: number;
 }

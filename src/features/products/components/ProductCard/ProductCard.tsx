@@ -45,7 +45,7 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
             )}
             <li className="subinfo__row">
               <p className="subinfo__category">Company</p>
-              <p className="subinfo__value">{product.farm}</p>
+              <p className="subinfo__value">{product.brand}</p>
             </li>
             <li className="subinfo__row">
               <p className="subinfo__category">Delivery</p>

@@ -7,12 +7,14 @@ export interface IProductsState {
   products: IProduct[];
   loading: boolean;
   searchValue: string;
+  category: string;
 }
 
 const initialState: IProductsState = {
   products: [],
   loading: false,
   searchValue: "",
+  category: "",
 };
 
 export const fetchProducts = createAsyncThunk("products/fetchProducts", () => {
@@ -31,6 +33,9 @@ export const productsSlice = createSlice({
     clearSearch(state) {
       state.searchValue = "";
     },
+    changeCategory(state, action: PayloadAction<string>) {
+      state.category = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchProducts.pending, (state) => {
@@ -43,7 +48,8 @@ export const productsSlice = createSlice({
   },
 });
 
-export const { changeSearch, clearSearch } = productsSlice.actions;
+export const { changeSearch, clearSearch, changeCategory } =
+  productsSlice.actions;
 
 export const selectProducts = (state: RootState) => state.products.products;
 

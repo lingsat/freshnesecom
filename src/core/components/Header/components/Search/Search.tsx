@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, useState } from "react";
+import React, { ChangeEvent, FC } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState, AppDispatch } from "@/store/store";
 import { changeSearch, clearSearch } from "@/features/products/productsSlice";
@@ -13,8 +13,6 @@ const Search: FC = () => {
     (state) => state.products
   );
   const dispatch = useDispatch<AppDispatch>();
-  const [searchCategory, setSearchCategory] =
-    useState<string>("All categories");
 
   const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
     dispatch(changeSearch(event.target.value));
@@ -26,7 +24,7 @@ const Search: FC = () => {
 
   return (
     <div className="search">
-      <Selector title={searchCategory} setSearchCategory={setSearchCategory} />
+      <Selector />
       <form>
         <label className="search__label">
           <input
