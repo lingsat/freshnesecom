@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { Link } from "react-router-dom";
-import { getStarsArrFromNumber } from "@/utils/starsTransformer";
+import { getStarsArrFromNumber } from "@/utils/products.utils";
 import star from "@/assets/images/star.svg";
 import checkedStar from "@/assets/images/star_checked.svg";
 import arrowRightIcon from "@/assets/images/arrow_right.svg";
@@ -44,7 +44,7 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
               </li>
             )}
             <li className="subinfo__row">
-              <p className="subinfo__category">Company</p>
+              <p className="subinfo__category">Brand</p>
               <p className="subinfo__value">{product.brand}</p>
             </li>
             <li className="subinfo__row">

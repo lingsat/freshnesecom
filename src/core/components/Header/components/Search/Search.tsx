@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC } from "react";
+import React, { ChangeEvent, FC, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState, AppDispatch } from "@/store/store";
 import { changeSearch, clearSearch } from "@/features/products/productsSlice";
@@ -14,13 +14,28 @@ const Search: FC = () => {
   );
   const dispatch = useDispatch<AppDispatch>();
 
+  const [localSearchValue, setLocalSearchValue] = useState<string>(searchValue);
+
   const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
-    dispatch(changeSearch(event.target.value));
+    setLocalSearchValue(event.target.value);
+  };
+
+  const startSearching = () => {
+    dispatch(changeSearch(localSearchValue));
   };
 
   const clearSearchValue = () => {
     dispatch(clearSearch());
   };
+
+  useEffect(() => {
+    const debounceTimer = setTimeout(startSearching, 500);
+    return () => clearTimeout(debounceTimer);
+  }, [localSearchValue]);
+
+  useEffect(() => {
+    setLocalSearchValue(searchValue);
+  }, [searchValue]);
 
   return (
     <div className="search">
@@ -31,10 +46,10 @@ const Search: FC = () => {
             className="search__input"
             type="text"
             placeholder="Search Products, categories ..."
-            value={searchValue}
+            value={localSearchValue}
             onChange={handleSearchChange}
           />
-          {searchValue ? (
+          {localSearchValue ? (
             <button
               className="search__clear"
               type="button"
