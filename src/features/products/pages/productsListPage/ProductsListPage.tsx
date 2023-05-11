@@ -1,20 +1,32 @@
 import React, { FC } from "react";
-import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
+import ListNavigation from "@products/components/ListNavigation/ListNavigation";
+import ListFilter from "@products/components/ListFilter/ListFilter";
+import ProductsList from "@products/components/ProductsList/ProductsList";
+import { IProduct } from "@products/types/product.interface";
+import "./ProductsListPage.scss";
 
 const ProductsListPage: FC = () => {
+  const products = useSelector<RootState, IProduct[]>(
+    (state) => state.products.products
+  );
+
   return (
-    <>
-      <ul>
-        Product List
-        <li>
-          <Link to="/products/1">Product 1</Link>
-        </li>
-        <li>
-          <Link to="/products/2">Product 2</Link>
-        </li>
-      </ul>
-      <Link to="/cart">To cart page</Link>
-    </>
+    <div className="products-list">
+      <ListNavigation />
+      <div className="products-list__header">
+        <h2 className="products-list__title">All Products</h2>
+        <div className="products-list__stat">
+          <p>{products.length}</p>
+          <span>Products</span>
+        </div>
+      </div>
+      <div className="products-list__main">
+        <ListFilter />
+        <ProductsList />
+      </div>
+    </div>
   );
 };
 

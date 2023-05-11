@@ -11,16 +11,25 @@ $bg-search-color: #f9f9f9;
 $bg-header-categories-color: #f9f9f9;
 $bg-button-hover-color: #d2d2d4;
 $bg-cart-counter-color: #e6704b;
+$bg-list-stat-color: #f4f8ec;
+$bg-card-btn-color: #6a983c;
+$bg-card-btn-hover-color: #46760a;
 
 // Border
 $header-border-line-color: rgba(21, 21, 21, 0.05);
+$listNav-border-color: #a9a9a9;
 $header-search-border-color: #d1d1d1;
+$card-btn-border-color: #46760a;
 
 // Text
 $text-white-color: #fff;
 $text-black-color: #151515;
 $link-main-color: #6a983c;
 $search-field-color: #a9a9a9;
+$text-info-desc-color: #575757;
 
 // Shadow
 $shadow-cart-counter-color: rgba(0, 0, 0, 0.15);
+
+// Loading Spinner
+$spinner-main-color: #6a983c;
