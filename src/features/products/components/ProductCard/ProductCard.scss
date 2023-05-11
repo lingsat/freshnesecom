@@ -260,6 +260,10 @@
 @media (max-width: 679.98px) {
   .card {
     height: 290px;
+
+    & > a {
+      width: 100%;
+    }
   }
 
   .card__info {
@@ -268,7 +272,7 @@
   }
 
   .card__image {
-    width: 268px;
+    width: 100%;
   }
 
   .info__left {
@@ -288,12 +292,6 @@
   }
 }
 
-@media (max-width: 575.98px) {
-  .card__image {
-    width: 200px;
-  }
-}
-
 @media (max-width: 479.98px) {
   .card {
     width: 100%;
@@ -301,6 +299,10 @@
     height: 500px;
     margin: 0 auto;
     flex-direction: column;
+
+    & > a {
+      height: 230px;
+    }
   }
 
   .card__image {
