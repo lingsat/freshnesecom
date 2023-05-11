@@ -2,7 +2,11 @@ import React, { FC } from "react";
 import { Link } from "react-router-dom";
 import "./ListNavigation.scss";
 
-const ListNavigation: FC = () => {
+interface ListNavigationProps {
+  category: string;
+}
+
+const ListNavigation: FC<ListNavigationProps> = ({ category }) => {
   return (
     <ul className="list-nav">
       <li className="list-nav__item">
@@ -11,10 +15,17 @@ const ListNavigation: FC = () => {
         </Link>
       </li>
       <li className="list-nav__item">
-        <Link className="list-nav__link list-nav__link--active" to="/products">
+        <Link className="list-nav__link" to="/products">
           All products
         </Link>
       </li>
+      {category && (
+        <li className="list-nav__item">
+          <Link className="list-nav__link" to={`/products/${category}`}>
+            {category}
+          </Link>
+        </li>
+      )}
     </ul>
   );
 };

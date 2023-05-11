@@ -21,8 +21,14 @@
       transform: skewX(-15deg);
     }
 
-    &:last-of-type::after {
-      display: none;
+    &:last-of-type {
+      .list-nav__link {
+        color: $text-black-color;
+      }
+
+      &::after {
+        display: none;
+      }
     }
   }
 
@@ -35,10 +41,6 @@
 
     &:hover {
       text-decoration: underline;
-    }
-
-    &--active {
-      color: $text-black-color;
     }
   }
 }
