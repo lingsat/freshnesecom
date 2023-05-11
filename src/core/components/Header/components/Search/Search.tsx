@@ -1,20 +1,27 @@
 import React, { ChangeEvent, FC, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState, AppDispatch } from "@/store/store";
+import { changeSearch, clearSearch } from "@/features/products/productsSlice";
 import Selector from "@/core/components/Header/components/Selector/Selector";
 import searchIcon from "@/assets/images/search.svg";
 import closeIcon from "@/assets/images/close.svg";
+import { IProductsState } from "@/features/products/productsSlice";
 import "./Search.scss";
 
 const Search: FC = () => {
-  const [searchValue, setSearchValue] = useState<string>("");
+  const { searchValue } = useSelector<RootState, IProductsState>(
+    (state) => state.products
+  );
+  const dispatch = useDispatch<AppDispatch>();
   const [searchCategory, setSearchCategory] =
     useState<string>("All categories");
 
   const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setSearchValue(event.target.value);
+    dispatch(changeSearch(event.target.value));
   };
 
-  const clearSearch = () => {
-    setSearchValue("");
+  const clearSearchValue = () => {
+    dispatch(clearSearch());
   };
 
   return (
@@ -33,7 +40,7 @@ const Search: FC = () => {
             <button
               className="search__clear"
               type="button"
-              onClick={clearSearch}>
+              onClick={clearSearchValue}>
               <img src={closeIcon} alt="Close" />
             </button>
           ) : (

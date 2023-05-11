@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { RootState } from "@/store/store";
 import { IProduct } from "@features/products/types/product.interface";
@@ -6,11 +6,13 @@ import { IProduct } from "@features/products/types/product.interface";
 export interface IProductsState {
   products: IProduct[];
   loading: boolean;
+  searchValue: string;
 }
 
 const initialState: IProductsState = {
   products: [],
   loading: false,
+  searchValue: "",
 };
 
 export const fetchProducts = createAsyncThunk("products/fetchProducts", () => {
@@ -22,7 +24,14 @@ export const fetchProducts = createAsyncThunk("products/fetchProducts", () => {
 export const productsSlice = createSlice({
   name: "products",
   initialState,
-  reducers: {},
+  reducers: {
+    changeSearch(state, action: PayloadAction<string>) {
+      state.searchValue = action.payload;
+    },
+    clearSearch(state) {
+      state.searchValue = "";
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchProducts.pending, (state) => {
       state.loading = true;
@@ -33,6 +42,8 @@ export const productsSlice = createSlice({
     });
   },
 });
+
+export const { changeSearch, clearSearch } = productsSlice.actions;
 
 export const selectProducts = (state: RootState) => state.products.products;
 
