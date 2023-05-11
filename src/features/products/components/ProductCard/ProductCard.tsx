@@ -60,22 +60,28 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
           </ul>
         </div>
         <div className="info__right">
-          <p className="info__price">{product.price} USD</p>
-          <p className="info__old-price">{product.oldPrice}</p>
-          <p className="info__shipping">
-            {product.freeShipping ? "Free" : "Payed"} Shipping
-          </p>
-          <p className="info__delivery">
-            Delivery in {product.deliveryTime} day
-          </p>
-          <Link to={`/products/${product.id}`} className="info__btn">
-            Product Detail
-            <img src={arrowRightIcon} alt=">" />
-          </Link>
-          <button className="info__wish-btn">
-            <img src={heartIcon} alt="Heart" />
-            Add to wish list
-          </button>
+          <div className="info__price-block">
+            <p className="info__price">{product.price} USD</p>
+            <p className="info__old-price">{product.oldPrice}</p>
+          </div>
+          <div className="info__delivery-block">
+            <p className="info__shipping">
+              {product.freeShipping ? "Free" : "Payed"} Shipping
+            </p>
+            <p className="info__delivery">
+              Delivery in {product.deliveryTime} day
+            </p>
+          </div>
+          <div className="info__buttons">
+            <Link to={`/products/${product.id}`} className="info__btn">
+              Product Detail
+              <img src={arrowRightIcon} alt=">" />
+            </Link>
+            <button className="info__wish-btn">
+              <img src={heartIcon} alt="Heart" />
+              Add to wish list
+            </button>
+          </div>
         </div>
       </div>
     </li>

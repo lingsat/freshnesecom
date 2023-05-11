@@ -1,4 +1,5 @@
 @import "@/assets/styles/_variables.scss";
+@import "@/assets/styles/_mixins.scss";
 
 .card {
   border: 1px solid $header-search-border-color;
@@ -37,6 +38,8 @@
   line-height: 1.65rem;
 
   a {
+    @include text-overflow-hide;
+    display: block;
     color: $text-black-color;
     text-decoration: none;
   }
@@ -47,6 +50,7 @@
 }
 
 .info__description {
+  @include text-overflow-hide;
   margin-bottom: 0.5rem;
   font-size: 0.75rem;
   line-height: 1rem;
@@ -76,15 +80,26 @@
   }
 
   &__category {
-    width: 75px;
+    @include text-overflow-hide;
+    width: 80px;
   }
 
-  &__value span {
-    color: $link-main-color;
+  &__value {
+    @include text-overflow-hide;
+    width: calc(100% - 80px);
+
+    span {
+      color: $link-main-color;
+    }
   }
 }
 
+.info__price-block {
+  margin-bottom: 1rem;
+}
+
 .info__price {
+  @include text-overflow-hide;
   font-family: $title-text-font;
   font-weight: 600;
   font-size: 1.125rem;
@@ -92,7 +107,7 @@
 }
 
 .info__old-price {
-  margin-bottom: 1rem;
+  @include text-overflow-hide;
   font-family: $title-text-font;
   font-weight: 600;
   font-size: 0.75rem;
@@ -101,7 +116,12 @@
   color: $search-field-color;
 }
 
+.info__delivery-block {
+  margin-bottom: 1.5rem;
+}
+
 .info__shipping {
+  @include text-overflow-hide;
   font-family: $title-text-font;
   font-weight: 600;
   font-size: 0.75rem;
@@ -110,7 +130,7 @@
 }
 
 .info__delivery {
-  margin-bottom: 1.5rem;
+  @include text-overflow-hide;
   font-size: 0.75rem;
   line-height: 1rem;
   color: $search-field-color;
@@ -227,6 +247,7 @@
 @media (max-width: 679.98px) {
   .card__info {
     flex-direction: column;
+    align-items: center;
   }
 
   .card__image {
@@ -234,10 +255,11 @@
   }
 
   .info__left {
-    width: 100%;
+    width: 200px;
   }
 
   .info__stars {
+    justify-content: center;
     margin-bottom: 1rem;
   }
 
@@ -254,7 +276,7 @@
   }
 }
 
-@media (max-width: 449.98px) {
+@media (max-width: 479.98px) {
   .card {
     flex-direction: column;
     width: 100%;
@@ -269,9 +291,15 @@
 
   .info__left,
   .info__right {
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
+  }
+
+  .info__title,
+  .info__description {
+    width: 100%;
   }
 
   .info__btn {
