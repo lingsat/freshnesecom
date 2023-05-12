@@ -2,7 +2,11 @@ import React, { FC } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { IProductsState } from "../../productsSlice";
-import { getFilteredProducts } from "@/utils/products.utils";
+import {
+  getBrands,
+  getCategoriesWithCount,
+  getFilteredProducts,
+} from "@/utils/products.utils";
 import ListNavigation from "@products/components/ListNavigation/ListNavigation";
 import ListFilter from "@products/components/ListFilter/ListFilter";
 import ProductsList from "@products/components/ProductsList/ProductsList";
@@ -15,6 +19,8 @@ const ProductsListPage: FC = () => {
   >((state) => state.products);
 
   const filteredProducts = getFilteredProducts(products, category, searchValue);
+  const categories = getCategoriesWithCount(products);
+  const brands = getBrands(products);
 
   return (
     <div className="products-list">
@@ -27,7 +33,7 @@ const ProductsListPage: FC = () => {
         </div>
       </div>
       <div className="products-list__main">
-        <ListFilter />
+        <ListFilter categories={categories} brands={brands} />
         <ProductsList filteredProducts={filteredProducts} />
       </div>
     </div>

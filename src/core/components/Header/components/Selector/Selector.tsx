@@ -5,6 +5,7 @@ import {
   changeCategory,
   IProductsState,
 } from "@/features/products/productsSlice";
+import { getCategories } from "@/utils/products.utils";
 import arrowDown from "@/assets/images/arrow_down.svg";
 import "./Selector.scss";
 
@@ -16,12 +17,7 @@ const Selector: FC = () => {
   );
   const dispatch = useDispatch<AppDispatch>();
 
-  const categories = products.reduce((acc: string[], product) => {
-    if (!acc.includes(product.category)) {
-      acc.push(product.category);
-    }
-    return acc;
-  }, []);
+  const categories = getCategories(products);
 
   const handleHideMenu = () => {
     setShowMenu(false);
