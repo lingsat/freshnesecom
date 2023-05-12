@@ -1,5 +1,9 @@
 import React, { FC, useState } from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
+import { getCategoriesWithBrands } from "@/utils/products.utils";
+import { IProductsState } from "@/features/products/productsSlice";
 import LinkItem from "@/common/components/LInkItem/LinkItem";
 import Search from "./components/Search/Search";
 import Category from "./components/Category/Category";
@@ -7,11 +11,16 @@ import logo from "@/assets/images/logo.svg";
 import arrowDown from "@/assets/images/arrow_down.svg";
 import userIcon from "@/assets/images/user.svg";
 import cartIcon from "@/assets/images/basket.svg";
-import { categories } from "@/mock/categories";
 import "./Header.scss";
 
 const Header: FC = () => {
+  const { products } = useSelector<RootState, IProductsState>(
+    (state) => state.products
+  );
   const [showCategories, setShowCategories] = useState<boolean>(true);
+
+  const categoriesWithBrands = getCategoriesWithBrands(products);
+  const categories = Object.keys(categoriesWithBrands);
 
   const toggleShowCategories = () => {
     setShowCategories((prev) => !prev);
@@ -79,7 +88,11 @@ const Header: FC = () => {
             showCategories && "header__categories--hide"
           }`}>
           {categories.map((category, index) => (
-            <Category key={`cat-${category}-${index}`} title={category} />
+            <Category
+              key={`cat-${category}-${index}`}
+              title={category}
+              brands={categoriesWithBrands[category]}
+            />
           ))}
         </ul>
       </nav>

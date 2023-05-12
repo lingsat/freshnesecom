@@ -1,4 +1,7 @@
-import { ICategoryWithCount } from "@/features/products/types/caregory.interface";
+import {
+  ICategoryWithBrands,
+  ICategoryWithCount,
+} from "@/features/products/types/caregory.interface";
 import { IProduct } from "@/features/products/types/product.interface";
 
 export const getFilteredProducts = (
@@ -15,12 +18,12 @@ export const getFilteredProducts = (
   });
 };
 
-export const getStarsArrFromNumber = (num: number) => {
-  const arr = Array(5).fill(false);
+export const getStarsArrFromNumber = (num: number): boolean[] => {
+  const arr: boolean[] = Array(5).fill(false);
   return arr.map((_, index) => index < num);
 };
 
-export const getCategories = (productsArr: IProduct[]) => {
+export const getCategories = (productsArr: IProduct[]): string[] => {
   return productsArr.reduce((acc: string[], product) => {
     if (!acc.includes(product.category)) {
       acc.push(product.category);
@@ -29,7 +32,9 @@ export const getCategories = (productsArr: IProduct[]) => {
   }, []);
 };
 
-export const getCategoriesWithCount = (productsArr: IProduct[]) => {
+export const getCategoriesWithCount = (
+  productsArr: IProduct[]
+): ICategoryWithCount[] => {
   const categories: ICategoryWithCount[] = productsArr.reduce(
     (acc: ICategoryWithCount[], product) => {
       const existingCategory = acc.find(
@@ -47,7 +52,24 @@ export const getCategoriesWithCount = (productsArr: IProduct[]) => {
   return categories;
 };
 
-export const getBrands = (productsArr: IProduct[]) => {
+export const getCategoriesWithBrands = (
+  productsArr: IProduct[]
+): ICategoryWithBrands => {
+  const categories = productsArr.reduce((acc: ICategoryWithBrands, product) => {
+    const existingCategory = product.category in acc;
+    if (existingCategory) {
+      if (!acc[product.category].includes(product.brand)) {
+        acc[product.category].push(product.brand);
+      }
+    } else {
+      acc[product.category] = [product.brand];
+    }
+    return acc;
+  }, {});
+  return categories;
+};
+
+export const getBrands = (productsArr: IProduct[]): string[] => {
   return productsArr.reduce((acc: string[], product) => {
     if (!acc.includes(product.brand)) {
       acc.push(product.brand);

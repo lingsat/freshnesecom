@@ -46,6 +46,7 @@
   }
 
   &__categories {
+    min-height: 54px;
     list-style: none;
     padding: 0 45px;
     background-color: $bg-header-categories-color;

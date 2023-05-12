@@ -1,14 +1,14 @@
 import React, { FC, useState } from "react";
 import { Link } from "react-router-dom";
 import arrowDownThin from "@/assets/images/arrow_down_thin.svg";
-import { brands } from "@/mock/brands";
 import "./Category.scss";
 
 interface CategoryProps {
   title: string;
+  brands: string[];
 }
 
-const Category: FC<CategoryProps> = ({ title }) => {
+const Category: FC<CategoryProps> = ({ title, brands }) => {
   const [showMenu, setShowMenu] = useState<boolean>(false);
 
   const handleHideMenu = () => {
