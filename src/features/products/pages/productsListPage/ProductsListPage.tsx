@@ -18,7 +18,7 @@ const ProductsListPage: FC = () => {
 
   return (
     <div className="products-list">
-      <ListNavigation category={category} />
+      <ListNavigation />
       <div className="products-list__header">
         <h2 className="products-list__title">{category || "All Products"}</h2>
         <div className="products-list__stat">
