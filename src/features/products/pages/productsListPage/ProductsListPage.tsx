@@ -6,6 +6,7 @@ import {
   getBrands,
   getCategoriesWithCount,
   getFilteredProducts,
+  getMaxPrice,
 } from "@/utils/products.utils";
 import ListNavigation from "@products/components/ListNavigation/ListNavigation";
 import ListFilter from "@products/components/ListFilter/ListFilter";
@@ -21,6 +22,7 @@ const ProductsListPage: FC = () => {
   const filteredProducts = getFilteredProducts(products, category, searchValue);
   const categories = getCategoriesWithCount(products);
   const brands = getBrands(products);
+  const maxPrice = getMaxPrice(products);
 
   return (
     <div className="products-list">
@@ -33,7 +35,11 @@ const ProductsListPage: FC = () => {
         </div>
       </div>
       <div className="products-list__main">
-        <ListFilter categories={categories} brands={brands} />
+        <ListFilter
+          categories={categories}
+          brands={brands}
+          maxPrice={maxPrice}
+        />
         <ProductsList filteredProducts={filteredProducts} />
       </div>
     </div>

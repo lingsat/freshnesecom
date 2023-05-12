@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, useState } from "react";
+import React, { ChangeEvent, FC, useEffect, useState } from "react";
 import ReactSlider from "react-slider";
 import { ICategoryWithCount } from "@products/types/caregory.interface";
 import arrowDownThin from "@/assets/images/arrow_down_thin.svg";
@@ -12,12 +12,13 @@ import "./ListFilter.scss";
 interface ListFilterProps {
   categories: ICategoryWithCount[];
   brands: string[];
+  maxPrice: number;
 }
 
-const ListFilter: FC<ListFilterProps> = ({ categories, brands }) => {
+const ListFilter: FC<ListFilterProps> = ({ categories, brands, maxPrice }) => {
   const [showFilter, setShowFIlter] = useState<boolean>(false);
 
-  const [priceValues, setPriceValues] = useState<number[]>([0, 500]);
+  const [priceValues, setPriceValues] = useState<number[]>([1, maxPrice]);
 
   const changeMinPrice = (event: ChangeEvent<HTMLInputElement>) => {
     setPriceValues((prevValues) => [+event.target.value, prevValues[1]]);
@@ -34,6 +35,10 @@ const ListFilter: FC<ListFilterProps> = ({ categories, brands }) => {
   const handleFilterShow = () => {
     setShowFIlter(true);
   };
+
+  useEffect(() => {
+    setPriceValues([1, maxPrice]);
+  }, [maxPrice]);
 
   return (
     <>
@@ -102,8 +107,8 @@ const ListFilter: FC<ListFilterProps> = ({ categories, brands }) => {
             trackClassName="price-slider__track"
             value={priceValues}
             onChange={setPriceValues}
-            min={0}
-            max={500}
+            min={1}
+            max={maxPrice}
             pearling
             minDistance={5}
           />
@@ -113,7 +118,9 @@ const ListFilter: FC<ListFilterProps> = ({ categories, brands }) => {
               <input
                 className="filter-price__input"
                 type="number"
-                value={priceValues[0]}
+                min={1}
+                max={maxPrice}
+                value={priceValues[0] || ""}
                 onChange={changeMinPrice}
               />
             </label>
@@ -122,7 +129,9 @@ const ListFilter: FC<ListFilterProps> = ({ categories, brands }) => {
               <input
                 className="filter-price__input"
                 type="number"
-                value={priceValues[1]}
+                min={1}
+                max={maxPrice}
+                value={priceValues[1] || ""}
                 onChange={changeMaxPrice}
               />
             </label>

@@ -77,3 +77,13 @@ export const getBrands = (productsArr: IProduct[]): string[] => {
     return acc;
   }, []);
 };
+
+export const getMaxPrice = (productsArr: IProduct[]): number => {
+  let maxPrice = 0;
+  productsArr.forEach((product) => {
+    if (product.price > maxPrice) {
+      maxPrice = product.price;
+    }
+  });
+  return Math.ceil(maxPrice);
+};
