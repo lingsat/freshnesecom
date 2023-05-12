@@ -2,7 +2,18 @@
 
 .filter {
   width: 270px;
-  background-color: #fff;
+  background-color: $bg-white-color;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+
+  &__title {
+    margin-bottom: 1rem;
+    font-family: $title-text-font;
+    font-weight: 600;
+    font-size: 1.125rem;
+    line-height: 1.65rem;
+  }
 
   &__switcher {
     display: none;
@@ -24,6 +35,100 @@
     img {
       transition: all 0.3s linear;
     }
+  }
+}
+
+.filter-categories {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+
+  &__btn {
+    padding: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: none;
+    background: inherit;
+    font-family: $main-text-font;
+    font-weight: 400;
+    font-size: 0.875rem;
+    line-height: 1.185rem;
+    color: $text-black-color;
+    cursor: pointer;
+
+    &:hover p {
+      text-decoration: underline;
+    }
+
+    span {
+      padding: 0 8px;
+      background: $bg-list-stat-color;
+      border-radius: 12px;
+      font-family: $title-text-font;
+      font-weight: 600;
+      font-size: 0.75rem;
+      line-height: 1.185rem;
+      color: $link-main-color;
+    }
+  }
+}
+
+.filter-brands {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+
+  &__item {
+    border: none;
+    padding: 0;
+    margin: 0;
+    position: relative;
+  }
+
+  &__input {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    border: 2px solid $bg-card-btn-hover-color;
+    border-radius: 3px;
+    background-color: $bg-white-color;
+    outline: none;
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    z-index: 1;
+    transform: translateY(-50%);
+
+    &:hover {
+      box-shadow: 0 0 5px $bg-card-btn-color;
+    }
+
+    &:checked {
+      background-color: $bg-card-btn-color;
+
+      &::before {
+        content: "\2714";
+        font-size: 1rem;
+        color: $text-white-color;
+        position: absolute;
+        right: 1px;
+        top: -3px;
+      }
+    }
+  }
+
+  &__label {
+    margin-left: 35px;
+    font-size: 0.875rem;
+    line-height: 1.185rem;
+    cursor: pointer;
   }
 }
 
