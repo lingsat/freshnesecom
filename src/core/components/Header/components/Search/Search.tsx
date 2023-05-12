@@ -1,39 +1,59 @@
-import React, { ChangeEvent, FC, useState } from "react";
+import React, { ChangeEvent, FC, useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState, AppDispatch } from "@/store/store";
+import { changeSearch, clearSearch } from "@/features/products/productsSlice";
 import Selector from "@/core/components/Header/components/Selector/Selector";
 import searchIcon from "@/assets/images/search.svg";
 import closeIcon from "@/assets/images/close.svg";
+import { IProductsState } from "@/features/products/productsSlice";
 import "./Search.scss";
 
 const Search: FC = () => {
-  const [searchValue, setSearchValue] = useState<string>("");
-  const [searchCategory, setSearchCategory] =
-    useState<string>("All categories");
+  const { searchValue } = useSelector<RootState, IProductsState>(
+    (state) => state.products
+  );
+  const dispatch = useDispatch<AppDispatch>();
+
+  const [localSearchValue, setLocalSearchValue] = useState<string>(searchValue);
 
   const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setSearchValue(event.target.value);
+    setLocalSearchValue(event.target.value);
   };
 
-  const clearSearch = () => {
-    setSearchValue("");
+  const startSearching = () => {
+    dispatch(changeSearch(localSearchValue));
   };
+
+  const clearSearchValue = () => {
+    dispatch(clearSearch());
+  };
+
+  useEffect(() => {
+    const debounceTimer = setTimeout(startSearching, 500);
+    return () => clearTimeout(debounceTimer);
+  }, [localSearchValue]);
+
+  useEffect(() => {
+    setLocalSearchValue(searchValue);
+  }, [searchValue]);
 
   return (
     <div className="search">
-      <Selector title={searchCategory} setSearchCategory={setSearchCategory} />
+      <Selector />
       <form>
         <label className="search__label">
           <input
             className="search__input"
             type="text"
             placeholder="Search Products, categories ..."
-            value={searchValue}
+            value={localSearchValue}
             onChange={handleSearchChange}
           />
-          {searchValue ? (
+          {localSearchValue ? (
             <button
               className="search__clear"
               type="button"
-              onClick={clearSearch}>
+              onClick={clearSearchValue}>
               <img src={closeIcon} alt="Close" />
             </button>
           ) : (

@@ -11,7 +11,7 @@ const ListNavigation: FC = () => {
         </Link>
       </li>
       <li className="list-nav__item">
-        <Link className="list-nav__link list-nav__link--active" to="/products">
+        <Link className="list-nav__link" to="/products">
           All products
         </Link>
       </li>

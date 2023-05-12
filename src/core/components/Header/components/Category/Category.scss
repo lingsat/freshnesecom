@@ -35,8 +35,9 @@
   position: absolute;
   top: 100%;
   left: 0;
-  z-index: 1;
-  background-color: $bg-white-color;
+  z-index: 2;
+  background: $bg-search-color;
+  box-shadow: $shadow-dropdown-color 0px 2px 8px 0px;
   list-style: none;
   border: 1px solid $header-search-border-color;
 
