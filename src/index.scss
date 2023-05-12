@@ -33,3 +33,21 @@ body {
 .reverse__icon {
   transform: rotate(180deg);
 }
+
+// Scrollbar styles
+::-webkit-scrollbar {
+  -webkit-appearance: none;
+}
+
+::-webkit-scrollbar:vertical {
+  width: 12px;
+}
+
+::-webkit-scrollbar:horizontal {
+  height: 12px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: $bg-scroll-color;
+  border-radius: 10px;
+}
