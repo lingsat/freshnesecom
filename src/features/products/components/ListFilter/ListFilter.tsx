@@ -8,13 +8,12 @@ import {
   getMaxPrice,
 } from "@/utils/products.utils";
 import FilterPrice from "../FilterPrice/FilterPrice";
+import FilterStars from "../FilterStars/FilterStars";
+import { EStars } from "../../types/start.enum";
 import arrowDownThin from "@/assets/images/arrow_down_thin.svg";
-import fiveStars from "@/assets/images/stars_five.svg";
-import fourStars from "@/assets/images/stars_four.svg";
-import threeStars from "@/assets/images/stars_three.svg";
-import twoStars from "@/assets/images/stars_two.svg";
-import oneStars from "@/assets/images/stars_one.svg";
 import "./ListFilter.scss";
+
+const starsArr = Object.values(EStars);
 
 const ListFilter: FC = () => {
   const { products } = useSelector<RootState, IProductsState>(
@@ -72,36 +71,14 @@ const ListFilter: FC = () => {
         <div className="filter__block">
           <h3 className="filter__title">Rating</h3>
           <ul className="filter-rating">
-            <li>
-              <label className="filter__label">
-                <input className="filter__input" type="checkbox" />
-                <img src={fiveStars} alt="Five Stars" />
-              </label>
-            </li>
-            <li>
-              <label className="filter__label">
-                <input className="filter__input" type="checkbox" />
-                <img src={fourStars} alt="Five Stars" />
-              </label>
-            </li>
-            <li>
-              <label className="filter__label">
-                <input className="filter__input" type="checkbox" />
-                <img src={threeStars} alt="Five Stars" />
-              </label>
-            </li>
-            <li>
-              <label className="filter__label">
-                <input className="filter__input" type="checkbox" />
-                <img src={twoStars} alt="Five Stars" />
-              </label>
-            </li>
-            <li>
-              <label className="filter__label">
-                <input className="filter__input" type="checkbox" />
-                <img src={oneStars} alt="Five Stars" />
-              </label>
-            </li>
+            {starsArr.map((starCount, index) => (
+              <li key={`filterstars-${starCount}-${index}`}>
+                <label className="filter__label">
+                  <input className="filter__input" type="checkbox" />
+                  <FilterStars checkedStars={starCount} />
+                </label>
+              </li>
+            ))}
           </ul>
         </div>
         <div className="filter__block">
