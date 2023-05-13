@@ -85,7 +85,7 @@ const Header: FC = () => {
       <nav>
         <ul
           className={`header__categories ${
-            showCategories && "header__categories--hide"
+            showCategories ? "header__categories--hide" : ""
           }`}>
           {categories.map((category, index) => (
             <Category

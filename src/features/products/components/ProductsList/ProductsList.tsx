@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { IProductsState } from "@products/productsSlice";
 import ProductCard from "@products/components/ProductCard/ProductCard";
-import LoadinSpinner from "@/common/components/LoadingSpinner/LoadingSpinner";
 import { IProduct } from "../../types/product.interface";
 import "./ProductsList.scss";
 
@@ -12,14 +11,9 @@ interface ProductsListProps {
 }
 
 const ProductsList: FC<ProductsListProps> = ({ filteredProducts }) => {
-  const { loading, searchValue, category } = useSelector<
-    RootState,
-    IProductsState
-  >((state) => state.products);
-
-  if (loading) {
-    return <LoadinSpinner />;
-  }
+  const { searchValue, category } = useSelector<RootState, IProductsState>(
+    (state) => state.products
+  );
 
   if (!filteredProducts.length) {
     return (

@@ -1,6 +1,7 @@
 import React, { ChangeEvent, FC, useEffect, useState } from "react";
 import ReactSlider from "react-slider";
 import { ICategoryWithCount } from "@products/types/caregory.interface";
+import { EPrice } from "../../types/price.enum";
 import arrowDownThin from "@/assets/images/arrow_down_thin.svg";
 import fiveStars from "@/assets/images/stars_five.svg";
 import fourStars from "@/assets/images/stars_four.svg";
@@ -18,14 +19,19 @@ interface ListFilterProps {
 const ListFilter: FC<ListFilterProps> = ({ categories, brands, maxPrice }) => {
   const [showFilter, setShowFIlter] = useState<boolean>(false);
 
-  const [priceValues, setPriceValues] = useState<number[]>([1, maxPrice]);
+  const [priceValues, setPriceValues] = useState<number[]>([
+    EPrice.MIN,
+    maxPrice,
+  ]);
 
   const changeMinPrice = (event: ChangeEvent<HTMLInputElement>) => {
-    setPriceValues((prevValues) => [+event.target.value, prevValues[1]]);
+    const newMinValue = +event.target.value;
+    setPriceValues((prevValues) => [newMinValue, prevValues[1]]);
   };
 
   const changeMaxPrice = (event: ChangeEvent<HTMLInputElement>) => {
-    setPriceValues((prevValues) => [prevValues[0], +event.target.value]);
+    const newMaxValue = +event.target.value;
+    setPriceValues((prevValues) => [prevValues[0], newMaxValue]);
   };
 
   const handleFilterHide = () => {
@@ -43,7 +49,7 @@ const ListFilter: FC<ListFilterProps> = ({ categories, brands, maxPrice }) => {
   return (
     <>
       <div
-        className={`filter ${showFilter && "filter--show"}`}
+        className={`filter ${showFilter ? "filter--show" : ""}`}
         onMouseEnter={handleFilterShow}
         onMouseLeave={handleFilterHide}>
         <div className="filter__block">
@@ -63,41 +69,51 @@ const ListFilter: FC<ListFilterProps> = ({ categories, brands, maxPrice }) => {
         </div>
         <div className="filter__block">
           <h3 className="filter__title">Brands</h3>
-          <form className="filter-brands">
+          <ul className="filter-brands">
             {brands.map((brand, index) => (
-              <label
-                key={`filterbrand-${brand}-${index}`}
-                className="filter__label">
-                <input className="filter__input" type="checkbox" />
-                <p>{brand}</p>
-              </label>
+              <li key={`filterbrand-${brand}-${index}`}>
+                <label className="filter__label">
+                  <input className="filter__input" type="checkbox" />
+                  <p>{brand}</p>
+                </label>
+              </li>
             ))}
-          </form>
+          </ul>
         </div>
         <div className="filter__block">
           <h3 className="filter__title">Rating</h3>
-          <form className="filter-rating">
-            <label className="filter__label">
-              <input className="filter__input" type="checkbox" />
-              <img src={fiveStars} alt="Five Stars" />
-            </label>
-            <label className="filter__label">
-              <input className="filter__input" type="checkbox" />
-              <img src={fourStars} alt="Five Stars" />
-            </label>
-            <label className="filter__label">
-              <input className="filter__input" type="checkbox" />
-              <img src={threeStars} alt="Five Stars" />
-            </label>
-            <label className="filter__label">
-              <input className="filter__input" type="checkbox" />
-              <img src={twoStars} alt="Five Stars" />
-            </label>
-            <label className="filter__label">
-              <input className="filter__input" type="checkbox" />
-              <img src={oneStars} alt="Five Stars" />
-            </label>
-          </form>
+          <ul className="filter-rating">
+            <li>
+              <label className="filter__label">
+                <input className="filter__input" type="checkbox" />
+                <img src={fiveStars} alt="Five Stars" />
+              </label>
+            </li>
+            <li>
+              <label className="filter__label">
+                <input className="filter__input" type="checkbox" />
+                <img src={fourStars} alt="Five Stars" />
+              </label>
+            </li>
+            <li>
+              <label className="filter__label">
+                <input className="filter__input" type="checkbox" />
+                <img src={threeStars} alt="Five Stars" />
+              </label>
+            </li>
+            <li>
+              <label className="filter__label">
+                <input className="filter__input" type="checkbox" />
+                <img src={twoStars} alt="Five Stars" />
+              </label>
+            </li>
+            <li>
+              <label className="filter__label">
+                <input className="filter__input" type="checkbox" />
+                <img src={oneStars} alt="Five Stars" />
+              </label>
+            </li>
+          </ul>
         </div>
         <div className="filter__block">
           <h3 className="filter__title">Price</h3>
@@ -107,10 +123,10 @@ const ListFilter: FC<ListFilterProps> = ({ categories, brands, maxPrice }) => {
             trackClassName="price-slider__track"
             value={priceValues}
             onChange={setPriceValues}
-            min={1}
+            min={EPrice.MIN}
             max={maxPrice}
             pearling
-            minDistance={5}
+            minDistance={EPrice.MIN_DISTANCE}
           />
           <form className="filter-price">
             <label className="filter-price__label">
@@ -118,7 +134,7 @@ const ListFilter: FC<ListFilterProps> = ({ categories, brands, maxPrice }) => {
               <input
                 className="filter-price__input"
                 type="number"
-                min={1}
+                min={EPrice.MIN}
                 max={maxPrice}
                 value={priceValues[0] || ""}
                 onChange={changeMinPrice}
@@ -129,7 +145,7 @@ const ListFilter: FC<ListFilterProps> = ({ categories, brands, maxPrice }) => {
               <input
                 className="filter-price__input"
                 type="number"
-                min={1}
+                min={priceValues[0]}
                 max={maxPrice}
                 value={priceValues[1] || ""}
                 onChange={changeMaxPrice}

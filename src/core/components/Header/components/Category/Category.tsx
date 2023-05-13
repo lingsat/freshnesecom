@@ -29,7 +29,8 @@ const Category: FC<CategoryProps> = ({ title, brands }) => {
           alt="DownArrow"
         />
       </div>
-      <ul className={`category__menu ${showMenu && "category__menu--show"}`}>
+      <ul
+        className={`category__menu ${showMenu ? "category__menu--show" : ""}`}>
         {brands.map((brand, index) => (
           <li key={`brand-${brand}-${index}`}>
             <Link className="category__link" to="/">

@@ -12,9 +12,10 @@ import ListNavigation from "@products/components/ListNavigation/ListNavigation";
 import ListFilter from "@products/components/ListFilter/ListFilter";
 import ProductsList from "@products/components/ProductsList/ProductsList";
 import "./ProductsListPage.scss";
+import LoadinSpinner from "@/common/components/LoadingSpinner/LoadingSpinner";
 
 const ProductsListPage: FC = () => {
-  const { products, searchValue, category } = useSelector<
+  const { products, searchValue, category, loading } = useSelector<
     RootState,
     IProductsState
   >((state) => state.products);
@@ -34,14 +35,18 @@ const ProductsListPage: FC = () => {
           <span>Products</span>
         </div>
       </div>
-      <div className="products-list__main">
-        <ListFilter
-          categories={categories}
-          brands={brands}
-          maxPrice={maxPrice}
-        />
-        <ProductsList filteredProducts={filteredProducts} />
-      </div>
+      {loading ? (
+        <LoadinSpinner />
+      ) : (
+        <div className="products-list__main">
+          <ListFilter
+            categories={categories}
+            brands={brands}
+            maxPrice={maxPrice}
+          />
+          <ProductsList filteredProducts={filteredProducts} />
+        </div>
+      )}
     </div>
   );
 };
