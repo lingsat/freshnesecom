@@ -1,7 +1,13 @@
-import React, { ChangeEvent, FC, useEffect, useState } from "react";
-import ReactSlider from "react-slider";
-import { ICategoryWithCount } from "@products/types/caregory.interface";
-import { EPrice } from "../../types/price.enum";
+import React, { FC, useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
+import { IProductsState } from "../../productsSlice";
+import {
+  getCategoriesWithCount,
+  getBrands,
+  getMaxPrice,
+} from "@/utils/products.utils";
+import FilterPrice from "../FilterPrice/FilterPrice";
 import arrowDownThin from "@/assets/images/arrow_down_thin.svg";
 import fiveStars from "@/assets/images/stars_five.svg";
 import fourStars from "@/assets/images/stars_four.svg";
@@ -10,29 +16,16 @@ import twoStars from "@/assets/images/stars_two.svg";
 import oneStars from "@/assets/images/stars_one.svg";
 import "./ListFilter.scss";
 
-interface ListFilterProps {
-  categories: ICategoryWithCount[];
-  brands: string[];
-  maxPrice: number;
-}
+const ListFilter: FC = () => {
+  const { products } = useSelector<RootState, IProductsState>(
+    (state) => state.products
+  );
 
-const ListFilter: FC<ListFilterProps> = ({ categories, brands, maxPrice }) => {
+  const categories = getCategoriesWithCount(products);
+  const brands = getBrands(products);
+  const maxPrice = getMaxPrice(products);
+
   const [showFilter, setShowFIlter] = useState<boolean>(false);
-
-  const [priceValues, setPriceValues] = useState<number[]>([
-    EPrice.MIN,
-    maxPrice,
-  ]);
-
-  const changeMinPrice = (event: ChangeEvent<HTMLInputElement>) => {
-    const newMinValue = +event.target.value;
-    setPriceValues((prevValues) => [newMinValue, prevValues[1]]);
-  };
-
-  const changeMaxPrice = (event: ChangeEvent<HTMLInputElement>) => {
-    const newMaxValue = +event.target.value;
-    setPriceValues((prevValues) => [prevValues[0], newMaxValue]);
-  };
 
   const handleFilterHide = () => {
     setShowFIlter(false);
@@ -41,10 +34,6 @@ const ListFilter: FC<ListFilterProps> = ({ categories, brands, maxPrice }) => {
   const handleFilterShow = () => {
     setShowFIlter(true);
   };
-
-  useEffect(() => {
-    setPriceValues([1, maxPrice]);
-  }, [maxPrice]);
 
   return (
     <>
@@ -117,41 +106,7 @@ const ListFilter: FC<ListFilterProps> = ({ categories, brands, maxPrice }) => {
         </div>
         <div className="filter__block">
           <h3 className="filter__title">Price</h3>
-          <ReactSlider
-            className="price-slider"
-            thumbClassName="price-slider__thumb"
-            trackClassName="price-slider__track"
-            value={priceValues}
-            onChange={setPriceValues}
-            min={EPrice.MIN}
-            max={maxPrice}
-            pearling
-            minDistance={EPrice.MIN_DISTANCE}
-          />
-          <form className="filter-price">
-            <label className="filter-price__label">
-              Min
-              <input
-                className="filter-price__input"
-                type="number"
-                min={EPrice.MIN}
-                max={maxPrice}
-                value={priceValues[0] || ""}
-                onChange={changeMinPrice}
-              />
-            </label>
-            <label className="filter-price__label">
-              Max
-              <input
-                className="filter-price__input"
-                type="number"
-                min={priceValues[0]}
-                max={maxPrice}
-                value={priceValues[1] || ""}
-                onChange={changeMaxPrice}
-              />
-            </label>
-          </form>
+          <FilterPrice maxPrice={maxPrice} />
         </div>
         <button className="filter__reset">Reset</button>
       </div>

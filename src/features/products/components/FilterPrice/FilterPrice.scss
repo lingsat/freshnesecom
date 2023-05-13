@@ -1,0 +1,64 @@
+@import "@/assets/styles/_variables.scss";
+
+.filter-price {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.75rem;
+  position: relative;
+
+  &::before {
+    content: "-";
+    color: $search-field-color;
+    position: absolute;
+    bottom: 11px;
+    left: 50%;
+    z-index: 1;
+    transform: translateX(-50%);
+  }
+
+  &__label {
+    width: 42%;
+    display: flex;
+    flex-direction: column;
+    font-family: $title-text-font;
+    font-weight: 600;
+    font-size: 0.75rem;
+    line-height: 1.125rem;
+  }
+
+  &__input {
+    padding: 0.75rem 1rem;
+    background: $bg-search-color;
+    border: 1px solid $header-search-border-color;
+    border-radius: 12px;
+    font-family: $main-text-font;
+    font-size: 0.875rem;
+    line-height: 1.185rem;
+    color: $search-field-color;
+    outline: none;
+  }
+}
+
+.price-slider {
+  width: 100%;
+  height: 6px;
+  margin-bottom: 1.5rem;
+  background-color: $bg-price-slider-color;
+  border-radius: 12px;
+
+  &__thumb {
+    width: 20px;
+    height: 20px;
+    top: -7px;
+    background: $bg-white-color;
+    border: 1px solid $header-search-border-color;
+    border-radius: 50%;
+    box-shadow: 0px 2px 4px $shadow-cart-counter-color;
+    cursor: pointer;
+  }
+
+  &__track-1 {
+    height: 6px;
+    background: $bg-price-slider-track-color;
+  }
+}

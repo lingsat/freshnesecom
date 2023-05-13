@@ -87,3 +87,7 @@ export const getMaxPrice = (productsArr: IProduct[]): number => {
   });
   return Math.ceil(maxPrice);
 };
+
+export const getValidPrice = (value: string, max: number, min = 0) => {
+  return Math.max(min, Math.min(max, Number(value)));
+};

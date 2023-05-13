@@ -2,17 +2,12 @@ import React, { FC } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { IProductsState } from "../../productsSlice";
-import {
-  getBrands,
-  getCategoriesWithCount,
-  getFilteredProducts,
-  getMaxPrice,
-} from "@/utils/products.utils";
+import { getFilteredProducts } from "@/utils/products.utils";
 import ListNavigation from "@products/components/ListNavigation/ListNavigation";
 import ListFilter from "@products/components/ListFilter/ListFilter";
 import ProductsList from "@products/components/ProductsList/ProductsList";
-import "./ProductsListPage.scss";
 import LoadinSpinner from "@/common/components/LoadingSpinner/LoadingSpinner";
+import "./ProductsListPage.scss";
 
 const ProductsListPage: FC = () => {
   const { products, searchValue, category, loading } = useSelector<
@@ -21,9 +16,6 @@ const ProductsListPage: FC = () => {
   >((state) => state.products);
 
   const filteredProducts = getFilteredProducts(products, category, searchValue);
-  const categories = getCategoriesWithCount(products);
-  const brands = getBrands(products);
-  const maxPrice = getMaxPrice(products);
 
   return (
     <div className="products-list">
@@ -39,11 +31,7 @@ const ProductsListPage: FC = () => {
         <LoadinSpinner />
       ) : (
         <div className="products-list__main">
-          <ListFilter
-            categories={categories}
-            brands={brands}
-            maxPrice={maxPrice}
-          />
+          <ListFilter />
           <ProductsList filteredProducts={filteredProducts} />
         </div>
       )}
