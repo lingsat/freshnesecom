@@ -24,7 +24,7 @@ const Category: FC<CategoryProps> = ({ title, brands }) => {
       <div className="category__item" onMouseEnter={handleShowMenu}>
         {title}
         <img
-          className={`${showMenu && "reverse__icon"}`}
+          className={`${showMenu ? "reverse__icon" : ""}`}
           src={arrowDownThin}
           alt="DownArrow"
         />

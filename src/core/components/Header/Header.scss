@@ -4,6 +4,7 @@
   margin-bottom: 2rem;
 
   &__links {
+    height: 55px;
     padding: 1rem 0;
     display: flex;
     justify-content: space-between;
@@ -43,6 +44,11 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+  }
+
+  &__logo {
+    width: 178px;
+    height: 18px;
   }
 
   &__categories {
@@ -152,13 +158,19 @@
 
 @media (max-width: 699.98px) {
   .header__links {
-    flex-wrap: wrap;
+    height: 69px;
+    padding: 0.5rem 0;
+    flex-direction: column;
     justify-content: center;
     row-gap: 0.5rem;
   }
 }
 
 @media (max-width: 575.98px) {
+  .header__links {
+    height: 39px;
+  }
+
   .header__contacts {
     width: 100%;
     justify-content: space-around;

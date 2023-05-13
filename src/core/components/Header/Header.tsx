@@ -58,7 +58,7 @@ const Header: FC = () => {
       </div>
       <div className="header__main">
         <Link to="/">
-          <img src={logo} alt="Freshnesecom" />
+          <img className="header__logo" src={logo} alt="Freshnesecom" />
         </Link>
         <Search />
         <div className="controls">
