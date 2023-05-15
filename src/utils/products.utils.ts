@@ -78,14 +78,19 @@ export const getBrands = (productsArr: IProduct[]): string[] => {
   }, []);
 };
 
-export const getMaxPrice = (productsArr: IProduct[]): number => {
-  let maxPrice = 0;
-  productsArr.forEach((product) => {
-    if (product.price > maxPrice) {
-      maxPrice = product.price;
-    }
-  });
-  return Math.ceil(maxPrice);
+export const getMinMaxPrice = (
+  productsArr: IProduct[]
+): { min: number; max: number } => {
+  return productsArr.reduce(
+    (acc, product) => {
+      const { price } = product;
+      return {
+        min: Math.min(acc.min, Math.floor(price)),
+        max: Math.max(acc.max, Math.ceil(price)),
+      };
+    },
+    { min: Infinity, max: -Infinity }
+  );
 };
 
 export const getValidPrice = (value: string, max: number, min = 0) => {

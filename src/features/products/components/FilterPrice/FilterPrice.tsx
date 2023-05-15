@@ -5,13 +5,13 @@ import { EPrice } from "@products/types/price.enum";
 import "./FilterPrice.scss";
 
 interface FilterPriceProps {
-  maxPrice: number;
+  priceMinMax: { min: number; max: number };
 }
 
-const FilterPrice: FC<FilterPriceProps> = ({ maxPrice }) => {
+const FilterPrice: FC<FilterPriceProps> = ({ priceMinMax }) => {
   const [priceValues, setPriceValues] = useState<number[]>([
-    EPrice.MIN,
-    maxPrice,
+    priceMinMax.min,
+    priceMinMax.max,
   ]);
 
   const handleChangeMin = (event: ChangeEvent<HTMLInputElement>) => {
@@ -20,19 +20,19 @@ const FilterPrice: FC<FilterPriceProps> = ({ maxPrice }) => {
   };
 
   const handleChangeMax = (event: ChangeEvent<HTMLInputElement>) => {
-    const newMaxPrice = getValidPrice(event.target.value, maxPrice);
+    const newMaxPrice = getValidPrice(event.target.value, priceMinMax.max);
     setPriceValues((prevValues) => [prevValues[0], newMaxPrice]);
   };
 
   const handleBlurMin = (event: ChangeEvent<HTMLInputElement>) => {
-    if (+event.target.value < EPrice.MIN) {
-      setPriceValues((prevValues) => [EPrice.MIN, prevValues[1]]);
+    if (+event.target.value < priceMinMax.min) {
+      setPriceValues((prevValues) => [priceMinMax.min, prevValues[1]]);
     }
   };
 
   const handleBlurMax = (event: ChangeEvent<HTMLInputElement>) => {
     if (+event.target.value < priceValues[0]) {
-      setPriceValues((prevValues) => [prevValues[0], maxPrice]);
+      setPriceValues((prevValues) => [prevValues[0], priceMinMax.max]);
     }
   };
 
@@ -44,8 +44,8 @@ const FilterPrice: FC<FilterPriceProps> = ({ maxPrice }) => {
         trackClassName="price-slider__track"
         value={priceValues}
         onChange={setPriceValues}
-        min={EPrice.MIN}
-        max={maxPrice}
+        min={priceMinMax.min}
+        max={priceMinMax.max}
         pearling
         minDistance={EPrice.MIN_DISTANCE}
       />
@@ -53,10 +53,14 @@ const FilterPrice: FC<FilterPriceProps> = ({ maxPrice }) => {
         <label className="filter-price__label">
           Min
           <input
-            className="filter-price__input"
+            className={`filter-price__input ${
+              priceValues[0] < priceMinMax.min
+                ? "filter-price__input--error"
+                : ""
+            }`}
             type="number"
-            min={EPrice.MIN}
-            max={maxPrice}
+            min={priceMinMax.min}
+            max={priceMinMax.max}
             value={priceValues[0] || ""}
             onChange={handleChangeMin}
             onBlur={handleBlurMin}
@@ -65,10 +69,14 @@ const FilterPrice: FC<FilterPriceProps> = ({ maxPrice }) => {
         <label className="filter-price__label">
           Max
           <input
-            className="filter-price__input"
+            className={`filter-price__input ${
+              priceValues[0] > priceValues[1]
+                ? "filter-price__input--error"
+                : ""
+            }`}
             type="number"
             min={priceValues[0]}
-            max={maxPrice}
+            max={priceMinMax.max}
             value={priceValues[1] || ""}
             onChange={handleChangeMax}
             onBlur={handleBlurMax}

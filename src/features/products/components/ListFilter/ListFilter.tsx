@@ -5,7 +5,7 @@ import { IProductsState } from "@products/productsSlice";
 import {
   getCategoriesWithCount,
   getBrands,
-  getMaxPrice,
+  getMinMaxPrice,
 } from "@/utils/products.utils";
 import FilterPrice from "@products/components/FilterPrice/FilterPrice";
 import FilterStars from "@products/components/FilterStars/FilterStars";
@@ -22,7 +22,7 @@ const ListFilter: FC = () => {
 
   const categories = getCategoriesWithCount(products);
   const brands = getBrands(products);
-  const maxPrice = getMaxPrice(products);
+  const priceMinMax = getMinMaxPrice(products);
 
   const [showFilter, setShowFIlter] = useState<boolean>(false);
 
@@ -36,7 +36,7 @@ const ListFilter: FC = () => {
 
   return (
     <>
-      <div
+      <aside
         className={`filter ${showFilter ? "filter--show" : ""}`}
         onMouseEnter={handleFilterShow}
         onMouseLeave={handleFilterHide}>
@@ -83,10 +83,10 @@ const ListFilter: FC = () => {
         </div>
         <div className="filter__block">
           <h3 className="filter__title">Price</h3>
-          <FilterPrice maxPrice={maxPrice} />
+          <FilterPrice priceMinMax={priceMinMax} />
         </div>
         <button className="filter__reset">Reset</button>
-      </div>
+      </aside>
       <div
         className="filter__switcher"
         onMouseEnter={handleFilterShow}
