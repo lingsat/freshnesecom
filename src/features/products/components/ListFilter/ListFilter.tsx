@@ -2,10 +2,10 @@ import React, { FC, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store/store";
 import {
+  changeCategory,
   clearAllFilters,
   IProductsState,
   toggleBrands,
-  toggleCategory,
   toggleStars,
 } from "@products/productsSlice";
 import {
@@ -43,7 +43,7 @@ const ListFilter: FC = () => {
   };
 
   const handleChooseCategory = (category: string) => () => {
-    dispatch(toggleCategory(category));
+    dispatch(changeCategory(category));
   };
 
   const handleChooseBrand = (brand: string) => () => {
@@ -91,6 +91,16 @@ const ListFilter: FC = () => {
                   <span>{categoriesObj[category].count}</span>
                 </li>
               ))}
+              <li
+                className={`filter-categories__item ${
+                  filter.category === ""
+                    ? "filter-categories__item--active"
+                    : ""
+                }`}
+                onClick={handleChooseCategory("")}>
+                <p>All categories</p>
+                <span>{products.length}</span>
+              </li>
             </ul>
           </div>
           <div className="filter__block">

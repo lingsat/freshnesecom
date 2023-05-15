@@ -1,5 +1,8 @@
-import React, { ChangeEvent, FC, useState } from "react";
+import React, { ChangeEvent, FC, useEffect, useState } from "react";
 import ReactSlider from "react-slider";
+import { useDispatch } from "react-redux";
+import { changePrice } from "@products/productsSlice";
+import { AppDispatch } from "@/store/store";
 import { getValidPrice } from "@/utils/products.utils";
 import { EPrice } from "@products/types/price.enum";
 import "./FilterPrice.scss";
@@ -13,6 +16,8 @@ const FilterPrice: FC<FilterPriceProps> = ({ priceMinMax }) => {
     priceMinMax.min,
     priceMinMax.max,
   ]);
+
+  const dispatch = useDispatch<AppDispatch>();
 
   const handleChangeMin = (event: ChangeEvent<HTMLInputElement>) => {
     const newMinPrice = getValidPrice(event.target.value, priceValues[1]);
@@ -35,6 +40,14 @@ const FilterPrice: FC<FilterPriceProps> = ({ priceMinMax }) => {
       setPriceValues((prevValues) => [prevValues[0], priceMinMax.max]);
     }
   };
+
+  const handleSearchByPrice = () => {
+    dispatch(changePrice(priceValues));
+  };
+
+  useEffect(() => {
+    handleSearchByPrice();
+  }, [priceValues]);
 
   return (
     <>

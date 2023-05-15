@@ -8,6 +8,7 @@ export interface IFilter {
   category: string;
   brands: string[];
   stars: number[];
+  price: number[];
 }
 
 export interface IProductsState {
@@ -24,6 +25,7 @@ const initialState: IProductsState = {
     category: "",
     brands: [],
     stars: [],
+    price: [],
   },
 };
 
@@ -47,16 +49,9 @@ export const productsSlice = createSlice({
       state.filter.category = action.payload;
       state.filter.brands = [];
     },
-    toggleCategory(state, action: PayloadAction<string>) {
-      if (state.filter.category === action.payload) {
-        state.filter.category = "";
-      } else {
-        state.filter.category = action.payload;
-      }
-      state.filter.brands = [];
-    },
     changeSingleBrand(state, action: PayloadAction<string>) {
       state.filter.category = "";
+      state.filter.stars = [];
       state.filter.brands = [action.payload];
     },
     toggleBrands(state, action: PayloadAction<string>) {
@@ -79,12 +74,16 @@ export const productsSlice = createSlice({
         state.filter.stars.push(action.payload);
       }
     },
+    changePrice(state, action: PayloadAction<number[]>) {
+      state.filter.price = action.payload;
+    },
     clearAllFilters(state) {
       state.filter = {
         searchValue: "",
         category: "",
         brands: [],
         stars: [],
+        price: [],
       };
     },
   },
@@ -103,10 +102,10 @@ export const {
   changeSearch,
   clearSearch,
   changeCategory,
-  toggleCategory,
   changeSingleBrand,
   toggleBrands,
   toggleStars,
+  changePrice,
   clearAllFilters,
 } = productsSlice.actions;
 
