@@ -8,11 +8,7 @@ import {
   toggleBrands,
   toggleStars,
 } from "@products/productsSlice";
-import {
-  getBrands,
-  getCategoriesObj,
-  getMinMaxPrice,
-} from "@/utils/products.utils";
+import { getBrands, getCategoriesObj } from "@/utils/products.utils";
 import FilterPrice from "@products/components/FilterPrice/FilterPrice";
 import FilterStars from "@products/components/FilterStars/FilterStars";
 import { EStars } from "@products/types/start.enum";
@@ -30,7 +26,6 @@ const ListFilter: FC = () => {
   const categoriesObj = getCategoriesObj(products);
   const categories = Object.keys(categoriesObj);
   const brands = getBrands(categoriesObj, filter.category);
-  const priceMinMax = getMinMaxPrice(products);
 
   const [showFilter, setShowFIlter] = useState<boolean>(false);
 
@@ -141,7 +136,7 @@ const ListFilter: FC = () => {
           </div>
           <div className="filter__block">
             <h3 className="filter__title">Price</h3>
-            <FilterPrice priceMinMax={priceMinMax} />
+            <FilterPrice />
           </div>
           <button className="filter__reset" onClick={handleFilterReset}>
             Reset

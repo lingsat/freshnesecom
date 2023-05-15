@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { RootState } from "@/store/store";
 import { IProduct } from "@products/types/product.interface";
+import { getMinMaxPrice } from "@/utils/products.utils";
 
 export interface IFilter {
   searchValue: string;
@@ -14,12 +15,20 @@ export interface IFilter {
 export interface IProductsState {
   products: IProduct[];
   loading: boolean;
+  minMaxPrice: {
+    min: number;
+    max: number;
+  };
   filter: IFilter;
 }
 
 const initialState: IProductsState = {
   products: [],
   loading: false,
+  minMaxPrice: {
+    min: 0,
+    max: 0,
+  },
   filter: {
     searchValue: "",
     category: "",
@@ -52,6 +61,7 @@ export const productsSlice = createSlice({
     changeSingleBrand(state, action: PayloadAction<string>) {
       state.filter.category = "";
       state.filter.stars = [];
+      state.filter.price = [state.minMaxPrice.min, state.minMaxPrice.max];
       state.filter.brands = [action.payload];
     },
     toggleBrands(state, action: PayloadAction<string>) {
@@ -83,7 +93,7 @@ export const productsSlice = createSlice({
         category: "",
         brands: [],
         stars: [],
-        price: [],
+        price: [state.minMaxPrice.min, state.minMaxPrice.max],
       };
     },
   },
@@ -94,6 +104,8 @@ export const productsSlice = createSlice({
     builder.addCase(fetchProducts.fulfilled, (state, action) => {
       state.loading = false;
       state.products = action.payload;
+      state.minMaxPrice = getMinMaxPrice(action.payload);
+      state.filter.price = [state.minMaxPrice.min, state.minMaxPrice.max];
     });
   },
 });
