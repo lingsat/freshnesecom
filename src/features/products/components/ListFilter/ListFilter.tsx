@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { IProductsState } from "@products/productsSlice";
@@ -26,78 +26,87 @@ const ListFilter: FC = () => {
 
   const [showFilter, setShowFIlter] = useState<boolean>(false);
 
-  const handleFilterHide = () => {
-    setShowFIlter(false);
+  const toggleFilter = () => {
+    setShowFIlter((prev) => !prev);
   };
 
-  const handleFilterShow = () => {
-    setShowFIlter(true);
+  const handleFilterPropagation = (event: React.MouseEvent<HTMLDivElement>) => {
+    event.stopPropagation();
   };
+
+  useEffect(() => {
+    if (showFilter) {
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = "unset";
+      };
+    }
+  }, [showFilter]);
 
   return (
     <>
-      <aside
-        className={`filter ${showFilter ? "filter--show" : ""}`}
-        onMouseEnter={handleFilterShow}
-        onMouseLeave={handleFilterHide}>
-        <div className="filter__block">
-          <h3 className="filter__title">Categories</h3>
-          <ul className="filter-categories">
-            {categories.map((category, index) => (
-              <li
-                key={`filterCat-${category}-${index}`}
-                className="filter-categories__item">
-                <button className="filter-categories__btn">
-                  <p>{category.title}</p>
-                  <span>{category.count}</span>
-                </button>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div className="filter__block">
-          <h3 className="filter__title">Brands</h3>
-          <ul className="filter-brands">
-            {brands.map((brand, index) => (
-              <li key={`filterbrand-${brand}-${index}`}>
-                <label className="filter__label">
-                  <input className="filter__input" type="checkbox" />
-                  <p>{brand}</p>
-                </label>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div className="filter__block">
-          <h3 className="filter__title">Rating</h3>
-          <ul className="filter-rating">
-            {starsArr.map((starCount, index) => (
-              <li key={`filterstars-${starCount}-${index}`}>
-                <label className="filter__label">
-                  <input className="filter__input" type="checkbox" />
-                  <FilterStars checkedStars={starCount} />
-                </label>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div className="filter__block">
-          <h3 className="filter__title">Price</h3>
-          <FilterPrice priceMinMax={priceMinMax} />
-        </div>
-        <button className="filter__reset">Reset</button>
-      </aside>
       <div
-        className="filter__switcher"
-        onMouseEnter={handleFilterShow}
-        onMouseLeave={handleFilterHide}>
+        className={`filter__wrapper ${
+          showFilter ? "filter__wrapper--show" : ""
+        }`}
+        onClick={toggleFilter}>
+        <aside className="filter" onClick={handleFilterPropagation}>
+          <div className="filter__block">
+            <h3 className="filter__title">Categories</h3>
+            <ul className="filter-categories">
+              {categories.map((category, index) => (
+                <li
+                  key={`filterCat-${category}-${index}`}
+                  className="filter-categories__item">
+                  <button className="filter-categories__btn">
+                    <p>{category.title}</p>
+                    <span>{category.count}</span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="filter__block">
+            <h3 className="filter__title">Brands</h3>
+            <ul className="filter-brands">
+              {brands.map((brand, index) => (
+                <li key={`filterbrand-${brand}-${index}`}>
+                  <label className="filter__label">
+                    <input className="filter__input" type="checkbox" />
+                    <p>{brand}</p>
+                  </label>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="filter__block">
+            <h3 className="filter__title">Rating</h3>
+            <ul className="filter-rating">
+              {starsArr.map((starCount, index) => (
+                <li key={`filterstars-${starCount}-${index}`}>
+                  <label className="filter__label">
+                    <input className="filter__input" type="checkbox" />
+                    <FilterStars checkedStars={starCount} />
+                  </label>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="filter__block">
+            <h3 className="filter__title">Price</h3>
+            <FilterPrice priceMinMax={priceMinMax} />
+          </div>
+          <button className="filter__reset">Reset</button>
+        </aside>
+      </div>
+      <button className="filter__switcher" type="button" onClick={toggleFilter}>
         Show Filter
         <img
           className={`${showFilter && "reverse__icon"}`}
           src={arrowDownThin}
           alt="DownArrow"
         />
-      </div>
+      </button>
     </>
   );
 };

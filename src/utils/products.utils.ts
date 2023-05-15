@@ -81,6 +81,9 @@ export const getBrands = (productsArr: IProduct[]): string[] => {
 export const getMinMaxPrice = (
   productsArr: IProduct[]
 ): { min: number; max: number } => {
+  if (!productsArr.length) {
+    return { min: 0, max: 0 };
+  }
   return productsArr.reduce(
     (acc, product) => {
       const { price } = product;
@@ -89,7 +92,7 @@ export const getMinMaxPrice = (
         max: Math.max(acc.max, Math.ceil(price)),
       };
     },
-    { min: Infinity, max: -Infinity }
+    { min: productsArr[0].price, max: productsArr[0].price }
   );
 };
 

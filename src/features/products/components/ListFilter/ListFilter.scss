@@ -26,6 +26,8 @@
     color: $text-black-color;
     align-items: center;
     gap: 0.5rem;
+    background: inherit;
+    border: none;
     border-radius: 12px;
     cursor: pointer;
     transition: all 0.1s linear;
@@ -171,16 +173,30 @@
 
 @media (max-width: 991.98px) {
   .filter {
-    display: none;
     padding: 0.75rem;
-    position: absolute;
-    z-index: 2;
     border: 1px solid $filter-border-color;
-    border-radius: 12px;
     box-shadow: $shadow-filter-color 0px 2px 8px 0px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 4;
+    overflow-y: auto;
+    overflow-x: hidden;
 
-    &--show {
-      display: flex;
+    &__wrapper {
+      display: none;
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: 3;
+      backdrop-filter: blur(5px);
+
+      &--show {
+        display: flex;
+      }
     }
 
     &__switcher {
