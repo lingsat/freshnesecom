@@ -10,18 +10,19 @@ import LoadinSpinner from "@/common/components/LoadingSpinner/LoadingSpinner";
 import "./ProductsListPage.scss";
 
 const ProductsListPage: FC = () => {
-  const { products, searchValue, category, loading } = useSelector<
-    RootState,
-    IProductsState
-  >((state) => state.products);
+  const { products, loading, filter } = useSelector<RootState, IProductsState>(
+    (state) => state.products
+  );
 
-  const filteredProducts = getFilteredProducts(products, category, searchValue);
+  const filteredProducts = getFilteredProducts(products, filter);
 
   return (
     <div className="products-list">
       <ListNavigation />
       <div className="products-list__header">
-        <h2 className="products-list__title">{category || "All Products"}</h2>
+        <h2 className="products-list__title">
+          {filter.category || "All Products"}
+        </h2>
         <div className="products-list__stat">
           <p>{filteredProducts.length}</p>
           <span>Products</span>

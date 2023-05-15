@@ -76,6 +76,10 @@
       line-height: 1.185rem;
       color: $link-main-color;
     }
+
+    &--active {
+      font-weight: 700;
+    }
   }
 }
 

@@ -3,18 +3,26 @@ import axios from "axios";
 import { RootState } from "@/store/store";
 import { IProduct } from "@products/types/product.interface";
 
+export interface IFilter {
+  searchValue: string;
+  category: string;
+  brands: string[];
+}
+
 export interface IProductsState {
   products: IProduct[];
   loading: boolean;
-  searchValue: string;
-  category: string;
+  filter: IFilter;
 }
 
 const initialState: IProductsState = {
   products: [],
   loading: false,
-  searchValue: "",
-  category: "",
+  filter: {
+    searchValue: "",
+    category: "",
+    brands: [],
+  },
 };
 
 export const fetchProducts = createAsyncThunk("products/fetchProducts", () => {
@@ -28,13 +36,39 @@ export const productsSlice = createSlice({
   initialState,
   reducers: {
     changeSearch(state, action: PayloadAction<string>) {
-      state.searchValue = action.payload;
+      state.filter.searchValue = action.payload;
     },
     clearSearch(state) {
-      state.searchValue = "";
+      state.filter.searchValue = "";
     },
     changeCategory(state, action: PayloadAction<string>) {
-      state.category = action.payload;
+      state.filter.category = action.payload;
+      state.filter.brands = [];
+    },
+    toggleCategory(state, action: PayloadAction<string>) {
+      if (state.filter.category) {
+        state.filter.category = "";
+      } else {
+        state.filter.category = action.payload;
+      }
+      state.filter.brands = [];
+    },
+    toggleBrands(state, action: PayloadAction<string>) {
+      if (state.filter.brands.includes(action.payload)) {
+        const filteredBrands = state.filter.brands.filter(
+          (brand) => brand !== action.payload
+        );
+        state.filter.brands = filteredBrands;
+      } else {
+        state.filter.brands.push(action.payload);
+      }
+    },
+    clearAllFilters(state) {
+      state.filter = {
+        searchValue: "",
+        category: "",
+        brands: [],
+      };
     },
   },
   extraReducers: (builder) => {
@@ -48,8 +82,14 @@ export const productsSlice = createSlice({
   },
 });
 
-export const { changeSearch, clearSearch, changeCategory } =
-  productsSlice.actions;
+export const {
+  changeSearch,
+  clearSearch,
+  changeCategory,
+  toggleCategory,
+  toggleBrands,
+  clearAllFilters,
+} = productsSlice.actions;
 
 export const selectProducts = (state: RootState) => state.products.products;
 

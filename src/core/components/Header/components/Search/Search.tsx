@@ -12,12 +12,14 @@ import closeIcon from "@/assets/images/close.svg";
 import "./Search.scss";
 
 const Search: FC = () => {
-  const { searchValue } = useSelector<RootState, IProductsState>(
+  const { filter } = useSelector<RootState, IProductsState>(
     (state) => state.products
   );
   const dispatch = useDispatch<AppDispatch>();
 
-  const [localSearchValue, setLocalSearchValue] = useState<string>(searchValue);
+  const [localSearchValue, setLocalSearchValue] = useState<string>(
+    filter.searchValue
+  );
 
   const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
     setLocalSearchValue(event.target.value);
@@ -37,8 +39,8 @@ const Search: FC = () => {
   }, [localSearchValue]);
 
   useEffect(() => {
-    setLocalSearchValue(searchValue);
-  }, [searchValue]);
+    setLocalSearchValue(filter.searchValue);
+  }, [filter.searchValue]);
 
   return (
     <div className="search">
