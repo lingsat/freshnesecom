@@ -1,8 +1,8 @@
 import {
   ICategoryWithBrands,
   ICategoryWithCount,
-} from "@/features/products/types/caregory.interface";
-import { IProduct } from "@/features/products/types/product.interface";
+} from "@products/types/caregory.interface";
+import { IProduct } from "@products/types/product.interface";
 
 export const getFilteredProducts = (
   productsArr: IProduct[],

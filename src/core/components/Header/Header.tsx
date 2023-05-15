@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { getCategoriesWithBrands } from "@/utils/products.utils";
-import { IProductsState } from "@/features/products/productsSlice";
+import { IProductsState } from "@products/productsSlice";
 import LinkItem from "@/common/components/LInkItem/LinkItem";
 import Search from "./components/Search/Search";
 import Category from "./components/Category/Category";

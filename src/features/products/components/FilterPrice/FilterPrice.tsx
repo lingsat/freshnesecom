@@ -1,7 +1,7 @@
 import React, { ChangeEvent, FC, useState } from "react";
 import ReactSlider from "react-slider";
 import { getValidPrice } from "@/utils/products.utils";
-import { EPrice } from "../../types/price.enum";
+import { EPrice } from "@products/types/price.enum";
 import "./FilterPrice.scss";
 
 interface FilterPriceProps {

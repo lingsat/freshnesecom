@@ -1,11 +1,14 @@
 import React, { ChangeEvent, FC, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState, AppDispatch } from "@/store/store";
-import { changeSearch, clearSearch } from "@/features/products/productsSlice";
+import {
+  changeSearch,
+  clearSearch,
+  IProductsState,
+} from "@products/productsSlice";
 import Selector from "@/core/components/Header/components/Selector/Selector";
 import searchIcon from "@/assets/images/search.svg";
 import closeIcon from "@/assets/images/close.svg";
-import { IProductsState } from "@/features/products/productsSlice";
 import "./Search.scss";
 
 const Search: FC = () => {

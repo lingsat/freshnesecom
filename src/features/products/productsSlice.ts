@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { RootState } from "@/store/store";
-import { IProduct } from "@features/products/types/product.interface";
+import { IProduct } from "@products/types/product.interface";
 
 export interface IProductsState {
   products: IProduct[];

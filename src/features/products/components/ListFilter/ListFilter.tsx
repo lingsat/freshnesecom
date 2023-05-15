@@ -1,15 +1,15 @@
 import React, { FC, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
-import { IProductsState } from "../../productsSlice";
+import { IProductsState } from "@products/productsSlice";
 import {
   getCategoriesWithCount,
   getBrands,
   getMaxPrice,
 } from "@/utils/products.utils";
-import FilterPrice from "../FilterPrice/FilterPrice";
-import FilterStars from "../FilterStars/FilterStars";
-import { EStars } from "../../types/start.enum";
+import FilterPrice from "@products/components/FilterPrice/FilterPrice";
+import FilterStars from "@products/components/FilterStars/FilterStars";
+import { EStars } from "@products/types/start.enum";
 import arrowDownThin from "@/assets/images/arrow_down_thin.svg";
 import "./ListFilter.scss";
 

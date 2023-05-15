@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
-import { IProductsState } from "../../productsSlice";
+import { IProductsState } from "@products/productsSlice";
 import { getFilteredProducts } from "@/utils/products.utils";
 import ListNavigation from "@products/components/ListNavigation/ListNavigation";
 import ListFilter from "@products/components/ListFilter/ListFilter";

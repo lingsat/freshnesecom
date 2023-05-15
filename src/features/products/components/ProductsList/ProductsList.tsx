@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { IProductsState } from "@products/productsSlice";
 import ProductCard from "@products/components/ProductCard/ProductCard";
-import { IProduct } from "../../types/product.interface";
+import { IProduct } from "@products/types/product.interface";
 import "./ProductsList.scss";
 
 interface ProductsListProps {
