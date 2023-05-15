@@ -1,7 +1,4 @@
-import {
-  ICategoryWithBrands,
-  ICategoryWithCount,
-} from "@products/types/caregory.interface";
+import { ICategory } from "@products/types/caregory.interface";
 import { IProduct } from "@products/types/product.interface";
 
 export const getFilteredProducts = (
@@ -23,59 +20,31 @@ export const getStarsArrFromNumber = (num: number): boolean[] => {
   return arr.map((_, index) => index < num);
 };
 
-export const getCategories = (productsArr: IProduct[]): string[] => {
-  return productsArr.reduce((acc: string[], product) => {
-    if (!acc.includes(product.category)) {
-      acc.push(product.category);
-    }
-    return acc;
-  }, []);
-};
+export const getCategoriesObj = (productsArr: IProduct[]): ICategory => {
+  return productsArr.reduce((acc: ICategory, product) => {
+    const { category, brand } = product;
 
-export const getCategoriesWithCount = (
-  productsArr: IProduct[]
-): ICategoryWithCount[] => {
-  const categories: ICategoryWithCount[] = productsArr.reduce(
-    (acc: ICategoryWithCount[], product) => {
-      const existingCategory = acc.find(
-        (category) => category.title === product.category
-      );
-      if (existingCategory) {
-        existingCategory.count++;
-      } else {
-        acc.push({ title: product.category, count: 1 });
-      }
-      return acc;
-    },
-    []
-  );
-  return categories;
-};
-
-export const getCategoriesWithBrands = (
-  productsArr: IProduct[]
-): ICategoryWithBrands => {
-  const categories = productsArr.reduce((acc: ICategoryWithBrands, product) => {
-    const existingCategory = product.category in acc;
-    if (existingCategory) {
-      if (!acc[product.category].includes(product.brand)) {
-        acc[product.category].push(product.brand);
-      }
-    } else {
-      acc[product.category] = [product.brand];
+    if (!acc[category]) {
+      acc[category] = {
+        count: 0,
+        brands: [],
+      };
     }
+
+    if (!acc[category].brands.includes(brand)) {
+      acc[category].brands.push(brand);
+    }
+
+    acc[category].count++;
+
     return acc;
   }, {});
-  return categories;
 };
 
-export const getBrands = (productsArr: IProduct[]): string[] => {
-  return productsArr.reduce((acc: string[], product) => {
-    if (!acc.includes(product.brand)) {
-      acc.push(product.brand);
-    }
-    return acc;
-  }, []);
+export const getBrands = (categoriesObj: ICategory): string[] => {
+  const categories = Object.values(categoriesObj);
+  const brands = categories.map((categoryObj) => categoryObj.brands).flat();
+  return Array.from(new Set(brands));
 };
 
 export const getMinMaxPrice = (

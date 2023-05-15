@@ -2,7 +2,7 @@ import React, { FC, useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
-import { getCategoriesWithBrands } from "@/utils/products.utils";
+import { getCategoriesObj } from "@/utils/products.utils";
 import { IProductsState } from "@products/productsSlice";
 import LinkItem from "@/common/components/LInkItem/LinkItem";
 import Search from "./components/Search/Search";
@@ -19,8 +19,8 @@ const Header: FC = () => {
   );
   const [showCategories, setShowCategories] = useState<boolean>(true);
 
-  const categoriesWithBrands = getCategoriesWithBrands(products);
-  const categories = Object.keys(categoriesWithBrands);
+  const categoriesObj = getCategoriesObj(products);
+  const categories = Object.keys(categoriesObj);
 
   const toggleShowCategories = () => {
     setShowCategories((prev) => !prev);
@@ -91,7 +91,7 @@ const Header: FC = () => {
             <Category
               key={`cat-${category}-${index}`}
               title={category}
-              brands={categoriesWithBrands[category]}
+              brands={categoriesObj[category].brands}
             />
           ))}
         </ul>

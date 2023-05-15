@@ -3,8 +3,8 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { IProductsState } from "@products/productsSlice";
 import {
-  getCategoriesWithCount,
   getBrands,
+  getCategoriesObj,
   getMinMaxPrice,
 } from "@/utils/products.utils";
 import FilterPrice from "@products/components/FilterPrice/FilterPrice";
@@ -20,8 +20,9 @@ const ListFilter: FC = () => {
     (state) => state.products
   );
 
-  const categories = getCategoriesWithCount(products);
-  const brands = getBrands(products);
+  const categoriesObj = getCategoriesObj(products);
+  const categories = Object.keys(categoriesObj);
+  const brands = getBrands(categoriesObj);
   const priceMinMax = getMinMaxPrice(products);
 
   const [showFilter, setShowFIlter] = useState<boolean>(false);
@@ -58,10 +59,8 @@ const ListFilter: FC = () => {
                 <li
                   key={`filterCat-${category}-${index}`}
                   className="filter-categories__item">
-                  <button className="filter-categories__btn">
-                    <p>{category.title}</p>
-                    <span>{category.count}</span>
-                  </button>
+                  <p>{category}</p>
+                  <span>{categoriesObj[category].count}</span>
                 </li>
               ))}
             </ul>

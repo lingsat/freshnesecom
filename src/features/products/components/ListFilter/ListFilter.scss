@@ -48,16 +48,10 @@
   flex-direction: column;
   gap: 0.75rem;
 
-  &__btn {
-    padding: 0;
-    width: 100%;
+  &__item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border: none;
-    background: inherit;
-    font-family: $main-text-font;
-    font-weight: 400;
     font-size: 0.875rem;
     line-height: 1.185rem;
     color: $text-black-color;
