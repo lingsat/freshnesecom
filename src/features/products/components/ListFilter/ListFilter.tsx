@@ -6,6 +6,7 @@ import {
   IProductsState,
   toggleBrands,
   toggleCategory,
+  toggleStars,
 } from "@products/productsSlice";
 import {
   getBrands,
@@ -47,6 +48,10 @@ const ListFilter: FC = () => {
 
   const handleChooseBrand = (brand: string) => () => {
     dispatch(toggleBrands(brand));
+  };
+
+  const handleChooseStar = (star: string) => () => {
+    dispatch(toggleStars(+star));
   };
 
   const handleFilterReset = () => {
@@ -112,7 +117,12 @@ const ListFilter: FC = () => {
               {starsArr.map((starCount, index) => (
                 <li key={`filterstars-${starCount}-${index}`}>
                   <label className="filter__label">
-                    <input className="filter__input" type="checkbox" />
+                    <input
+                      className="filter__input"
+                      type="checkbox"
+                      checked={filter.stars.includes(+starCount)}
+                      onChange={handleChooseStar(starCount)}
+                    />
                     <FilterStars checkedStars={starCount} />
                   </label>
                 </li>

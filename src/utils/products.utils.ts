@@ -6,14 +6,15 @@ export const getFilteredProducts = (
   productsArr: IProduct[],
   filter: IFilter
 ): IProduct[] => {
-  const { searchValue, category, brands } = filter;
+  const { searchValue, category, brands, stars } = filter;
   const formatedSearchValue = searchValue.toLowerCase().trim();
 
   return productsArr.filter((product) => {
     const isInCategory = !category || product.category === category;
     const isInBrands = !brands.length || brands.includes(product.brand);
+    const isInStars = !stars.length || stars.includes(product.stars);
     const isInTitle = product.title.toLowerCase().includes(formatedSearchValue);
-    return isInCategory && isInBrands && isInTitle;
+    return isInCategory && isInBrands && isInStars && isInTitle;
   });
 };
 

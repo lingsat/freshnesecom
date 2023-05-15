@@ -7,6 +7,7 @@ export interface IFilter {
   searchValue: string;
   category: string;
   brands: string[];
+  stars: number[];
 }
 
 export interface IProductsState {
@@ -22,6 +23,7 @@ const initialState: IProductsState = {
     searchValue: "",
     category: "",
     brands: [],
+    stars: [],
   },
 };
 
@@ -46,12 +48,16 @@ export const productsSlice = createSlice({
       state.filter.brands = [];
     },
     toggleCategory(state, action: PayloadAction<string>) {
-      if (state.filter.category) {
+      if (state.filter.category === action.payload) {
         state.filter.category = "";
       } else {
         state.filter.category = action.payload;
       }
       state.filter.brands = [];
+    },
+    changeSingleBrand(state, action: PayloadAction<string>) {
+      state.filter.category = "";
+      state.filter.brands = [action.payload];
     },
     toggleBrands(state, action: PayloadAction<string>) {
       if (state.filter.brands.includes(action.payload)) {
@@ -63,11 +69,22 @@ export const productsSlice = createSlice({
         state.filter.brands.push(action.payload);
       }
     },
+    toggleStars(state, action: PayloadAction<number>) {
+      if (state.filter.stars.includes(action.payload)) {
+        const filteredStars = state.filter.stars.filter(
+          (star) => star !== action.payload
+        );
+        state.filter.stars = filteredStars;
+      } else {
+        state.filter.stars.push(action.payload);
+      }
+    },
     clearAllFilters(state) {
       state.filter = {
         searchValue: "",
         category: "",
         brands: [],
+        stars: [],
       };
     },
   },
@@ -87,7 +104,9 @@ export const {
   clearSearch,
   changeCategory,
   toggleCategory,
+  changeSingleBrand,
   toggleBrands,
+  toggleStars,
   clearAllFilters,
 } = productsSlice.actions;
 
