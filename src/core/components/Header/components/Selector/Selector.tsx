@@ -1,10 +1,8 @@
 import React, { FC, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store/store";
-import {
-  changeCategory,
-  IProductsState,
-} from "@/features/products/productsSlice";
+import { changeCategory, IProductsState } from "@products/productsSlice";
+import { getCategoriesObj } from "@/utils/products.utils";
 import arrowDown from "@/assets/images/arrow_down.svg";
 import "./Selector.scss";
 
@@ -16,12 +14,7 @@ const Selector: FC = () => {
   );
   const dispatch = useDispatch<AppDispatch>();
 
-  const categories = products.reduce((acc: string[], product) => {
-    if (!acc.includes(product.category)) {
-      acc.push(product.category);
-    }
-    return acc;
-  }, []);
+  const categories = Object.keys(getCategoriesObj(products));
 
   const handleHideMenu = () => {
     setShowMenu(false);

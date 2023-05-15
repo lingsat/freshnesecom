@@ -1,5 +1,9 @@
 import React, { FC, useState } from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
+import { getCategoriesObj } from "@/utils/products.utils";
+import { IProductsState } from "@products/productsSlice";
 import LinkItem from "@/common/components/LInkItem/LinkItem";
 import Search from "./components/Search/Search";
 import Category from "./components/Category/Category";
@@ -7,11 +11,16 @@ import logo from "@/assets/images/logo.svg";
 import arrowDown from "@/assets/images/arrow_down.svg";
 import userIcon from "@/assets/images/user.svg";
 import cartIcon from "@/assets/images/basket.svg";
-import { categories } from "@/mock/categories";
 import "./Header.scss";
 
 const Header: FC = () => {
+  const { products } = useSelector<RootState, IProductsState>(
+    (state) => state.products
+  );
   const [showCategories, setShowCategories] = useState<boolean>(true);
+
+  const categoriesObj = getCategoriesObj(products);
+  const categories = Object.keys(categoriesObj);
 
   const toggleShowCategories = () => {
     setShowCategories((prev) => !prev);
@@ -49,7 +58,7 @@ const Header: FC = () => {
       </div>
       <div className="header__main">
         <Link to="/">
-          <img src={logo} alt="Freshnesecom" />
+          <img className="header__logo" src={logo} alt="Freshnesecom" />
         </Link>
         <Search />
         <div className="controls">
@@ -76,10 +85,14 @@ const Header: FC = () => {
       <nav>
         <ul
           className={`header__categories ${
-            showCategories && "header__categories--hide"
+            showCategories ? "header__categories--hide" : ""
           }`}>
           {categories.map((category, index) => (
-            <Category key={`cat-${category}-${index}`} title={category} />
+            <Category
+              key={`cat-${category}-${index}`}
+              title={category}
+              brands={categoriesObj[category].brands}
+            />
           ))}
         </ul>
       </nav>

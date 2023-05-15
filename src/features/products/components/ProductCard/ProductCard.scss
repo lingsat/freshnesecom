@@ -63,6 +63,11 @@
   list-style: none;
   display: flex;
   gap: 4px;
+
+  img {
+    width: 18px;
+    height: 16px;
+  }
 }
 
 .subinfo {
@@ -160,6 +165,11 @@
   &:hover {
     background-color: $bg-card-btn-hover-color;
   }
+
+  img {
+    width: 17px;
+    height: 17px;
+  }
 }
 
 .info__wish-btn {
@@ -182,6 +192,11 @@
   &:hover {
     transition: all 0.1s linear;
     background-color: $bg-button-hover-color;
+  }
+
+  img {
+    width: 17px;
+    height: 16px;
   }
 }
 
