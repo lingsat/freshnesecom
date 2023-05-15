@@ -51,3 +51,8 @@ body {
   background-color: $bg-scroll-color;
   border-radius: 10px;
 }
+
+::-webkit-scrollbar-track {
+  background-color: $bg-scroll-track-color;
+  border-radius: 10px;
+}
