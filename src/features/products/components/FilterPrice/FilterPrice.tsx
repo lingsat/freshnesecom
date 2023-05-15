@@ -46,7 +46,8 @@ const FilterPrice: FC<FilterPriceProps> = ({ priceMinMax }) => {
   };
 
   useEffect(() => {
-    handleSearchByPrice();
+    const debounceTimer = setTimeout(handleSearchByPrice, 500);
+    return () => clearTimeout(debounceTimer);
   }, [priceValues]);
 
   return (
