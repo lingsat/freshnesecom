@@ -9,10 +9,14 @@ const getSortedProducts = (productsArr: IProduct[], sortRule: ESort) => {
       return productsArr.sort((a, b) => a.price - b.price);
     case ESort.PRICE_HIGH:
       return productsArr.sort((a, b) => b.price - a.price);
+    case ESort.RATING_LOW:
+      return productsArr.sort((a, b) => a.stars - b.stars);
+    case ESort.RATING_HIGH:
+      return productsArr.sort((a, b) => b.stars - a.stars);
     case ESort.TITLE_ASC:
-      return productsArr.sort((a, b) => (a.title > b.title ? 1 : -1));
+      return productsArr.sort((a, b) => a.title.localeCompare(b.title));
     case ESort.TITLE_DESC:
-      return productsArr.sort((a, b) => (b.title > a.title ? 1 : -1));
+      return productsArr.sort((a, b) => b.title.localeCompare(a.title));
     default:
       return productsArr;
   }
