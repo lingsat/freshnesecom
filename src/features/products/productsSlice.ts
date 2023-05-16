@@ -3,6 +3,7 @@ import axios from "axios";
 import { RootState } from "@/store/store";
 import { IProduct } from "@products/types/product.interface";
 import { getMinMaxPrice } from "@/utils/products.utils";
+import { getToggledArray } from "@/utils/toggleArrItem";
 
 export interface IFilter {
   searchValue: string;
@@ -69,24 +70,13 @@ export const productsSlice = createSlice({
       state.filter.brands = [brand];
     },
     toggleBrands(state, action: PayloadAction<string>) {
-      if (state.filter.brands.includes(action.payload)) {
-        const filteredBrands = state.filter.brands.filter(
-          (brand) => brand !== action.payload
-        );
-        state.filter.brands = filteredBrands;
-      } else {
-        state.filter.brands.push(action.payload);
-      }
+      state.filter.brands = getToggledArray(
+        state.filter.brands,
+        action.payload
+      );
     },
     toggleStars(state, action: PayloadAction<number>) {
-      if (state.filter.stars.includes(action.payload)) {
-        const filteredStars = state.filter.stars.filter(
-          (star) => star !== action.payload
-        );
-        state.filter.stars = filteredStars;
-      } else {
-        state.filter.stars.push(action.payload);
-      }
+      state.filter.stars = getToggledArray(state.filter.stars, action.payload);
     },
     changePrice(state, action: PayloadAction<number[]>) {
       state.filter.price = action.payload;
