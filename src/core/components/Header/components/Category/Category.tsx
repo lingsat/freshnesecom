@@ -6,11 +6,11 @@ import arrowDownThin from "@/assets/images/arrow_down_thin.svg";
 import "./Category.scss";
 
 interface CategoryProps {
-  title: string;
+  category: string;
   brands: string[];
 }
 
-const Category: FC<CategoryProps> = ({ title, brands }) => {
+const Category: FC<CategoryProps> = ({ category, brands }) => {
   const [showMenu, setShowMenu] = useState<boolean>(false);
 
   const dispatch = useDispatch<AppDispatch>();
@@ -24,13 +24,13 @@ const Category: FC<CategoryProps> = ({ title, brands }) => {
   };
 
   const handleChooseBrand = (brand: string) => () => {
-    dispatch(changeSingleBrand(brand));
+    dispatch(changeSingleBrand({ brand, category }));
   };
 
   return (
     <li className="category" onMouseLeave={handleHideMenu}>
       <div className="category__item" onMouseEnter={handleShowMenu}>
-        {title}
+        {category}
         <img
           className={`${showMenu ? "reverse__icon" : ""}`}
           src={arrowDownThin}

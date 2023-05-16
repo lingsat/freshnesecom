@@ -58,11 +58,15 @@ export const productsSlice = createSlice({
       state.filter.category = action.payload;
       state.filter.brands = [];
     },
-    changeSingleBrand(state, action: PayloadAction<string>) {
-      state.filter.category = "";
+    changeSingleBrand(
+      state,
+      action: PayloadAction<{ brand: string; category: string }>
+    ) {
+      const { brand, category } = action.payload;
+      state.filter.category = category;
       state.filter.stars = [];
       state.filter.price = [state.minMaxPrice.min, state.minMaxPrice.max];
-      state.filter.brands = [action.payload];
+      state.filter.brands = [brand];
     },
     toggleBrands(state, action: PayloadAction<string>) {
       if (state.filter.brands.includes(action.payload)) {
