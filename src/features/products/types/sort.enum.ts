@@ -1,7 +1,7 @@
-export enum ISort {
+export enum ESort {
   CLEAR = "",
-  PRICE_LOW = "price-low",
-  PRICE_HIGH = "price-high",
-  TITLE_ASC = "title-asc",
-  TITLE_DESC = "title-desc",
+  PRICE_LOW = "Price: Up",
+  PRICE_HIGH = "Price: Down",
+  TITLE_ASC = "Title: A-Z",
+  TITLE_DESC = "Title: Z-A",
 }

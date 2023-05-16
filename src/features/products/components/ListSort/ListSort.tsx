@@ -1,10 +1,14 @@
 import React, { FC, useState } from "react";
 import arrowIcon from "@/assets/images/arrow_black.svg";
 import "./ListSort.scss";
+import { ESort } from "../../types/sort.enum";
 
 const ListSort: FC = () => {
-  const [sortRule, setSortRule] = useState<string>("");
+  const [sortRule, setSortRule] = useState<ESort>(ESort.CLEAR);
   const [showMenu, setShowMenu] = useState<boolean>(false);
+
+  const sortRuleArr = Object.values(ESort);
+  console.log(sortRuleArr);
 
   const handleHideMenu = () => {
     setShowMenu(false);
@@ -14,7 +18,7 @@ const ListSort: FC = () => {
     setShowMenu(true);
   };
 
-  const handleSetCategory = (newSort: string) => () => {
+  const handleSetSortRule = (newSort: ESort) => () => {
     setSortRule(newSort);
     handleHideMenu();
   };
@@ -32,15 +36,14 @@ const ListSort: FC = () => {
           />
         </div>
         <ul className={`sort__menu ${showMenu && "sort__menu--show"}`}>
-          <li className="sort__link" onClick={handleSetCategory("")}>
-            Clear
-          </li>
-          <li className="sort__link" onClick={handleSetCategory("Asc")}>
-            Asc
-          </li>
-          <li className="sort__link" onClick={handleSetCategory("Desc")}>
-            Desc
-          </li>
+          {sortRuleArr.map((rule, index) => (
+            <li
+              key={`sortrule-${rule}-${index}`}
+              className="sort__link"
+              onClick={handleSetSortRule(rule)}>
+              {rule || "Clear"}
+            </li>
+          ))}
         </ul>
       </div>
     </div>
