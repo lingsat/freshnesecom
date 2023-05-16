@@ -41,6 +41,18 @@
       border-color: $price-input-error-color;
     }
   }
+
+  &__error {
+    width: 100%;
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    z-index: 2;
+    text-align: center;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    color: $text-error-color;
+  }
 }
 
 .price-slider {

@@ -12,6 +12,8 @@ const FilterPrice: FC = () => {
     (state) => state.products
   );
   const [priceValues, setPriceValues] = useState<number[]>(filter.price);
+  const isPricesValid =
+    priceValues[0] < minMaxPrice.min || priceValues[0] > priceValues[1];
 
   const dispatch = useDispatch<AppDispatch>();
 
@@ -96,6 +98,11 @@ const FilterPrice: FC = () => {
             onBlur={handleBlurMax}
           />
         </label>
+        {isPricesValid && (
+          <p className="filter-price__error">
+            {`The prices should be between ${minMaxPrice.min} and ${minMaxPrice.max} USD. Min can't be lower than Max`}
+          </p>
+        )}
       </form>
     </>
   );
