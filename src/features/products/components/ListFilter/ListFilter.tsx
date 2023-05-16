@@ -73,6 +73,16 @@ const ListFilter: FC = () => {
           <div className="filter__block">
             <h3 className="filter__title">Categories</h3>
             <ul className="filter-categories">
+              <li
+                className={`filter-categories__item ${
+                  filter.category === ""
+                    ? "filter-categories__item--active"
+                    : ""
+                }`}
+                onClick={handleChooseCategory("")}>
+                <p>All categories</p>
+                <span>{products.length}</span>
+              </li>
               {categories.map((category, index) => (
                 <li
                   key={`filterCat-${category}-${index}`}
@@ -86,16 +96,6 @@ const ListFilter: FC = () => {
                   <span>{categoriesObj[category].count}</span>
                 </li>
               ))}
-              <li
-                className={`filter-categories__item ${
-                  filter.category === ""
-                    ? "filter-categories__item--active"
-                    : ""
-                }`}
-                onClick={handleChooseCategory("")}>
-                <p>All categories</p>
-                <span>{products.length}</span>
-              </li>
             </ul>
           </div>
           <div className="filter__block">
