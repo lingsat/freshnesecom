@@ -70,11 +70,16 @@
       padding: 0 8px;
       background: $bg-list-stat-color;
       border-radius: 12px;
+      text-align: center;
       font-family: $title-text-font;
       font-weight: 600;
       font-size: 0.75rem;
       line-height: 1.185rem;
       color: $link-main-color;
+    }
+
+    &--active {
+      font-weight: 700;
     }
   }
 }

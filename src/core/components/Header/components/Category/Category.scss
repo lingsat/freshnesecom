@@ -51,13 +51,10 @@
 
 .category__link {
   @include text-overflow-hide;
-  display: block;
   padding: 5px;
-  text-decoration: none;
-  font-family: $main-text-font;
   font-size: 0.8rem;
   line-height: 1rem;
-  color: $text-black-color;
+  cursor: pointer;
 
   &:hover {
     text-decoration: underline;

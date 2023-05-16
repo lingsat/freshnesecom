@@ -1,12 +1,14 @@
 import React, { FC, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "@/store/store";
-import { IProductsState } from "@products/productsSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@/store/store";
 import {
-  getBrands,
-  getCategoriesObj,
-  getMinMaxPrice,
-} from "@/utils/products.utils";
+  changeCategory,
+  clearAllFilters,
+  IProductsState,
+  toggleBrands,
+  toggleStars,
+} from "@products/productsSlice";
+import { getBrands, getCategoriesObj } from "@/utils/products.utils";
 import FilterPrice from "@products/components/FilterPrice/FilterPrice";
 import FilterStars from "@products/components/FilterStars/FilterStars";
 import { EStars } from "@products/types/start.enum";
@@ -16,14 +18,14 @@ import "./ListFilter.scss";
 const starsArr = Object.values(EStars);
 
 const ListFilter: FC = () => {
-  const { products } = useSelector<RootState, IProductsState>(
+  const { products, filter } = useSelector<RootState, IProductsState>(
     (state) => state.products
   );
+  const dispatch = useDispatch<AppDispatch>();
 
   const categoriesObj = getCategoriesObj(products);
   const categories = Object.keys(categoriesObj);
-  const brands = getBrands(categoriesObj);
-  const priceMinMax = getMinMaxPrice(products);
+  const brands = getBrands(categoriesObj, filter.category);
 
   const [showFilter, setShowFIlter] = useState<boolean>(false);
 
@@ -33,6 +35,22 @@ const ListFilter: FC = () => {
 
   const handleFilterPropagation = (event: React.MouseEvent<HTMLDivElement>) => {
     event.stopPropagation();
+  };
+
+  const handleChooseCategory = (category: string) => () => {
+    dispatch(changeCategory(category));
+  };
+
+  const handleChooseBrand = (brand: string) => () => {
+    dispatch(toggleBrands(brand));
+  };
+
+  const handleChooseStar = (star: string) => () => {
+    dispatch(toggleStars(+star));
+  };
+
+  const handleFilterReset = () => {
+    dispatch(clearAllFilters());
   };
 
   useEffect(() => {
@@ -55,10 +73,25 @@ const ListFilter: FC = () => {
           <div className="filter__block">
             <h3 className="filter__title">Categories</h3>
             <ul className="filter-categories">
+              <li
+                className={`filter-categories__item ${
+                  filter.category === ""
+                    ? "filter-categories__item--active"
+                    : ""
+                }`}
+                onClick={handleChooseCategory("")}>
+                <p>All categories</p>
+                <span>{products.length}</span>
+              </li>
               {categories.map((category, index) => (
                 <li
                   key={`filterCat-${category}-${index}`}
-                  className="filter-categories__item">
+                  className={`filter-categories__item ${
+                    filter.category === category
+                      ? "filter-categories__item--active"
+                      : ""
+                  }`}
+                  onClick={handleChooseCategory(category)}>
                   <p>{category}</p>
                   <span>{categoriesObj[category].count}</span>
                 </li>
@@ -71,7 +104,12 @@ const ListFilter: FC = () => {
               {brands.map((brand, index) => (
                 <li key={`filterbrand-${brand}-${index}`}>
                   <label className="filter__label">
-                    <input className="filter__input" type="checkbox" />
+                    <input
+                      className="filter__input"
+                      type="checkbox"
+                      checked={filter.brands.includes(brand)}
+                      onChange={handleChooseBrand(brand)}
+                    />
                     <p>{brand}</p>
                   </label>
                 </li>
@@ -84,7 +122,12 @@ const ListFilter: FC = () => {
               {starsArr.map((starCount, index) => (
                 <li key={`filterstars-${starCount}-${index}`}>
                   <label className="filter__label">
-                    <input className="filter__input" type="checkbox" />
+                    <input
+                      className="filter__input"
+                      type="checkbox"
+                      checked={filter.stars.includes(+starCount)}
+                      onChange={handleChooseStar(starCount)}
+                    />
                     <FilterStars checkedStars={starCount} />
                   </label>
                 </li>
@@ -93,9 +136,11 @@ const ListFilter: FC = () => {
           </div>
           <div className="filter__block">
             <h3 className="filter__title">Price</h3>
-            <FilterPrice priceMinMax={priceMinMax} />
+            <FilterPrice />
           </div>
-          <button className="filter__reset">Reset</button>
+          <button className="filter__reset" onClick={handleFilterReset}>
+            Reset
+          </button>
         </aside>
       </div>
       <button className="filter__switcher" type="button" onClick={toggleFilter}>

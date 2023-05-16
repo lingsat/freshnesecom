@@ -90,7 +90,7 @@ const Header: FC = () => {
           {categories.map((category, index) => (
             <Category
               key={`cat-${category}-${index}`}
-              title={category}
+              category={category}
               brands={categoriesObj[category].brands}
             />
           ))}

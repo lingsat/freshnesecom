@@ -9,7 +9,7 @@ import "./Selector.scss";
 const Selector: FC = () => {
   const [showMenu, setShowMenu] = useState<boolean>(false);
 
-  const { category, products } = useSelector<RootState, IProductsState>(
+  const { products, filter } = useSelector<RootState, IProductsState>(
     (state) => state.products
   );
   const dispatch = useDispatch<AppDispatch>();
@@ -32,7 +32,7 @@ const Selector: FC = () => {
   return (
     <div className="selector" onMouseLeave={handleHideMenu}>
       <div className="selector__btn" onMouseEnter={handleShowMenu}>
-        {category || "All Categories"}
+        {filter.category || "All Categories"}
         <img
           className={`${showMenu && "reverse__icon"}`}
           src={arrowDown}
