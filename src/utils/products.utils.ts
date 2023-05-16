@@ -1,15 +1,32 @@
+import { ESort } from "@/features/products/types/sort.enum";
 import { IFilter } from "@products/productsSlice";
 import { ICategory } from "@products/types/caregory.interface";
 import { IProduct } from "@products/types/product.interface";
 
+const getSortedProducts = (productsArr: IProduct[], sortRule: ESort) => {
+  switch (sortRule) {
+    case ESort.PRICE_LOW:
+      return productsArr.sort((a, b) => a.price - b.price);
+    case ESort.PRICE_HIGH:
+      return productsArr.sort((a, b) => b.price - a.price);
+    case ESort.TITLE_ASC:
+      return productsArr.sort((a, b) => (a.title > b.title ? 1 : -1));
+    case ESort.TITLE_DESC:
+      return productsArr.sort((a, b) => (b.title > a.title ? 1 : -1));
+    default:
+      return productsArr;
+  }
+};
+
 export const getFilteredProducts = (
   productsArr: IProduct[],
-  filter: IFilter
+  filter: IFilter,
+  sortRule: ESort
 ): IProduct[] => {
   const { searchValue, category, brands, stars, price } = filter;
   const formatedSearchValue = searchValue.toLowerCase().trim();
 
-  return productsArr.filter((product) => {
+  const filteredArr = productsArr.filter((product) => {
     const isInCategory = !category || product.category === category;
     const isInBrands = !brands.length || brands.includes(product.brand);
     const isInStars = !stars.length || stars.includes(product.stars);
@@ -18,6 +35,8 @@ export const getFilteredProducts = (
     const isInTitle = product.title.toLowerCase().includes(formatedSearchValue);
     return isInCategory && isInBrands && isInStars && isInPrice && isInTitle;
   });
+
+  return getSortedProducts(filteredArr, sortRule);
 };
 
 export const getStarsArrFromNumber = (num: number): boolean[] => {

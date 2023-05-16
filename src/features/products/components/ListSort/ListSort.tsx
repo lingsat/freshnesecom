@@ -1,14 +1,20 @@
 import React, { FC, useState } from "react";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/store/store";
+import { changeSortRule } from "@products/productsSlice";
 import arrowIcon from "@/assets/images/arrow_black.svg";
+import { ESort } from "@products/types/sort.enum";
 import "./ListSort.scss";
-import { ESort } from "../../types/sort.enum";
 
-const ListSort: FC = () => {
-  const [sortRule, setSortRule] = useState<ESort>(ESort.CLEAR);
+interface ListSortProps {
+  sortRule: ESort;
+}
+
+const ListSort: FC<ListSortProps> = ({ sortRule }) => {
+  const dispatch = useDispatch<AppDispatch>();
   const [showMenu, setShowMenu] = useState<boolean>(false);
 
   const sortRuleArr = Object.values(ESort);
-  console.log(sortRuleArr);
 
   const handleHideMenu = () => {
     setShowMenu(false);
@@ -18,8 +24,8 @@ const ListSort: FC = () => {
     setShowMenu(true);
   };
 
-  const handleSetSortRule = (newSort: ESort) => () => {
-    setSortRule(newSort);
+  const handleSetSortRule = (newSortRule: ESort) => () => {
+    dispatch(changeSortRule(newSortRule));
     handleHideMenu();
   };
 
