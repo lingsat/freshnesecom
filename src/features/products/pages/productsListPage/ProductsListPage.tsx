@@ -8,6 +8,7 @@ import ListFilter from "@products/components/ListFilter/ListFilter";
 import ProductsList from "@products/components/ProductsList/ProductsList";
 import LoadinSpinner from "@/common/components/LoadingSpinner/LoadingSpinner";
 import "./ProductsListPage.scss";
+import ListSort from "../../components/ListSort/ListSort";
 
 const ProductsListPage: FC = () => {
   const { products, loading, filter } = useSelector<RootState, IProductsState>(
@@ -28,6 +29,7 @@ const ProductsListPage: FC = () => {
           <span>Products</span>
         </div>
       </div>
+      <ListSort />
       {loading ? (
         <LoadinSpinner />
       ) : (
