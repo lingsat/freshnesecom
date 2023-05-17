@@ -1,40 +1,41 @@
 import React, { FC } from "react";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/store/store";
-import { changeCurrentPage } from "@products/productsSlice";
+import {
+  changeCurrentPage,
+  increaseProductsPerPage,
+} from "@products/productsSlice";
 import arrow from "@/assets/images/arrow_right.svg";
 import { EPagination } from "@products/types/pagination.enum";
 import "./ListPagination.scss";
 
 interface ListPaginationProps {
   productsCount: number;
-  currentPage: number;
-  productsPerPage: number;
-  setProductsPerPage: React.Dispatch<React.SetStateAction<number>>;
+  pagination: {
+    currentPage: number;
+    productsPerPage: number;
+  };
 }
 
 const ListPagination: FC<ListPaginationProps> = ({
   productsCount,
-  currentPage,
-  productsPerPage,
-  setProductsPerPage,
+  pagination,
 }) => {
   const dispatch = useDispatch<AppDispatch>();
 
   const pageCount = Math.ceil(productsCount / EPagination.PRODUCTS_PER_PAGE);
   const pagesArr = Array.from({ length: pageCount }, (_, index) => index + 1);
   const activePagesArr = Array.from(
-    { length: productsPerPage / EPagination.PRODUCTS_PER_PAGE },
-    (_, index) => index + currentPage
+    { length: pagination.productsPerPage / EPagination.PRODUCTS_PER_PAGE },
+    (_, index) => index + pagination.currentPage
   );
 
   const handlePageChange = (newPageNumber: number) => () => {
-    setProductsPerPage(EPagination.PRODUCTS_PER_PAGE);
     dispatch(changeCurrentPage(newPageNumber));
   };
 
-  const increaseProdPerPage = () => {
-    setProductsPerPage((prev) => prev + EPagination.PRODUCTS_PER_PAGE);
+  const handleIncreaseProdPerPage = () => {
+    dispatch(increaseProductsPerPage());
   };
 
   return (
@@ -58,7 +59,7 @@ const ListPagination: FC<ListPaginationProps> = ({
         type="button"
         className="pagination__btn"
         disabled={activePagesArr.includes(pageCount)}
-        onClick={increaseProdPerPage}>
+        onClick={handleIncreaseProdPerPage}>
         Show more products
         <img src={arrow} alt="ArrowDown" />
       </button>

@@ -49,9 +49,10 @@ export const getFilteredProducts = (
 
 export const getPaginatedProducts = (
   productsArr: IProduct[],
-  currentPage: number,
-  productsPerPage: number
+  pagination: { currentPage: number; productsPerPage: number }
 ) => {
+  const { currentPage, productsPerPage } = pagination;
+
   const indexOffirstProduct =
     currentPage * EPagination.PRODUCTS_PER_PAGE - EPagination.PRODUCTS_PER_PAGE;
   const indexOfLastProduct = indexOffirstProduct + productsPerPage;

@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { IProductsState } from "@products/productsSlice";
@@ -12,25 +12,16 @@ import ListSort from "@products/components/ListSort/ListSort";
 import ProductsList from "@products/components/ProductsList/ProductsList";
 import ListPagination from "@products/components/ListPagination/ListPagination";
 import LoadinSpinner from "@/common/components/LoadingSpinner/LoadingSpinner";
-import { EPagination } from "@products/types/pagination.enum";
 import "./ProductsListPage.scss";
 
 const ProductsListPage: FC = () => {
-  const { products, loading, filter, sortRule, currentPage } = useSelector<
+  const { products, loading, filter, sortRule, pagination } = useSelector<
     RootState,
     IProductsState
   >((state) => state.products);
 
-  const [productsPerPage, setProductsPerPage] = useState<number>(
-    EPagination.PRODUCTS_PER_PAGE
-  );
-
   const filteredProducts = getFilteredProducts(products, filter, sortRule);
-  const paginatedProducts = getPaginatedProducts(
-    filteredProducts,
-    currentPage,
-    productsPerPage
-  );
+  const paginatedProducts = getPaginatedProducts(filteredProducts, pagination);
 
   return (
     <div className="products-list">
@@ -53,9 +44,7 @@ const ProductsListPage: FC = () => {
           <ProductsList filteredProducts={paginatedProducts} />
           <ListPagination
             productsCount={filteredProducts.length}
-            currentPage={currentPage}
-            productsPerPage={productsPerPage}
-            setProductsPerPage={setProductsPerPage}
+            pagination={pagination}
           />
         </div>
       )}

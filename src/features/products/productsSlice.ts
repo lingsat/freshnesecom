@@ -24,7 +24,10 @@ export interface IProductsState {
   };
   filter: IFilter;
   sortRule: ESort;
-  currentPage: number;
+  pagination: {
+    currentPage: number;
+    productsPerPage: number;
+  };
 }
 
 const initialState: IProductsState = {
@@ -42,7 +45,10 @@ const initialState: IProductsState = {
     price: [],
   },
   sortRule: ESort.CLEAR,
-  currentPage: EPagination.INITIAL__PAGE,
+  pagination: {
+    currentPage: EPagination.INITIAL__PAGE,
+    productsPerPage: EPagination.PRODUCTS_PER_PAGE,
+  },
 };
 
 export const fetchProducts = createAsyncThunk("products/fetchProducts", () => {
@@ -57,16 +63,25 @@ export const productsSlice = createSlice({
   reducers: {
     changeSearch(state, action: PayloadAction<string>) {
       state.filter.searchValue = action.payload;
-      state.currentPage = EPagination.INITIAL__PAGE;
+      state.pagination = {
+        currentPage: EPagination.INITIAL__PAGE,
+        productsPerPage: EPagination.PRODUCTS_PER_PAGE,
+      };
     },
     clearSearch(state) {
       state.filter.searchValue = "";
-      state.currentPage = EPagination.INITIAL__PAGE;
+      state.pagination = {
+        currentPage: EPagination.INITIAL__PAGE,
+        productsPerPage: EPagination.PRODUCTS_PER_PAGE,
+      };
     },
     changeCategory(state, action: PayloadAction<string>) {
       state.filter.category = action.payload;
       state.filter.brands = [];
-      state.currentPage = EPagination.INITIAL__PAGE;
+      state.pagination = {
+        currentPage: EPagination.INITIAL__PAGE,
+        productsPerPage: EPagination.PRODUCTS_PER_PAGE,
+      };
     },
     changeSingleBrand(
       state,
@@ -77,22 +92,34 @@ export const productsSlice = createSlice({
       state.filter.stars = [];
       state.filter.price = [state.minMaxPrice.min, state.minMaxPrice.max];
       state.filter.brands = [brand];
-      state.currentPage = EPagination.INITIAL__PAGE;
+      state.pagination = {
+        currentPage: EPagination.INITIAL__PAGE,
+        productsPerPage: EPagination.PRODUCTS_PER_PAGE,
+      };
     },
     toggleBrands(state, action: PayloadAction<string>) {
       state.filter.brands = getToggledArray(
         state.filter.brands,
         action.payload
       );
-      state.currentPage = EPagination.INITIAL__PAGE;
+      state.pagination = {
+        currentPage: EPagination.INITIAL__PAGE,
+        productsPerPage: EPagination.PRODUCTS_PER_PAGE,
+      };
     },
     toggleStars(state, action: PayloadAction<number>) {
       state.filter.stars = getToggledArray(state.filter.stars, action.payload);
-      state.currentPage = EPagination.INITIAL__PAGE;
+      state.pagination = {
+        currentPage: EPagination.INITIAL__PAGE,
+        productsPerPage: EPagination.PRODUCTS_PER_PAGE,
+      };
     },
     changePrice(state, action: PayloadAction<number[]>) {
       state.filter.price = action.payload;
-      state.currentPage = EPagination.INITIAL__PAGE;
+      state.pagination = {
+        currentPage: EPagination.INITIAL__PAGE,
+        productsPerPage: EPagination.PRODUCTS_PER_PAGE,
+      };
     },
     clearAllFilters(state) {
       state.filter = {
@@ -102,13 +129,22 @@ export const productsSlice = createSlice({
         stars: [],
         price: [state.minMaxPrice.min, state.minMaxPrice.max],
       };
-      state.currentPage = EPagination.INITIAL__PAGE;
+      state.pagination = {
+        currentPage: EPagination.INITIAL__PAGE,
+        productsPerPage: EPagination.PRODUCTS_PER_PAGE,
+      };
     },
     changeSortRule(state, action: PayloadAction<ESort>) {
       state.sortRule = action.payload;
     },
     changeCurrentPage(state, action: PayloadAction<number>) {
-      state.currentPage = action.payload;
+      state.pagination = {
+        currentPage: action.payload,
+        productsPerPage: EPagination.PRODUCTS_PER_PAGE,
+      };
+    },
+    increaseProductsPerPage(state) {
+      state.pagination.productsPerPage += EPagination.PRODUCTS_PER_PAGE;
     },
   },
   extraReducers: (builder) => {
@@ -135,6 +171,7 @@ export const {
   clearAllFilters,
   changeSortRule,
   changeCurrentPage,
+  increaseProductsPerPage,
 } = productsSlice.actions;
 
 export const selectProducts = (state: RootState) => state.products.products;
