@@ -5,16 +5,18 @@ import { IProductsState } from "@products/productsSlice";
 import { getFilteredProducts } from "@/utils/products.utils";
 import ListNavigation from "@products/components/ListNavigation/ListNavigation";
 import ListFilter from "@products/components/ListFilter/ListFilter";
+import ListSort from "@products/components/ListSort/ListSort";
 import ProductsList from "@products/components/ProductsList/ProductsList";
 import LoadinSpinner from "@/common/components/LoadingSpinner/LoadingSpinner";
 import "./ProductsListPage.scss";
 
 const ProductsListPage: FC = () => {
-  const { products, loading, filter } = useSelector<RootState, IProductsState>(
-    (state) => state.products
-  );
+  const { products, loading, filter, sortRule } = useSelector<
+    RootState,
+    IProductsState
+  >((state) => state.products);
 
-  const filteredProducts = getFilteredProducts(products, filter);
+  const filteredProducts = getFilteredProducts(products, filter, sortRule);
 
   return (
     <div className="products-list">
@@ -28,6 +30,7 @@ const ProductsListPage: FC = () => {
           <span>Products</span>
         </div>
       </div>
+      <ListSort sortRule={sortRule} />
       {loading ? (
         <LoadinSpinner />
       ) : (

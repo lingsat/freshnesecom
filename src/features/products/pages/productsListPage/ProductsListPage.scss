@@ -51,12 +51,16 @@
   }
 
   .products-list__header {
-    margin-bottom: 2.5rem;
+    margin-bottom: 1rem;
   }
 }
 
 @media (max-width: 575.98px) {
   .products-list__title {
     font-size: 1.5rem;
+  }
+
+  .products-list__header {
+    margin-bottom: 0;
   }
 }

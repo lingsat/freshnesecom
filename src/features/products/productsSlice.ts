@@ -4,6 +4,7 @@ import { RootState } from "@/store/store";
 import { IProduct } from "@products/types/product.interface";
 import { getMinMaxPrice } from "@/utils/products.utils";
 import { getToggledArray } from "@/utils/toggleArrItem";
+import { ESort } from "./types/sort.enum";
 
 export interface IFilter {
   searchValue: string;
@@ -21,6 +22,7 @@ export interface IProductsState {
     max: number;
   };
   filter: IFilter;
+  sortRule: ESort;
 }
 
 const initialState: IProductsState = {
@@ -37,6 +39,7 @@ const initialState: IProductsState = {
     stars: [],
     price: [],
   },
+  sortRule: ESort.CLEAR,
 };
 
 export const fetchProducts = createAsyncThunk("products/fetchProducts", () => {
@@ -90,6 +93,9 @@ export const productsSlice = createSlice({
         price: [state.minMaxPrice.min, state.minMaxPrice.max],
       };
     },
+    changeSortRule(state, action: PayloadAction<ESort>) {
+      state.sortRule = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchProducts.pending, (state) => {
@@ -113,6 +119,7 @@ export const {
   toggleStars,
   changePrice,
   clearAllFilters,
+  changeSortRule,
 } = productsSlice.actions;
 
 export const selectProducts = (state: RootState) => state.products.products;
