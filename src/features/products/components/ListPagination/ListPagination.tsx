@@ -7,13 +7,19 @@ import "./ListPagination.scss";
 interface ListPaginationProps {
   productsCount: number;
   handlePageChange: ({ selected }: { selected: number }) => void;
+  setProductsPerPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const ListPagination: FC<ListPaginationProps> = ({
   productsCount,
   handlePageChange,
+  setProductsPerPage,
 }) => {
   const pageCount = Math.ceil(productsCount / EPagination.PRODUCTS_PER_PAGE);
+
+  const increaseProdPerPage = () => {
+    setProductsPerPage((prev) => prev + EPagination.PRODUCTS_PER_PAGE);
+  };
 
   return (
     <div className="pagination">
@@ -31,7 +37,11 @@ const ListPagination: FC<ListPaginationProps> = ({
           activeLinkClassName="pagination__link--active"
         />
       </div>
-      <button type="button" className="pagination__btn">
+      <button
+        type="button"
+        className="pagination__btn"
+        disabled={pageCount <= 1}
+        onClick={increaseProdPerPage}>
         Show more products
         <img src={arrow} alt="ArrowDown" />
       </button>

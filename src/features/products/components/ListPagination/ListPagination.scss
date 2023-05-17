@@ -89,6 +89,13 @@
     height: 17px;
     transform: rotate(90deg);
   }
+
+  &:disabled {
+    background-color: $bg-btn-disabled-color;
+    border-color: $btn-disabled-border-color;
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
 }
 
 @media (max-width: 767.98px) {

@@ -24,13 +24,21 @@ const ProductsListPage: FC = () => {
   const [currentPage, setCurrentPage] = useState<number>(
     EPagination.INITIAL__PAGE
   );
+  const [productsPerPage, setProductsPerPage] = useState<number>(
+    EPagination.PRODUCTS_PER_PAGE
+  );
 
   const handlePageChange = ({ selected }: { selected: number }) => {
+    setProductsPerPage(EPagination.PRODUCTS_PER_PAGE);
     setCurrentPage(selected);
   };
 
   const filteredProducts = getFilteredProducts(products, filter, sortRule);
-  const paginatedProducts = getPaginatedProducts(filteredProducts, currentPage);
+  const paginatedProducts = getPaginatedProducts(
+    filteredProducts,
+    currentPage,
+    productsPerPage
+  );
 
   return (
     <div className="products-list">
@@ -54,6 +62,7 @@ const ProductsListPage: FC = () => {
           <ListPagination
             productsCount={filteredProducts.length}
             handlePageChange={handlePageChange}
+            setProductsPerPage={setProductsPerPage}
           />
         </div>
       )}

@@ -1,8 +1,8 @@
-import { EPagination } from "@/features/products/types/pagination.enum";
-import { ESort } from "@/features/products/types/sort.enum";
+import { ESort } from "@products/types/sort.enum";
 import { IFilter } from "@products/productsSlice";
 import { ICategory } from "@products/types/caregory.interface";
 import { IProduct } from "@products/types/product.interface";
+import { EPagination } from "@/features/products/types/pagination.enum";
 
 const getSortedProducts = (
   productsArr: IProduct[],
@@ -49,11 +49,13 @@ export const getFilteredProducts = (
 
 export const getPaginatedProducts = (
   productsArr: IProduct[],
-  currentPage: number
+  currentPage: number,
+  productsPerPage: number
 ) => {
-  const indexOfLastProduct = (currentPage + 1) * EPagination.PRODUCTS_PER_PAGE;
   const indexOffirstProduct =
-    indexOfLastProduct - EPagination.PRODUCTS_PER_PAGE;
+    (currentPage + 1) * EPagination.PRODUCTS_PER_PAGE -
+    EPagination.PRODUCTS_PER_PAGE;
+  const indexOfLastProduct = indexOffirstProduct + productsPerPage;
 
   return productsArr.slice(indexOffirstProduct, indexOfLastProduct);
 };
