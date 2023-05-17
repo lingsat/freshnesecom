@@ -9,6 +9,7 @@ import ListSort from "@products/components/ListSort/ListSort";
 import ProductsList from "@products/components/ProductsList/ProductsList";
 import LoadinSpinner from "@/common/components/LoadingSpinner/LoadingSpinner";
 import "./ProductsListPage.scss";
+import ListPagination from "../../components/ListPagination/ListPagination";
 
 const ProductsListPage: FC = () => {
   const { products, loading, filter, sortRule } = useSelector<
@@ -37,6 +38,7 @@ const ProductsListPage: FC = () => {
         <div className="products-list__main">
           <ListFilter />
           <ProductsList filteredProducts={filteredProducts} />
+          <ListPagination productsCount={filteredProducts.length} />
         </div>
       )}
     </div>

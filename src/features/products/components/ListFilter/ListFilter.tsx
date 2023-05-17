@@ -144,7 +144,7 @@ const ListFilter: FC = () => {
         </aside>
       </div>
       <button className="filter__switcher" type="button" onClick={toggleFilter}>
-        Show Filter
+        Filter
         <img
           className={`${showFilter && "reverse__icon"}`}
           src={arrowDownThin}
