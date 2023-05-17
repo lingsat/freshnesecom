@@ -1,19 +1,24 @@
 import React, { FC } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { getStarsArrFromNumber } from "@/utils/products.utils";
 import { IProduct } from "@products/types/product.interface";
 import star from "@/assets/images/star.svg";
 import checkedStar from "@/assets/images/star_checked.svg";
-import arrowRightIcon from "@/assets/images/arrow_right.svg";
 import heartIcon from "@/assets/images/heart.svg";
 import "./ProductCard.scss";
+import GreenButton from "@/common/components/GreenButton/GreenButton";
 
 interface ProductCardProps {
   product: IProduct;
 }
 
 const ProductCard: FC<ProductCardProps> = ({ product }) => {
+  const navigate = useNavigate();
   const starsArr = getStarsArrFromNumber(product.stars);
+
+  const handleOpenProduct = () => {
+    navigate(`/products/${product.id}`);
+  };
 
   return (
     <li className="card">
@@ -73,10 +78,7 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
             </p>
           </div>
           <div className="info__buttons">
-            <Link to={`/products/${product.id}`} className="info__btn">
-              Product Detail
-              <img src={arrowRightIcon} alt=">" />
-            </Link>
+            <GreenButton text="Product Detail" onCLick={handleOpenProduct} />
             <button className="info__wish-btn">
               <img src={heartIcon} alt="Heart" />
               Add to wish list

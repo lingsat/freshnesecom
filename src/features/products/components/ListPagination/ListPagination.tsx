@@ -5,7 +5,7 @@ import {
   changeCurrentPage,
   increaseProductsPerPage,
 } from "@products/productsSlice";
-import arrow from "@/assets/images/arrow_right.svg";
+import GreenButton from "@/common/components/GreenButton/GreenButton";
 import { EPagination } from "@products/types/pagination.enum";
 import "./ListPagination.scss";
 
@@ -55,14 +55,12 @@ const ListPagination: FC<ListPaginationProps> = ({
           ))}
         </ul>
       </div>
-      <button
-        type="button"
-        className="pagination__btn"
+      <GreenButton
+        text="Show more products"
+        arrowDirection="bottom"
+        onCLick={handleIncreaseProdPerPage}
         disabled={activePagesArr.includes(pageCount)}
-        onClick={handleIncreaseProdPerPage}>
-        Show more products
-        <img src={arrow} alt="ArrowDown" />
-      </button>
+      />
       <div className="pagination__stat">
         <p>{productsCount}</p>
         <span>Products</span>
