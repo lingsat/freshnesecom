@@ -3,7 +3,10 @@ import { IFilter } from "@products/productsSlice";
 import { ICategory } from "@products/types/caregory.interface";
 import { IProduct } from "@products/types/product.interface";
 
-const getSortedProducts = (productsArr: IProduct[], sortRule: ESort) => {
+const getSortedProducts = (
+  productsArr: IProduct[],
+  sortRule: ESort
+): IProduct[] => {
   switch (sortRule) {
     case ESort.PRICE_LOW:
       return productsArr.sort((a, b) => a.price - b.price);
@@ -100,6 +103,6 @@ export const getMinMaxPrice = (
   );
 };
 
-export const getValidPrice = (value: string, max: number, min = 0) => {
+export const getValidPrice = (value: string, max: number, min = 0): number => {
   return Math.max(min, Math.min(max, Number(value)));
 };
