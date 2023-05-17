@@ -16,22 +16,14 @@ import { EPagination } from "@products/types/pagination.enum";
 import "./ProductsListPage.scss";
 
 const ProductsListPage: FC = () => {
-  const { products, loading, filter, sortRule } = useSelector<
+  const { products, loading, filter, sortRule, currentPage } = useSelector<
     RootState,
     IProductsState
   >((state) => state.products);
 
-  const [currentPage, setCurrentPage] = useState<number>(
-    EPagination.INITIAL__PAGE
-  );
   const [productsPerPage, setProductsPerPage] = useState<number>(
     EPagination.PRODUCTS_PER_PAGE
   );
-
-  const handlePageChange = ({ selected }: { selected: number }) => {
-    setProductsPerPage(EPagination.PRODUCTS_PER_PAGE);
-    setCurrentPage(selected);
-  };
 
   const filteredProducts = getFilteredProducts(products, filter, sortRule);
   const paginatedProducts = getPaginatedProducts(
@@ -61,7 +53,8 @@ const ProductsListPage: FC = () => {
           <ProductsList filteredProducts={paginatedProducts} />
           <ListPagination
             productsCount={filteredProducts.length}
-            handlePageChange={handlePageChange}
+            currentPage={currentPage}
+            productsPerPage={productsPerPage}
             setProductsPerPage={setProductsPerPage}
           />
         </div>

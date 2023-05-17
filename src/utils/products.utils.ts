@@ -53,8 +53,7 @@ export const getPaginatedProducts = (
   productsPerPage: number
 ) => {
   const indexOffirstProduct =
-    (currentPage + 1) * EPagination.PRODUCTS_PER_PAGE -
-    EPagination.PRODUCTS_PER_PAGE;
+    currentPage * EPagination.PRODUCTS_PER_PAGE - EPagination.PRODUCTS_PER_PAGE;
   const indexOfLastProduct = indexOffirstProduct + productsPerPage;
 
   return productsArr.slice(indexOffirstProduct, indexOfLastProduct);

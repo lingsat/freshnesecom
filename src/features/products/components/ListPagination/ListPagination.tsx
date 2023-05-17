@@ -1,21 +1,37 @@
 import React, { FC } from "react";
-import ReactPaginate from "react-paginate";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/store/store";
+import { changeCurrentPage } from "@products/productsSlice";
 import arrow from "@/assets/images/arrow_right.svg";
 import { EPagination } from "@products/types/pagination.enum";
 import "./ListPagination.scss";
 
 interface ListPaginationProps {
   productsCount: number;
-  handlePageChange: ({ selected }: { selected: number }) => void;
+  currentPage: number;
+  productsPerPage: number;
   setProductsPerPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const ListPagination: FC<ListPaginationProps> = ({
   productsCount,
-  handlePageChange,
+  currentPage,
+  productsPerPage,
   setProductsPerPage,
 }) => {
+  const dispatch = useDispatch<AppDispatch>();
+
   const pageCount = Math.ceil(productsCount / EPagination.PRODUCTS_PER_PAGE);
+  const pagesArr = Array.from({ length: pageCount }, (_, index) => index + 1);
+  const activePagesArr = Array.from(
+    { length: productsPerPage / EPagination.PRODUCTS_PER_PAGE },
+    (_, index) => index + currentPage
+  );
+
+  const handlePageChange = (newPageNumber: number) => () => {
+    setProductsPerPage(EPagination.PRODUCTS_PER_PAGE);
+    dispatch(changeCurrentPage(newPageNumber));
+  };
 
   const increaseProdPerPage = () => {
     setProductsPerPage((prev) => prev + EPagination.PRODUCTS_PER_PAGE);
@@ -25,22 +41,23 @@ const ListPagination: FC<ListPaginationProps> = ({
     <div className="pagination">
       <div className="pagination__controls">
         <p>Page:</p>
-        <ReactPaginate
-          breakLabel="..."
-          onPageChange={handlePageChange}
-          pageRangeDisplayed={EPagination.PAGES__PANGE}
-          pageCount={pageCount}
-          nextLabel={null}
-          previousLabel={null}
-          containerClassName="pagination__list"
-          pageLinkClassName="pagination__link"
-          activeLinkClassName="pagination__link--active"
-        />
+        <ul className="pagination__list">
+          {pagesArr.map((page, index) => (
+            <li
+              key={`page-${page}-${index}`}
+              className={`pagination__item ${
+                activePagesArr.includes(page) ? "pagination__item--active" : ""
+              }`}
+              onClick={handlePageChange(page)}>
+              {page}
+            </li>
+          ))}
+        </ul>
       </div>
       <button
         type="button"
         className="pagination__btn"
-        disabled={pageCount <= 1}
+        disabled={activePagesArr.includes(pageCount)}
         onClick={increaseProdPerPage}>
         Show more products
         <img src={arrow} alt="ArrowDown" />
