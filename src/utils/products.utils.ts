@@ -1,3 +1,4 @@
+import { EPagination } from "@/features/products/types/pagination.enum";
 import { ESort } from "@/features/products/types/sort.enum";
 import { IFilter } from "@products/productsSlice";
 import { ICategory } from "@products/types/caregory.interface";
@@ -44,6 +45,17 @@ export const getFilteredProducts = (
   });
 
   return getSortedProducts(filteredArr, sortRule);
+};
+
+export const getPaginatedProducts = (
+  productsArr: IProduct[],
+  currentPage: number
+) => {
+  const indexOfLastProduct = (currentPage + 1) * EPagination.PRODUCTS_PER_PAGE;
+  const indexOffirstProduct =
+    indexOfLastProduct - EPagination.PRODUCTS_PER_PAGE;
+
+  return productsArr.slice(indexOffirstProduct, indexOfLastProduct);
 };
 
 export const getStarsArrFromNumber = (num: number): boolean[] => {

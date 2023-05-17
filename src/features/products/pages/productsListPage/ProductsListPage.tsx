@@ -1,15 +1,19 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { IProductsState } from "@products/productsSlice";
-import { getFilteredProducts } from "@/utils/products.utils";
+import {
+  getFilteredProducts,
+  getPaginatedProducts,
+} from "@/utils/products.utils";
 import ListNavigation from "@products/components/ListNavigation/ListNavigation";
 import ListFilter from "@products/components/ListFilter/ListFilter";
 import ListSort from "@products/components/ListSort/ListSort";
 import ProductsList from "@products/components/ProductsList/ProductsList";
+import ListPagination from "@products/components/ListPagination/ListPagination";
 import LoadinSpinner from "@/common/components/LoadingSpinner/LoadingSpinner";
+import { EPagination } from "@products/types/pagination.enum";
 import "./ProductsListPage.scss";
-import ListPagination from "../../components/ListPagination/ListPagination";
 
 const ProductsListPage: FC = () => {
   const { products, loading, filter, sortRule } = useSelector<
@@ -17,7 +21,16 @@ const ProductsListPage: FC = () => {
     IProductsState
   >((state) => state.products);
 
+  const [currentPage, setCurrentPage] = useState<number>(
+    EPagination.INITIAL__PAGE
+  );
+
+  const handlePageChange = ({ selected }: { selected: number }) => {
+    setCurrentPage(selected);
+  };
+
   const filteredProducts = getFilteredProducts(products, filter, sortRule);
+  const paginatedProducts = getPaginatedProducts(filteredProducts, currentPage);
 
   return (
     <div className="products-list">
@@ -37,8 +50,11 @@ const ProductsListPage: FC = () => {
       ) : (
         <div className="products-list__main">
           <ListFilter />
-          <ProductsList filteredProducts={filteredProducts} />
-          <ListPagination productsCount={filteredProducts.length} />
+          <ProductsList filteredProducts={paginatedProducts} />
+          <ListPagination
+            productsCount={filteredProducts.length}
+            handlePageChange={handlePageChange}
+          />
         </div>
       )}
     </div>

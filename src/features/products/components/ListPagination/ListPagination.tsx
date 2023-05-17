@@ -1,23 +1,29 @@
 import React, { FC } from "react";
 import ReactPaginate from "react-paginate";
 import arrow from "@/assets/images/arrow_right.svg";
+import { EPagination } from "@products/types/pagination.enum";
 import "./ListPagination.scss";
 
 interface ListPaginationProps {
   productsCount: number;
+  handlePageChange: ({ selected }: { selected: number }) => void;
 }
 
-const ListPagination: FC<ListPaginationProps> = ({ productsCount }) => {
+const ListPagination: FC<ListPaginationProps> = ({
+  productsCount,
+  handlePageChange,
+}) => {
+  const pageCount = Math.ceil(productsCount / EPagination.PRODUCTS_PER_PAGE);
+
   return (
     <div className="pagination">
       <div className="pagination__controls">
         <p>Page:</p>
         <ReactPaginate
           breakLabel="..."
-          // onPageChange={handlePageChange}
-          pageRangeDisplayed={3}
-          pageCount={4}
-          initialPage={1}
+          onPageChange={handlePageChange}
+          pageRangeDisplayed={EPagination.PAGES__PANGE}
+          pageCount={pageCount}
           nextLabel={null}
           previousLabel={null}
           containerClassName="pagination__list"
