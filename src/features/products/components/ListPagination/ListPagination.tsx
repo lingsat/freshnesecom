@@ -29,6 +29,8 @@ const ListPagination: FC<ListPaginationProps> = ({
     pagination
   );
 
+  const isShowMoreDisabled = activePagesArr.includes(pageCount) || !pageCount;
+
   const handlePageChange = (_: ChangeEvent<unknown>, page: number) => {
     dispatch(changeCurrentPage(page));
     handlePageScroll();
@@ -66,7 +68,7 @@ const ListPagination: FC<ListPaginationProps> = ({
         text="Show more products"
         arrowDirection="bottom"
         onCLick={handleIncreaseProdPerPage}
-        disabled={activePagesArr.includes(pageCount) || !pageCount}
+        disabled={isShowMoreDisabled}
       />
       <div className="pagination__stat">
         <p>{productsCount}</p>
