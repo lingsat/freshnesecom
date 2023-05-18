@@ -31,6 +31,7 @@ const ListPagination: FC<ListPaginationProps> = ({
     { length: pagination.productsPerPage / EPagination.PRODUCTS_PER_PAGE },
     (_, index) => index + pagination.currentPage
   );
+  console.log(pageCount);
 
   const handlePageChange = (newPageNumber: number) => () => {
     dispatch(changeCurrentPage(newPageNumber));
@@ -62,7 +63,7 @@ const ListPagination: FC<ListPaginationProps> = ({
         text="Show more products"
         arrowDirection="bottom"
         onCLick={handleIncreaseProdPerPage}
-        disabled={activePagesArr.includes(pageCount)}
+        disabled={activePagesArr.includes(pageCount) || !pageCount}
       />
       <div className="pagination__stat">
         <p>{productsCount}</p>
