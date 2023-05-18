@@ -38,7 +38,7 @@ const ProductsListPage: FC = () => {
           {filter.category || "All Products"}
         </h2>
         <div className="products-list__stat">
-          <p>{filteredProducts.length}</p>
+          <p>{paginatedProducts.length}</p>
           <span>Products</span>
         </div>
       </div>
