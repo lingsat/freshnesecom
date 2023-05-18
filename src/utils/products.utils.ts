@@ -1,8 +1,6 @@
-import { ESort } from "@products/types/sort.enum";
 import { IFilter } from "@products/productsSlice";
-import { ICategory } from "@products/types/caregory.interface";
-import { IProduct } from "@products/types/product.interface";
-import { EPagination } from "@/features/products/types/pagination.enum";
+import { IProduct, ICategory, ESort } from "@products/types/product";
+import { IPaginationState, EPagination } from "@products/types/pagination";
 
 const getSortedProducts = (
   productsArr: IProduct[],
@@ -49,7 +47,7 @@ export const getFilteredProducts = (
 
 export const getPaginatedProducts = (
   productsArr: IProduct[],
-  pagination: { currentPage: number; productsPerPage: number }
+  pagination: IPaginationState
 ): IProduct[] => {
   const { currentPage, productsPerPage } = pagination;
 

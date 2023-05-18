@@ -3,9 +3,8 @@ import axios from "axios";
 import { RootState } from "@/store/store";
 import { getMinMaxPrice } from "@/utils/products.utils";
 import { getToggledArray } from "@/utils/toggleArrItem";
-import { IProduct } from "@products/types/product.interface";
-import { ESort } from "@products/types/sort.enum";
-import { EPagination } from "@products/types/pagination.enum";
+import { IProduct, ESort } from "@products/types/product";
+import { IPaginationState, EPagination } from "@products/types/pagination";
 
 export interface IFilter {
   searchValue: string;
@@ -24,10 +23,7 @@ export interface IProductsState {
   };
   filter: IFilter;
   sortRule: ESort;
-  pagination: {
-    currentPage: number;
-    productsPerPage: number;
-  };
+  pagination: IPaginationState;
 }
 
 const initialPagination = {

@@ -11,7 +11,7 @@ import {
 import { getBrands, getCategoriesObj } from "@/utils/products.utils";
 import FilterPrice from "@products/components/FilterPrice/FilterPrice";
 import FilterStars from "@products/components/FilterStars/FilterStars";
-import { EStars } from "@products/types/start.enum";
+import { EStars } from "@products/types/product";
 import arrowDownThin from "@/assets/images/arrow_down_thin.svg";
 import "./ListFilter.scss";
 

@@ -20,23 +20,26 @@
   }
 
   &__list {
-    list-style: none;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
     gap: 0.2rem;
-  }
 
-  &__item {
-    padding: 3px;
-    font-size: 1rem;
-    line-height: 1rem;
-    cursor: pointer;
+    button {
+      padding: 3px;
+      margin: 0;
+      min-width: 23px;
+      min-height: 23px;
+      height: auto;
+      font-family: $main-text-font;
+      font-size: 1rem;
+      line-height: 1rem;
+    }
 
-    &--active {
+    .active {
       color: $link-main-color;
     }
+  }
+
+  &__item--selected {
+    color: $link-main-color;
   }
 
   &__stat {
@@ -48,7 +51,7 @@
     p {
       padding: 0 0.5rem;
       border-radius: 12px;
-      font-family: "Poppins";
+      font-family: $title-text-font;
       font-weight: 600;
       font-size: 0.75rem;
       line-height: 1.125rem;
@@ -73,7 +76,7 @@
       justify-content: center;
     }
 
-    button {
+    .green-btn {
       width: 214px;
       margin: 0 auto;
     }

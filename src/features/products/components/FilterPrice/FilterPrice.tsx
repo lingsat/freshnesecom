@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { changePrice, IProductsState } from "@products/productsSlice";
 import { AppDispatch, RootState } from "@/store/store";
 import { getValidPrice } from "@/utils/products.utils";
-import { EPrice } from "@products/types/price.enum";
+import { EPrice } from "@products/types/product";
 import "./FilterPrice.scss";
 
 const FilterPrice: FC = () => {

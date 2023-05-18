@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/store/store";
 import { changeSortRule } from "@products/productsSlice";
 import arrowIcon from "@/assets/images/arrow_black.svg";
-import { ESort } from "@products/types/sort.enum";
+import { ESort } from "@products/types/product";
 import "./ListSort.scss";
 
 interface ListSortProps {

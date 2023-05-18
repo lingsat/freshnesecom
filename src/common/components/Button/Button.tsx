@@ -1,15 +1,15 @@
 import React, { FC } from "react";
 import arrow from "@/assets/images/arrow_right.svg";
-import "./GreenButton.scss";
+import "./Button.scss";
 
-interface GreenButtonProps {
+interface ButtonProps {
   text: string;
   onCLick: () => void;
   arrowDirection?: "right" | "bottom";
   disabled?: boolean;
 }
 
-const GreenButton: FC<GreenButtonProps> = ({
+const Button: FC<ButtonProps> = ({
   text,
   arrowDirection = "right",
   onCLick,
@@ -33,4 +33,4 @@ const GreenButton: FC<GreenButtonProps> = ({
   );
 };
 
-export default GreenButton;
+export default Button;

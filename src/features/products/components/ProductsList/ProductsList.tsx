@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import ProductCard from "@products/components/ProductCard/ProductCard";
-import { IProduct } from "@products/types/product.interface";
+import { IProduct } from "@products/types/product";
 import "./ProductsList.scss";
 
 interface ProductsListProps {

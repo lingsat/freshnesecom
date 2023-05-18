@@ -1,8 +1,8 @@
 import React, { FC } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { getStarsArrFromNumber } from "@/utils/products.utils";
-import GreenButton from "@/common/components/GreenButton/GreenButton";
-import { IProduct } from "@products/types/product.interface";
+import Button from "@/common/components/Button/Button";
+import { IProduct } from "@products/types/product";
 import star from "@/assets/images/star.svg";
 import checkedStar from "@/assets/images/star_checked.svg";
 import heartIcon from "@/assets/images/heart.svg";
@@ -79,7 +79,7 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
             </p>
           </div>
           <div className="info__buttons">
-            <GreenButton text="Product Detail" onCLick={handleOpenProduct} />
+            <Button text="Product Detail" onCLick={handleOpenProduct} />
             <button className="info__wish-btn">
               <img src={heartIcon} alt="Heart" />
               Add to wish list
