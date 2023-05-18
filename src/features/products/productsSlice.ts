@@ -30,6 +30,11 @@ export interface IProductsState {
   };
 }
 
+const initialPagination = {
+  currentPage: EPagination.INITIAL__PAGE,
+  productsPerPage: EPagination.PRODUCTS_PER_PAGE,
+};
+
 const initialState: IProductsState = {
   products: [],
   loading: false,
@@ -45,10 +50,7 @@ const initialState: IProductsState = {
     price: [],
   },
   sortRule: ESort.CLEAR,
-  pagination: {
-    currentPage: EPagination.INITIAL__PAGE,
-    productsPerPage: EPagination.PRODUCTS_PER_PAGE,
-  },
+  pagination: initialPagination,
 };
 
 export const fetchProducts = createAsyncThunk("products/fetchProducts", () => {
@@ -63,25 +65,16 @@ export const productsSlice = createSlice({
   reducers: {
     changeSearch(state, action: PayloadAction<string>) {
       state.filter.searchValue = action.payload;
-      state.pagination = {
-        currentPage: EPagination.INITIAL__PAGE,
-        productsPerPage: EPagination.PRODUCTS_PER_PAGE,
-      };
+      state.pagination = initialPagination;
     },
     clearSearch(state) {
       state.filter.searchValue = "";
-      state.pagination = {
-        currentPage: EPagination.INITIAL__PAGE,
-        productsPerPage: EPagination.PRODUCTS_PER_PAGE,
-      };
+      state.pagination = initialPagination;
     },
     changeCategory(state, action: PayloadAction<string>) {
       state.filter.category = action.payload;
       state.filter.brands = [];
-      state.pagination = {
-        currentPage: EPagination.INITIAL__PAGE,
-        productsPerPage: EPagination.PRODUCTS_PER_PAGE,
-      };
+      state.pagination = initialPagination;
     },
     changeSingleBrand(
       state,
@@ -92,34 +85,22 @@ export const productsSlice = createSlice({
       state.filter.stars = [];
       state.filter.price = [state.minMaxPrice.min, state.minMaxPrice.max];
       state.filter.brands = [brand];
-      state.pagination = {
-        currentPage: EPagination.INITIAL__PAGE,
-        productsPerPage: EPagination.PRODUCTS_PER_PAGE,
-      };
+      state.pagination = initialPagination;
     },
     toggleBrands(state, action: PayloadAction<string>) {
       state.filter.brands = getToggledArray(
         state.filter.brands,
         action.payload
       );
-      state.pagination = {
-        currentPage: EPagination.INITIAL__PAGE,
-        productsPerPage: EPagination.PRODUCTS_PER_PAGE,
-      };
+      state.pagination = initialPagination;
     },
     toggleStars(state, action: PayloadAction<number>) {
       state.filter.stars = getToggledArray(state.filter.stars, action.payload);
-      state.pagination = {
-        currentPage: EPagination.INITIAL__PAGE,
-        productsPerPage: EPagination.PRODUCTS_PER_PAGE,
-      };
+      state.pagination = initialPagination;
     },
     changePrice(state, action: PayloadAction<number[]>) {
       state.filter.price = action.payload;
-      state.pagination = {
-        currentPage: EPagination.INITIAL__PAGE,
-        productsPerPage: EPagination.PRODUCTS_PER_PAGE,
-      };
+      state.pagination = initialPagination;
     },
     clearAllFilters(state) {
       state.filter = {
@@ -129,13 +110,11 @@ export const productsSlice = createSlice({
         stars: [],
         price: [state.minMaxPrice.min, state.minMaxPrice.max],
       };
-      state.pagination = {
-        currentPage: EPagination.INITIAL__PAGE,
-        productsPerPage: EPagination.PRODUCTS_PER_PAGE,
-      };
+      state.pagination = initialPagination;
     },
     changeSortRule(state, action: PayloadAction<ESort>) {
       state.sortRule = action.payload;
+      state.pagination = initialPagination;
     },
     changeCurrentPage(state, action: PayloadAction<number>) {
       state.pagination = {
