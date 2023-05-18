@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useRef } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { IProductsState } from "@products/productsSlice";
@@ -19,12 +19,19 @@ const ProductsListPage: FC = () => {
     RootState,
     IProductsState
   >((state) => state.products);
+  const listRef = useRef<HTMLDivElement>(null);
 
   const filteredProducts = getFilteredProducts(products, filter, sortRule);
   const paginatedProducts = getPaginatedProducts(filteredProducts, pagination);
 
+  const handlePageScroll = () => {
+    if (listRef) {
+      listRef.current?.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
-    <div className="products-list">
+    <div className="products-list" ref={listRef}>
       <ListNavigation />
       <div className="products-list__header">
         <h2 className="products-list__title">
@@ -41,10 +48,11 @@ const ProductsListPage: FC = () => {
       ) : (
         <div className="products-list__main">
           <ListFilter />
-          <ProductsList filteredProducts={paginatedProducts} />
+          <ProductsList products={paginatedProducts} />
           <ListPagination
             productsCount={filteredProducts.length}
             pagination={pagination}
+            handlePageScroll={handlePageScroll}
           />
         </div>
       )}

@@ -1,11 +1,11 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { RootState } from "@/store/store";
-import { IProduct } from "@products/types/product.interface";
 import { getMinMaxPrice } from "@/utils/products.utils";
 import { getToggledArray } from "@/utils/toggleArrItem";
-import { ESort } from "./types/sort.enum";
-import { EPagination } from "./types/pagination.enum";
+import { IProduct } from "@products/types/product.interface";
+import { ESort } from "@products/types/sort.enum";
+import { EPagination } from "@products/types/pagination.enum";
 
 export interface IFilter {
   searchValue: string;

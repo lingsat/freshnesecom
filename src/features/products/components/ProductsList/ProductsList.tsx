@@ -4,17 +4,17 @@ import { IProduct } from "@products/types/product.interface";
 import "./ProductsList.scss";
 
 interface ProductsListProps {
-  filteredProducts: IProduct[];
+  products: IProduct[];
 }
 
-const ProductsList: FC<ProductsListProps> = ({ filteredProducts }) => {
-  if (!filteredProducts.length) {
+const ProductsList: FC<ProductsListProps> = ({ products }) => {
+  if (!products.length) {
     return <p className="not-found">No items found!</p>;
   }
 
   return (
     <ul className="list">
-      {filteredProducts.map((product) => (
+      {products.map((product) => (
         <ProductCard key={`product-${product.id}`} product={product} />
       ))}
     </ul>

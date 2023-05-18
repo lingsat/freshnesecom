@@ -15,11 +15,13 @@ interface ListPaginationProps {
     currentPage: number;
     productsPerPage: number;
   };
+  handlePageScroll: () => void;
 }
 
 const ListPagination: FC<ListPaginationProps> = ({
   productsCount,
   pagination,
+  handlePageScroll,
 }) => {
   const dispatch = useDispatch<AppDispatch>();
 
@@ -32,6 +34,7 @@ const ListPagination: FC<ListPaginationProps> = ({
 
   const handlePageChange = (newPageNumber: number) => () => {
     dispatch(changeCurrentPage(newPageNumber));
+    handlePageScroll();
   };
 
   const handleIncreaseProdPerPage = () => {

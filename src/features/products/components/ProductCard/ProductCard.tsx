@@ -1,12 +1,12 @@
 import React, { FC } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { getStarsArrFromNumber } from "@/utils/products.utils";
+import GreenButton from "@/common/components/GreenButton/GreenButton";
 import { IProduct } from "@products/types/product.interface";
 import star from "@/assets/images/star.svg";
 import checkedStar from "@/assets/images/star_checked.svg";
 import heartIcon from "@/assets/images/heart.svg";
 import "./ProductCard.scss";
-import GreenButton from "@/common/components/GreenButton/GreenButton";
 
 interface ProductCardProps {
   product: IProduct;
@@ -14,6 +14,7 @@ interface ProductCardProps {
 
 const ProductCard: FC<ProductCardProps> = ({ product }) => {
   const navigate = useNavigate();
+
   const starsArr = getStarsArrFromNumber(product.stars);
 
   const handleOpenProduct = () => {

@@ -50,14 +50,13 @@ export const getFilteredProducts = (
 export const getPaginatedProducts = (
   productsArr: IProduct[],
   pagination: { currentPage: number; productsPerPage: number }
-) => {
+): IProduct[] => {
   const { currentPage, productsPerPage } = pagination;
 
-  const indexOffirstProduct =
-    currentPage * EPagination.PRODUCTS_PER_PAGE - EPagination.PRODUCTS_PER_PAGE;
-  const indexOfLastProduct = indexOffirstProduct + productsPerPage;
+  const indexOfFirstProduct = (currentPage - 1) * EPagination.PRODUCTS_PER_PAGE;
+  const indexOfLastProduct = indexOfFirstProduct + productsPerPage;
 
-  return productsArr.slice(indexOffirstProduct, indexOfLastProduct);
+  return productsArr.slice(indexOfFirstProduct, indexOfLastProduct);
 };
 
 export const getStarsArrFromNumber = (num: number): boolean[] => {
