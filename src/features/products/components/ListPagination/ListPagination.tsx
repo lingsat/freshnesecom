@@ -31,7 +31,6 @@ const ListPagination: FC<ListPaginationProps> = ({
     { length: pagination.productsPerPage / EPagination.PRODUCTS_PER_PAGE },
     (_, index) => index + pagination.currentPage
   );
-  console.log(pageCount);
 
   const handlePageChange = (newPageNumber: number) => () => {
     dispatch(changeCurrentPage(newPageNumber));
