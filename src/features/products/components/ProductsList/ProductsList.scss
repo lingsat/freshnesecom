@@ -9,3 +9,9 @@
   text-align: center;
   font-weight: 700;
 }
+
+@media (max-width: 991.98px) {
+  .list {
+    grid-column: 1 /3;
+  }
+}

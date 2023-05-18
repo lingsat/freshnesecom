@@ -1,6 +1,6 @@
 import React, { ChangeEvent, FC, useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState, AppDispatch } from "@/store/store";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@/store/store";
 import {
   changeSearch,
   clearSearch,

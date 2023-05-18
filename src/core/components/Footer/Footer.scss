@@ -30,9 +30,13 @@
 }
 
 @media (max-width: 767.98px) {
-  .footer__links {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+  .footer {
+    padding: 2rem 0;
+
+    &__links {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
   }
 }
 

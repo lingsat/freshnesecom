@@ -1,7 +1,5 @@
-import { ESort } from "@/features/products/types/sort.enum";
 import { IFilter } from "@products/productsSlice";
-import { ICategory } from "@products/types/caregory.interface";
-import { IProduct } from "@products/types/product.interface";
+import { IProduct, ICategory, ESort } from "@products/types/product";
 
 const getSortedProducts = (
   productsArr: IProduct[],

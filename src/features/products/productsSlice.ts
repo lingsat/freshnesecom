@@ -1,10 +1,10 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { RootState } from "@/store/store";
-import { IProduct } from "@products/types/product.interface";
 import { getMinMaxPrice } from "@/utils/products.utils";
 import { getToggledArray } from "@/utils/toggleArrItem";
-import { ESort } from "./types/sort.enum";
+import { IProduct, ESort } from "@products/types/product";
+import { IPaginationState, EPagination } from "@products/types/pagination";
 
 export interface IFilter {
   searchValue: string;
@@ -23,7 +23,13 @@ export interface IProductsState {
   };
   filter: IFilter;
   sortRule: ESort;
+  pagination: IPaginationState;
 }
+
+const initialPagination = {
+  currentPage: EPagination.INITIAL__PAGE,
+  productsPerPage: EPagination.PRODUCTS_PER_PAGE,
+};
 
 const initialState: IProductsState = {
   products: [],
@@ -40,6 +46,7 @@ const initialState: IProductsState = {
     price: [],
   },
   sortRule: ESort.CLEAR,
+  pagination: initialPagination,
 };
 
 export const fetchProducts = createAsyncThunk("products/fetchProducts", () => {
@@ -54,13 +61,16 @@ export const productsSlice = createSlice({
   reducers: {
     changeSearch(state, action: PayloadAction<string>) {
       state.filter.searchValue = action.payload;
+      state.pagination = initialPagination;
     },
     clearSearch(state) {
       state.filter.searchValue = "";
+      state.pagination = initialPagination;
     },
     changeCategory(state, action: PayloadAction<string>) {
       state.filter.category = action.payload;
       state.filter.brands = [];
+      state.pagination = initialPagination;
     },
     changeSingleBrand(
       state,
@@ -71,18 +81,22 @@ export const productsSlice = createSlice({
       state.filter.stars = [];
       state.filter.price = [state.minMaxPrice.min, state.minMaxPrice.max];
       state.filter.brands = [brand];
+      state.pagination = initialPagination;
     },
     toggleBrands(state, action: PayloadAction<string>) {
       state.filter.brands = getToggledArray(
         state.filter.brands,
         action.payload
       );
+      state.pagination = initialPagination;
     },
     toggleStars(state, action: PayloadAction<number>) {
       state.filter.stars = getToggledArray(state.filter.stars, action.payload);
+      state.pagination = initialPagination;
     },
     changePrice(state, action: PayloadAction<number[]>) {
       state.filter.price = action.payload;
+      state.pagination = initialPagination;
     },
     clearAllFilters(state) {
       state.filter = {
@@ -92,9 +106,20 @@ export const productsSlice = createSlice({
         stars: [],
         price: [state.minMaxPrice.min, state.minMaxPrice.max],
       };
+      state.pagination = initialPagination;
     },
     changeSortRule(state, action: PayloadAction<ESort>) {
       state.sortRule = action.payload;
+      state.pagination = initialPagination;
+    },
+    changeCurrentPage(state, action: PayloadAction<number>) {
+      state.pagination = {
+        currentPage: action.payload,
+        productsPerPage: EPagination.PRODUCTS_PER_PAGE,
+      };
+    },
+    increaseProductsPerPage(state) {
+      state.pagination.productsPerPage += EPagination.PRODUCTS_PER_PAGE;
     },
   },
   extraReducers: (builder) => {
@@ -120,6 +145,8 @@ export const {
   changePrice,
   clearAllFilters,
   changeSortRule,
+  changeCurrentPage,
+  increaseProductsPerPage,
 } = productsSlice.actions;
 
 export const selectProducts = (state: RootState) => state.products.products;
