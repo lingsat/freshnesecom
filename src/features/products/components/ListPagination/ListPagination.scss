@@ -22,7 +22,9 @@
   &__list {
     list-style: none;
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
+    justify-content: center;
     gap: 0.2rem;
   }
 
