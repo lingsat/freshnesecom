@@ -1,6 +1,5 @@
 import { IFilter } from "@products/productsSlice";
 import { IProduct, ICategory, ESort } from "@products/types/product";
-import { IPaginationState, EPagination } from "@products/types/pagination";
 
 const getSortedProducts = (
   productsArr: IProduct[],
@@ -43,18 +42,6 @@ export const getFilteredProducts = (
   });
 
   return getSortedProducts(filteredArr, sortRule);
-};
-
-export const getPaginatedProducts = (
-  productsArr: IProduct[],
-  pagination: IPaginationState
-): IProduct[] => {
-  const { currentPage, productsPerPage } = pagination;
-
-  const indexOfFirstProduct = (currentPage - 1) * EPagination.PRODUCTS_PER_PAGE;
-  const indexOfLastProduct = indexOfFirstProduct + productsPerPage;
-
-  return productsArr.slice(indexOfFirstProduct, indexOfLastProduct);
 };
 
 export const getStarsArrFromNumber = (num: number): boolean[] => {

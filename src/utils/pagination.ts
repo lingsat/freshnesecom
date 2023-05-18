@@ -1,8 +1,21 @@
+import { IProduct } from "@/features/products/types/product";
 import {
   IPaginationData,
   IPaginationState,
   EPagination,
 } from "@products/types/pagination";
+
+export const getPaginatedProducts = (
+  productsArr: IProduct[],
+  pagination: IPaginationState
+): IProduct[] => {
+  const { currentPage, productsPerPage } = pagination;
+
+  const indexOfFirstProduct = (currentPage - 1) * EPagination.PRODUCTS_PER_PAGE;
+  const indexOfLastProduct = indexOfFirstProduct + productsPerPage;
+
+  return productsArr.slice(indexOfFirstProduct, indexOfLastProduct);
+};
 
 export const getPaginationData = (
   productsCount: number,
@@ -18,7 +31,7 @@ export const getPaginationData = (
   return { pageCount, activePagesArr, lastActivePage };
 };
 
-export const isPageInActivePange = (
+export const isPageInActiveRange = (
   activePagesArr: number[],
   page: number | null
 ): boolean => {

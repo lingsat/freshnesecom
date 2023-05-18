@@ -2,10 +2,8 @@ import React, { FC, useRef } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { IProductsState } from "@products/productsSlice";
-import {
-  getFilteredProducts,
-  getPaginatedProducts,
-} from "@/utils/products.utils";
+import { getFilteredProducts } from "@/utils/products.utils";
+import { getPaginatedProducts } from "@/utils/pagination";
 import ListNavigation from "@products/components/ListNavigation/ListNavigation";
 import ListFilter from "@products/components/ListFilter/ListFilter";
 import ListSort from "@products/components/ListSort/ListSort";
@@ -39,7 +37,7 @@ const ProductsListPage: FC = () => {
         </h2>
         <div className="products-list__stat">
           <p>{paginatedProducts.length}</p>
-          <span>Products</span>
+          <span>Products/page</span>
         </div>
       </div>
       <ListSort sortRule={sortRule} />

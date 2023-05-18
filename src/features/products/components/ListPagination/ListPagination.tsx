@@ -6,7 +6,7 @@ import {
   changeCurrentPage,
   increaseProductsPerPage,
 } from "@products/productsSlice";
-import { getPaginationData, isPageInActivePange } from "@/utils/pagination";
+import { getPaginationData, isPageInActiveRange } from "@/utils/pagination";
 import Button from "@/common/components/Button/Button";
 import { IPaginationState } from "@products/types/pagination";
 import "./ListPagination.scss";
@@ -54,7 +54,7 @@ const ListPagination: FC<ListPaginationProps> = ({
               {...item}
               classes={{
                 root: `${
-                  isPageInActivePange(activePagesArr, item.page) ? "active" : ""
+                  isPageInActiveRange(activePagesArr, item.page) ? "active" : ""
                 }`,
                 selected: "pagination__item--selected",
               }}

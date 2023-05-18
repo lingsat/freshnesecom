@@ -18,13 +18,13 @@ const Button: FC<ButtonProps> = ({
   return (
     <button
       type="button"
-      className="green-btn"
+      className="button"
       disabled={disabled}
       onClick={onCLick}>
       {text}
       <img
-        className={`green-btn__image ${
-          arrowDirection === "bottom" ? "green-btn__image--bottom" : ""
+        className={`button__image ${
+          arrowDirection === "bottom" ? "button__image--bottom" : ""
         }`}
         src={arrow}
         alt="ArrowDown"
