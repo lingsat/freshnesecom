@@ -1,4 +1,5 @@
 import React, { ChangeEvent, FC, useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { AppDispatch, RootState } from "@Store/store";
@@ -7,6 +8,7 @@ import {
   clearSearch,
   IProductsState,
 } from "@Products/productsSlice";
+import { ERoutes } from "@/types/routes";
 import Selector from "../Selector/Selector";
 
 import searchIcon from "@Images/search.svg";
@@ -14,10 +16,13 @@ import closeIcon from "@Images/close.svg";
 import "./Search.scss";
 
 const Search: FC = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
+
   const { filter } = useSelector<RootState, IProductsState>(
     (state) => state.products
   );
-  const dispatch = useDispatch<AppDispatch>();
 
   const [localSearchValue, setLocalSearchValue] = useState<string>(
     filter.searchValue
@@ -28,6 +33,9 @@ const Search: FC = () => {
   };
 
   const startSearching = () => {
+    if (pathname !== ERoutes.PRODUCTS_LIST) {
+      navigate(ERoutes.PRODUCTS_LIST);
+    }
     dispatch(changeSearch(localSearchValue));
   };
 

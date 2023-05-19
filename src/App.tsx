@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 
 import { AppDispatch } from "@Store/store";
 import { fetchProducts } from "@Products/productsSlice";
+import { ERoutes } from "@/types/routes";
 import Header from "@CoreComponents/Header/Header";
 import Footer from "@CoreComponents/Footer/Footer";
 import Home from "@ProductsPages/Home/Home";
@@ -26,11 +27,11 @@ const App = () => {
       <Header />
       <main>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/products" element={<ProductsList />} />
-          <Route path="/products/:id" element={<ProductItem />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="*" element={<NotFound />} />
+          <Route path={ERoutes.HOME} element={<Home />} />
+          <Route path={ERoutes.PRODUCTS_LIST} element={<ProductsList />} />
+          <Route path={ERoutes.PRODUCT_ITEM} element={<ProductItem />} />
+          <Route path={ERoutes.CART} element={<Cart />} />
+          <Route path={ERoutes.NOT_FOUND} element={<NotFound />} />
         </Routes>
       </main>
       <Footer />
