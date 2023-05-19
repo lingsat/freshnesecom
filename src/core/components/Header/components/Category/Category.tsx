@@ -1,8 +1,10 @@
 import React, { FC, useState } from "react";
 import { useDispatch } from "react-redux";
-import { AppDispatch } from "@/store/store";
-import { changeSingleBrand } from "@products/productsSlice";
-import arrowDownThin from "@/assets/images/arrow_down_thin.svg";
+
+import { AppDispatch } from "@Store/store";
+import { changeSingleBrand } from "@Products/productsSlice";
+
+import arrowDownThin from "@Images/arrow_down_thin.svg";
 import "./Category.scss";
 
 interface CategoryProps {

@@ -1,18 +1,20 @@
 import React, { FC, useRef } from "react";
 import { useSelector } from "react-redux";
-import { RootState } from "@/store/store";
-import { IProductsState } from "@products/productsSlice";
-import { getFilteredProducts } from "@/utils/products.utils";
-import { getPaginatedProducts } from "@/utils/pagination";
-import ListNavigation from "@products/components/ListNavigation/ListNavigation";
-import ListFilter from "@products/components/ListFilter/ListFilter";
-import ListSort from "@products/components/ListSort/ListSort";
-import ProductsList from "@products/components/ProductsList/ProductsList";
-import ListPagination from "@products/components/ListPagination/ListPagination";
-import LoadinSpinner from "@/common/components/LoadingSpinner/LoadingSpinner";
-import "./ProductsListPage.scss";
 
-const ProductsListPage: FC = () => {
+import { RootState } from "@Store/store";
+import { IProductsState } from "@Products/productsSlice";
+import { getFilteredProducts } from "@/utils/products";
+import { getPaginatedProducts } from "@/utils/pagination";
+import LoadinSpinner from "@CommonComponents/LoadingSpinner/LoadingSpinner";
+import Navigation from "@ProductsComponents/Navigation/Navigation";
+import Sort from "@ProductsComponents/Sort/Sort";
+import Filter from "@ProductsComponents/Filter/Filter";
+import Products from "@ProductsComponents/Products/Products";
+import Paging from "@ProductsComponents/Paging/Paging";
+
+import "./ProductsList.scss";
+
+const ProductsList: FC = () => {
   const { products, loading, filter, sortRule, pagination } = useSelector<
     RootState,
     IProductsState
@@ -30,7 +32,7 @@ const ProductsListPage: FC = () => {
 
   return (
     <div className="products-list" ref={listRef}>
-      <ListNavigation />
+      <Navigation />
       <div className="products-list__header">
         <h2 className="products-list__title">
           {filter.category || "All Products"}
@@ -40,14 +42,14 @@ const ProductsListPage: FC = () => {
           <span>Products/page</span>
         </div>
       </div>
-      <ListSort sortRule={sortRule} />
+      <Sort sortRule={sortRule} />
       {loading ? (
         <LoadinSpinner />
       ) : (
         <div className="products-list__main">
-          <ListFilter />
-          <ProductsList products={paginatedProducts} />
-          <ListPagination
+          <Filter />
+          <Products products={paginatedProducts} />
+          <Paging
             productsCount={filteredProducts.length}
             pagination={pagination}
             handlePageScroll={handlePageScroll}
@@ -58,4 +60,4 @@ const ProductsListPage: FC = () => {
   );
 };
 
-export default ProductsListPage;
+export default ProductsList;

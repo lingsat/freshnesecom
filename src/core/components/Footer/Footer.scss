@@ -1,4 +1,4 @@
-@import "@/assets/styles/_variables.scss";
+@import "@Styles/_variables.scss";
 
 .footer {
   padding: 4rem 0;
@@ -9,6 +9,14 @@
     display: flex;
     justify-content: space-between;
     gap: 10px;
+  }
+
+  &__title {
+    margin-bottom: 1rem;
+    font-family: $title-text-font;
+    font-weight: 600;
+    font-size: 1.125rem;
+    line-height: 1.675rem;
   }
 
   &__tags {
@@ -23,7 +31,6 @@
 
 .tags__block {
   list-style: none;
-  margin-top: 1.25rem;
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;

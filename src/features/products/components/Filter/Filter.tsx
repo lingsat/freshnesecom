@@ -1,23 +1,25 @@
 import React, { FC, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "@/store/store";
+
+import { AppDispatch, RootState } from "@Store/store";
 import {
   changeCategory,
   clearAllFilters,
   IProductsState,
   toggleBrands,
   toggleStars,
-} from "@products/productsSlice";
-import { getBrands, getCategoriesObj } from "@/utils/products.utils";
-import FilterPrice from "@products/components/FilterPrice/FilterPrice";
-import FilterStars from "@products/components/FilterStars/FilterStars";
-import { EStars } from "@products/types/product";
-import arrowDownThin from "@/assets/images/arrow_down_thin.svg";
-import "./ListFilter.scss";
+} from "@Products/productsSlice";
+import { getBrands, getCategoriesObj } from "@/utils/products";
+import { EStars } from "@Products/types/product";
+import FilterStars from "@ProductsComponents/FilterStars/FilterStars";
+import FilterPrice from "@ProductsComponents/FilterPrice/FilterPrice";
+
+import arrowDownThin from "@Images/arrow_down_thin.svg";
+import "./Filter.scss";
 
 const starsArr = Object.values(EStars);
 
-const ListFilter: FC = () => {
+const Filter: FC = () => {
   const { products, filter } = useSelector<RootState, IProductsState>(
     (state) => state.products
   );
@@ -155,4 +157,4 @@ const ListFilter: FC = () => {
   );
 };
 
-export default ListFilter;
+export default Filter;

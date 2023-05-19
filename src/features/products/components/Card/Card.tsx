@@ -1,18 +1,20 @@
 import React, { FC } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { getStarsArrFromNumber } from "@/utils/products.utils";
-import Button from "@/common/components/Button/Button";
-import { IProduct } from "@products/types/product";
-import star from "@/assets/images/star.svg";
-import checkedStar from "@/assets/images/star_checked.svg";
-import heartIcon from "@/assets/images/heart.svg";
-import "./ProductCard.scss";
 
-interface ProductCardProps {
+import { getStarsArrFromNumber } from "@/utils/products";
+import { IProduct } from "@Products/types/product";
+import Button from "@CommonComponents/Button/Button";
+
+import star from "@Images/star.svg";
+import checkedStar from "@Images/star_checked.svg";
+import heartIcon from "@Images/heart.svg";
+import "./Card.scss";
+
+interface CardProps {
   product: IProduct;
 }
 
-const ProductCard: FC<ProductCardProps> = ({ product }) => {
+const Card: FC<CardProps> = ({ product }) => {
   const navigate = useNavigate();
 
   const starsArr = getStarsArrFromNumber(product.stars);
@@ -91,4 +93,4 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
   );
 };
 
-export default ProductCard;
+export default Card;

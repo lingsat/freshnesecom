@@ -1,9 +1,11 @@
 import React, { FC, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "@/store/store";
-import { changeCategory, IProductsState } from "@products/productsSlice";
-import { getCategoriesObj } from "@/utils/products.utils";
-import arrowDown from "@/assets/images/arrow_down.svg";
+
+import { AppDispatch, RootState } from "@Store/store";
+import { changeCategory, IProductsState } from "@Products/productsSlice";
+import { getCategoriesObj } from "@/utils/products";
+
+import arrowDown from "@Images/arrow_down.svg";
 import "./Selector.scss";
 
 const Selector: FC = () => {

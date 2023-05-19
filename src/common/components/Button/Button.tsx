@@ -1,5 +1,6 @@
 import React, { FC } from "react";
-import arrow from "@/assets/images/arrow_right.svg";
+
+import arrow from "@Images/arrow_right.svg";
 import "./Button.scss";
 
 interface ButtonProps {

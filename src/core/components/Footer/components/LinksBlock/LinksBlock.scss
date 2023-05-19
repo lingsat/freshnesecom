@@ -1,17 +1,10 @@
-@import "@/assets/styles/_variables.scss";
+@import "@Styles/_variables.scss";
 
 .footer__block {
   list-style: none;
   display: flex;
   flex-direction: column;
   gap: 1rem;
-}
-
-.footer__title {
-  font-family: $title-text-font;
-  font-weight: 600;
-  font-size: 1.125rem;
-  line-height: 1.675rem;
 }
 
 @media (max-width: 767.98px) {

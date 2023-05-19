@@ -1,14 +1,16 @@
 import React, { ChangeEvent, FC, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "@/store/store";
+
+import { AppDispatch, RootState } from "@Store/store";
 import {
   changeSearch,
   clearSearch,
   IProductsState,
-} from "@products/productsSlice";
-import Selector from "@/core/components/Header/components/Selector/Selector";
-import searchIcon from "@/assets/images/search.svg";
-import closeIcon from "@/assets/images/close.svg";
+} from "@Products/productsSlice";
+import Selector from "../Selector/Selector";
+
+import searchIcon from "@Images/search.svg";
+import closeIcon from "@Images/close.svg";
 import "./Search.scss";
 
 const Search: FC = () => {
@@ -50,7 +52,7 @@ const Search: FC = () => {
           <input
             className="search__input"
             type="text"
-            placeholder="Search Products, categories ..."
+            placeholder="Search Products ..."
             value={localSearchValue}
             onChange={handleSearchChange}
           />

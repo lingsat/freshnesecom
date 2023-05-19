@@ -1,16 +1,18 @@
 import React, { FC, useState } from "react";
 import { useDispatch } from "react-redux";
-import { AppDispatch } from "@/store/store";
-import { changeSortRule } from "@products/productsSlice";
-import arrowIcon from "@/assets/images/arrow_black.svg";
-import { ESort } from "@products/types/product";
-import "./ListSort.scss";
 
-interface ListSortProps {
+import { AppDispatch } from "@Store/store";
+import { changeSortRule } from "@Products/productsSlice";
+import { ESort } from "@Products/types/product";
+
+import arrowIcon from "@Images/arrow_black.svg";
+import "./Sort.scss";
+
+interface SortProps {
   sortRule: ESort;
 }
 
-const ListSort: FC<ListSortProps> = ({ sortRule }) => {
+const Sort: FC<SortProps> = ({ sortRule }) => {
   const dispatch = useDispatch<AppDispatch>();
   const [showMenu, setShowMenu] = useState<boolean>(false);
 
@@ -56,4 +58,4 @@ const ListSort: FC<ListSortProps> = ({ sortRule }) => {
   );
 };
 
-export default ListSort;
+export default Sort;

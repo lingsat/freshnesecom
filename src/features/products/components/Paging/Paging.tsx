@@ -1,23 +1,25 @@
 import React, { ChangeEvent, FC } from "react";
-import { Pagination, PaginationItem } from "@mui/material";
 import { useDispatch } from "react-redux";
-import { AppDispatch } from "@/store/store";
+import { Pagination, PaginationItem } from "@mui/material";
+
+import { AppDispatch } from "@Store/store";
 import {
   changeCurrentPage,
   increaseProductsPerPage,
-} from "@products/productsSlice";
+} from "@Products/productsSlice";
+import { IPaginationState } from "@Products/types/pagination";
 import { getPaginationData, isPageInActiveRange } from "@/utils/pagination";
-import Button from "@/common/components/Button/Button";
-import { IPaginationState } from "@products/types/pagination";
-import "./ListPagination.scss";
+import Button from "@CommonComponents/Button/Button";
 
-interface ListPaginationProps {
+import "./Paging.scss";
+
+interface PagingProps {
   productsCount: number;
   pagination: IPaginationState;
   handlePageScroll: () => void;
 }
 
-const ListPagination: FC<ListPaginationProps> = ({
+const Paging: FC<PagingProps> = ({
   productsCount,
   pagination,
   handlePageScroll,
@@ -78,4 +80,4 @@ const ListPagination: FC<ListPaginationProps> = ({
   );
 };
 
-export default ListPagination;
+export default Paging;

@@ -3,8 +3,15 @@
     "baseUrl": "./src",
     "paths": {
       "@/*": ["./*"],
-      "@features/*": ["./features/*"],
-      "@products/*": ["./features/products/*"]
+      "@Store/*": ["./store/*"],
+      "@Features/*": ["./features/*"],
+      "@Products/*": ["./features/products/*"],
+      "@ProductsComponents/*": ["./features/products/components/*"],
+      "@ProductsPages/*": ["./features/products/pages/*"],
+      "@CoreComponents/*": ["./core/components/*"],
+      "@CommonComponents/*": ["./common/components/*"],
+      "@Images/*": ["./assets/images/*"],
+      "@Styles/*": ["./assets/styles/*"]
     }
   }
 }

@@ -1,7 +1,9 @@
 import React, { FC } from "react";
-import { getStarsArrFromNumber } from "@/utils/products.utils";
-import checkedStar from "@/assets/images/star_checked_gold.svg";
-import star from "@/assets/images/star.svg";
+
+import { getStarsArrFromNumber } from "@/utils/products";
+
+import star from "@Images/star.svg";
+import checkedStar from "@Images/star_checked_gold.svg";
 import "./FilterStars.scss";
 
 interface FilterStarsProps {

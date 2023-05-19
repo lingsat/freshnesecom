@@ -1,10 +1,12 @@
 import React, { ChangeEvent, FC, useEffect, useState } from "react";
-import ReactSlider from "react-slider";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "@/store/store";
-import { changePrice, IProductsState } from "@products/productsSlice";
-import { getValidPrice } from "@/utils/products.utils";
-import { EPrice } from "@products/types/product";
+import ReactSlider from "react-slider";
+
+import { AppDispatch, RootState } from "@Store/store";
+import { changePrice, IProductsState } from "@Products/productsSlice";
+import { getValidPrice } from "@/utils/products";
+import { EPrice } from "@Products/types/product";
+
 import "./FilterPrice.scss";
 
 const FilterPrice: FC = () => {

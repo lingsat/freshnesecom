@@ -1,13 +1,24 @@
 import React, { FC } from "react";
-import Tag from "@/common/components/Tag/Tag";
+import { useSelector } from "react-redux";
+
+import { RootState } from "@Store/store";
+import { IProductsState } from "@Products/productsSlice";
+import { getTags } from "@/utils/products";
+import Tag from "@CommonComponents/Tag/Tag";
 import LinksBlock from "./components/LinksBlock/LinksBlock";
 import { footerLinks } from "@/mock/footerLinks";
-import { tags } from "@/mock/tags";
+
 import "./Footer.scss";
 
 const linksBlockArr = Object.keys(footerLinks);
 
 const Footer: FC = () => {
+  const { products } = useSelector<RootState, IProductsState>(
+    (state) => state.products
+  );
+
+  const tags = getTags(products);
+
   return (
     <footer className="footer">
       <ul className="footer__links">

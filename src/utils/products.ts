@@ -1,5 +1,5 @@
-import { IFilter } from "@products/productsSlice";
-import { IProduct, ICategory, ESort } from "@products/types/product";
+import { IFilter } from "@Products/productsSlice";
+import { IProduct, ICategory, ESort } from "@Products/types/product";
 
 const getSortedProducts = (
   productsArr: IProduct[],
@@ -81,6 +81,13 @@ export const getBrands = (
     const brands = categories.map((categoryObj) => categoryObj.brands).flat();
     return Array.from(new Set(brands));
   }
+};
+
+export const getTags = (productsArr: IProduct[]): string[] => {
+  const allTagsArr = productsArr.reduce((acc: string[], product) => {
+    return [...acc, ...product.tags];
+  }, []);
+  return Array.from(new Set(allTagsArr));
 };
 
 export const getMinMaxPrice = (

@@ -1,8 +1,9 @@
 import React, { FC } from "react";
 import { Link } from "react-router-dom";
-import "./ListNavigation.scss";
 
-const ListNavigation: FC = () => {
+import "./Navigation.scss";
+
+const Navigation: FC = () => {
   return (
     <ul className="list-nav">
       <li className="list-nav__item">
@@ -19,4 +20,4 @@ const ListNavigation: FC = () => {
   );
 };
 
-export default ListNavigation;
+export default Navigation;

@@ -1,16 +1,18 @@
 import React, { FC, useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { RootState } from "@/store/store";
-import { getCategoriesObj } from "@/utils/products.utils";
-import { IProductsState } from "@products/productsSlice";
-import LinkItem from "@/common/components/LInkItem/LinkItem";
+
+import { RootState } from "@Store/store";
+import { getCategoriesObj } from "@/utils/products";
+import { IProductsState } from "@Products/productsSlice";
+import LinkItem from "@CommonComponents/LInkItem/LinkItem";
 import Search from "./components/Search/Search";
 import Category from "./components/Category/Category";
-import logo from "@/assets/images/logo.svg";
-import arrowDown from "@/assets/images/arrow_down.svg";
-import userIcon from "@/assets/images/user.svg";
-import cartIcon from "@/assets/images/basket.svg";
+
+import logo from "@Images/logo.svg";
+import arrowDown from "@Images/arrow_down.svg";
+import userIcon from "@Images/user.svg";
+import cartIcon from "@Images/basket.svg";
 import "./Header.scss";
 
 const Header: FC = () => {
