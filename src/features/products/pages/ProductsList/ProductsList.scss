@@ -76,6 +76,10 @@
   }
 }
 
+.spinner__wrapper {
+  min-height: 100vh;
+}
+
 @media (max-width: 991.98px) {
   .products-list__main {
     grid-template-columns: 1fr;

@@ -61,7 +61,9 @@ const ProductsList: FC = () => {
         </button>
       </div>
       {loading ? (
-        <LoadinSpinner />
+        <div className="spinner__wrapper">
+          <LoadinSpinner />
+        </div>
       ) : (
         <div className="products-list__main">
           <Filter showFilter={showFilter} toggleFilter={toggleFilter} />
