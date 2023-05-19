@@ -64,10 +64,6 @@ export const productsSlice = createSlice({
       state.filter.searchValue = action.payload;
       state.pagination = initialPagination;
     },
-    clearSearch(state) {
-      state.filter.searchValue = "";
-      state.pagination = initialPagination;
-    },
     changeCategory(state, action: PayloadAction<string>) {
       state.filter.category = action.payload;
       state.filter.brands = [];
@@ -138,7 +134,6 @@ export const productsSlice = createSlice({
 
 export const {
   changeSearch,
-  clearSearch,
   changeCategory,
   changeSingleBrand,
   toggleBrands,

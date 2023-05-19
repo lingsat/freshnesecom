@@ -10,14 +10,16 @@ import { EPrice } from "@Products/types/product";
 import "./FilterPrice.scss";
 
 const FilterPrice: FC = () => {
+  const dispatch = useDispatch<AppDispatch>();
   const { minMaxPrice, filter } = useSelector<RootState, IProductsState>(
     (state) => state.products
   );
+
+  const [isMount, setIsMount] = useState<boolean>(false);
   const [priceValues, setPriceValues] = useState<number[]>(filter.price);
+
   const isPricesValid =
     priceValues[0] < minMaxPrice.min || priceValues[0] > priceValues[1];
-
-  const dispatch = useDispatch<AppDispatch>();
 
   const handleChangeMin = (event: ChangeEvent<HTMLInputElement>) => {
     const newMinPrice = getValidPrice(event.target.value, priceValues[1]);
@@ -46,8 +48,12 @@ const FilterPrice: FC = () => {
   };
 
   useEffect(() => {
-    const debounceTimer = setTimeout(handleSearchByPrice, 500);
-    return () => clearTimeout(debounceTimer);
+    if (isMount) {
+      const debounceTimer = setTimeout(handleSearchByPrice, 500);
+      return () => clearTimeout(debounceTimer);
+    } else {
+      setIsMount(true);
+    }
   }, [priceValues]);
 
   useEffect(() => {

@@ -3,11 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { AppDispatch, RootState } from "@Store/store";
-import {
-  changeSearch,
-  clearSearch,
-  IProductsState,
-} from "@Products/productsSlice";
+import { changeSearch, IProductsState } from "@Products/productsSlice";
 import { ERoutes } from "@/types/routes";
 import Selector from "../Selector/Selector";
 
@@ -24,6 +20,7 @@ const Search: FC = () => {
     (state) => state.products
   );
 
+  const [isMount, setIsMount] = useState<boolean>(false);
   const [localSearchValue, setLocalSearchValue] = useState<string>(
     filter.searchValue
   );
@@ -33,24 +30,24 @@ const Search: FC = () => {
   };
 
   const startSearching = () => {
-    if (pathname !== ERoutes.PRODUCTS_LIST) {
+    if (pathname !== ERoutes.PRODUCTS_LIST && localSearchValue) {
       navigate(ERoutes.PRODUCTS_LIST);
     }
     dispatch(changeSearch(localSearchValue));
   };
 
   const clearSearchValue = () => {
-    dispatch(clearSearch());
+    setLocalSearchValue("");
   };
 
   useEffect(() => {
-    const debounceTimer = setTimeout(startSearching, 500);
-    return () => clearTimeout(debounceTimer);
+    if (isMount) {
+      const debounceTimer = setTimeout(startSearching, 500);
+      return () => clearTimeout(debounceTimer);
+    } else {
+      setIsMount(true);
+    }
   }, [localSearchValue]);
-
-  useEffect(() => {
-    setLocalSearchValue(filter.searchValue);
-  }, [filter.searchValue]);
 
   return (
     <div className="search">

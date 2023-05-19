@@ -35,9 +35,10 @@
   gap: 0.5rem;
   border-radius: 12px;
   cursor: pointer;
-  transition: all 0.1s linear;
 
   img {
+    width: 7px;
+    height: 5px;
     transition: all 0.3s linear;
   }
 }
