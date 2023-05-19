@@ -4,7 +4,7 @@ import axios from "axios";
 import { RootState } from "@Store/store";
 import { getMinMaxPrice } from "@/utils/products";
 import { getToggledArray } from "@/utils/toggleArrItem";
-import { IProduct, ESort } from "@Products/types/product";
+import { IProduct } from "@Products/types/product";
 import { IPaginationState, EPagination } from "@Products/types/pagination";
 
 export interface IFilter {
@@ -23,7 +23,7 @@ export interface IProductsState {
     max: number;
   };
   filter: IFilter;
-  sortRule: ESort;
+  sortRule: string;
   pagination: IPaginationState;
 }
 
@@ -46,7 +46,7 @@ const initialState: IProductsState = {
     stars: [],
     price: [],
   },
-  sortRule: ESort.CLEAR,
+  sortRule: "",
   pagination: initialPagination,
 };
 
@@ -109,7 +109,7 @@ export const productsSlice = createSlice({
       };
       state.pagination = initialPagination;
     },
-    changeSortRule(state, action: PayloadAction<ESort>) {
+    changeSortRule(state, action: PayloadAction<string>) {
       state.sortRule = action.payload;
       state.pagination = initialPagination;
     },

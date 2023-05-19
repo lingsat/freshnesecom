@@ -3,7 +3,7 @@ import { IProduct, ICategory, ESort } from "@Products/types/product";
 
 const getSortedProducts = (
   productsArr: IProduct[],
-  sortRule: ESort
+  sortRule: string
 ): IProduct[] => {
   switch (sortRule) {
     case ESort.PRICE_LOW:
@@ -26,7 +26,7 @@ const getSortedProducts = (
 export const getFilteredProducts = (
   productsArr: IProduct[],
   filter: IFilter,
-  sortRule: ESort
+  sortRule: string
 ): IProduct[] => {
   const { searchValue, category, brands, stars, price } = filter;
   const formatedSearchValue = searchValue.toLowerCase().trim();

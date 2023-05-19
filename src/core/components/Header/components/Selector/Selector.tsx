@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@Store/store";
 import { changeCategory, IProductsState } from "@Products/productsSlice";
 import { getCategoriesObj } from "@/utils/products";
+import DropDown from "@CommonComponents/DropDown/DropDown";
 
 import arrowDown from "@Images/arrow_down.svg";
 import "./Selector.scss";
@@ -26,7 +27,7 @@ const Selector: FC = () => {
     setShowMenu(true);
   };
 
-  const handleSetCategory = (newCategory: string) => () => {
+  const handleSetCategory = (newCategory: string) => {
     dispatch(changeCategory(newCategory));
     handleHideMenu();
   };
@@ -41,19 +42,14 @@ const Selector: FC = () => {
           alt="DownArrow"
         />
       </div>
-      <ul className={`selector__menu ${showMenu && "selector__menu--show"}`}>
-        <li className="selector__link" onClick={handleSetCategory("")}>
-          All categories
-        </li>
-        {categories.map((category, index) => (
-          <li
-            key={`selector-${category}-${index}`}
-            className="selector__link"
-            onClick={handleSetCategory(category)}>
-            {category}
-          </li>
-        ))}
-      </ul>
+      {showMenu && (
+        <DropDown
+          list={categories}
+          onClick={handleSetCategory}
+          clearValue="All categories"
+          position="center"
+        />
+      )}
     </div>
   );
 };

@@ -3,13 +3,14 @@ import { useDispatch } from "react-redux";
 
 import { AppDispatch } from "@Store/store";
 import { changeSortRule } from "@Products/productsSlice";
+import DropDown from "@CommonComponents/DropDown/DropDown";
 import { ESort } from "@Products/types/product";
 
 import arrowIcon from "@Images/arrow_black.svg";
 import "./Sort.scss";
 
 interface SortProps {
-  sortRule: ESort;
+  sortRule: string;
 }
 
 const Sort: FC<SortProps> = ({ sortRule }) => {
@@ -26,7 +27,7 @@ const Sort: FC<SortProps> = ({ sortRule }) => {
     setShowMenu(true);
   };
 
-  const handleSetSortRule = (newSortRule: ESort) => () => {
+  const handleSetSortRule = (newSortRule: string) => {
     dispatch(changeSortRule(newSortRule));
     handleHideMenu();
   };
@@ -43,16 +44,14 @@ const Sort: FC<SortProps> = ({ sortRule }) => {
             alt="DownArrow"
           />
         </div>
-        <ul className={`sort__menu ${showMenu && "sort__menu--show"}`}>
-          {sortRuleArr.map((rule, index) => (
-            <li
-              key={`sortrule-${rule}-${index}`}
-              className="sort__link"
-              onClick={handleSetSortRule(rule)}>
-              {rule || "Clear"}
-            </li>
-          ))}
-        </ul>
+        {showMenu && (
+          <DropDown
+            list={sortRuleArr}
+            onClick={handleSetSortRule}
+            clearValue="Clear"
+            position="center"
+          />
+        )}
       </div>
     </div>
   );

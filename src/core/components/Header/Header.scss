@@ -186,23 +186,6 @@
     display: none;
   }
 
-  .search {
-    flex-direction: column;
-    row-gap: 0.5rem;
-
-    form {
-      width: 100%;
-    }
-
-    &__input {
-      width: 100%;
-      padding-top: 5px;
-      padding-bottom: 5px;
-      padding-left: 5px;
-      border: 1px solid $header-search-border-color;
-    }
-  }
-
   .category__hider {
     display: flex;
   }

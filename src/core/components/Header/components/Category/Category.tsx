@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 
 import { AppDispatch } from "@Store/store";
 import { changeSingleBrand } from "@Products/productsSlice";
+import DropDown from "@CommonComponents/DropDown/DropDown";
 
 import arrowDownThin from "@Images/arrow_down_thin.svg";
 import "./Category.scss";
@@ -25,7 +26,8 @@ const Category: FC<CategoryProps> = ({ category, brands }) => {
     setShowMenu(true);
   };
 
-  const handleChooseBrand = (brand: string) => () => {
+  const handleChooseBrand = (brand: string) => {
+    handleHideMenu();
     dispatch(changeSingleBrand({ brand, category }));
   };
 
@@ -39,17 +41,7 @@ const Category: FC<CategoryProps> = ({ category, brands }) => {
           alt="DownArrow"
         />
       </div>
-      <ul
-        className={`category__menu ${showMenu ? "category__menu--show" : ""}`}>
-        {brands.map((brand, index) => (
-          <li
-            key={`brand-${brand}-${index}`}
-            className="category__link"
-            onClick={handleChooseBrand(brand)}>
-            {brand}
-          </li>
-        ))}
-      </ul>
+      {showMenu && <DropDown list={brands} onClick={handleChooseBrand} />}
     </li>
   );
 };

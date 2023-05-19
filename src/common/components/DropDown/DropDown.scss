@@ -1,0 +1,32 @@
+@import "@Styles/_variables.scss";
+@import "@Styles/_mixins.scss";
+
+.dropdown {
+  width: 130px;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 2;
+  background: $bg-search-color;
+  box-shadow: $shadow-dropdown-color 0px 2px 8px 0px;
+  list-style: none;
+  border: 1px solid $header-search-border-color;
+  border-radius: 5px;
+
+  &--center {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  &__item {
+    @include text-overflow-hide;
+    padding: 5px;
+    font-size: 0.8rem;
+    line-height: 1rem;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

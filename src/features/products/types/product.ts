@@ -29,7 +29,6 @@ export enum EPrice {
 }
 
 export enum ESort {
-  CLEAR = "",
   PRICE_LOW = "Lowest Price",
   PRICE_HIGH = "Highest Price",
   RATING_LOW = "Lowest Rating",

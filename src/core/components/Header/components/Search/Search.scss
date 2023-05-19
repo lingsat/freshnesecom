@@ -1,7 +1,7 @@
 @import "@Styles/_variables.scss";
 
 .search {
-  padding: 0.5rem 1rem;
+  padding: 0 1rem;
   display: flex;
   align-items: center;
   background: $bg-search-color;
@@ -75,10 +75,6 @@
     width: 100%;
     max-width: 520px;
     margin: 0 auto;
-
-    &__input {
-      width: 280px;
-    }
   }
 }
 
@@ -88,6 +84,7 @@
     row-gap: 0.5rem;
 
     form {
+      margin-bottom: 0.5rem;
       width: 100%;
     }
 
@@ -95,8 +92,13 @@
       width: 100%;
       padding-top: 5px;
       padding-bottom: 5px;
-      padding-left: 5px;
+      padding-left: 10px;
       border: 1px solid $header-search-border-color;
+      border-radius: 8px;
+    }
+
+    &__icon {
+      right: 5px;
     }
   }
 }
