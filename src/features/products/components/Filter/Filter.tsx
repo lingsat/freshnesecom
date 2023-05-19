@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { AppDispatch, RootState } from "@Store/store";
@@ -14,26 +14,24 @@ import { EStars } from "@Products/types/product";
 import FilterStars from "@ProductsComponents/FilterStars/FilterStars";
 import FilterPrice from "@ProductsComponents/FilterPrice/FilterPrice";
 
-import arrowDownThin from "@Images/arrow_down_thin.svg";
 import "./Filter.scss";
 
 const starsArr = Object.values(EStars);
 
-const Filter: FC = () => {
+interface FilterProps {
+  showFilter: boolean;
+  toggleFilter: () => void;
+}
+
+const Filter: FC<FilterProps> = ({ showFilter, toggleFilter }) => {
+  const dispatch = useDispatch<AppDispatch>();
   const { products, filter } = useSelector<RootState, IProductsState>(
     (state) => state.products
   );
-  const dispatch = useDispatch<AppDispatch>();
 
   const categoriesObj = getCategoriesObj(products);
   const categories = Object.keys(categoriesObj);
   const brands = getBrands(categoriesObj, filter.category);
-
-  const [showFilter, setShowFIlter] = useState<boolean>(false);
-
-  const toggleFilter = () => {
-    setShowFIlter((prev) => !prev);
-  };
 
   const handleFilterPropagation = (event: React.MouseEvent<HTMLDivElement>) => {
     event.stopPropagation();
@@ -67,92 +65,81 @@ const Filter: FC = () => {
   return (
     <>
       <div
-        className={`filter__wrapper ${
-          showFilter ? "filter__wrapper--show" : ""
-        }`}
-        onClick={toggleFilter}>
-        <aside className="filter" onClick={handleFilterPropagation}>
-          <div className="filter__block">
-            <h3 className="filter__title">Categories</h3>
-            <ul className="filter-categories">
+        className={`overlay ${showFilter ? "overlay--show" : ""}`}
+        onClick={toggleFilter}></div>
+      <aside
+        className={`filter ${showFilter ? "filter--show" : ""}`}
+        onClick={handleFilterPropagation}>
+        <div className="filter__block">
+          <h3 className="filter__title">Categories</h3>
+          <ul className="filter-categories">
+            <li
+              className={`filter-categories__item ${
+                filter.category === "" ? "filter-categories__item--active" : ""
+              }`}
+              onClick={handleChooseCategory("")}>
+              <p>All categories</p>
+              <span>{products.length}</span>
+            </li>
+            {categories.map((category, index) => (
               <li
+                key={`filterCat-${category}-${index}`}
                 className={`filter-categories__item ${
-                  filter.category === ""
+                  filter.category === category
                     ? "filter-categories__item--active"
                     : ""
                 }`}
-                onClick={handleChooseCategory("")}>
-                <p>All categories</p>
-                <span>{products.length}</span>
+                onClick={handleChooseCategory(category)}>
+                <p>{category}</p>
+                <span>{categoriesObj[category].count}</span>
               </li>
-              {categories.map((category, index) => (
-                <li
-                  key={`filterCat-${category}-${index}`}
-                  className={`filter-categories__item ${
-                    filter.category === category
-                      ? "filter-categories__item--active"
-                      : ""
-                  }`}
-                  onClick={handleChooseCategory(category)}>
-                  <p>{category}</p>
-                  <span>{categoriesObj[category].count}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className="filter__block">
-            <h3 className="filter__title">Brands</h3>
-            <ul className="filter-brands">
-              {brands.map((brand, index) => (
-                <li key={`filterbrand-${brand}-${index}`}>
-                  <label className="filter__label">
-                    <input
-                      className="filter__input"
-                      type="checkbox"
-                      checked={filter.brands.includes(brand)}
-                      onChange={handleChooseBrand(brand)}
-                    />
-                    <p>{brand}</p>
-                  </label>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className="filter__block">
-            <h3 className="filter__title">Rating</h3>
-            <ul className="filter-rating">
-              {starsArr.map((starCount, index) => (
-                <li key={`filterstars-${starCount}-${index}`}>
-                  <label className="filter__label">
-                    <input
-                      className="filter__input"
-                      type="checkbox"
-                      checked={filter.stars.includes(+starCount)}
-                      onChange={handleChooseStar(starCount)}
-                    />
-                    <FilterStars checkedStars={starCount} />
-                  </label>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className="filter__block">
-            <h3 className="filter__title">Price</h3>
-            <FilterPrice />
-          </div>
-          <button className="filter__reset" onClick={handleFilterReset}>
-            Reset
-          </button>
-        </aside>
-      </div>
-      <button className="filter__switcher" type="button" onClick={toggleFilter}>
-        Filter
-        <img
-          className={`${showFilter && "reverse__icon"}`}
-          src={arrowDownThin}
-          alt="DownArrow"
-        />
-      </button>
+            ))}
+          </ul>
+        </div>
+        <div className="filter__block">
+          <h3 className="filter__title">Brands</h3>
+          <ul className="filter-brands">
+            {brands.map((brand, index) => (
+              <li key={`filterbrand-${brand}-${index}`}>
+                <label className="filter__label">
+                  <input
+                    className="filter__input"
+                    type="checkbox"
+                    checked={filter.brands.includes(brand)}
+                    onChange={handleChooseBrand(brand)}
+                  />
+                  <p>{brand}</p>
+                </label>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className="filter__block">
+          <h3 className="filter__title">Rating</h3>
+          <ul className="filter-rating">
+            {starsArr.map((starCount, index) => (
+              <li key={`filterstars-${starCount}-${index}`}>
+                <label className="filter__label">
+                  <input
+                    className="filter__input"
+                    type="checkbox"
+                    checked={filter.stars.includes(+starCount)}
+                    onChange={handleChooseStar(starCount)}
+                  />
+                  <FilterStars checkedStars={starCount} />
+                </label>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className="filter__block">
+          <h3 className="filter__title">Price</h3>
+          <FilterPrice />
+        </div>
+        <button className="filter__reset" onClick={handleFilterReset}>
+          Reset
+        </button>
+      </aside>
     </>
   );
 };

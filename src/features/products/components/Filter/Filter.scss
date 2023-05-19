@@ -1,6 +1,10 @@
 @import "@Styles/_variables.scss";
 @import "@Styles/_mixins.scss";
 
+.overlay {
+  display: none;
+}
+
 .filter {
   width: 270px;
   background-color: $color-white;
@@ -14,31 +18,6 @@
     font-weight: 600;
     font-size: 1.125rem;
     line-height: 1.65rem;
-  }
-
-  &__switcher {
-    display: none;
-    padding: 0 0.5rem;
-    font-family: $font-secondary;
-    font-weight: 500;
-    font-size: 0.95rem;
-    line-height: 1.375rem;
-    color: $color-black;
-    align-items: center;
-    gap: 0.5rem;
-    background: inherit;
-    border: none;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: all 0.1s linear;
-
-    &:hover {
-      background-color: $color-gray-light;
-    }
-
-    img {
-      transition: all 0.3s linear;
-    }
   }
 }
 
@@ -171,39 +150,35 @@
 }
 
 @media (max-width: 991.98px) {
+  .overlay {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 3;
+    backdrop-filter: blur(5px);
+
+    &--show {
+      display: block;
+    }
+  }
+
   .filter {
     padding: 0.75rem;
     border: 1px solid $color-gray-light;
     box-shadow: $color-gray 0px 2px 8px 0px;
     position: absolute;
     top: 0;
-    left: 0;
+    left: -270px;
     bottom: 0;
     z-index: 4;
     overflow-y: auto;
     overflow-x: hidden;
+    transition: all 0.3s linear;
 
-    &__wrapper {
-      display: none;
-      position: fixed;
-      width: 100%;
-      height: 100%;
-      top: 0;
+    &--show {
       left: 0;
-      z-index: 3;
-      backdrop-filter: blur(5px);
-
-      &--show {
-        display: flex;
-      }
-    }
-
-    &__switcher {
-      display: flex;
-      position: absolute;
-      top: -40px;
-      left: 0;
-      z-index: 2;
     }
   }
 }

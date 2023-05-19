@@ -1,4 +1,4 @@
-import React, { FC, useRef } from "react";
+import React, { FC, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 
 import { RootState } from "@Store/store";
@@ -12,6 +12,7 @@ import Filter from "@ProductsComponents/Filter/Filter";
 import Products from "@ProductsComponents/Products/Products";
 import Paging from "@ProductsComponents/Paging/Paging";
 
+import arrowDownThin from "@Images/arrow_down_thin.svg";
 import "./ProductsList.scss";
 
 const ProductsList: FC = () => {
@@ -20,6 +21,12 @@ const ProductsList: FC = () => {
     IProductsState
   >((state) => state.products);
   const listRef = useRef<HTMLDivElement>(null);
+
+  const [showFilter, setShowFIlter] = useState<boolean>(false);
+
+  const toggleFilter = () => {
+    setShowFIlter((prev) => !prev);
+  };
 
   const filteredProducts = getFilteredProducts(products, filter, sortRule);
   const paginatedProducts = getPaginatedProducts(filteredProducts, pagination);
@@ -42,12 +49,22 @@ const ProductsList: FC = () => {
           <span>Products/page</span>
         </div>
       </div>
-      <Sort sortRule={sortRule} />
+      <div className="products-list__controls">
+        <Sort sortRule={sortRule} />
+        <button className="filter__switcher" onClick={toggleFilter}>
+          Filter
+          <img
+            className={`${showFilter && "reverse__icon"}`}
+            src={arrowDownThin}
+            alt="DownArrow"
+          />
+        </button>
+      </div>
       {loading ? (
         <LoadinSpinner />
       ) : (
         <div className="products-list__main">
-          <Filter />
+          <Filter showFilter={showFilter} toggleFilter={toggleFilter} />
           <Products products={paginatedProducts} />
           <Paging
             productsCount={filteredProducts.length}

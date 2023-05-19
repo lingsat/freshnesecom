@@ -1,9 +1,8 @@
 @import "@Styles/_variables.scss";
 
 .sort {
-  margin-bottom: 4rem;
   width: 190px;
-  padding: 0 0 0 10px;
+  padding: 0 0 0 0.75rem;
   background: $color-gray-lightest;
   border: 1px solid $color-gray-light;
   border-radius: 12px;
@@ -40,11 +39,5 @@
 
   img {
     transition: all 0.3s linear;
-  }
-}
-
-@media (max-width: 991.98px) {
-  .sort {
-    margin: 0 0 0.6rem auto;
   }
 }
