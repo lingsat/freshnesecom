@@ -4,8 +4,8 @@
   padding: 0 1rem;
   display: flex;
   align-items: center;
-  background: $bg-search-color;
-  border: 1px solid $header-search-border-color;
+  background: $color-gray-lightest;
+  border: 1px solid $color-gray-light;
   border-radius: 12px;
 
   &__label {
@@ -32,14 +32,14 @@
     padding: 0 1.5rem;
     width: 300px;
     border: none;
-    border-left: 1px solid $header-search-border-color;
+    border-left: 1px solid $color-gray-light;
     outline: none;
-    font-family: $main-text-font;
+    font-family: $font-primary;
     font-weight: 400;
     font-size: 0.875rem;
     line-height: 1.185rem;
     background: inherit;
-    color: $search-field-color;
+    color: $color-gray;
   }
 
   &__clear {
@@ -59,7 +59,7 @@
     transition: all 0.1s linear;
 
     &:hover {
-      background-color: $bg-button-hover-color;
+      background-color: $color-gray-light;
     }
 
     img {
@@ -93,7 +93,7 @@
       padding-top: 5px;
       padding-bottom: 5px;
       padding-left: 10px;
-      border: 1px solid $header-search-border-color;
+      border: 1px solid $color-gray-light;
       border-radius: 8px;
     }
 

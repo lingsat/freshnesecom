@@ -7,10 +7,10 @@
   top: 100%;
   left: 0;
   z-index: 2;
-  background: $bg-search-color;
-  box-shadow: $shadow-dropdown-color 0px 2px 8px 0px;
+  background: $color-gray-lightest;
+  box-shadow: $color-gray-light 0px 2px 8px 0px;
   list-style: none;
-  border: 1px solid $header-search-border-color;
+  border: 1px solid $color-gray-light;
   border-radius: 5px;
 
   &--center {

@@ -15,7 +15,7 @@
     p {
       font-size: 0.75rem;
       line-height: 1rem;
-      color: $search-field-color;
+      color: $color-gray;
     }
   }
 
@@ -28,18 +28,18 @@
       min-width: 23px;
       min-height: 23px;
       height: auto;
-      font-family: $main-text-font;
+      font-family: $font-primary;
       font-size: 1rem;
       line-height: 1rem;
     }
 
     .active {
-      color: $link-main-color;
+      color: $color-green;
     }
   }
 
   &__item--selected {
-    color: $link-main-color;
+    color: $color-green;
   }
 
   &__stat {
@@ -51,18 +51,18 @@
     p {
       padding: 0 0.5rem;
       border-radius: 12px;
-      font-family: $title-text-font;
+      font-family: $font-secondary;
       font-weight: 600;
       font-size: 0.75rem;
       line-height: 1.125rem;
-      background-color: $bg-list-stat-color;
-      color: $link-main-color;
+      background-color: $color-gray-lightest;
+      color: $color-green;
     }
 
     span {
       font-size: 0.75rem;
       line-height: 1rem;
-      color: $search-field-color;
+      color: $color-gray;
     }
   }
 }

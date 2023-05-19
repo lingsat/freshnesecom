@@ -3,7 +3,7 @@
 
 .card {
   height: 285px;
-  border: 1px solid $header-search-border-color;
+  border: 1px solid $color-gray-light;
   border-radius: 12px;
   display: flex;
   overflow: hidden;
@@ -33,7 +33,7 @@
 
 .info__title {
   margin-bottom: 4px;
-  font-family: $title-text-font;
+  font-family: $font-secondary;
   font-weight: 600;
   font-size: 1.125rem;
   line-height: 1.65rem;
@@ -41,7 +41,7 @@
   a {
     @include text-overflow-hide;
     display: block;
-    color: $text-black-color;
+    color: $color-black;
     text-decoration: none;
   }
 
@@ -55,7 +55,7 @@
   margin-bottom: 0.5rem;
   font-size: 0.75rem;
   line-height: 1rem;
-  color: $text-info-desc-color;
+  color: $color-gray-dark;
 }
 
 .info__stars {
@@ -82,7 +82,7 @@
     column-gap: 30px;
     font-size: 0.875rem;
     line-height: 1.185rem;
-    color: $search-field-color;
+    color: $color-gray;
   }
 
   &__category {
@@ -95,7 +95,7 @@
     width: calc(100% - 110px);
 
     span {
-      color: $link-main-color;
+      color: $color-green;
     }
   }
 }
@@ -106,7 +106,7 @@
 
 .info__price {
   @include text-overflow-hide;
-  font-family: $title-text-font;
+  font-family: $font-secondary;
   font-weight: 600;
   font-size: 1.125rem;
   line-height: 1.65rem;
@@ -114,12 +114,12 @@
 
 .info__old-price {
   @include text-overflow-hide;
-  font-family: $title-text-font;
+  font-family: $font-secondary;
   font-weight: 600;
   font-size: 0.75rem;
   line-height: 1.125rem;
   text-decoration-line: line-through;
-  color: $search-field-color;
+  color: $color-gray;
 }
 
 .info__delivery-block {
@@ -128,18 +128,18 @@
 
 .info__shipping {
   @include text-overflow-hide;
-  font-family: $title-text-font;
+  font-family: $font-secondary;
   font-weight: 600;
   font-size: 0.75rem;
   line-height: 1.125rem;
-  color: $search-field-color;
+  color: $color-gray;
 }
 
 .info__delivery {
   @include text-overflow-hide;
   font-size: 0.75rem;
   line-height: 1rem;
-  color: $search-field-color;
+  color: $color-gray;
 }
 
 .info__buttons {
@@ -155,19 +155,19 @@
   justify-content: center;
   align-items: center;
   gap: 6px;
-  background: $bg-tag-color;
+  background: $color-gray-lightest;
   border: none;
   border-radius: 12px;
-  font-family: $title-text-font;
+  font-family: $font-secondary;
   font-weight: 700;
   font-size: 0.95rem;
   line-height: 1.375rem;
-  color: $text-black-color;
+  color: $color-black;
   cursor: pointer;
 
   &:hover {
     transition: all 0.1s linear;
-    background-color: $bg-button-hover-color;
+    background-color: $color-gray-light;
   }
 
   img {

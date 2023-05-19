@@ -13,7 +13,7 @@
       content: "";
       width: 0;
       height: 10px;
-      border-right: 1px solid $listNav-border-color;
+      border-right: 1px solid $color-gray;
       position: absolute;
       right: -10px;
       bottom: 4px;
@@ -23,7 +23,7 @@
 
     &:last-of-type {
       .list-nav__link {
-        color: $text-black-color;
+        color: $color-black;
       }
 
       &::after {
@@ -34,10 +34,10 @@
 
   &__link {
     text-decoration: none;
-    font-family: $main-text-font;
+    font-family: $font-primary;
     font-size: 0.75rem;
     line-height: 1rem;
-    color: $search-field-color;
+    color: $color-gray;
 
     &:hover {
       text-decoration: underline;

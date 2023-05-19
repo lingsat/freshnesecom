@@ -27,14 +27,14 @@
     font-weight: 600;
     font-size: 0.75rem;
     line-height: 1.125rem;
-    background-color: $bg-list-stat-color;
-    color: $link-main-color;
+    background-color: $color-gray-lightest;
+    color: $color-green;
   }
 
   span {
     font-size: 0.75rem;
     line-height: 1rem;
-    color: $search-field-color;
+    color: $color-gray;
   }
 }
 

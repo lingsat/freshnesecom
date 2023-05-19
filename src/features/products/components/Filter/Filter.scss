@@ -3,14 +3,14 @@
 
 .filter {
   width: 270px;
-  background-color: $bg-white-color;
+  background-color: $color-white;
   display: flex;
   flex-direction: column;
   gap: 3rem;
 
   &__title {
     margin-bottom: 1rem;
-    font-family: $title-text-font;
+    font-family: $font-secondary;
     font-weight: 600;
     font-size: 1.125rem;
     line-height: 1.65rem;
@@ -19,11 +19,11 @@
   &__switcher {
     display: none;
     padding: 0 0.5rem;
-    font-family: $title-text-font;
+    font-family: $font-secondary;
     font-weight: 500;
     font-size: 0.95rem;
     line-height: 1.375rem;
-    color: $text-black-color;
+    color: $color-black;
     align-items: center;
     gap: 0.5rem;
     background: inherit;
@@ -33,7 +33,7 @@
     transition: all 0.1s linear;
 
     &:hover {
-      background-color: $bg-button-hover-color;
+      background-color: $color-gray-light;
     }
 
     img {
@@ -54,7 +54,7 @@
     align-items: center;
     font-size: 0.875rem;
     line-height: 1.185rem;
-    color: $text-black-color;
+    color: $color-black;
     cursor: pointer;
 
     p {
@@ -68,14 +68,14 @@
     span {
       min-width: 30px;
       padding: 0 8px;
-      background: $bg-list-stat-color;
+      background: $color-gray-lightest;
       border-radius: 12px;
       text-align: center;
-      font-family: $title-text-font;
+      font-family: $font-secondary;
       font-weight: 600;
       font-size: 0.75rem;
       line-height: 1.185rem;
-      color: $link-main-color;
+      color: $color-green;
     }
 
     &--active {
@@ -122,9 +122,9 @@
   width: 20px;
   height: 20px;
   margin: 0;
-  border: 2px solid $header-search-border-color;
+  border: 2px solid $color-gray-light;
   border-radius: 3px;
-  background-color: $bg-white-color;
+  background-color: $color-white;
   outline: none;
   cursor: pointer;
   position: absolute;
@@ -134,17 +134,17 @@
   transform: translateY(-50%);
 
   &:hover {
-    box-shadow: 0 0 5px $bg-card-btn-color;
+    box-shadow: 0 0 5px $color-green;
   }
 
   &:checked {
-    background-color: $bg-card-btn-color;
-    border: 2px solid $bg-card-btn-hover-color;
+    background-color: $color-green;
+    border: 2px solid $color-green-dark;
 
     &::before {
       content: "\2714";
       font-size: 0.9rem;
-      color: $text-white-color;
+      color: $color-white;
       position: absolute;
       right: 2px;
       top: -3px;
@@ -157,24 +157,24 @@
   margin: 0 auto;
   border: none;
   background: inherit;
-  font-family: $title-text-font;
+  font-family: $font-secondary;
   font-weight: 700;
   font-size: 0.95rem;
   line-height: 1.375rem;
-  color: $text-reset-color;
+  color: $color-gray;
   cursor: pointer;
   transition: all 0.1s linear;
 
   &:hover {
-    color: $text-reset-hover-color;
+    color: $color-gray-dark;
   }
 }
 
 @media (max-width: 991.98px) {
   .filter {
     padding: 0.75rem;
-    border: 1px solid $filter-border-color;
-    box-shadow: $shadow-filter-color 0px 2px 8px 0px;
+    border: 1px solid $color-gray-light;
+    box-shadow: $color-gray 0px 2px 8px 0px;
     position: absolute;
     top: 0;
     left: 0;

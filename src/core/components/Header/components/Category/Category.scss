@@ -9,11 +9,11 @@
 
 .category__item {
   padding: 0 10px;
-  font-family: $title-text-font;
+  font-family: $font-secondary;
   font-weight: 500;
   font-size: 0.95rem;
   line-height: 1.375rem;
-  color: $text-black-color;
+  color: $color-black;
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -22,7 +22,7 @@
   transition: all 0.1s linear;
 
   &:hover {
-    background-color: $bg-button-hover-color;
+    background-color: $color-gray-light;
   }
 
   img {
