@@ -3,7 +3,11 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { AppDispatch, RootState } from "@Store/store";
-import { changeSearch, IProductsState } from "@Products/productsSlice";
+import {
+  changeSearch,
+  IProductsState,
+  selectProducts,
+} from "@Products/productsSlice";
 import { ERoutes } from "@/types/routes";
 import Selector from "../Selector/Selector";
 
@@ -15,10 +19,7 @@ const Search: FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { pathname } = useLocation();
   const navigate = useNavigate();
-
-  const { filter } = useSelector<RootState, IProductsState>(
-    (state) => state.products
-  );
+  const { filter } = useSelector<RootState, IProductsState>(selectProducts);
 
   const [isMount, setIsMount] = useState<boolean>(false);
   const [localSearchValue, setLocalSearchValue] = useState<string>(

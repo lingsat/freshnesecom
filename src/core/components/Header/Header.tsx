@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 
 import { RootState } from "@Store/store";
 import { getCategoriesObj } from "@/utils/products";
-import { IProductsState } from "@Products/productsSlice";
+import { IProductsState, selectProducts } from "@Products/productsSlice";
 import LinkItem from "@CommonComponents/LInkItem/LinkItem";
 import Search from "./components/Search/Search";
 import Category from "./components/Category/Category";
@@ -16,9 +16,7 @@ import cartIcon from "@Images/basket.svg";
 import "./Header.scss";
 
 const Header: FC = () => {
-  const { products } = useSelector<RootState, IProductsState>(
-    (state) => state.products
-  );
+  const { products } = useSelector<RootState, IProductsState>(selectProducts);
   const [showCategories, setShowCategories] = useState<boolean>(true);
 
   const categoriesObj = getCategoriesObj(products);

@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import { useSelector } from "react-redux";
 
 import { RootState } from "@Store/store";
-import { IProductsState } from "@Products/productsSlice";
+import { IProductsState, selectProducts } from "@Products/productsSlice";
 import { getTags } from "@/utils/products";
 import Tag from "@CommonComponents/Tag/Tag";
 import LinksBlock from "./components/LinksBlock/LinksBlock";
@@ -13,9 +13,7 @@ import "./Footer.scss";
 const linksBlockArr = Object.keys(footerLinks);
 
 const Footer: FC = () => {
-  const { products } = useSelector<RootState, IProductsState>(
-    (state) => state.products
-  );
+  const { products } = useSelector<RootState, IProductsState>(selectProducts);
 
   const tags = getTags(products);
 

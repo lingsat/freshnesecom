@@ -145,6 +145,6 @@ export const {
   increaseProductsPerPage,
 } = productsSlice.actions;
 
-export const selectProducts = (state: RootState) => state.products.products;
+export const selectProducts = (state: RootState) => state.products;
 
 export default productsSlice.reducer;

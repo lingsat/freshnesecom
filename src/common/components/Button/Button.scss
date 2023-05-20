@@ -1,21 +1,18 @@
 @import "@Styles/_variables.scss";
+@import "@Styles/_mixins.scss";
 
 .button {
-  width: 100%;
+  @include flex-center;
   padding: 10px 8px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  width: 100%;
   gap: 6px;
-  text-decoration: none;
+  font-family: $font-secondary;
+  @include font(700, 0.95rem, 1.375rem);
+  color: $color-white;
   background-color: $color-green;
   border: 2px solid $color-green-dark;
   border-radius: 12px;
-  font-family: $font-secondary;
-  font-weight: 700;
-  font-size: 0.95rem;
-  line-height: 1.375rem;
-  color: $color-white;
+  text-decoration: none;
   cursor: pointer;
   transition: all 0.1s linear;
 

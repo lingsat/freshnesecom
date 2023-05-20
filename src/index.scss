@@ -21,6 +21,11 @@ li {
   margin: 0;
 }
 
+ul,
+ol {
+  list-style: none;
+}
+
 body {
   margin: 0;
   font-family: $font-primary;

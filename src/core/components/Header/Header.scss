@@ -1,20 +1,18 @@
 @import "@Styles/_variables.scss";
+@import "@Styles/_mixins.scss";
 
 .header {
   margin-bottom: 2rem;
 
   &__links {
-    height: 55px;
-    padding: 1rem 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    @include flex-between-center;
     column-gap: 2rem;
+    padding: 1rem 0;
+    height: 55px;
     border-bottom: 1px solid $color-gray-lightest;
   }
 
   &__contacts {
-    list-style: none;
     display: flex;
     align-items: center;
     gap: 2rem;
@@ -22,9 +20,9 @@
 
   &__link {
     font-family: $font-primary;
-    color: $color-black;
     font-size: 0.75rem;
     line-height: 1rem;
+    color: $color-black;
     text-decoration: none;
 
     &:hover {
@@ -33,18 +31,15 @@
   }
 
   &__pages {
-    list-style: none;
     display: flex;
     align-items: center;
     gap: 2rem;
   }
 
   &__main {
+    @include flex-between-center;
     min-height: 66px;
     padding: 0.8rem 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
   }
 
   &__logo {
@@ -53,13 +48,10 @@
   }
 
   &__categories {
+    @include flex-between-center;
     min-height: 54px;
-    list-style: none;
     padding: 0 45px;
     background-color: $color-gray-lightest;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
   }
 }
 
@@ -86,24 +78,19 @@
     }
 
     span {
-      display: block;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      @include flex-center;
       width: 16px;
       height: 16px;
       position: absolute;
       left: -5px;
       bottom: -2px;
       z-index: 1;
+      font-family: $font-secondary;
+      @include font(600, 0.75rem, 1.125rem);
+      color: $color-white;
       background: $color-red;
       box-shadow: 0px 2px 4px $color-gray;
       border-radius: 12px;
-      font-family: $font-secondary;
-      font-weight: 600;
-      font-size: 0.75rem;
-      line-height: 1.125rem;
-      color: $color-white;
     }
   }
 }

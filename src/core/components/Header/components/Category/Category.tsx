@@ -14,9 +14,9 @@ interface CategoryProps {
 }
 
 const Category: FC<CategoryProps> = ({ category, brands }) => {
-  const [showMenu, setShowMenu] = useState<boolean>(false);
-
   const dispatch = useDispatch<AppDispatch>();
+
+  const [showMenu, setShowMenu] = useState<boolean>(false);
 
   const handleHideMenu = () => {
     setShowMenu(false);

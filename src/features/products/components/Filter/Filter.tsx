@@ -6,6 +6,7 @@ import {
   changeCategory,
   clearAllFilters,
   IProductsState,
+  selectProducts,
   toggleBrands,
   toggleStars,
 } from "@Products/productsSlice";
@@ -26,7 +27,7 @@ interface FilterProps {
 const Filter: FC<FilterProps> = ({ showFilter, toggleFilter }) => {
   const dispatch = useDispatch<AppDispatch>();
   const { products, filter } = useSelector<RootState, IProductsState>(
-    (state) => state.products
+    selectProducts
   );
 
   const categoriesObj = getCategoriesObj(products);

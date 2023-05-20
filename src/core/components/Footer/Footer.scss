@@ -1,10 +1,10 @@
 @import "@Styles/_variables.scss";
+@import "@Styles/_mixins.scss";
 
 .footer {
   padding: 4rem 0;
 
   &__links {
-    list-style: none;
     margin-bottom: 3rem;
     display: flex;
     justify-content: space-between;
@@ -14,9 +14,7 @@
   &__title {
     margin-bottom: 1rem;
     font-family: $font-secondary;
-    font-weight: 600;
-    font-size: 1.125rem;
-    line-height: 1.675rem;
+    @include font(600, 1.125rem, 1.675rem);
   }
 
   &__tags {
@@ -30,7 +28,6 @@
 }
 
 .tags__block {
-  list-style: none;
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;

@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
 import { HashRouter } from "react-router-dom";
 
-import { store } from "@/store/store";
+import { store } from "@Store/store";
 import ErrorBoundary from "@Features/error/ErrorBoundary";
 import App from "./App";
 

@@ -7,8 +7,8 @@ import {
   changeCurrentPage,
   increaseProductsPerPage,
 } from "@Products/productsSlice";
-import { IPaginationState } from "@Products/types/pagination";
 import { getPaginationData, isPageInActiveRange } from "@/utils/pagination";
+import { IPaginationState } from "@Products/types/pagination";
 import Button from "@CommonComponents/Button/Button";
 
 import "./Paging.scss";
@@ -30,7 +30,6 @@ const Paging: FC<PagingProps> = ({
     productsCount,
     pagination
   );
-
   const isShowMoreDisabled = activePagesArr.includes(pageCount) || !pageCount;
 
   const handlePageChange = (_: ChangeEvent<unknown>, page: number) => {

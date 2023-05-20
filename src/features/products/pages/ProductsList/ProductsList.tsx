@@ -2,7 +2,7 @@ import React, { FC, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 
 import { RootState } from "@Store/store";
-import { IProductsState } from "@Products/productsSlice";
+import { IProductsState, selectProducts } from "@Products/productsSlice";
 import { getFilteredProducts } from "@/utils/products";
 import { getPaginatedProducts } from "@/utils/pagination";
 import LoadinSpinner from "@CommonComponents/LoadingSpinner/LoadingSpinner";
@@ -19,9 +19,8 @@ const ProductsList: FC = () => {
   const { products, loading, filter, sortRule, pagination } = useSelector<
     RootState,
     IProductsState
-  >((state) => state.products);
+  >(selectProducts);
   const listRef = useRef<HTMLDivElement>(null);
-
   const [showFilter, setShowFIlter] = useState<boolean>(false);
 
   const toggleFilter = () => {
@@ -32,8 +31,8 @@ const ProductsList: FC = () => {
   const paginatedProducts = getPaginatedProducts(filteredProducts, pagination);
 
   const handlePageScroll = () => {
-    if (listRef) {
-      listRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (listRef.current) {
+      listRef.current.scrollIntoView({ behavior: "smooth" });
     }
   };
 

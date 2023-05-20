@@ -3,5 +3,5 @@ export enum ERoutes {
   PRODUCTS_LIST = "/products",
   PRODUCT_ITEM = "/products/:id",
   CART = "/cart",
-  NOT_FOUND = "8",
+  NOT_FOUND = "*",
 }

@@ -2,21 +2,18 @@
 @import "@Styles/_mixins.scss";
 
 .category {
-  list-style: none;
   padding: 1rem 0;
   position: relative;
 }
 
 .category__item {
   padding: 0 10px;
-  font-family: $font-secondary;
-  font-weight: 500;
-  font-size: 0.95rem;
-  line-height: 1.375rem;
-  color: $color-black;
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  font-family: $font-secondary;
+  @include font(500, 0.95rem, 1.375rem);
+  color: $color-black;
   border-radius: 12px;
   cursor: pointer;
   transition: all 0.1s linear;

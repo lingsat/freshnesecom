@@ -2,7 +2,11 @@ import React, { FC, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { AppDispatch, RootState } from "@Store/store";
-import { changeCategory, IProductsState } from "@Products/productsSlice";
+import {
+  changeCategory,
+  IProductsState,
+  selectProducts,
+} from "@Products/productsSlice";
 import { getCategoriesObj } from "@/utils/products";
 import DropDown from "@CommonComponents/DropDown/DropDown";
 
@@ -10,12 +14,12 @@ import arrowDown from "@Images/arrow_down.svg";
 import "./Selector.scss";
 
 const Selector: FC = () => {
-  const [showMenu, setShowMenu] = useState<boolean>(false);
-
-  const { products, filter } = useSelector<RootState, IProductsState>(
-    (state) => state.products
-  );
   const dispatch = useDispatch<AppDispatch>();
+  const { products, filter } = useSelector<RootState, IProductsState>(
+    selectProducts
+  );
+
+  const [showMenu, setShowMenu] = useState<boolean>(false);
 
   const categories = Object.keys(getCategoriesObj(products));
 
