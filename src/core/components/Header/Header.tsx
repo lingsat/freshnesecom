@@ -66,10 +66,10 @@ const Header: FC = () => {
           <button type="button" className="controls__btn">
             <img src={userIcon} alt="User" />
           </button>
-          <button type="button" className="controls__btn">
+          <Link to="/cart" className="controls__btn">
             <img src={cartIcon} alt="Cart" />
             <span>4</span>
-          </button>
+          </Link>
         </div>
       </div>
       <button
