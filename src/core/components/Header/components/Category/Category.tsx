@@ -6,6 +6,7 @@ import { changeSingleBrand } from "@Products/productsSlice";
 import DropDown from "@CommonComponents/DropDown/DropDown";
 
 import arrowDownThin from "@Images/arrow_down_thin.svg";
+
 import "./Category.scss";
 
 interface CategoryProps {

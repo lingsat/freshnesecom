@@ -1,6 +1,6 @@
+import { Pagination, PaginationItem } from "@mui/material";
 import React, { ChangeEvent, FC } from "react";
 import { useDispatch } from "react-redux";
-import { Pagination, PaginationItem } from "@mui/material";
 
 import { AppDispatch } from "@Store/store";
 import {

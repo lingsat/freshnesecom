@@ -3,10 +3,11 @@ import { useDispatch } from "react-redux";
 
 import { AppDispatch } from "@Store/store";
 import { changeSortRule } from "@Products/productsSlice";
-import DropDown from "@CommonComponents/DropDown/DropDown";
 import { ESort } from "@Products/types/product";
+import DropDown from "@CommonComponents/DropDown/DropDown";
 
 import arrowIcon from "@Images/arrow_black.svg";
+
 import "./Sort.scss";
 
 interface SortProps {

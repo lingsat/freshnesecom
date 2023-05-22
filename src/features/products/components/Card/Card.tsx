@@ -5,9 +5,10 @@ import { getStarsArrFromNumber } from "@/utils/products";
 import { IProduct } from "@Products/types/product";
 import Button from "@CommonComponents/Button/Button";
 
+import heartIcon from "@Images/heart.svg";
 import star from "@Images/star.svg";
 import checkedStar from "@Images/star_checked.svg";
-import heartIcon from "@Images/heart.svg";
+
 import "./Card.scss";
 
 interface CardProps {

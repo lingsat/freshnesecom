@@ -1,9 +1,9 @@
-import { IProduct } from "@Products/types/product";
 import {
   IPaginationData,
   IPaginationState,
   EPagination,
 } from "@Products/types/pagination";
+import { IProduct } from "@Products/types/product";
 
 export const getPaginatedProducts = (
   productsArr: IProduct[],

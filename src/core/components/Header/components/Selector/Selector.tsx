@@ -11,6 +11,7 @@ import { getCategoriesObj } from "@/utils/products";
 import DropDown from "@CommonComponents/DropDown/DropDown";
 
 import arrowDown from "@Images/arrow_down.svg";
+
 import "./Selector.scss";
 
 const Selector: FC = () => {

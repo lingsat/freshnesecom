@@ -4,10 +4,10 @@ import { useSelector } from "react-redux";
 import { RootState } from "@Store/store";
 import { IProductsState, selectProducts } from "@Products/productsSlice";
 import { getTags } from "@/utils/products";
-import Tag from "@CommonComponents/Tag/Tag";
-import LinksBlock from "./components/LinksBlock/LinksBlock";
 import { footerLinks } from "@/mock/footerLinks";
+import Tag from "@CommonComponents/Tag/Tag";
 
+import LinksBlock from "./components/LinksBlock/LinksBlock";
 import "./Footer.scss";
 
 const linksBlockArr = Object.keys(footerLinks);

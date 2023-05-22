@@ -12,8 +12,8 @@ import {
 } from "@Products/productsSlice";
 import { getBrands, getCategoriesObj } from "@/utils/products";
 import { EStars } from "@Products/types/product";
-import FilterStars from "@ProductsComponents/FilterStars/FilterStars";
 import FilterPrice from "@ProductsComponents/FilterPrice/FilterPrice";
+import FilterStars from "@ProductsComponents/FilterStars/FilterStars";
 
 import "./Filter.scss";
 

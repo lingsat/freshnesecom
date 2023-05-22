@@ -1,6 +1,6 @@
 import React, { ChangeEvent, FC, useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import { AppDispatch, RootState } from "@Store/store";
 import {
@@ -8,11 +8,13 @@ import {
   IProductsState,
   selectProducts,
 } from "@Products/productsSlice";
+import { debounceDelay } from "@/constants";
 import { ERoutes } from "@/types/routes";
-import Selector from "../Selector/Selector";
 
-import searchIcon from "@Images/search.svg";
 import closeIcon from "@Images/close.svg";
+import searchIcon from "@Images/search.svg";
+
+import Selector from "../Selector/Selector";
 import "./Search.scss";
 
 const Search: FC = () => {
@@ -43,7 +45,7 @@ const Search: FC = () => {
 
   useEffect(() => {
     if (isMount) {
-      const debounceTimer = setTimeout(startSearching, 500);
+      const debounceTimer = setTimeout(startSearching, debounceDelay);
       return () => clearTimeout(debounceTimer);
     } else {
       setIsMount(true);

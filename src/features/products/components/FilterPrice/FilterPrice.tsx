@@ -9,6 +9,7 @@ import {
   selectProducts,
 } from "@Products/productsSlice";
 import { getValidPrice } from "@/utils/products";
+import { debounceDelay } from "@/constants";
 import { EPrice } from "@Products/types/product";
 
 import "./FilterPrice.scss";
@@ -53,7 +54,7 @@ const FilterPrice: FC = () => {
 
   useEffect(() => {
     if (isMount) {
-      const debounceTimer = setTimeout(handleSearchByPrice, 500);
+      const debounceTimer = setTimeout(handleSearchByPrice, debounceDelay);
       return () => clearTimeout(debounceTimer);
     } else {
       setIsMount(true);

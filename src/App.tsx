@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import { Route, Routes } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { Route, Routes } from "react-router-dom";
 
 import { AppDispatch } from "@Store/store";
 import { fetchProducts } from "@Products/productsSlice";

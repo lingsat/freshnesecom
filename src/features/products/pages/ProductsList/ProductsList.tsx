@@ -3,16 +3,17 @@ import { useSelector } from "react-redux";
 
 import { RootState } from "@Store/store";
 import { IProductsState, selectProducts } from "@Products/productsSlice";
-import { getFilteredProducts } from "@/utils/products";
 import { getPaginatedProducts } from "@/utils/pagination";
+import { getFilteredProducts } from "@/utils/products";
 import LoadinSpinner from "@CommonComponents/LoadingSpinner/LoadingSpinner";
-import Navigation from "@ProductsComponents/Navigation/Navigation";
-import Sort from "@ProductsComponents/Sort/Sort";
 import Filter from "@ProductsComponents/Filter/Filter";
-import Products from "@ProductsComponents/Products/Products";
+import Navigation from "@ProductsComponents/Navigation/Navigation";
 import Paging from "@ProductsComponents/Paging/Paging";
+import Products from "@ProductsComponents/Products/Products";
+import Sort from "@ProductsComponents/Sort/Sort";
 
 import arrowDownThin from "@Images/arrow_down_thin.svg";
+
 import "./ProductsList.scss";
 
 const ProductsList: FC = () => {
