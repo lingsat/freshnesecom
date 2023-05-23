@@ -10,10 +10,12 @@ import {
 } from "@Products/productsSlice";
 import LoadinSpinner from "@CommonComponents/LoadingSpinner/LoadingSpinner";
 
+import "./ProductItem.scss";
+
 const ProductItem = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { id } = useParams();
-  const { singleProduct, isSingleLoading } = useSelector<
+  const { singleProduct, isSingleLoading, singleError } = useSelector<
     RootState,
     IProductsState
   >(selectProducts);
@@ -28,8 +30,8 @@ const ProductItem = () => {
     return <LoadinSpinner />;
   }
 
-  if (!singleProduct) {
-    return <p>Product Not Found!</p>;
+  if (!singleProduct || singleError) {
+    return <p className="product__error">Product not Found!</p>;
   }
 
   return (

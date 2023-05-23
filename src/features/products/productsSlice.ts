@@ -1,4 +1,9 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import {
+  createAsyncThunk,
+  createSlice,
+  PayloadAction,
+  SerializedError,
+} from "@reduxjs/toolkit";
 import axios from "axios";
 
 import { RootState } from "@Store/store";
@@ -20,6 +25,7 @@ export interface IProductsState {
   loading: boolean;
   singleProduct: IProduct | null;
   isSingleLoading: boolean;
+  singleError: SerializedError | null;
   minMaxPrice: {
     min: number;
     max: number;
@@ -39,6 +45,7 @@ const initialState: IProductsState = {
   loading: false,
   singleProduct: null,
   isSingleLoading: false,
+  singleError: null,
   minMaxPrice: {
     min: 0,
     max: 0,
@@ -147,7 +154,12 @@ export const productsSlice = createSlice({
     });
     builder.addCase(fetchSingleProduct.fulfilled, (state, action) => {
       state.isSingleLoading = false;
+      state.singleError = null;
       state.singleProduct = action.payload;
+    });
+    builder.addCase(fetchSingleProduct.rejected, (state, action) => {
+      state.isSingleLoading = false;
+      state.singleError = action.error;
     });
   },
 });

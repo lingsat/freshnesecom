@@ -1,3 +1,4 @@
+import { IProduct } from "@/features/products/types/product";
 import { ERoutes } from "@/types/routes";
 
 interface IBreadCrumb {
@@ -7,7 +8,7 @@ interface IBreadCrumb {
 
 export const generateBreadcrumbs = (
   pathName: string,
-  productTitle = ""
+  product: IProduct | null
 ): IBreadCrumb[] => {
   const paths = pathName.split("/").filter((path) => path.trim() !== "");
   const breadcrumbsArr = [{ path: "/", text: "Home" }];
@@ -17,9 +18,11 @@ export const generateBreadcrumbs = (
   }
 
   if (paths[1]) {
+    const crumbText =
+      product && product.id === paths[1] ? product.title : "Product not Found";
     breadcrumbsArr.push({
       path: `/${ERoutes.PRODUCTS_LIST}/${paths[1]}`,
-      text: productTitle,
+      text: crumbText,
     });
   }
 

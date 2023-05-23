@@ -15,7 +15,7 @@ const BreadCrumbs: FC = () => {
     IProductsState
   >(selectProducts);
 
-  const links = generateBreadcrumbs(pathname, singleProduct?.title);
+  const links = generateBreadcrumbs(pathname, singleProduct);
 
   if (isSingleLoading) {
     return <p className="breadcrumbs__loading">Loading ...</p>;
