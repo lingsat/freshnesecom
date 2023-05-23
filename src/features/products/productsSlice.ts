@@ -18,6 +18,8 @@ export interface IFilter {
 export interface IProductsState {
   products: IProduct[];
   loading: boolean;
+  singleProduct: IProduct | null;
+  isSingleLoading: boolean;
   minMaxPrice: {
     min: number;
     max: number;
@@ -35,6 +37,8 @@ const initialPagination = {
 const initialState: IProductsState = {
   products: [],
   loading: false,
+  singleProduct: null,
+  isSingleLoading: false,
   minMaxPrice: {
     min: 0,
     max: 0,
@@ -55,6 +59,15 @@ export const fetchProducts = createAsyncThunk("products/fetchProducts", () => {
     .get<IProduct[]>(`${process.env.REACT_APP_API_URL}/products`)
     .then((response) => response.data);
 });
+
+export const fetchSingleProduct = createAsyncThunk(
+  "products/fetchSingleProduct",
+  (productId: string) => {
+    return axios
+      .get<IProduct>(`${process.env.REACT_APP_API_URL}/products/${productId}`)
+      .then((response) => response.data);
+  }
+);
 
 export const productsSlice = createSlice({
   name: "products",
@@ -128,6 +141,13 @@ export const productsSlice = createSlice({
       state.products = action.payload;
       state.minMaxPrice = getMinMaxPrice(action.payload);
       state.filter.price = [state.minMaxPrice.min, state.minMaxPrice.max];
+    });
+    builder.addCase(fetchSingleProduct.pending, (state) => {
+      state.isSingleLoading = true;
+    });
+    builder.addCase(fetchSingleProduct.fulfilled, (state, action) => {
+      state.isSingleLoading = false;
+      state.singleProduct = action.payload;
     });
   },
 });

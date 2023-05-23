@@ -44,13 +44,6 @@ export const getFilteredProducts = (
   return getSortedProducts(filteredArr, sortRule);
 };
 
-export const getSingleProduct = (
-  productsArr: IProduct[],
-  id: string | undefined
-): IProduct | undefined => {
-  return productsArr.find((product) => product.id === id);
-};
-
 export const getStarsArrFromNumber = (num: number): boolean[] => {
   const arr: boolean[] = Array(5).fill(false);
   return arr.map((_, index) => index < num);
