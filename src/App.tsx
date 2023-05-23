@@ -6,6 +6,7 @@ import { AppDispatch } from "@Store/store";
 import { fetchProducts } from "@Products/productsSlice";
 import { ERoutes } from "@/types/routes";
 import Header from "@CoreComponents/Header/Header";
+import BreadCrumbs from "@CoreComponents/BreadCrumbs/BreadCrumbs";
 import Footer from "@CoreComponents/Footer/Footer";
 import Home from "@ProductsPages/Home/Home";
 import ProductsList from "@ProductsPages/ProductsList/ProductsList";
@@ -25,6 +26,7 @@ const App = () => {
   return (
     <div className="container">
       <Header />
+      <BreadCrumbs />
       <main>
         <Routes>
           <Route path={ERoutes.HOME} element={<Home />} />
