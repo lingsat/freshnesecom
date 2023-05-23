@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
@@ -16,7 +16,7 @@ import Category from "./components/Category/Category";
 import Search from "./components/Search/Search";
 import "./Header.scss";
 
-const Header: FC = () => {
+const Header = () => {
   const { products } = useSelector<RootState, IProductsState>(selectProducts);
   const [showCategories, setShowCategories] = useState<boolean>(true);
 
@@ -78,15 +78,15 @@ const Header: FC = () => {
         onClick={toggleShowCategories}>
         Categories
         <img
-          className={`${!showCategories && "rotate__icon"}`}
+          className={`${!showCategories ? "rotate__icon" : ""}`}
           src={arrowDown}
           alt="DownArrow"
         />
       </button>
       <nav>
         <ul
-          className={`header__categories ${
-            showCategories ? "header__categories--hide" : ""
+          className={`header__categories${
+            showCategories ? " header__categories--hide" : ""
           }`}>
           {categories.map((category, index) => (
             <Category

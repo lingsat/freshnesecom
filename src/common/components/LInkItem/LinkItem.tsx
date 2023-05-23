@@ -17,7 +17,7 @@ const LinkItem: FC<LinkItemProps> = ({
   return (
     <Link
       to={hrefPath}
-      className={`link ${type === "small" ? "link--small" : ""}`}>
+      className={`link${type === "small" ? " link--small" : ""}`}>
       {title}
     </Link>
   );

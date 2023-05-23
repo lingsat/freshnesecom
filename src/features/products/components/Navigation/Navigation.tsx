@@ -1,9 +1,9 @@
-import React, { FC } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 
 import "./Navigation.scss";
 
-const Navigation: FC = () => {
+const Navigation = () => {
   return (
     <ul className="list-nav">
       <li className="list-nav__item">

@@ -25,8 +25,8 @@ const Button: FC<ButtonProps> = ({
       onClick={onCLick}>
       {text}
       <img
-        className={`button__image ${
-          arrowDirection === "bottom" ? "button__image--bottom" : ""
+        className={`button__image${
+          arrowDirection === "bottom" ? " button__image--bottom" : ""
         }`}
         src={arrow}
         alt="ArrowDown"

@@ -1,47 +1,49 @@
 @import "@Styles/_variables.scss";
 @import "@Styles/_mixins.scss";
 
-.products-list__header {
-  @include flex-between-center;
-  margin-bottom: 1.5rem;
-  gap: 1rem;
-}
+.products-list {
+  &__header {
+    @include flex-between-center;
+    margin-bottom: 1.5rem;
+    gap: 1rem;
+  }
 
-.products-list__title {
-  font-family: $font-secondary;
-  @include font(600, 2rem, 3rem);
-}
-
-.products-list__stat {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-
-  p {
-    padding: 0 0.5rem;
-    border-radius: 12px;
+  &__title {
     font-family: $font-secondary;
-    @include font(600, 0.75rem, 1.125rem);
-    background-color: $color-gray-lightest;
-    color: $color-green;
+    @include font(600, 2rem, 3rem);
   }
 
-  span {
-    font-size: 0.75rem;
-    line-height: 1rem;
-    color: $color-gray;
+  &__stat {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    p {
+      padding: 0 0.5rem;
+      border-radius: 12px;
+      font-family: $font-secondary;
+      @include font(600, 0.75rem, 1.125rem);
+      background-color: $color-gray-lightest;
+      color: $color-green;
+    }
+
+    span {
+      font-size: 0.75rem;
+      line-height: 1rem;
+      color: $color-gray;
+    }
   }
-}
 
-.products-list__controls {
-  @include flex-between-center;
-  margin-bottom: 4rem;
-}
+  &__controls {
+    @include flex-between-center;
+    margin-bottom: 4rem;
+  }
 
-.products-list__main {
-  display: grid;
-  grid-template-columns: 270px 1fr;
-  gap: 2rem;
+  &__main {
+    display: grid;
+    grid-template-columns: 270px 1fr;
+    gap: 2rem;
+  }
 }
 
 .filter__switcher {
@@ -67,18 +69,20 @@
 }
 
 @media (max-width: 991.98px) {
-  .products-list__main {
-    grid-template-columns: 1fr;
-    column-gap: 0;
-    row-gap: 1rem;
-  }
+  .products-list {
+    &__main {
+      grid-template-columns: 1fr;
+      column-gap: 0;
+      row-gap: 1rem;
+    }
 
-  .products-list__header {
-    margin-bottom: 1rem;
-  }
+    &__header {
+      margin-bottom: 1rem;
+    }
 
-  .products-list__controls {
-    margin-bottom: 1rem;
+    &__controls {
+      margin-bottom: 1rem;
+    }
   }
 
   .filter__switcher {
@@ -87,11 +91,13 @@
 }
 
 @media (max-width: 575.98px) {
-  .products-list__title {
-    font-size: 1.5rem;
-  }
+  .products-list {
+    &__title {
+      font-size: 1.5rem;
+    }
 
-  .products-list__header {
-    margin-bottom: 0;
+    &__header {
+      margin-bottom: 0;
+    }
   }
 }

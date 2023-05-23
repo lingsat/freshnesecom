@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ReactSlider from "react-slider";
 
@@ -9,12 +9,12 @@ import {
   selectProducts,
 } from "@Products/productsSlice";
 import { getValidPrice } from "@/utils/products";
-import { debounceDelay } from "@/constants";
+import { DEBOUNCE_DELAY } from "@/constants";
 import { EPrice } from "@Products/types/product";
 
 import "./FilterPrice.scss";
 
-const FilterPrice: FC = () => {
+const FilterPrice = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { minMaxPrice, filter } = useSelector<RootState, IProductsState>(
     selectProducts
@@ -54,7 +54,7 @@ const FilterPrice: FC = () => {
 
   useEffect(() => {
     if (isMount) {
-      const debounceTimer = setTimeout(handleSearchByPrice, debounceDelay);
+      const debounceTimer = setTimeout(handleSearchByPrice, DEBOUNCE_DELAY);
       return () => clearTimeout(debounceTimer);
     } else {
       setIsMount(true);
@@ -82,9 +82,9 @@ const FilterPrice: FC = () => {
         <label className="filter-price__label">
           Min
           <input
-            className={`filter-price__input ${
+            className={`filter-price__input${
               priceValues[0] < minMaxPrice.min
-                ? "filter-price__input--error"
+                ? " filter-price__input--error"
                 : ""
             }`}
             type="number"
@@ -98,9 +98,9 @@ const FilterPrice: FC = () => {
         <label className="filter-price__label">
           Max
           <input
-            className={`filter-price__input ${
+            className={`filter-price__input${
               priceValues[0] > priceValues[1]
-                ? "filter-price__input--error"
+                ? " filter-price__input--error"
                 : ""
             }`}
             type="number"

@@ -1,7 +1,7 @@
-import React, { FC } from "react";
+import React from "react";
 import { Link, useParams } from "react-router-dom";
 
-const ProductItem: FC = () => {
+const ProductItem = () => {
   const { id } = useParams();
 
   return (

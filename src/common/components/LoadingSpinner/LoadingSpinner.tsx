@@ -1,8 +1,8 @@
-import React, { FC } from "react";
+import React from "react";
 
 import "./LoadingSpinner.scss";
 
-const LoadinSpinner: FC = () => {
+const LoadinSpinner = () => {
   return (
     <div className="lds-ring">
       <div></div>

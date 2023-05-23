@@ -34,6 +34,10 @@ const Filter: FC<FilterProps> = ({ showFilter, toggleFilter }) => {
   const categories = Object.keys(categoriesObj);
   const brands = getBrands(categoriesObj, filter.category);
 
+  const isChecked = <T,>(array: T[], value: T) => {
+    return array.includes(value);
+  };
+
   const handleFilterPropagation = (event: React.MouseEvent<HTMLDivElement>) => {
     event.stopPropagation();
   };
@@ -66,17 +70,17 @@ const Filter: FC<FilterProps> = ({ showFilter, toggleFilter }) => {
   return (
     <>
       <div
-        className={`overlay ${showFilter ? "overlay--show" : ""}`}
+        className={`overlay${showFilter ? " overlay--show" : ""}`}
         onClick={toggleFilter}></div>
       <aside
-        className={`filter ${showFilter ? "filter--show" : ""}`}
+        className={`filter${showFilter ? " filter--show" : ""}`}
         onClick={handleFilterPropagation}>
         <div className="filter__block">
           <h3 className="filter__title">Categories</h3>
           <ul className="filter-categories">
             <li
-              className={`filter-categories__item ${
-                filter.category === "" ? "filter-categories__item--active" : ""
+              className={`filter-categories__item${
+                !filter.category ? " filter-categories__item--active" : ""
               }`}
               onClick={handleChooseCategory("")}>
               <p>All categories</p>
@@ -85,9 +89,9 @@ const Filter: FC<FilterProps> = ({ showFilter, toggleFilter }) => {
             {categories.map((category, index) => (
               <li
                 key={`filterCat-${category}-${index}`}
-                className={`filter-categories__item ${
+                className={`filter-categories__item${
                   filter.category === category
-                    ? "filter-categories__item--active"
+                    ? " filter-categories__item--active"
                     : ""
                 }`}
                 onClick={handleChooseCategory(category)}>
@@ -106,7 +110,7 @@ const Filter: FC<FilterProps> = ({ showFilter, toggleFilter }) => {
                   <input
                     className="filter__input"
                     type="checkbox"
-                    checked={filter.brands.includes(brand)}
+                    checked={isChecked(filter.brands, brand)}
                     onChange={handleChooseBrand(brand)}
                   />
                   <p>{brand}</p>
@@ -124,7 +128,7 @@ const Filter: FC<FilterProps> = ({ showFilter, toggleFilter }) => {
                   <input
                     className="filter__input"
                     type="checkbox"
-                    checked={filter.stars.includes(+starCount)}
+                    checked={isChecked(filter.stars, +starCount)}
                     onChange={handleChooseStar(starCount)}
                   />
                   <FilterStars checkedStars={starCount} />

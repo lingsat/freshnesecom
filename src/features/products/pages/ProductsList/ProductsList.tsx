@@ -1,4 +1,4 @@
-import React, { FC, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { useSelector } from "react-redux";
 
 import { RootState } from "@Store/store";
@@ -16,7 +16,7 @@ import arrowDownThin from "@Images/arrow_down_thin.svg";
 
 import "./ProductsList.scss";
 
-const ProductsList: FC = () => {
+const ProductsList = () => {
   const { products, loading, filter, sortRule, pagination } = useSelector<
     RootState,
     IProductsState
@@ -54,7 +54,7 @@ const ProductsList: FC = () => {
         <button className="filter__switcher" onClick={toggleFilter}>
           Filter
           <img
-            className={`${showFilter && "reverse__icon"}`}
+            className={`${showFilter ? "reverse__icon" : ""}`}
             src={arrowDownThin}
             alt="DownArrow"
           />

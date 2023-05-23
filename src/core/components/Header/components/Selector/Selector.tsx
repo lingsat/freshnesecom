@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { AppDispatch, RootState } from "@Store/store";
@@ -14,7 +14,7 @@ import arrowDown from "@Images/arrow_down.svg";
 
 import "./Selector.scss";
 
-const Selector: FC = () => {
+const Selector = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { products, filter } = useSelector<RootState, IProductsState>(
     selectProducts
@@ -42,7 +42,7 @@ const Selector: FC = () => {
       <div className="selector__btn" onMouseEnter={handleShowMenu}>
         {filter.category || "All Categories"}
         <img
-          className={`${showMenu && "reverse__icon"}`}
+          className={`${showMenu ? "reverse__icon" : ""}`}
           src={arrowDown}
           alt="DownArrow"
         />

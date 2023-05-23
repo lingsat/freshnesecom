@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -8,7 +8,7 @@ import {
   IProductsState,
   selectProducts,
 } from "@Products/productsSlice";
-import { debounceDelay } from "@/constants";
+import { DEBOUNCE_DELAY } from "@/constants";
 import { ERoutes } from "@/types/routes";
 
 import closeIcon from "@Images/close.svg";
@@ -17,7 +17,7 @@ import searchIcon from "@Images/search.svg";
 import Selector from "../Selector/Selector";
 import "./Search.scss";
 
-const Search: FC = () => {
+const Search = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { pathname } = useLocation();
   const navigate = useNavigate();
@@ -45,7 +45,7 @@ const Search: FC = () => {
 
   useEffect(() => {
     if (isMount) {
-      const debounceTimer = setTimeout(startSearching, debounceDelay);
+      const debounceTimer = setTimeout(startSearching, DEBOUNCE_DELAY);
       return () => clearTimeout(debounceTimer);
     } else {
       setIsMount(true);

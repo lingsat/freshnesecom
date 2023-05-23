@@ -1,7 +1,7 @@
-import React, { FC } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 
-const Cart: FC = () => {
+const Cart = () => {
   return (
     <div>
       <h2>Cart</h2>

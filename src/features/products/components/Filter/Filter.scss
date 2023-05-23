@@ -17,6 +17,73 @@
     font-family: $font-secondary;
     @include font(600, 1.125rem, 1.65rem);
   }
+
+  &__label {
+    padding: 1px 0 1px 30px;
+    width: 100%;
+    display: flex;
+    font-size: 14px;
+    line-height: 19px;
+    cursor: pointer;
+    position: relative;
+
+    p {
+      @include text-overflow-hide;
+      width: 100%;
+    }
+  }
+
+  &__input {
+    -webkit-appearance: none;
+    appearance: none;
+    margin: 0;
+    width: 20px;
+    height: 20px;
+    background-color: $color-white;
+    border: 2px solid $color-gray-light;
+    border-radius: 3px;
+    outline: none;
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    left: 2px;
+    z-index: 3;
+    transform: translateY(-50%);
+
+    &:hover {
+      box-shadow: 0 0 5px $color-green;
+    }
+
+    &:checked {
+      background-color: $color-green;
+      border: 2px solid $color-green-dark;
+
+      &::before {
+        content: "\2714";
+        font-size: 0.9rem;
+        color: $color-white;
+        position: absolute;
+        right: 2px;
+        top: -3px;
+      }
+    }
+  }
+
+  &__reset {
+    width: fit-content;
+    margin: 0 auto;
+    border: none;
+    font-family: $font-secondary;
+    @include font(700, 0.95rem, 1.375rem);
+    background: inherit;
+    color: $color-gray;
+    cursor: pointer;
+    transition: all 0.1s linear;
+
+    &:hover {
+      color: $color-gray-dark;
+    }
+  }
 }
 
 .filter-categories {
@@ -68,73 +135,6 @@
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-}
-
-.filter__label {
-  padding: 1px 0 1px 30px;
-  width: 100%;
-  display: flex;
-  font-size: 14px;
-  line-height: 19px;
-  cursor: pointer;
-  position: relative;
-
-  p {
-    @include text-overflow-hide;
-    width: 100%;
-  }
-}
-
-.filter__input {
-  -webkit-appearance: none;
-  appearance: none;
-  margin: 0;
-  width: 20px;
-  height: 20px;
-  background-color: $color-white;
-  border: 2px solid $color-gray-light;
-  border-radius: 3px;
-  outline: none;
-  cursor: pointer;
-  position: absolute;
-  top: 50%;
-  left: 2px;
-  z-index: 3;
-  transform: translateY(-50%);
-
-  &:hover {
-    box-shadow: 0 0 5px $color-green;
-  }
-
-  &:checked {
-    background-color: $color-green;
-    border: 2px solid $color-green-dark;
-
-    &::before {
-      content: "\2714";
-      font-size: 0.9rem;
-      color: $color-white;
-      position: absolute;
-      right: 2px;
-      top: -3px;
-    }
-  }
-}
-
-.filter__reset {
-  width: fit-content;
-  margin: 0 auto;
-  border: none;
-  font-family: $font-secondary;
-  @include font(700, 0.95rem, 1.375rem);
-  background: inherit;
-  color: $color-gray;
-  cursor: pointer;
-  transition: all 0.1s linear;
-
-  &:hover {
-    color: $color-gray-dark;
-  }
 }
 
 @media (max-width: 991.98px) {

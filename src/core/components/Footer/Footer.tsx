@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 
 import { RootState } from "@Store/store";
@@ -12,7 +12,7 @@ import "./Footer.scss";
 
 const linksBlockArr = Object.keys(footerLinks);
 
-const Footer: FC = () => {
+const Footer = () => {
   const { products } = useSelector<RootState, IProductsState>(selectProducts);
 
   const tags = getTags(products);

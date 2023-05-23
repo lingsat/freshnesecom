@@ -4,28 +4,28 @@
 .category {
   padding: 1rem 0;
   position: relative;
-}
 
-.category__item {
-  padding: 0 10px;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-family: $font-secondary;
-  @include font(500, 0.95rem, 1.375rem);
-  color: $color-black;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: all 0.1s linear;
+  &__item {
+    padding: 0 10px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: $font-secondary;
+    @include font(500, 0.95rem, 1.375rem);
+    color: $color-black;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.1s linear;
 
-  &:hover {
-    background-color: $color-gray-light;
-  }
+    &:hover {
+      background-color: $color-gray-light;
+    }
 
-  img {
-    width: 7px;
-    height: 5px;
-    transition: all 0.3s linear;
+    img {
+      width: 7px;
+      height: 5px;
+      transition: all 0.3s linear;
+    }
   }
 }
 

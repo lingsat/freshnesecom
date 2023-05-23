@@ -23,21 +23,21 @@
     justify-content: center;
     position: relative;
   }
-}
 
-.sort__btn {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 0.5rem;
-  font-family: $font-secondary;
-  @include font(600, 0.75rem, 1rem);
-  border-radius: 12px;
-  cursor: pointer;
+  &__btn {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: $font-secondary;
+    @include font(600, 0.75rem, 1rem);
+    border-radius: 12px;
+    cursor: pointer;
 
-  img {
-    width: 7px;
-    height: 5px;
-    transition: all 0.3s linear;
+    img {
+      width: 7px;
+      height: 5px;
+      transition: all 0.3s linear;
+    }
   }
 }

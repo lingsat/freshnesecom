@@ -40,7 +40,7 @@ const Sort: FC<SortProps> = ({ sortRule }) => {
         <div className="sort__btn" onMouseEnter={handleShowMenu}>
           {sortRule ? sortRule : "Select"}
           <img
-            className={`${showMenu && "reverse__icon"}`}
+            className={`${showMenu ? "reverse__icon" : ""}`}
             src={arrowIcon}
             alt="DownArrow"
           />

@@ -21,7 +21,7 @@ const DropDown: FC<DropDownProps> = ({
 
   return (
     <ul
-      className={`dropdown ${position === "center" ? "dropdown--center" : ""}`}>
+      className={`dropdown${position === "center" ? " dropdown--center" : ""}`}>
       {!!clearValue && (
         <li className="dropdown__item" onClick={handleClick("")}>
           {clearValue}
