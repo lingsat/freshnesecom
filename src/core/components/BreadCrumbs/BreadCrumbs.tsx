@@ -18,14 +18,16 @@ const BreadCrumbs: FC = () => {
   const links = generateBreadcrumbs(pathname, singleProduct?.title);
 
   if (isSingleLoading) {
-    return <p className="list-nav__loading">Loading ...</p>;
+    return <p className="breadcrumbs__loading">Loading ...</p>;
   }
 
   return (
-    <ul className="list-nav">
+    <ul className="breadcrumbs">
       {links.map((link, index) => (
-        <li key={`breadcrumb-${link.text}-${index}`} className="list-nav__item">
-          <Link className="list-nav__link" to={link.path}>
+        <li
+          key={`breadcrumb-${link.text}-${index}`}
+          className="breadcrumbs__item">
+          <Link className="breadcrumbs__link" to={link.path}>
             {link.text}
           </Link>
         </li>

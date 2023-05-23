@@ -1,7 +1,7 @@
 @import "@Styles/_variables.scss";
 @import "@Styles/_mixins.scss";
 
-.list-nav {
+.breadcrumbs {
   margin-bottom: 1rem;
   display: flex;
   gap: 1.3rem;
@@ -29,7 +29,7 @@
     }
 
     &:last-of-type {
-      .list-nav__link {
+      .breadcrumbs__link {
         color: $color-black;
         pointer-events: none;
       }
@@ -57,13 +57,13 @@
 }
 
 @media (max-width: 991.98px) {
-  .list-nav {
+  .breadcrumbs {
     margin-bottom: 0.2rem;
   }
 }
 
 @media (max-width: 575.98px) {
-  .list-nav__link {
+  .breadcrumbs__link {
     max-width: 145px;
   }
 }
