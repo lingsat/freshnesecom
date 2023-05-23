@@ -19,7 +19,7 @@ export const generateBreadcrumbs = (
 
   if (paths[1]) {
     const crumbText =
-      product && product.id === paths[1] ? product.title : "Product not Found";
+      product && product.id === paths[1] ? product.title : "Not Found";
     breadcrumbsArr.push({
       path: `/${ERoutes.PRODUCTS_LIST}/${paths[1]}`,
       text: crumbText,
