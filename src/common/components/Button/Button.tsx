@@ -1,5 +1,7 @@
 import React, { FC } from "react";
-import arrow from "@/assets/images/arrow_right.svg";
+
+import arrow from "@Images/arrow_right.svg";
+
 import "./Button.scss";
 
 interface ButtonProps {
@@ -23,8 +25,8 @@ const Button: FC<ButtonProps> = ({
       onClick={onCLick}>
       {text}
       <img
-        className={`button__image ${
-          arrowDirection === "bottom" ? "button__image--bottom" : ""
+        className={`button__image${
+          arrowDirection === "bottom" ? " button__image--bottom" : ""
         }`}
         src={arrow}
         alt="ArrowDown"

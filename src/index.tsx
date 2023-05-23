@@ -2,8 +2,10 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
 import { HashRouter } from "react-router-dom";
-import { store } from "@/store/store";
-import ErrorBoundary from "@features/error/ErrorBoundary";
+
+import { store } from "@Store/store";
+import ErrorBoundary from "@Features/error/ErrorBoundary";
+
 import App from "./App";
 import "./index.scss";
 

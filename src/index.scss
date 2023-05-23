@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans&family=Poppins:wght@500;600;700&display=swap");
-@import "./assets/styles/_variables.scss";
+@import "@Styles/_variables.scss";
 
 *,
 *::before,
@@ -21,11 +21,16 @@ li {
   margin: 0;
 }
 
+ul,
+ol {
+  list-style: none;
+}
+
 body {
   margin: 0;
-  font-family: $main-text-font;
-  background-color: $bg-white-color;
-  color: $text-black-color;
+  font-family: $font-primary;
+  background-color: $color-white;
+  color: $color-black;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -48,11 +53,11 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: $bg-scroll-color;
+  background-color: $color-gray-light;
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background-color: $bg-scroll-track-color;
+  background-color: $color-gray-lightest;
   border-radius: 10px;
 }

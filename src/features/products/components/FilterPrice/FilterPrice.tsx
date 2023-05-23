@@ -1,21 +1,30 @@
-import React, { ChangeEvent, FC, useEffect, useState } from "react";
-import ReactSlider from "react-slider";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "@/store/store";
-import { changePrice, IProductsState } from "@products/productsSlice";
-import { getValidPrice } from "@/utils/products.utils";
-import { EPrice } from "@products/types/product";
+import ReactSlider from "react-slider";
+
+import { AppDispatch, RootState } from "@Store/store";
+import {
+  changePrice,
+  IProductsState,
+  selectProducts,
+} from "@Products/productsSlice";
+import { getValidPrice } from "@/utils/products";
+import { DEBOUNCE_DELAY } from "@/constants";
+import { EPrice } from "@Products/types/product";
+
 import "./FilterPrice.scss";
 
-const FilterPrice: FC = () => {
+const FilterPrice = () => {
+  const dispatch = useDispatch<AppDispatch>();
   const { minMaxPrice, filter } = useSelector<RootState, IProductsState>(
-    (state) => state.products
+    selectProducts
   );
+
+  const [isMount, setIsMount] = useState<boolean>(false);
   const [priceValues, setPriceValues] = useState<number[]>(filter.price);
+
   const isPricesValid =
     priceValues[0] < minMaxPrice.min || priceValues[0] > priceValues[1];
-
-  const dispatch = useDispatch<AppDispatch>();
 
   const handleChangeMin = (event: ChangeEvent<HTMLInputElement>) => {
     const newMinPrice = getValidPrice(event.target.value, priceValues[1]);
@@ -44,8 +53,12 @@ const FilterPrice: FC = () => {
   };
 
   useEffect(() => {
-    const debounceTimer = setTimeout(handleSearchByPrice, 500);
-    return () => clearTimeout(debounceTimer);
+    if (isMount) {
+      const debounceTimer = setTimeout(handleSearchByPrice, DEBOUNCE_DELAY);
+      return () => clearTimeout(debounceTimer);
+    } else {
+      setIsMount(true);
+    }
   }, [priceValues]);
 
   useEffect(() => {
@@ -69,9 +82,9 @@ const FilterPrice: FC = () => {
         <label className="filter-price__label">
           Min
           <input
-            className={`filter-price__input ${
+            className={`filter-price__input${
               priceValues[0] < minMaxPrice.min
-                ? "filter-price__input--error"
+                ? " filter-price__input--error"
                 : ""
             }`}
             type="number"
@@ -85,9 +98,9 @@ const FilterPrice: FC = () => {
         <label className="filter-price__label">
           Max
           <input
-            className={`filter-price__input ${
+            className={`filter-price__input${
               priceValues[0] > priceValues[1]
-                ? "filter-price__input--error"
+                ? " filter-price__input--error"
                 : ""
             }`}
             type="number"

@@ -1,5 +1,7 @@
 import React, { FC } from "react";
-import LinkItem from "@/common/components/LInkItem/LinkItem";
+
+import LinkItem from "@CommonComponents/LInkItem/LinkItem";
+
 import "./LinksBlock.scss";
 
 interface LinksBlockProps {
@@ -10,10 +12,8 @@ interface LinksBlockProps {
 const LinksBlock: FC<LinksBlockProps> = ({ title, links }) => {
   return (
     <li>
+      <h3 className="footer__title">{title}</h3>
       <ul className="footer__block">
-        <li>
-          <h3 className="footer__title">{title}</h3>
-        </li>
         {links.map((link, index) => (
           <li key={`link-${link}-${index}`}>
             <LinkItem title={link} />

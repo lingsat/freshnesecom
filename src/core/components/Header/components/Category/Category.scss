@@ -1,63 +1,31 @@
-@import "@/assets/styles/_variables.scss";
-@import "@/assets/styles/mixins.scss";
+@import "@Styles/_variables.scss";
+@import "@Styles/_mixins.scss";
 
 .category {
-  list-style: none;
   padding: 1rem 0;
   position: relative;
-}
 
-.category__item {
-  padding: 0 10px;
-  font-family: $title-text-font;
-  font-weight: 500;
-  font-size: 0.95rem;
-  line-height: 1.375rem;
-  color: $text-black-color;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: all 0.1s linear;
+  &__item {
+    padding: 0 10px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: $font-secondary;
+    @include font(500, 0.95rem, 1.375rem);
+    color: $color-black;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.1s linear;
 
-  &:hover {
-    background-color: $bg-button-hover-color;
-  }
+    &:hover {
+      background-color: $color-gray-light;
+    }
 
-  img {
-    width: 7px;
-    height: 5px;
-    transition: all 0.3s linear;
-  }
-}
-
-.category__menu {
-  display: none;
-  width: 110px;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  z-index: 2;
-  background: $bg-search-color;
-  box-shadow: $shadow-dropdown-color 0px 2px 8px 0px;
-  list-style: none;
-  border: 1px solid $header-search-border-color;
-
-  &--show {
-    display: block;
-  }
-}
-
-.category__link {
-  @include text-overflow-hide;
-  padding: 5px;
-  font-size: 0.8rem;
-  line-height: 1rem;
-  cursor: pointer;
-
-  &:hover {
-    text-decoration: underline;
+    img {
+      width: 7px;
+      height: 5px;
+      transition: all 0.3s linear;
+    }
   }
 }
 
@@ -70,9 +38,5 @@
 @media (max-width: 575.98px) {
   .category {
     padding: 0.2rem 0;
-  }
-  .category__menu {
-    left: calc(100% + 0.5rem);
-    top: 0.2rem;
   }
 }

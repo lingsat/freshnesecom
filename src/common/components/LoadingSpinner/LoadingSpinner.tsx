@@ -1,15 +1,14 @@
-import React, { FC } from "react";
+import React from "react";
+
 import "./LoadingSpinner.scss";
 
-const LoadinSpinner: FC = () => {
-  return (
-    <div className="lds-ring">
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-    </div>
-  );
-};
+const LoadinSpinner = () => (
+  <div className="lds-ring">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+);
 
 export default LoadinSpinner;

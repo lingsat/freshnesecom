@@ -3,3 +3,21 @@
   overflow: hidden;
   white-space: nowrap;
 }
+
+@mixin flex-between-center {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin font($weight, $size, $lineHeight) {
+  font-weight: $weight;
+  font-size: $size;
+  line-height: $lineHeight;
+}

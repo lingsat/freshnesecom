@@ -1,22 +1,23 @@
-import React, { FC, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { RootState } from "@/store/store";
-import { getCategoriesObj } from "@/utils/products.utils";
-import { IProductsState } from "@products/productsSlice";
-import LinkItem from "@/common/components/LInkItem/LinkItem";
-import Search from "./components/Search/Search";
+import { Link } from "react-router-dom";
+
+import { RootState } from "@Store/store";
+import { IProductsState, selectProducts } from "@Products/productsSlice";
+import { getCategoriesObj } from "@/utils/products";
+import LinkItem from "@CommonComponents/LInkItem/LinkItem";
+
+import arrowDown from "@Images/arrow_down.svg";
+import cartIcon from "@Images/basket.svg";
+import logo from "@Images/logo.svg";
+import userIcon from "@Images/user.svg";
+
 import Category from "./components/Category/Category";
-import logo from "@/assets/images/logo.svg";
-import arrowDown from "@/assets/images/arrow_down.svg";
-import userIcon from "@/assets/images/user.svg";
-import cartIcon from "@/assets/images/basket.svg";
+import Search from "./components/Search/Search";
 import "./Header.scss";
 
-const Header: FC = () => {
-  const { products } = useSelector<RootState, IProductsState>(
-    (state) => state.products
-  );
+const Header = () => {
+  const { products } = useSelector<RootState, IProductsState>(selectProducts);
   const [showCategories, setShowCategories] = useState<boolean>(true);
 
   const categoriesObj = getCategoriesObj(products);
@@ -77,15 +78,15 @@ const Header: FC = () => {
         onClick={toggleShowCategories}>
         Categories
         <img
-          className={`${!showCategories && "rotate__icon"}`}
+          className={`${!showCategories ? "rotate__icon" : ""}`}
           src={arrowDown}
           alt="DownArrow"
         />
       </button>
       <nav>
         <ul
-          className={`header__categories ${
-            showCategories ? "header__categories--hide" : ""
+          className={`header__categories${
+            showCategories ? " header__categories--hide" : ""
           }`}>
           {categories.map((category, index) => (
             <Category

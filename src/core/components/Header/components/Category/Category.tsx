@@ -1,8 +1,12 @@
 import React, { FC, useState } from "react";
 import { useDispatch } from "react-redux";
-import { AppDispatch } from "@/store/store";
-import { changeSingleBrand } from "@products/productsSlice";
-import arrowDownThin from "@/assets/images/arrow_down_thin.svg";
+
+import { AppDispatch } from "@Store/store";
+import { changeSingleBrand } from "@Products/productsSlice";
+import DropDown from "@CommonComponents/DropDown/DropDown";
+
+import arrowDownThin from "@Images/arrow_down_thin.svg";
+
 import "./Category.scss";
 
 interface CategoryProps {
@@ -11,9 +15,9 @@ interface CategoryProps {
 }
 
 const Category: FC<CategoryProps> = ({ category, brands }) => {
-  const [showMenu, setShowMenu] = useState<boolean>(false);
-
   const dispatch = useDispatch<AppDispatch>();
+
+  const [showMenu, setShowMenu] = useState<boolean>(false);
 
   const handleHideMenu = () => {
     setShowMenu(false);
@@ -23,7 +27,8 @@ const Category: FC<CategoryProps> = ({ category, brands }) => {
     setShowMenu(true);
   };
 
-  const handleChooseBrand = (brand: string) => () => {
+  const handleChooseBrand = (brand: string) => {
+    handleHideMenu();
     dispatch(changeSingleBrand({ brand, category }));
   };
 
@@ -37,17 +42,7 @@ const Category: FC<CategoryProps> = ({ category, brands }) => {
           alt="DownArrow"
         />
       </div>
-      <ul
-        className={`category__menu ${showMenu ? "category__menu--show" : ""}`}>
-        {brands.map((brand, index) => (
-          <li
-            key={`brand-${brand}-${index}`}
-            className="category__link"
-            onClick={handleChooseBrand(brand)}>
-            {brand}
-          </li>
-        ))}
-      </ul>
+      {showMenu && <DropDown list={brands} onClick={handleChooseBrand} />}
     </li>
   );
 };

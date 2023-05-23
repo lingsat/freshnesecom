@@ -1,30 +1,28 @@
-@import "@/assets/styles/_variables.scss";
+@import "@Styles/_variables.scss";
+@import "@Styles/_mixins.scss";
 
 .header {
   margin-bottom: 2rem;
 
   &__links {
-    height: 55px;
-    padding: 1rem 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    @include flex-between-center;
     column-gap: 2rem;
-    border-bottom: 1px solid $header-border-line-color;
+    padding: 1rem 0;
+    height: 55px;
+    border-bottom: 1px solid $color-gray-lightest;
   }
 
   &__contacts {
-    list-style: none;
     display: flex;
     align-items: center;
     gap: 2rem;
   }
 
   &__link {
-    font-family: $main-text-font;
-    color: $text-black-color;
+    font-family: $font-primary;
     font-size: 0.75rem;
     line-height: 1rem;
+    color: $color-black;
     text-decoration: none;
 
     &:hover {
@@ -33,17 +31,15 @@
   }
 
   &__pages {
-    list-style: none;
     display: flex;
     align-items: center;
     gap: 2rem;
   }
 
   &__main {
+    @include flex-between-center;
+    min-height: 66px;
     padding: 0.8rem 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
   }
 
   &__logo {
@@ -52,13 +48,10 @@
   }
 
   &__categories {
+    @include flex-between-center;
     min-height: 54px;
-    list-style: none;
     padding: 0 45px;
-    background-color: $bg-header-categories-color;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    background-color: $color-gray-lightest;
   }
 }
 
@@ -85,24 +78,19 @@
     }
 
     span {
-      display: block;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      @include flex-center;
       width: 16px;
       height: 16px;
       position: absolute;
       left: -5px;
       bottom: -2px;
       z-index: 1;
-      background: $bg-cart-counter-color;
-      box-shadow: 0px 2px 4px $shadow-cart-counter-color;
+      font-family: $font-secondary;
+      @include font(600, 0.75rem, 1.125rem);
+      color: $color-white;
+      background: $color-red;
+      box-shadow: 0px 2px 4px $color-gray;
       border-radius: 12px;
-      font-family: $title-text-font;
-      font-weight: 600;
-      font-size: 0.75rem;
-      line-height: 1.125rem;
-      color: $text-white-color;
     }
   }
 }
@@ -110,10 +98,10 @@
 .category__hider {
   display: none;
   margin: 0 auto;
-  font-family: $title-text-font;
+  font-family: $font-secondary;
   font-size: 0.95rem;
   line-height: 1.375rem;
-  color: $text-black-color;
+  color: $color-black;
   align-items: center;
   gap: 0.5rem;
   border: none;
@@ -183,23 +171,6 @@
 
   .header__pages {
     display: none;
-  }
-
-  .search {
-    flex-direction: column;
-    row-gap: 0.5rem;
-
-    form {
-      width: 100%;
-    }
-
-    &__input {
-      width: 100%;
-      padding-top: 5px;
-      padding-bottom: 5px;
-      padding-left: 5px;
-      border: 1px solid $header-search-border-color;
-    }
   }
 
   .category__hider {

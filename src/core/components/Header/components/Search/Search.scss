@@ -1,18 +1,17 @@
-@import "@/assets/styles/_variables.scss";
+@import "@Styles/_variables.scss";
+@import "@Styles/_mixins.scss";
 
 .search {
-  padding: 0.5rem 1rem;
+  padding: 0 1rem;
   display: flex;
   align-items: center;
-  background: $bg-search-color;
-  border: 1px solid $header-search-border-color;
+  background: $color-gray-lightest;
+  border: 1px solid $color-gray-light;
   border-radius: 12px;
 
   &__label {
+    @include flex-center;
     position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
   }
 
   &__icon {
@@ -31,22 +30,18 @@
     margin: 0;
     padding: 0 1.5rem;
     width: 300px;
-    border: none;
-    border-left: 1px solid $header-search-border-color;
-    outline: none;
-    font-family: $main-text-font;
-    font-weight: 400;
-    font-size: 0.875rem;
-    line-height: 1.185rem;
+    font-family: $font-primary;
+    @include font(400, 0.875rem, 1.185rem);
     background: inherit;
-    color: $search-field-color;
+    color: $color-gray;
+    border: none;
+    border-left: 1px solid $color-gray-light;
+    outline: none;
   }
 
   &__clear {
+    @include flex-center;
     padding: 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     position: absolute;
     top: 50%;
     right: 0;
@@ -59,7 +54,7 @@
     transition: all 0.1s linear;
 
     &:hover {
-      background-color: $bg-button-hover-color;
+      background-color: $color-gray-light;
     }
 
     img {
@@ -72,13 +67,9 @@
 @media (max-width: 991.98px) {
   .search {
     order: 3;
+    margin: 0 auto;
     width: 100%;
     max-width: 520px;
-    margin: 0 auto;
-
-    &__input {
-      width: 280px;
-    }
   }
 }
 
@@ -88,6 +79,7 @@
     row-gap: 0.5rem;
 
     form {
+      margin-bottom: 0.5rem;
       width: 100%;
     }
 
@@ -95,8 +87,13 @@
       width: 100%;
       padding-top: 5px;
       padding-bottom: 5px;
-      padding-left: 5px;
-      border: 1px solid $header-search-border-color;
+      padding-left: 10px;
+      border: 1px solid $color-gray-light;
+      border-radius: 8px;
+    }
+
+    &__icon {
+      right: 5px;
     }
   }
 }

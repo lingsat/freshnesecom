@@ -1,9 +1,9 @@
-@import "@/assets/styles/_variables.scss";
+@import "@Styles/_variables.scss";
 
 .link {
   font-size: 0.875rem;
   line-height: 1.184rem;
-  color: $link-main-color;
+  color: $color-green;
   text-decoration: none;
 
   &:hover {

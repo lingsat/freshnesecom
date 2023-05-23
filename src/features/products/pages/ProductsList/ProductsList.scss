@@ -1,0 +1,103 @@
+@import "@Styles/_variables.scss";
+@import "@Styles/_mixins.scss";
+
+.products-list {
+  &__header {
+    @include flex-between-center;
+    margin-bottom: 1.5rem;
+    gap: 1rem;
+  }
+
+  &__title {
+    font-family: $font-secondary;
+    @include font(600, 2rem, 3rem);
+  }
+
+  &__stat {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    p {
+      padding: 0 0.5rem;
+      border-radius: 12px;
+      font-family: $font-secondary;
+      @include font(600, 0.75rem, 1.125rem);
+      background-color: $color-gray-lightest;
+      color: $color-green;
+    }
+
+    span {
+      font-size: 0.75rem;
+      line-height: 1rem;
+      color: $color-gray;
+    }
+  }
+
+  &__controls {
+    @include flex-between-center;
+    margin-bottom: 4rem;
+  }
+
+  &__main {
+    display: grid;
+    grid-template-columns: 270px 1fr;
+    gap: 2rem;
+  }
+}
+
+.filter__switcher {
+  display: none;
+  padding: 0 0.5rem;
+  font-family: $font-secondary;
+  @include font(500, 0.95rem, 1.375rem);
+  color: $color-black;
+  align-items: center;
+  gap: 0.5rem;
+  background: inherit;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+
+  img {
+    transition: all 0.3s linear;
+  }
+}
+
+.spinner__wrapper {
+  min-height: 100vh;
+}
+
+@media (max-width: 991.98px) {
+  .products-list {
+    &__main {
+      grid-template-columns: 1fr;
+      column-gap: 0;
+      row-gap: 1rem;
+    }
+
+    &__header {
+      margin-bottom: 1rem;
+    }
+
+    &__controls {
+      margin-bottom: 1rem;
+    }
+  }
+
+  .filter__switcher {
+    display: flex;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .products-list {
+    &__title {
+      font-size: 1.5rem;
+    }
+
+    &__header {
+      margin-bottom: 0;
+    }
+  }
+}

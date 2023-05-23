@@ -1,15 +1,18 @@
 import React, { useEffect } from "react";
-import { Route, Routes } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { AppDispatch } from "./store/store";
-import { fetchProducts } from "./features/products/productsSlice";
-import Header from "@/core/components/Header/Header";
-import Footer from "@/core/components/Footer/Footer";
-import HomePage from "@products/pages/HomePage/HomePage";
-import ProductsListPage from "@products/pages/ProductsListPage/ProductsListPage";
-import ProductItemPage from "@products/pages/ProductItemPage/ProductItemPage";
-import CartPage from "@products/pages/CartPage/CartPage";
-import NotFoundPage from "@products/pages/NotFoundPage/NotFoundPage";
+import { Route, Routes } from "react-router-dom";
+
+import { AppDispatch } from "@Store/store";
+import { fetchProducts } from "@Products/productsSlice";
+import { ERoutes } from "@/types/routes";
+import Header from "@CoreComponents/Header/Header";
+import Footer from "@CoreComponents/Footer/Footer";
+import Home from "@ProductsPages/Home/Home";
+import ProductsList from "@ProductsPages/ProductsList/ProductsList";
+import ProductItem from "@ProductsPages/ProductItem/ProductItem";
+import Cart from "@ProductsPages/Cart/Cart";
+import NotFound from "@ProductsPages/NotFound/NotFound";
+
 import "./App.scss";
 
 const App = () => {
@@ -24,11 +27,11 @@ const App = () => {
       <Header />
       <main>
         <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/products" element={<ProductsListPage />} />
-          <Route path="/products/:id" element={<ProductItemPage />} />
-          <Route path="/cart" element={<CartPage />} />
-          <Route path="*" element={<NotFoundPage />} />
+          <Route path={ERoutes.HOME} element={<Home />} />
+          <Route path={ERoutes.PRODUCTS_LIST} element={<ProductsList />} />
+          <Route path={ERoutes.PRODUCT_ITEM} element={<ProductItem />} />
+          <Route path={ERoutes.CART} element={<Cart />} />
+          <Route path={ERoutes.NOT_FOUND} element={<NotFound />} />
         </Routes>
       </main>
       <Footer />

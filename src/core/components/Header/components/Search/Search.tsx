@@ -1,22 +1,29 @@
-import React, { ChangeEvent, FC, useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "@/store/store";
+import { useLocation, useNavigate } from "react-router-dom";
+
+import { AppDispatch, RootState } from "@Store/store";
 import {
   changeSearch,
-  clearSearch,
   IProductsState,
-} from "@products/productsSlice";
-import Selector from "@/core/components/Header/components/Selector/Selector";
-import searchIcon from "@/assets/images/search.svg";
-import closeIcon from "@/assets/images/close.svg";
+  selectProducts,
+} from "@Products/productsSlice";
+import { DEBOUNCE_DELAY } from "@/constants";
+import { ERoutes } from "@/types/routes";
+
+import closeIcon from "@Images/close.svg";
+import searchIcon from "@Images/search.svg";
+
+import Selector from "../Selector/Selector";
 import "./Search.scss";
 
-const Search: FC = () => {
-  const { filter } = useSelector<RootState, IProductsState>(
-    (state) => state.products
-  );
+const Search = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
+  const { filter } = useSelector<RootState, IProductsState>(selectProducts);
 
+  const [isMount, setIsMount] = useState<boolean>(false);
   const [localSearchValue, setLocalSearchValue] = useState<string>(
     filter.searchValue
   );
@@ -26,21 +33,24 @@ const Search: FC = () => {
   };
 
   const startSearching = () => {
+    if (pathname !== ERoutes.PRODUCTS_LIST && localSearchValue) {
+      navigate(ERoutes.PRODUCTS_LIST);
+    }
     dispatch(changeSearch(localSearchValue));
   };
 
   const clearSearchValue = () => {
-    dispatch(clearSearch());
+    setLocalSearchValue("");
   };
 
   useEffect(() => {
-    const debounceTimer = setTimeout(startSearching, 500);
-    return () => clearTimeout(debounceTimer);
+    if (isMount) {
+      const debounceTimer = setTimeout(startSearching, DEBOUNCE_DELAY);
+      return () => clearTimeout(debounceTimer);
+    } else {
+      setIsMount(true);
+    }
   }, [localSearchValue]);
-
-  useEffect(() => {
-    setLocalSearchValue(filter.searchValue);
-  }, [filter.searchValue]);
 
   return (
     <div className="search">
@@ -50,7 +60,7 @@ const Search: FC = () => {
           <input
             className="search__input"
             type="text"
-            placeholder="Search Products, categories ..."
+            placeholder="Search Products ..."
             value={localSearchValue}
             onChange={handleSearchChange}
           />

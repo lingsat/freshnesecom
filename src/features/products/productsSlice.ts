@@ -1,10 +1,11 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
-import { RootState } from "@/store/store";
-import { getMinMaxPrice } from "@/utils/products.utils";
+
+import { RootState } from "@Store/store";
+import { getMinMaxPrice } from "@/utils/products";
 import { getToggledArray } from "@/utils/toggleArrItem";
-import { IProduct, ESort } from "@products/types/product";
-import { IPaginationState, EPagination } from "@products/types/pagination";
+import { IProduct } from "@Products/types/product";
+import { IPaginationState, EPagination } from "@Products/types/pagination";
 
 export interface IFilter {
   searchValue: string;
@@ -22,7 +23,7 @@ export interface IProductsState {
     max: number;
   };
   filter: IFilter;
-  sortRule: ESort;
+  sortRule: string;
   pagination: IPaginationState;
 }
 
@@ -45,7 +46,7 @@ const initialState: IProductsState = {
     stars: [],
     price: [],
   },
-  sortRule: ESort.CLEAR,
+  sortRule: "",
   pagination: initialPagination,
 };
 
@@ -61,10 +62,6 @@ export const productsSlice = createSlice({
   reducers: {
     changeSearch(state, action: PayloadAction<string>) {
       state.filter.searchValue = action.payload;
-      state.pagination = initialPagination;
-    },
-    clearSearch(state) {
-      state.filter.searchValue = "";
       state.pagination = initialPagination;
     },
     changeCategory(state, action: PayloadAction<string>) {
@@ -108,7 +105,7 @@ export const productsSlice = createSlice({
       };
       state.pagination = initialPagination;
     },
-    changeSortRule(state, action: PayloadAction<ESort>) {
+    changeSortRule(state, action: PayloadAction<string>) {
       state.sortRule = action.payload;
       state.pagination = initialPagination;
     },
@@ -137,7 +134,6 @@ export const productsSlice = createSlice({
 
 export const {
   changeSearch,
-  clearSearch,
   changeCategory,
   changeSingleBrand,
   toggleBrands,
@@ -149,6 +145,6 @@ export const {
   increaseProductsPerPage,
 } = productsSlice.actions;
 
-export const selectProducts = (state: RootState) => state.products.products;
+export const selectProducts = (state: RootState) => state.products;
 
 export default productsSlice.reducer;
