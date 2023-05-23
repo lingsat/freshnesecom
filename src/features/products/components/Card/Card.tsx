@@ -5,7 +5,6 @@ import { getStarsArrFromNumber } from "@/utils/products";
 import { IProduct } from "@Products/types/product";
 import Button from "@CommonComponents/Button/Button";
 
-import heartIcon from "@Images/heart.svg";
 import star from "@Images/star.svg";
 import checkedStar from "@Images/star_checked.svg";
 
@@ -83,10 +82,12 @@ const Card: FC<CardProps> = ({ product }) => {
           </div>
           <div className="info__buttons">
             <Button text="Product Detail" onCLick={handleOpenProduct} />
-            <button className="info__wish-btn">
-              <img src={heartIcon} alt="Heart" />
-              Add to wish list
-            </button>
+            <Button
+              style="secondary"
+              image="heart"
+              imagePosition="left"
+              text="Add to wish list"
+            />
           </div>
         </div>
       </div>

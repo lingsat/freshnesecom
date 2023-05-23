@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import { AppDispatch, RootState } from "@Store/store";
 import {
@@ -9,6 +9,10 @@ import {
   selectProducts,
 } from "@Products/productsSlice";
 import LoadinSpinner from "@CommonComponents/LoadingSpinner/LoadingSpinner";
+import Images from "@ProductsComponents/Images/Images";
+import ProductInfo from "@ProductsComponents/ProductInfo/ProductInfo";
+
+import "./ProductItem.scss";
 
 import "./ProductItem.scss";
 
@@ -35,9 +39,9 @@ const ProductItem = () => {
   }
 
   return (
-    <div>
-      <h2>Product {singleProduct.title}</h2>
-      <Link to="/products">Back to product list</Link>
+    <div className="product">
+      <Images />
+      <ProductInfo />
     </div>
   );
 };

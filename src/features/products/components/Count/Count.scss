@@ -1,0 +1,55 @@
+@import "@Styles/_variables.scss";
+@import "@Styles/_mixins.scss";
+
+.count {
+  padding: 0 0.75rem;
+  width: 140px;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  align-items: center;
+  background: $color-gray-lightest;
+  border: 1px solid $color-gray-light;
+  border-radius: 12px;
+
+  &__label {
+    width: 50px;
+
+    input {
+      padding: 2px 0;
+      width: 100%;
+      text-align: center;
+      font-size: 0.875rem;
+      line-height: 1.185rem;
+      color: $color-gray;
+      background-color: transparent;
+      border: none;
+      border-right: 1px solid $color-gray;
+      outline: none;
+    }
+  }
+
+  &__selector {
+    padding: 1rem 0;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+
+  &__btn {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: $font-secondary;
+    @include font(600, 0.75rem, 1.125rem);
+    cursor: pointer;
+
+    img {
+      width: 7px;
+      height: 5px;
+      transition: all 0.3s linear;
+    }
+  }
+}
