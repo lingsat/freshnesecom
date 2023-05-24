@@ -1,20 +1,49 @@
+// export interface IProduct {
+//   id: string;
+//   title: string;
+//   category: string;
+//   shortDescription: string;
+//   image: string;
+//   stars: number;
+//   votes: number;
+//   price: number;
+//   oldPrice: number;
+//   freeShipping: boolean;
+//   deliveryTime: number;
+//   deliveryFrom: string;
+//   tags: string[];
+//   freshness: string;
+//   brand: string;
+//   stock: number;
+// }
+
 export interface IProduct {
   id: string;
   title: string;
   category: string;
   shortDescription: string;
-  image: string;
+  images: string[];
   stars: number;
   votes: number;
-  price: number;
-  oldPrice: number;
+  mainPrice: number;
+  price: {
+    [key: string]: number;
+  };
+  discount: 15;
   freeShipping: boolean;
   deliveryTime: number;
-  deliveryFrom: string;
+  countryFrom: string;
+  countryFromCode: number;
+  deliveryArea: string;
   tags: string[];
   freshness: string;
   brand: string;
-  stock: number;
+  stock: {
+    [key: string]: number;
+  };
+  color: string;
+  size: string;
+  mainCountCategory: string;
 }
 
 export interface ICategory {
@@ -26,6 +55,10 @@ export interface ICategory {
 
 export enum EPrice {
   MIN_DISTANCE = 5,
+}
+
+export enum ECount {
+  MIN_COUNT_VALUE = 1,
 }
 
 export enum ESort {

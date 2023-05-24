@@ -63,7 +63,7 @@
 
   &__order {
     margin-bottom: 1.5rem;
-    padding: 1rem 1.5rem 1rem 1rem;
+    padding: 1rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -73,7 +73,7 @@
   }
 
   &__price {
-    width: 160px;
+    width: 165px;
   }
 }
 
@@ -101,13 +101,13 @@
   color: $color-gray;
 }
 
-@media (max-width: 1079.98px) {
+@media (max-width: 1099.98px) {
   .product-info__price {
-    width: 25%;
+    width: 28%;
   }
 
   .price__main {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     line-height: 1.5rem;
   }
 }
@@ -162,6 +162,11 @@
   .price__main,
   .price__old {
     text-align: center;
+  }
+
+  .price__main {
+    font-size: 1.4rem;
+    line-height: 1.8rem;
   }
 }
 

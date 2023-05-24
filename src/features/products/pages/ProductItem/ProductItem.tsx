@@ -14,8 +14,6 @@ import ProductInfo from "@ProductsComponents/ProductInfo/ProductInfo";
 
 import "./ProductItem.scss";
 
-import "./ProductItem.scss";
-
 const ProductItem = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { id } = useParams();
@@ -40,8 +38,12 @@ const ProductItem = () => {
 
   return (
     <div className="product">
-      <Images />
-      <ProductInfo />
+      <Images
+        images={singleProduct.images}
+        discount={singleProduct.discount}
+        freeShipping={singleProduct.freeShipping}
+      />
+      <ProductInfo product={singleProduct} />
     </div>
   );
 };

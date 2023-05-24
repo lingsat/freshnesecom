@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-import { getStarsArrFromNumber } from "@/utils/products";
+import { getOldPrice, getStarsArrFromNumber } from "@/utils/products";
 import { IProduct } from "@Products/types/product";
 import Button from "@CommonComponents/Button/Button";
 
@@ -17,7 +17,9 @@ interface CardProps {
 const Card: FC<CardProps> = ({ product }) => {
   const navigate = useNavigate();
 
+  const { mainPrice, mainCountCategory } = product;
   const starsArr = getStarsArrFromNumber(product.stars);
+  const oldPrice = getOldPrice(product.mainPrice, product.discount);
 
   const handleOpenProduct = () => {
     navigate(`/products/${product.id}`);
@@ -26,7 +28,11 @@ const Card: FC<CardProps> = ({ product }) => {
   return (
     <li className="card">
       <Link to={`/products/${product.id}`}>
-        <img className="card__image" src={product.image} alt={product.title} />
+        <img
+          className="card__image"
+          src={product.images[0]}
+          alt={product.title}
+        />
       </Link>
       <div className="card__info">
         <div className="info__left">
@@ -57,20 +63,22 @@ const Card: FC<CardProps> = ({ product }) => {
             </li>
             <li className="subinfo__row">
               <p className="subinfo__category">Delivery</p>
-              <p className="subinfo__value">{product.deliveryFrom}</p>
+              <p className="subinfo__value">{product.countryFrom}</p>
             </li>
             <li className="subinfo__row">
               <p className="subinfo__category">Stock</p>
               <p className="subinfo__value">
-                <span>{product.stock} pcs</span>
+                <span>
+                  {`${product.stock[mainCountCategory]} ${mainCountCategory}`}{" "}
+                </span>
               </p>
             </li>
           </ul>
         </div>
         <div className="info__right">
           <div className="info__price-block">
-            <p className="info__price">{product.price} USD</p>
-            <p className="info__old-price">{product.oldPrice}</p>
+            <p className="info__price">{mainPrice} USD</p>
+            <p className="info__old-price">{oldPrice}</p>
           </div>
           <div className="info__delivery-block">
             <p className="info__shipping">

@@ -1,15 +1,17 @@
-import React, { useState } from "react";
+import React, { FC, useState } from "react";
 
 import { getSortedImages } from "@/utils/products";
 
 import "./Images.scss";
 
-const Images = () => {
-  const [imagesArr, setImagesArr] = useState([
-    "https://content2.rozetka.com.ua/goods/images/big/325629467.jpg",
-    "https://m.media-amazon.com/images/I/61U6oC65TTL._AC_SL1500_.jpg",
-    "https://media.wired.com/photos/6151f908ce82f4f072e06cb9/1:1/w_1388,h_1388,c_limit/Gear-9th-Gen-iPad-Review-top.jpg",
-  ]);
+interface ImagesProps {
+  images: string[];
+  discount: number;
+  freeShipping: boolean;
+}
+
+const Images: FC<ImagesProps> = ({ images, discount, freeShipping }) => {
+  const [imagesArr, setImagesArr] = useState<string[]>(images);
 
   const handleImageClick = (imageIndex: number) => () => {
     const sortedImages = getSortedImages(imagesArr, imageIndex);
@@ -19,8 +21,8 @@ const Images = () => {
   return (
     <div className="images">
       <div className="images__data">
-        <span>- 36 %</span>
-        <span>Free shipping</span>
+        <span>- {discount} %</span>
+        <span>{freeShipping ? "Free" : "Payed"} shipping</span>
       </div>
       <div className="images__block">
         {imagesArr.map((imageSrc, index) => (

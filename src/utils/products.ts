@@ -1,5 +1,6 @@
 import { IFilter } from "@Products/productsSlice";
 import { IProduct, ICategory, ESort } from "@Products/types/product";
+import { productCategories } from "@/mock/productCategories";
 
 const getSortedProducts = (
   productsArr: IProduct[],
@@ -7,9 +8,13 @@ const getSortedProducts = (
 ): IProduct[] => {
   switch (sortRule) {
     case ESort.PRICE_LOW:
-      return productsArr.sort((a, b) => a.price - b.price);
+      return productsArr.sort(
+        (a, b) => a.price[a.mainCountCategory] - b.price[b.mainCountCategory]
+      );
     case ESort.PRICE_HIGH:
-      return productsArr.sort((a, b) => b.price - a.price);
+      return productsArr.sort(
+        (a, b) => b.price[b.mainCountCategory] - a.price[a.mainCountCategory]
+      );
     case ESort.RATING_LOW:
       return productsArr.sort((a, b) => a.stars - b.stars);
     case ESort.RATING_HIGH:
@@ -36,7 +41,9 @@ export const getFilteredProducts = (
     const isInBrands = !brands.length || brands.includes(product.brand);
     const isInStars = !stars.length || stars.includes(product.stars);
     const isInPrice =
-      !price.length || (product.price >= price[0] && product.price <= price[1]);
+      !price.length ||
+      (product.price[product.mainCountCategory] >= price[0] &&
+        product.price[product.mainCountCategory] <= price[1]);
     const isInTitle = product.title.toLowerCase().includes(formatedSearchValue);
     return isInCategory && isInBrands && isInStars && isInPrice && isInTitle;
   });
@@ -98,18 +105,71 @@ export const getMinMaxPrice = (
   }
   return productsArr.reduce(
     (acc, product) => {
-      const { price } = product;
+      const { mainPrice } = product;
       return {
-        min: Math.min(acc.min, Math.floor(price)),
-        max: Math.max(acc.max, Math.ceil(price)),
+        min: Math.min(acc.min, Math.floor(mainPrice)),
+        max: Math.max(acc.max, Math.ceil(mainPrice)),
       };
     },
-    { min: productsArr[0].price, max: productsArr[0].price }
+    {
+      min: productsArr[0].mainPrice,
+      max: productsArr[0].mainPrice,
+    }
   );
 };
 
 export const getValidPrice = (value: string, max: number, min = 0): number => {
   return Math.max(min, Math.min(max, Number(value)));
+};
+
+export const getOldPrice = (price: number, discount: number): string => {
+  const priceDiscount = (price * discount) / 100;
+  return (price + priceDiscount).toFixed(2);
+};
+
+export const getCountCategories = (priceObj: {
+  [key: string]: number;
+}): string[] => {
+  return Object.keys(priceObj);
+};
+
+const getValidDataListValue = (
+  product: IProduct,
+  category: string,
+  countCategory: string
+): string => {
+  let value;
+
+  switch (category) {
+    case "deliveryTime":
+      value = `in ${product[category as keyof IProduct]} days`;
+      break;
+    case "stock":
+      value = `${product.stock[countCategory]} ${countCategory}`;
+      break;
+    case "buyBy":
+      value = getCountCategories(product.price).join(", ");
+      break;
+    default:
+      value = product[category as keyof IProduct];
+      break;
+  }
+
+  return typeof value === "string" ? value : value.toString();
+};
+
+export const getProductDataList = (
+  product: IProduct,
+  countCategory: string
+): { category: string; value: string }[] => {
+  const catArr = Object.keys(productCategories);
+  return catArr.map((category) => {
+    const value = getValidDataListValue(product, category, countCategory);
+    return {
+      category: productCategories[category as keyof typeof productCategories],
+      value,
+    };
+  });
 };
 
 export const getSortedImages = (imagesArr: string[], index: number) => () => {

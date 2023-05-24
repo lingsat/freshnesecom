@@ -1,8 +1,10 @@
 import React, { FC, useState } from "react";
 import { useDispatch } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import { AppDispatch } from "@Store/store";
 import { changeSingleBrand } from "@Products/productsSlice";
+import { ERoutes } from "@/types/routes";
 import DropDown from "@CommonComponents/DropDown/DropDown";
 
 import arrowDownThin from "@Images/arrow_down_thin.svg";
@@ -16,6 +18,8 @@ interface CategoryProps {
 
 const Category: FC<CategoryProps> = ({ category, brands }) => {
   const dispatch = useDispatch<AppDispatch>();
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
 
   const [showMenu, setShowMenu] = useState<boolean>(false);
 
@@ -29,6 +33,9 @@ const Category: FC<CategoryProps> = ({ category, brands }) => {
 
   const handleChooseBrand = (brand: string) => {
     handleHideMenu();
+    if (pathname !== ERoutes.PRODUCTS_LIST) {
+      navigate(ERoutes.PRODUCTS_LIST);
+    }
     dispatch(changeSingleBrand({ brand, category }));
   };
 
