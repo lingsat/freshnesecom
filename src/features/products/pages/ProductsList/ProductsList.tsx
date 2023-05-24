@@ -7,7 +7,6 @@ import { getPaginatedProducts } from "@/utils/pagination";
 import { getFilteredProducts } from "@/utils/products";
 import LoadinSpinner from "@CommonComponents/LoadingSpinner/LoadingSpinner";
 import Filter from "@ProductsComponents/Filter/Filter";
-import Navigation from "@ProductsComponents/Navigation/Navigation";
 import Paging from "@ProductsComponents/Paging/Paging";
 import Products from "@ProductsComponents/Products/Products";
 import Sort from "@ProductsComponents/Sort/Sort";
@@ -39,7 +38,6 @@ const ProductsList = () => {
 
   return (
     <div className="products-list" ref={listRef}>
-      <Navigation />
       <div className="products-list__header">
         <h2 className="products-list__title">
           {filter.category || "All Products"}

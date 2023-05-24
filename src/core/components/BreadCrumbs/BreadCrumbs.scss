@@ -1,9 +1,17 @@
 @import "@Styles/_variables.scss";
+@import "@Styles/_mixins.scss";
 
-.list-nav {
+.breadcrumbs {
   margin-bottom: 1rem;
   display: flex;
   gap: 1.3rem;
+
+  &__loading {
+    margin-bottom: 1rem;
+    font-family: $font-primary;
+    font-size: 0.75rem;
+    line-height: 1rem;
+  }
 
   &__item {
     position: relative;
@@ -21,8 +29,9 @@
     }
 
     &:last-of-type {
-      .list-nav__link {
+      .breadcrumbs__link {
         color: $color-black;
+        pointer-events: none;
       }
 
       &::after {
@@ -32,6 +41,9 @@
   }
 
   &__link {
+    @include text-overflow-hide;
+    display: block;
+    max-width: 300px;
     text-decoration: none;
     font-family: $font-primary;
     font-size: 0.75rem;
@@ -45,7 +57,13 @@
 }
 
 @media (max-width: 991.98px) {
-  .list-nav {
+  .breadcrumbs {
     margin-bottom: 0.2rem;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .breadcrumbs__link {
+    max-width: 145px;
   }
 }
