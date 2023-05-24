@@ -111,3 +111,20 @@ export const getMinMaxPrice = (
 export const getValidPrice = (value: string, max: number, min = 0): number => {
   return Math.max(min, Math.min(max, Number(value)));
 };
+
+export const getSortedImages = (imagesArr: string[], index: number) => () => {
+  if (!index) {
+    return imagesArr;
+  }
+
+  const clickedImage = imagesArr[index];
+  const firstImage = imagesArr[0];
+  const updatedImagesArr = [
+    clickedImage,
+    ...imagesArr.slice(1, index),
+    firstImage,
+    ...imagesArr.slice(index + 1),
+  ];
+
+  return updatedImagesArr;
+};

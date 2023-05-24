@@ -1,12 +1,15 @@
-<<<<<<< HEAD
-.product__error {
-  text-align: center;
-=======
-@import "@Styles/_variables.scss";
-@import "@Styles/_mixins.scss";
-
 .product {
   display: flex;
   justify-content: space-between;
->>>>>>> ec46bb2 (feat: create UI for product item page - desktop)
+
+  &__error {
+    text-align: center;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .product {
+    flex-direction: column;
+    gap: 1rem;
+  }
 }
