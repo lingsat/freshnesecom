@@ -1,6 +1,6 @@
-import { Pagination, PaginationItem } from "@mui/material";
 import React, { ChangeEvent, FC } from "react";
 import { useDispatch } from "react-redux";
+import { Pagination, PaginationItem } from "@mui/material";
 
 import { AppDispatch } from "@Store/store";
 import {
@@ -9,7 +9,7 @@ import {
 } from "@Products/productsSlice";
 import { getPaginationData, isPageInActiveRange } from "@/utils/pagination";
 import { IPaginationState } from "@Products/types/pagination";
-import Button from "@CommonComponents/Button/Button";
+import Button, { EBtnArrowDir } from "@CommonComponents/Button/Button";
 
 import "./Paging.scss";
 
@@ -67,7 +67,7 @@ const Paging: FC<PagingProps> = ({
       </div>
       <Button
         text="Show more products"
-        arrowDirection="bottom"
+        arrowDirection={EBtnArrowDir.BOTTOM}
         onCLick={handleIncreaseProdPerPage}
         disabled={isShowMoreDisabled}
       />

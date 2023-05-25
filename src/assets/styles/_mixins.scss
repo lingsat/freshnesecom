@@ -4,6 +4,13 @@
   white-space: nowrap;
 }
 
+@mixin text-overflow-rows($rows) {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: $rows;
+  -webkit-box-orient: vertical;
+}
+
 @mixin flex-between-center {
   display: flex;
   justify-content: space-between;

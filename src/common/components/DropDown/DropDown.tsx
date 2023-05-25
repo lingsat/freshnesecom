@@ -7,6 +7,7 @@ interface DropDownProps {
   onClick: (item: string) => void;
   clearValue?: string;
   position?: "left" | "center";
+  size?: "normal" | "small";
 }
 
 const DropDown: FC<DropDownProps> = ({
@@ -14,6 +15,7 @@ const DropDown: FC<DropDownProps> = ({
   onClick,
   clearValue = "",
   position = "left",
+  size = "normal",
 }) => {
   const handleClick = (item: string) => () => {
     onClick(item);
@@ -21,7 +23,9 @@ const DropDown: FC<DropDownProps> = ({
 
   return (
     <ul
-      className={`dropdown${position === "center" ? " dropdown--center" : ""}`}>
+      className={`dropdown${position === "center" ? " dropdown--center" : ""}${
+        size === "small" ? " dropdown--small" : ""
+      }`}>
       {!!clearValue && (
         <li className="dropdown__item" onClick={handleClick("")}>
           {clearValue}

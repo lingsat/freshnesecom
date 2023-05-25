@@ -17,6 +17,10 @@
     transform: translateX(-50%);
   }
 
+  &--small {
+    width: 70px;
+  }
+
   &__item {
     @include text-overflow-hide;
     padding: 5px;
