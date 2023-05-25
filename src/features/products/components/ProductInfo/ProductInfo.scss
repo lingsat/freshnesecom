@@ -118,6 +118,7 @@
     width: 100%;
     display: flex;
     flex-direction: column;
+    align-items: center;
 
     &__title {
       text-align: center;
@@ -142,7 +143,13 @@
 
     &__datalist {
       margin-bottom: 1.5rem;
+      justify-content: center;
+      column-gap: 1rem;
       row-gap: 0.5rem;
+
+      li {
+        gap: 1rem;
+      }
     }
 
     &__price {
@@ -157,7 +164,7 @@
     }
 
     &__value {
-      width: calc(100% - 110px);
+      width: 140px;
     }
   }
 
@@ -208,17 +215,6 @@
         justify-content: center;
         gap: 1rem;
       }
-    }
-  }
-
-  .datalist {
-    &__category {
-      width: 120px;
-    }
-
-    &__value {
-      width: 150px;
-      text-align: right;
     }
   }
 }
