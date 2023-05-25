@@ -23,9 +23,9 @@ const ProductInfo: FC<ProductInfoProps> = ({ product }) => {
     product.mainCountCategory
   );
   const [count, setCount] = useState<number>(1);
+
   const isCountInvalid =
     count > product.stock[countCategory] || count < ECount.MIN_COUNT_VALUE;
-
   const starsArr = getStarsArrFromNumber(product.stars);
   const currentPrice = (product.price[countCategory] * +count).toFixed(2);
   const oldPrice = getOldPrice(+currentPrice, product.discount);

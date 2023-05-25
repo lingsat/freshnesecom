@@ -25,7 +25,7 @@ const Button: FC<ButtonProps> = ({
   arrowDirection = "right",
   disabled = false,
 }) => {
-  const imageRes = image === "plus" ? plus : image === "heart" ? heart : arrow;
+  const imageRes = { plus, heart, arrow }[image];
 
   return (
     <button

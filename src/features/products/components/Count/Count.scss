@@ -68,5 +68,9 @@
       height: 5px;
       transition: all 0.3s linear;
     }
+
+    &--single {
+      cursor: auto;
+    }
   }
 }

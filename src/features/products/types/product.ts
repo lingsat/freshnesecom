@@ -1,22 +1,3 @@
-// export interface IProduct {
-//   id: string;
-//   title: string;
-//   category: string;
-//   shortDescription: string;
-//   image: string;
-//   stars: number;
-//   votes: number;
-//   price: number;
-//   oldPrice: number;
-//   freeShipping: boolean;
-//   deliveryTime: number;
-//   deliveryFrom: string;
-//   tags: string[];
-//   freshness: string;
-//   brand: string;
-//   stock: number;
-// }
-
 export interface IProduct {
   id: string;
   title: string;
@@ -29,7 +10,7 @@ export interface IProduct {
   price: {
     [key: string]: number;
   };
-  discount: 15;
+  discount: number;
   freeShipping: boolean;
   deliveryTime: number;
   countryFrom: string;

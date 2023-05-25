@@ -142,7 +142,7 @@ const getValidDataListValue = (
 
   switch (category) {
     case "deliveryTime":
-      value = `in ${product[category as keyof IProduct]} days`;
+      value = `in ${product[category]} days`;
       break;
     case "stock":
       value = `${product.stock[countCategory]} ${countCategory}`;

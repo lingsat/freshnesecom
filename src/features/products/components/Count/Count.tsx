@@ -31,6 +31,7 @@ const Count: FC<CountProps> = ({
   const countCategoryList = getCountCategories(product.price);
   const maxCountValue = product.stock[countCategory];
   const isCountInvalidMax = isCountInvalid || maxError;
+  const isCountCategorySingle = countCategoryList.length === 1;
 
   const handleHideMenu = () => {
     setShowMenu(false);
@@ -57,6 +58,7 @@ const Count: FC<CountProps> = ({
 
   const handleSetCountCategory = (newCountCategory: string) => {
     setCountCategory(newCountCategory);
+    setCount(ECount.MIN_COUNT_VALUE);
     handleHideMenu();
   };
 
@@ -76,14 +78,18 @@ const Count: FC<CountProps> = ({
         <p className="count__message">{`Min ${ECount.MIN_COUNT_VALUE} / Max ${maxCountValue} ${countCategory}.`}</p>
       )}
       <div className="count__selector">
-        <div className="count__btn" onMouseEnter={handleShowMenu}>
-          {countCategory}
-          <img
-            className={`${showMenu ? "reverse__icon" : ""}`}
-            src={arrowIcon}
-            alt="DownArrow"
-          />
-        </div>
+        {isCountCategorySingle ? (
+          <div className="count__btn count__btn--single">{countCategory}</div>
+        ) : (
+          <div className="count__btn" onMouseEnter={handleShowMenu}>
+            {countCategory}
+            <img
+              className={`${showMenu ? "reverse__icon" : ""}`}
+              src={arrowIcon}
+              alt="DownArrow"
+            />
+          </div>
+        )}
         {showMenu && (
           <DropDown
             size="small"
