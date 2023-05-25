@@ -1,0 +1,37 @@
+@import "@Styles/_variables.scss";
+@import "@Styles/_mixins.scss";
+
+.reviews {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  max-height: 400px;
+  overflow-y: auto;
+
+  &__block {
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  &__image {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: contain;
+  }
+
+  &__author {
+    font-family: $font-secondary;
+    @include font(500, 0.95rem, 1.375rem);
+    text-decoration: underline;
+  }
+
+  &__text {
+    @include text-overflow-rows(3);
+    font-size: 0.875rem;
+    line-height: 1.185rem;
+    font-style: italic;
+  }
+}

@@ -1,6 +1,8 @@
 import React, { FC, useState } from "react";
 
-import Description from "../Description/Description";
+import Description from "@ProductsComponents/Description/Description";
+import Reviews from "@ProductsComponents/Reviews/Reviews";
+import Questions from "@ProductsComponents/Questions/Questions";
 
 import "./Tabs.scss";
 
@@ -9,7 +11,7 @@ import "./Tabs.scss";
 const Tabs: FC = () => {
   const [value, setValue] = useState<number>(0);
 
-  const tabsArr = ["Description", "Rewiews", "Questions"];
+  const tabsArr = ["Description", "Reviews", "Questions"];
 
   const handleActiveChange = (newValue: number) => () => {
     setValue(newValue);
@@ -31,7 +33,9 @@ const Tabs: FC = () => {
           </li>
         ))}
       </ul>
-      <Description />
+      {/* <Description /> */}
+      {/* <Reviews /> */}
+      <Questions />
     </div>
   );
 };
