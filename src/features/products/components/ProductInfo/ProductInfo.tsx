@@ -6,7 +6,11 @@ import {
   getStarsArrFromNumber,
 } from "@/utils/products";
 import { ECount, IProduct } from "@Products/types/product";
-import Button from "@CommonComponents/Button/Button";
+import Button, {
+  EBtnImage,
+  EBtnImagePos,
+  EBtnStyle,
+} from "@CommonComponents/Button/Button";
 import Count from "@ProductsComponents/Count/Count";
 
 import star from "@Images/star.svg";
@@ -67,16 +71,16 @@ const ProductInfo: FC<ProductInfoProps> = ({ product }) => {
           isCountInvalid={isCountInvalid}
         />
         <Button
-          image="plus"
-          imagePosition="left"
+          image={EBtnImage.PLUS}
+          imagePosition={EBtnImagePos.LEFT}
           text="Add to cart"
           disabled={isCountInvalid}
         />
       </div>
       <Button
-        style="secondary"
-        image="heart"
-        imagePosition="left"
+        style={EBtnStyle.SECONDARY}
+        image={EBtnImage.HEART}
+        imagePosition={EBtnImagePos.LEFT}
         text="Add to my wish list"
       />
     </div>

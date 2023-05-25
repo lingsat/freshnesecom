@@ -3,7 +3,11 @@ import { Link, useNavigate } from "react-router-dom";
 
 import { getOldPrice, getStarsArrFromNumber } from "@/utils/products";
 import { IProduct } from "@Products/types/product";
-import Button from "@CommonComponents/Button/Button";
+import Button, {
+  EBtnImage,
+  EBtnImagePos,
+  EBtnStyle,
+} from "@CommonComponents/Button/Button";
 
 import star from "@Images/star.svg";
 import checkedStar from "@Images/star_checked.svg";
@@ -91,9 +95,9 @@ const Card: FC<CardProps> = ({ product }) => {
           <div className="info__buttons">
             <Button text="Product Detail" onCLick={handleOpenProduct} />
             <Button
-              style="secondary"
-              image="heart"
-              imagePosition="left"
+              style={EBtnStyle.SECONDARY}
+              image={EBtnImage.HEART}
+              imagePosition={EBtnImagePos.LEFT}
               text="Add to wish list"
             />
           </div>
