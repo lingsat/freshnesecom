@@ -12,6 +12,7 @@ import Button, {
   EBtnStyle,
 } from "@CommonComponents/Button/Button";
 import Count from "@ProductsComponents/Count/Count";
+import Tabs from "@ProductsComponents/Tabs/Tabs";
 
 import star from "@Images/star.svg";
 import checkedStar from "@Images/star_checked.svg";
@@ -83,6 +84,7 @@ const ProductInfo: FC<ProductInfoProps> = ({ product }) => {
         imagePosition={EBtnImagePos.LEFT}
         text="Add to my wish list"
       />
+      <Tabs />
     </div>
   );
 };
