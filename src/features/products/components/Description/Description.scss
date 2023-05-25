@@ -5,6 +5,8 @@
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  max-height: 400px;
+  overflow-y: auto;
 
   &__subtitle {
     @include text-overflow-hide;
@@ -14,8 +16,12 @@
   }
 
   &__text {
-    @include text-overflow-rows(5);
     font-size: 0.875rem;
     line-height: 1.185rem;
+  }
+
+  &__message {
+    text-align: center;
+    text-decoration: underline;
   }
 }

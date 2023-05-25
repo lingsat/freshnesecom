@@ -84,7 +84,7 @@ const ProductInfo: FC<ProductInfoProps> = ({ product }) => {
         imagePosition={EBtnImagePos.LEFT}
         text="Add to my wish list"
       />
-      <Tabs />
+      <Tabs product={product} />
     </div>
   );
 };

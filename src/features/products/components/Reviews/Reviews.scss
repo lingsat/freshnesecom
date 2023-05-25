@@ -29,9 +29,13 @@
   }
 
   &__text {
-    @include text-overflow-rows(3);
     font-size: 0.875rem;
     line-height: 1.185rem;
     font-style: italic;
+  }
+
+  &__message {
+    text-align: center;
+    text-decoration: underline;
   }
 }

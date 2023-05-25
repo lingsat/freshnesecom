@@ -1,3 +1,19 @@
+export interface IDescription {
+  category: string;
+  text: string;
+}
+
+export interface IReview {
+  authorName: string;
+  authorImage: string;
+  text: string;
+}
+
+export interface IQuestion {
+  question: string;
+  answers: string[];
+}
+
 export interface IProduct {
   id: string;
   title: string;
@@ -25,6 +41,9 @@ export interface IProduct {
   color: string;
   size: string;
   mainCountCategory: string;
+  description: IDescription[];
+  reviews: IReview[];
+  questions: IQuestion[];
 }
 
 export interface ICategory {

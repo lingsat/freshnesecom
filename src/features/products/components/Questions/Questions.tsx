@@ -1,26 +1,21 @@
 import React, { FC } from "react";
 
+import { IQuestion } from "@Products/types/product";
+
 import "./Questions.scss";
 
-const questionsList = [
-  {
-    question: "Is it possible to take this out of S mode?",
-    answers: ["Yes, In fact (at 70) I turned it off in less than 2 minutes."],
-  },
-  {
-    question:
-      "Does it get very hot? I have an Acer a couple of years older that gets very hot.",
-    answers: [
-      "I've had mine on for a couple of years. Seems like typical room-temperature. Not even warm to the touch. (Aspire 5, Intel Core i5, Windows 10)",
-      "No not bad. Im upgrading from an Aspire 1 and I used that for gaming FPS games, of course with lag but this does good too and dosenst get loud or hot",
-    ],
-  },
-];
+interface QuestionsProps {
+  questions: IQuestion[];
+}
 
-const Questions: FC = () => {
+const Questions: FC<QuestionsProps> = ({ questions }) => {
+  if (!questions.length) {
+    return <p className="questions__message">No questions asked yet!</p>;
+  }
+
   return (
     <ul className="questions">
-      {questionsList.map((questions, index) => (
+      {questions.map((questions, index) => (
         <li key={`question-${index}`} className="questions__item">
           <h4 className="questions__question">{questions.question}</h4>
           <ul className="questions__block">

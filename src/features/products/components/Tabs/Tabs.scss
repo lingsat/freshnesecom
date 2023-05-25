@@ -40,10 +40,44 @@
     @include text-overflow-hide;
     font-family: $font-secondary;
     @include font(600, 1.125rem, 1.65rem);
+    text-transform: capitalize;
     cursor: pointer;
 
     &:hover {
       text-decoration: underline;
+    }
+  }
+}
+
+@media (max-width: 991.98px) {
+  .tabs {
+    margin-top: 2rem;
+
+    &__header {
+      margin-bottom: 1.5rem;
+    }
+  }
+}
+
+@media (max-width: 449.98px) {
+  .tabs__title {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 399.98px) {
+  .tabs {
+    &__item {
+      padding-bottom: 0.5rem;
+
+      span {
+        padding: 0 0.25rem;
+      }
+    }
+
+    &__title {
+      font-size: 0.75rem;
+      line-height: 1rem;
     }
   }
 }
