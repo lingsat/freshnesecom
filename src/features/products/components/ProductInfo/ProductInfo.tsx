@@ -47,7 +47,7 @@ const ProductInfo: FC<ProductInfoProps> = ({ product }) => {
             </li>
           ))}
         </ul>
-        <p>({product.votes} customers review)</p>
+        <p>({product.reviews.length} customers review)</p>
       </div>
       <p className="product-info__description">{product.shortDescription}</p>
       <ul className="product-info__datalist">
