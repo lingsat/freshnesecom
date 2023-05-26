@@ -51,6 +51,21 @@ export const getFilteredProducts = (
   return getSortedProducts(filteredArr, sortRule);
 };
 
+export const getProductsByCategory = (
+  products: IProduct[],
+  singleProduct: IProduct | null
+): IProduct[] => {
+  if (singleProduct) {
+    return products.filter(
+      (product) =>
+        product.category === singleProduct.category &&
+        product.id !== singleProduct.id
+    );
+  } else {
+    return [];
+  }
+};
+
 export const getStarsArrFromNumber = (num: number): boolean[] => {
   const arr: boolean[] = Array(5).fill(false);
   return arr.map((_, index) => index < num);

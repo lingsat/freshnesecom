@@ -46,6 +46,14 @@
       background-color: $color-gray-light;
     }
   }
+
+  &--small {
+    padding: 0.4rem 0.75rem;
+
+    .button__image {
+      display: none;
+    }
+  }
 }
 
 .image__left {

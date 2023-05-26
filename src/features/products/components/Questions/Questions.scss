@@ -2,6 +2,9 @@
 @import "@Styles/_mixins.scss";
 
 .questions {
+  padding-right: 0.5rem;
+  height: 300px;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -36,6 +39,8 @@
 
 @media (max-width: 991.98px) {
   .questions {
+    height: auto;
+    max-height: 300px;
     gap: 1.2rem;
   }
 }

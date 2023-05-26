@@ -48,12 +48,6 @@
       text-decoration: underline;
     }
   }
-
-  &__content {
-    padding-right: 0.5rem;
-    height: 300px;
-    overflow-y: auto;
-  }
 }
 
 @media (max-width: 991.98px) {
@@ -62,11 +56,6 @@
 
     &__header {
       margin-bottom: 1.5rem;
-    }
-
-    &__content {
-      height: auto;
-      max-height: 300px;
     }
   }
 }
