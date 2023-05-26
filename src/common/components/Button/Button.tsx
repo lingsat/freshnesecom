@@ -9,6 +9,7 @@ import "./Button.scss";
 export enum EBtnStyle {
   PRIMARY = "primary",
   SECONDARY = "secondary",
+  SMALL = "small",
 }
 
 export enum EBtnImage {
@@ -53,7 +54,9 @@ const Button: FC<ButtonProps> = ({
       type="button"
       className={`button${
         style === EBtnStyle.SECONDARY ? " button--secondary" : ""
-      }${imagePosition === EBtnImagePos.LEFT ? " image__left" : ""}`}
+      }${style === EBtnStyle.SMALL ? " button--small" : ""}${
+        imagePosition === EBtnImagePos.LEFT ? " image__left" : ""
+      }`}
       disabled={disabled}
       onClick={onCLick}>
       {text}

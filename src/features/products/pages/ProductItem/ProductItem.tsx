@@ -11,6 +11,7 @@ import {
 import LoadinSpinner from "@CommonComponents/LoadingSpinner/LoadingSpinner";
 import Images from "@ProductsComponents/Images/Images";
 import ProductInfo from "@ProductsComponents/ProductInfo/ProductInfo";
+import Suggested from "@ProductsComponents/Suggested/Suggested";
 
 import "./ProductItem.scss";
 
@@ -38,12 +39,23 @@ const ProductItem = () => {
 
   return (
     <div className="product">
-      <Images
-        images={singleProduct.images}
-        discount={singleProduct.discount}
-        freeShipping={singleProduct.freeShipping}
-      />
-      <ProductInfo product={singleProduct} />
+      <div className="product__main">
+        <Images
+          images={singleProduct.images}
+          discount={singleProduct.discount}
+          freeShipping={singleProduct.freeShipping}
+        />
+        <ProductInfo product={singleProduct} />
+      </div>
+      <div>
+        <h3 className="product__subtitle">You will maybe love</h3>
+        <div className="product__carousel">
+          <Suggested />
+          <Suggested />
+          <Suggested />
+          <Suggested />
+        </div>
+      </div>
     </div>
   );
 };
