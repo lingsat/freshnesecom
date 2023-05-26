@@ -1,9 +1,8 @@
 import React, { FC } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { getOldPrice, getStarsArrFromNumber } from "@/utils/products";
 import { IProduct } from "@Products/types/product";
-import { ERoutes } from "@/types/routes";
 import Button, {
   EBtnImage,
   EBtnImagePos,
@@ -27,24 +26,21 @@ const Card: FC<CardProps> = ({ product }) => {
   const oldPrice = getOldPrice(product.mainPrice, product.discount);
 
   const handleOpenProduct = () => {
-    navigate(`/${ERoutes.PRODUCTS_LIST}/${product.id}`);
+    navigate(product.id);
   };
 
   return (
     <li className="card">
-      <Link to={`/${ERoutes.PRODUCTS_LIST}/${product.id}`}>
-        <img
-          className="card__image"
-          src={product.images[0]}
-          alt={product.title}
-        />
-      </Link>
+      <img
+        className="card__image"
+        src={product.images[0]}
+        alt={product.title}
+        onClick={handleOpenProduct}
+      />
       <div className="card__info">
         <div className="info__left">
-          <h3 className="info__title">
-            <Link to={`/${ERoutes.PRODUCTS_LIST}/${product.id}`}>
-              {product.title}
-            </Link>
+          <h3 className="info__title" onClick={handleOpenProduct}>
+            {product.title}
           </h3>
           <p className="info__description">{product.shortDescription}</p>
           <ul className="info__stars">
