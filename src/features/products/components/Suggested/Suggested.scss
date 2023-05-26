@@ -56,4 +56,11 @@
     font-family: $font-secondary;
     @include font(600, 1.125rem, 1.65rem);
   }
+
+  &__oldprice {
+    font-family: $font-secondary;
+    @include font(600, 0.75rem, 1.125rem);
+    color: $color-gray;
+    text-decoration: line-through;
+  }
 }

@@ -1,6 +1,7 @@
 import React, { FC } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { getOldPrice } from "@/utils/products";
 import { IProduct } from "@Products/types/product";
 import { ERoutes } from "@/types/routes";
 import Button, { EBtnStyle } from "@CommonComponents/Button/Button";
@@ -13,6 +14,8 @@ interface SuggestedProps {
 
 const Suggested: FC<SuggestedProps> = ({ product }) => {
   const navigate = useNavigate();
+
+  const oldPrice = getOldPrice(product.mainPrice, product.discount);
 
   const handleOpenProduct = () => {
     navigate(`/${ERoutes.PRODUCTS_LIST}/${product.id}`);
@@ -32,7 +35,10 @@ const Suggested: FC<SuggestedProps> = ({ product }) => {
       </h4>
       <p className="suggested__description">{product.shortDescription}</p>
       <div className="suggested__block">
-        <p className="suggested__price">{product.mainPrice} USD</p>
+        <div>
+          <p className="suggested__price">{product.mainPrice} USD</p>
+          <p className="suggested__oldprice">{oldPrice}</p>
+        </div>
         <Button text="Buy now" style={EBtnStyle.SMALL} />
       </div>
     </div>
