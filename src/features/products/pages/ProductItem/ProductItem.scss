@@ -15,14 +15,26 @@
   }
 
   &__carousel {
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     gap: 2rem;
   }
 
   &__error {
     text-align: center;
+  }
+}
+
+.swiper {
+  &__next {
+    display: block;
+    margin: 30px auto;
+    width: 25px;
+    height: 25px;
+    border-top: 2px solid $color-black;
+    border-left: 2px solid $color-black;
+    // transform: rotate(135deg);
   }
 }
 

@@ -5,7 +5,7 @@
   position: relative;
 
   &__discount {
-    padding: 0.1rem 0.5rem;
+    padding: 1px 0.5rem;
     font-family: $font-secondary;
     @include font(600, 0.75rem, 1.125rem);
     color: $color-green-dark;
@@ -24,6 +24,7 @@
     object-fit: contain;
     border: 1px solid $color-gray-light;
     border-radius: 12px;
+    cursor: pointer;
   }
 
   &__title {
@@ -31,6 +32,11 @@
     @include text-overflow-hide;
     font-family: $font-secondary;
     @include font(500, 0.95rem, 1.375rem);
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 
   &__description {
