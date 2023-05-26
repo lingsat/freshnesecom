@@ -21,7 +21,6 @@ export interface IProduct {
   shortDescription: string;
   images: string[];
   stars: number;
-  votes: number;
   mainPrice: number;
   price: {
     [key: string]: number;
