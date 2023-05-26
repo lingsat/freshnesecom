@@ -1,0 +1,95 @@
+@import "@Styles/_variables.scss";
+@import "@Styles/_mixins.scss";
+
+.tabs {
+  width: 100%;
+  margin-top: 3.5rem;
+
+  &__header {
+    margin-bottom: 3rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  &__item {
+    padding-bottom: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    border-bottom: 1px solid $color-gray-light;
+
+    &--active {
+      border-color: $color-black;
+    }
+
+    span {
+      padding: 0.15rem 0.5rem;
+      font-family: $font-secondary;
+      @include font(600, 0.75rem, 1rem);
+      color: #6a983c;
+      background: $color-gray-lightest;
+      border-radius: 12px;
+    }
+
+    &:first-of-type span {
+      display: none;
+    }
+  }
+
+  &__title {
+    @include text-overflow-hide;
+    font-family: $font-secondary;
+    @include font(600, 1.125rem, 1.65rem);
+    text-transform: capitalize;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &__content {
+    padding-right: 0.5rem;
+    height: 300px;
+    overflow-y: auto;
+  }
+}
+
+@media (max-width: 991.98px) {
+  .tabs {
+    margin-top: 2rem;
+
+    &__header {
+      margin-bottom: 1.5rem;
+    }
+
+    &__content {
+      height: auto;
+      max-height: 300px;
+    }
+  }
+}
+
+@media (max-width: 449.98px) {
+  .tabs__title {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 399.98px) {
+  .tabs {
+    &__item {
+      padding-bottom: 0.5rem;
+
+      span {
+        padding: 0 0.25rem;
+      }
+    }
+
+    &__title {
+      font-size: 0.75rem;
+      line-height: 1rem;
+    }
+  }
+}

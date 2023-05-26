@@ -12,6 +12,7 @@ import Button, {
   EBtnStyle,
 } from "@CommonComponents/Button/Button";
 import Count from "@ProductsComponents/Count/Count";
+import Tabs from "@ProductsComponents/Tabs/Tabs";
 
 import star from "@Images/star.svg";
 import checkedStar from "@Images/star_checked.svg";
@@ -46,7 +47,7 @@ const ProductInfo: FC<ProductInfoProps> = ({ product }) => {
             </li>
           ))}
         </ul>
-        <p>({product.votes} customers review)</p>
+        <p>({product.reviews.length} customers review)</p>
       </div>
       <p className="product-info__description">{product.shortDescription}</p>
       <ul className="product-info__datalist">
@@ -83,6 +84,7 @@ const ProductInfo: FC<ProductInfoProps> = ({ product }) => {
         imagePosition={EBtnImagePos.LEFT}
         text="Add to my wish list"
       />
+      <Tabs product={product} />
     </div>
   );
 };
