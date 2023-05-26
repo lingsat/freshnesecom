@@ -2,6 +2,9 @@
 @import "@Styles/_mixins.scss";
 
 .reviews {
+  padding-right: 0.5rem;
+  height: 300px;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -35,5 +38,12 @@
   &__message {
     text-align: center;
     text-decoration: underline;
+  }
+}
+
+@media (max-width: 991.98px) {
+  .reviews {
+    height: auto;
+    max-height: 300px;
   }
 }

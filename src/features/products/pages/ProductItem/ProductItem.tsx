@@ -16,7 +16,6 @@ import Images from "@ProductsComponents/Images/Images";
 import ProductInfo from "@ProductsComponents/ProductInfo/ProductInfo";
 import Suggested from "@ProductsComponents/Suggested/Suggested";
 
-import "swiper/scss/navigation";
 import "swiper/scss";
 import "./ProductItem.scss";
 
@@ -69,7 +68,7 @@ const ProductItem = () => {
             slidesPerView={1}
             breakpoints={{
               576: { slidesPerView: 2 },
-              992: { slidesPerView: 3 },
+              850: { slidesPerView: 3 },
               1150: { slidesPerView: 4 },
             }}>
             {categoryProducts.map((product) => (

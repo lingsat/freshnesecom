@@ -43,11 +43,9 @@ const Tabs: FC<TabsProps> = ({ product }) => {
           </li>
         ))}
       </ul>
-      <div className="tabs__content">
-        {!value && <Description description={product.description} />}
-        {value === ETabs.ONE && <Reviews reviews={product.reviews} />}
-        {value === ETabs.TWO && <Questions questions={product.questions} />}
-      </div>
+      {!value && <Description description={product.description} />}
+      {value === ETabs.ONE && <Reviews reviews={product.reviews} />}
+      {value === ETabs.TWO && <Questions questions={product.questions} />}
     </div>
   );
 };
