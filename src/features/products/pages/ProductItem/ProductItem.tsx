@@ -54,31 +54,29 @@ const ProductItem = () => {
         />
         <ProductInfo product={singleProduct} />
       </div>
-      <div>
-        <h3 className="product__subtitle">You will maybe love</h3>
-        <div className="product__carousel">
-          <div className="swiper__prev"></div>
-          <Swiper
-            modules={[Navigation]}
-            navigation={{
-              nextEl: ".swiper__next",
-              prevEl: ".swiper__prev",
-            }}
-            spaceBetween={32}
-            slidesPerView={1}
-            breakpoints={{
-              576: { slidesPerView: 2 },
-              850: { slidesPerView: 3 },
-              1150: { slidesPerView: 4 },
-            }}>
-            {categoryProducts.map((product) => (
-              <SwiperSlide key={`suggested-${product.id}`}>
-                <Suggested product={product} />
-              </SwiperSlide>
-            ))}
-          </Swiper>
-          <div className="swiper__next"></div>
-        </div>
+      <h3 className="product__subtitle">You will maybe love</h3>
+      <div className="product__carousel">
+        <div className="swiper__prev"></div>
+        <Swiper
+          modules={[Navigation]}
+          navigation={{
+            nextEl: ".swiper__next",
+            prevEl: ".swiper__prev",
+          }}
+          spaceBetween={32}
+          slidesPerView={1}
+          breakpoints={{
+            576: { slidesPerView: 2 },
+            850: { slidesPerView: 3 },
+            1150: { slidesPerView: 4 },
+          }}>
+          {categoryProducts.map((product) => (
+            <SwiperSlide key={`suggested-${product.id}`}>
+              <Suggested product={product} />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+        <div className="swiper__next"></div>
       </div>
     </div>
   );
