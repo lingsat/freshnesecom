@@ -15,10 +15,7 @@
   }
 
   &__carousel {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 2rem;
+    position: relative;
   }
 
   &__error {
@@ -27,21 +24,62 @@
 }
 
 .swiper {
-  &__next {
-    display: block;
-    margin: 30px auto;
+  width: 90%;
+
+  &__next,
+  &__prev {
     width: 25px;
     height: 25px;
-    border-top: 2px solid $color-black;
-    border-left: 2px solid $color-black;
-    // transform: rotate(135deg);
+    border-top: 3px solid $color-green;
+    border-left: 3px solid $color-green;
+    position: absolute;
+    top: 50%;
+    z-index: 100;
+    transform: translateY(-50%);
+    cursor: pointer;
+
+    &.swiper-button-disabled {
+      border-color: $color-gray-light;
+    }
+  }
+
+  &__next {
+    transform: rotate(135deg);
+    right: 0;
+  }
+
+  &__prev {
+    transform: rotate(-45deg);
+    left: 0;
   }
 }
 
 @media (max-width: 991.98px) {
-  .product__main {
-    margin-bottom: 2.5rem;
-    flex-direction: column;
-    gap: 2rem;
+  .product {
+    &__main {
+      margin-bottom: 2.5rem;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    &__carousel {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+  }
+
+  .swiper {
+    width: 87%;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .product__carousel {
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  .swiper {
+    width: 75%;
   }
 }

@@ -58,7 +58,7 @@ const ProductItem = () => {
       <div>
         <h3 className="product__subtitle">You will maybe love</h3>
         <div className="product__carousel">
-          <div className="swiper__prev">left</div>
+          <div className="swiper__prev"></div>
           <Swiper
             modules={[Navigation]}
             navigation={{
@@ -66,7 +66,12 @@ const ProductItem = () => {
               prevEl: ".swiper__prev",
             }}
             spaceBetween={32}
-            slidesPerView={4}>
+            slidesPerView={1}
+            breakpoints={{
+              576: { slidesPerView: 2 },
+              992: { slidesPerView: 3 },
+              1150: { slidesPerView: 4 },
+            }}>
             {categoryProducts.map((product) => (
               <SwiperSlide key={`suggested-${product.id}`}>
                 <Suggested product={product} />
