@@ -1,18 +1,22 @@
 import React, { FC, useState, SyntheticEvent } from "react";
-import { ErrorMessage } from "formik";
-import TextField from "@mui/material/TextField";
-import Autocomplete from "@mui/material/Autocomplete";
+import { Autocomplete, TextField } from "@mui/material";
 import { Country, ICity, ICountry } from "country-state-city";
 
 import { getCitiesByCountry } from "@/utils/cart";
 
-import "./DropDownField.scss";
+import "./LocationSelector.scss";
 
-interface DropDownFieldProps {
+interface LocationSelectorProps {
   setFieldValue: (name: string, value: string | undefined) => void;
+  countryError: string | undefined;
+  cityError: string | undefined;
 }
 
-const DropDownField: FC<DropDownFieldProps> = ({ setFieldValue }) => {
+const LocationSelector: FC<LocationSelectorProps> = ({
+  setFieldValue,
+  countryError,
+  cityError,
+}) => {
   const [countryCode, setCountryCode] = useState<string>("");
 
   const countries = Country.getAllCountries();
@@ -34,7 +38,13 @@ const DropDownField: FC<DropDownFieldProps> = ({ setFieldValue }) => {
     setFieldValue("city", value?.name || "");
   };
 
-  const styles = {
+  const autocompleteStyles = {
+    "& .MuiOutlinedInput-notchedOutline": {
+      borderColor: "#d2d2d4",
+    },
+    "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+      border: "1px solid #d2d2d4",
+    },
     "& .MuiAutocomplete-inputRoot": {
       padding: "0.75rem 2rem 0.75rem 1rem",
       borderRadius: "12px",
@@ -51,6 +61,15 @@ const DropDownField: FC<DropDownFieldProps> = ({ setFieldValue }) => {
     },
   };
 
+  const textFieldStyles = {
+    input: {
+      "&::placeholder": {
+        color: "#a9a9a9",
+        opacity: 1,
+      },
+    },
+  };
+
   return (
     <>
       <label className="dropdown-field" htmlFor="country">
@@ -59,12 +78,13 @@ const DropDownField: FC<DropDownFieldProps> = ({ setFieldValue }) => {
           options={countries}
           getOptionLabel={(option) => option.name}
           onChange={handleCountryChange}
-          sx={styles}
+          sx={autocompleteStyles}
           renderInput={(params) => (
             <TextField
               name="country"
+              sx={textFieldStyles}
               {...params}
-              placeholder="Chose a state or Country"
+              placeholder="Choose a state or Country"
               inputProps={{
                 ...params.inputProps,
                 autoComplete: "new-password",
@@ -72,11 +92,9 @@ const DropDownField: FC<DropDownFieldProps> = ({ setFieldValue }) => {
             />
           )}
         />
-        <ErrorMessage
-          component="span"
-          className="dropdown-field__error"
-          name="country"
-        />
+        {countryError && (
+          <p className="dropdown-field__error">{countryError}</p>
+        )}
       </label>
       <label className="dropdown-field" htmlFor="city">
         <p className="dropdown-field__label">Town / City</p>
@@ -84,11 +102,20 @@ const DropDownField: FC<DropDownFieldProps> = ({ setFieldValue }) => {
           options={cities}
           getOptionLabel={(option) => option.name}
           onChange={handleCityChange}
-          sx={styles}
+          sx={autocompleteStyles}
+          renderOption={(props, option) => {
+            return (
+              <li {...props} key={`city-${option.name}-${option.latitude}`}>
+                {option.name}
+              </li>
+            );
+          }}
           renderInput={(params) => (
             <TextField
+              name="city"
+              sx={textFieldStyles}
               {...params}
-              placeholder="Town or City"
+              placeholder="Town or city"
               inputProps={{
                 ...params.inputProps,
                 autoComplete: "new-password",
@@ -96,14 +123,10 @@ const DropDownField: FC<DropDownFieldProps> = ({ setFieldValue }) => {
             />
           )}
         />
-        <ErrorMessage
-          component="span"
-          className="dropdown-field__error"
-          name="city"
-        />
+        {cityError && <p className="dropdown-field__error">{cityError}</p>}
       </label>
     </>
   );
 };
 
-export default DropDownField;
+export default LocationSelector;

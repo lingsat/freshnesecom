@@ -6,7 +6,7 @@ import { billingSchema } from "@Cart/schemas/billing";
 import Button, { EBtnStyle } from "@CommonComponents/Button/Button";
 import InputField from "@CartComponents/InputField/InputField";
 import CheckboxField from "@CartComponents/CheckboxField/CheckboxField";
-import DropDownField from "@CartComponents/DropDownField/DropDownField";
+import LocationSelector from "@CartComponents/LocationSelector/LocationSelector";
 
 import "./Billing.scss";
 
@@ -50,7 +50,11 @@ const Billing: FC = () => {
                 placeholder={field.placeholder}
               />
             ))}
-            <DropDownField setFieldValue={setFieldValue} />
+            <LocationSelector
+              setFieldValue={setFieldValue}
+              countryError={errors.country}
+              cityError={errors.city}
+            />
           </fieldset>
           <div className="billing__header">
             <h3 className="billing__title">Additional informations</h3>
