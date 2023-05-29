@@ -31,6 +31,7 @@ export enum EBtnArrowDir {
 
 interface ButtonProps {
   text: string;
+  type?: "button" | "submit" | "reset" | undefined;
   onCLick?: () => void;
   style?: EBtnStyle;
   image?: EBtnImage;
@@ -41,6 +42,7 @@ interface ButtonProps {
 
 const Button: FC<ButtonProps> = ({
   text,
+  type = "button",
   onCLick,
   style = EBtnStyle.PRIMARY,
   image = EBtnImage.ARROW,
@@ -76,7 +78,7 @@ const Button: FC<ButtonProps> = ({
 
   return (
     <button
-      type="button"
+      type={type}
       className={btnClassStr}
       disabled={disabled}
       onClick={onCLick}>

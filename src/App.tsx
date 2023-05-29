@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 
 import { AppDispatch } from "@Store/store";
 import { fetchProducts } from "@Products/productsSlice";
@@ -18,6 +18,7 @@ import "./App.scss";
 
 const App = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const { pathname } = useLocation();
 
   useEffect(() => {
     dispatch(fetchProducts());
@@ -36,7 +37,7 @@ const App = () => {
           <Route path={ERoutes.NOT_FOUND} element={<NotFound />} />
         </Routes>
       </main>
-      <Footer />
+      {pathname !== `/${ERoutes.CART}` && <Footer />}
     </div>
   );
 };

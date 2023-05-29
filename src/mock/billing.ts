@@ -1,4 +1,4 @@
-export const billingFields = [
+export const regularBillingFields = [
   {
     label: "First name",
     type: "text",
@@ -24,18 +24,18 @@ export const billingFields = [
     name: "phone",
   },
   { label: "Address", type: "text", placeholder: "Address", name: "address" },
-  {
-    label: "Town / City",
-    type: "text",
-    placeholder: "Town or City",
-    name: "city",
-  },
-  {
-    label: "State / Country",
-    type: "text",
-    placeholder: "Chose a state or Country",
-    name: "country",
-  },
+  // {
+  //   label: "Town / City",
+  //   type: "text",
+  //   placeholder: "Town or City",
+  //   name: "city",
+  // },
+  // {
+  //   label: "State / Country",
+  //   type: "text",
+  //   placeholder: "Chose a state or Country",
+  //   name: "country",
+  // },
   {
     label: "ZIP / Postal code",
     type: "text",
