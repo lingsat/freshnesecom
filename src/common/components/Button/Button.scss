@@ -54,6 +54,14 @@
       display: none;
     }
   }
+
+  &--big {
+    padding: 1rem 3rem;
+
+    .button__image {
+      display: none;
+    }
+  }
 }
 
 .image__left {
