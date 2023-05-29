@@ -75,67 +75,6 @@
     @include font(400, 0.75rem, 1.125rem);
     color: $color-red;
   }
-
-  &__confirm {
-    padding: 0.75rem 1rem 0.75rem 3rem;
-    display: flex;
-    width: fit-content;
-    align-items: center;
-    background: $color-gray-lightest;
-    border: 1px solid $color-gray-light;
-    border-radius: 12px;
-    position: relative;
-  }
-
-  &__checkbox {
-    -webkit-appearance: none;
-    appearance: none;
-    margin: 0;
-    width: 20px;
-    height: 20px;
-    background-color: $color-white;
-    border: 2px solid $color-gray-light;
-    border-radius: 3px;
-    outline: none;
-    cursor: pointer;
-    position: absolute;
-    top: 50%;
-    left: 1rem;
-    z-index: 3;
-    transform: translateY(-50%);
-
-    &:hover {
-      box-shadow: 0 0 5px $color-green;
-    }
-
-    &:checked {
-      background-color: $color-green;
-      border: 2px solid $color-green-dark;
-
-      &::before {
-        content: "\2714";
-        font-size: 0.9rem;
-        color: $color-white;
-        position: absolute;
-        right: 2px;
-        top: -3px;
-      }
-    }
-  }
-
-  &__label-text {
-    font-size: 0.875rem;
-    line-height: 1.185rem;
-
-    a {
-      color: $color-black;
-      transition: color 0.1s linear;
-
-      &:hover {
-        color: $color-green;
-      }
-    }
-  }
 }
 
 @media (max-width: 991.98px) {
@@ -162,19 +101,6 @@
 
     &__field {
       padding: 0.5rem 0.75rem;
-    }
-
-    &__confirm {
-      padding: 0.5rem 0.75rem 0.5rem 2.5rem;
-    }
-
-    &__checkbox {
-      left: 0.75rem;
-    }
-
-    &__label-text {
-      font-size: 0.7rem;
-      line-height: 1rem;
     }
   }
 }

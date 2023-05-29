@@ -20,7 +20,7 @@ export const billingSchema = yup.object({
     .matches(/^[0-9]{5}/, "Invalid postal code. Only numbers")
     .required("Postal code is required"),
   notes: yup.string(),
-  spamCheck: yup.boolean().oneOf([true], "You must accept sending messages"),
+  spamCheck: yup.boolean(),
   policyCheck: yup
     .boolean()
     .oneOf([true], "You must accept the terms and conditions"),
