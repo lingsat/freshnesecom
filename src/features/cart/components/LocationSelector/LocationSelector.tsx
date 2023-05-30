@@ -2,7 +2,7 @@ import React, { FC, useEffect, useRef, useState } from "react";
 import { ICity, ICountry } from "country-state-city";
 import { ErrorMessage, Field } from "formik";
 
-import { getCitiesByCountry, getCountries } from "@/utils/cart";
+import { getCitiesByCountry, getSortedCountries } from "@/utils/cart";
 import { ELocation } from "@Cart/types/location";
 
 import arrowDown from "@Images/arrow_black.svg";
@@ -11,21 +11,21 @@ import clear from "@Images/close.svg";
 import "./LocationSelector.scss";
 
 interface LocationSelectorProps {
+  allCountries: ICountry[];
   setFieldValue: (name: string, value: string | undefined) => void;
   countryValue: string;
   cityValue: string;
   countryCode: string;
   setCountryCode: React.Dispatch<React.SetStateAction<string>>;
-  handleBlur: (e: React.FocusEvent<HTMLInputElement, Element>) => void;
 }
 
 const LocationSelector: FC<LocationSelectorProps> = ({
+  allCountries,
   setFieldValue,
   countryValue,
   cityValue,
   countryCode,
   setCountryCode,
-  handleBlur,
 }) => {
   const [showCountries, setShowCountries] = useState<boolean>(false);
   const [showCities, setShowCities] = useState<boolean>(false);
@@ -33,7 +33,7 @@ const LocationSelector: FC<LocationSelectorProps> = ({
   const countriesRef = useRef<HTMLDivElement>(null);
   const citiesRef = useRef<HTMLDivElement>(null);
 
-  const countries = getCountries(countryValue);
+  const countries = getSortedCountries(allCountries, countryValue);
   const cities = getCitiesByCountry(countryCode, cityValue);
 
   const handleCountryChose = (country: ICountry) => () => {
@@ -67,19 +67,6 @@ const LocationSelector: FC<LocationSelectorProps> = ({
     setFieldValue(ELocation.CITY, "");
   };
 
-  const handleCountryBlur = (
-    event: React.FocusEvent<HTMLInputElement, Element>
-  ) => {
-    const isCountryInArray = countries.find(
-      (country) => country.name === countryValue
-    );
-
-    if (!isCountryInArray) {
-      handleClearCountry();
-    }
-    handleBlur(event);
-  };
-
   const handleOutsideClick = (e: MouseEvent) => {
     if (
       countriesRef.current &&
@@ -110,7 +97,6 @@ const LocationSelector: FC<LocationSelectorProps> = ({
             name={ELocation.COUNTRY}
             placeholder="Choose a state or Country"
             onFocus={handleCountryFocus}
-            onBlur={handleCountryBlur}
             autoComplete="new-password"
           />
           <ErrorMessage

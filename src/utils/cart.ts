@@ -1,4 +1,4 @@
-import { City, Country, ICity, ICountry } from "country-state-city";
+import { City, ICity, ICountry } from "country-state-city";
 
 export const getCitiesByCountry = (
   countryCode: string,
@@ -18,12 +18,14 @@ export const getCitiesByCountry = (
   }
 };
 
-export const getCountries = (countryValue: string): ICountry[] => {
+export const getSortedCountries = (
+  allCountries: ICountry[],
+  countryValue: string
+): ICountry[] => {
   const validCountryValue = countryValue.trim().toLowerCase();
-  const countries = Country.getAllCountries();
 
-  if (countries) {
-    return countries.filter((country) =>
+  if (allCountries) {
+    return allCountries.filter((country) =>
       country.name.toLowerCase().includes(validCountryValue)
     );
   } else {
