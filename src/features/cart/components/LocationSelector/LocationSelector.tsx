@@ -1,155 +1,189 @@
-import React, { FC, useState, SyntheticEvent } from "react";
-import { Autocomplete, TextField } from "@mui/material";
-import { Country, ICity, ICountry } from "country-state-city";
-import { FormikErrors, FormikTouched } from "formik";
+import React, { FC, useEffect, useRef, useState } from "react";
+import { ICity, ICountry } from "country-state-city";
+import { ErrorMessage, Field } from "formik";
 
-import { getCitiesByCountry } from "@/utils/cart";
+import { getCitiesByCountry, getCountries } from "@/utils/cart";
 import { ELocation } from "@Cart/types/location";
+
+import arrowDown from "@Images/arrow_black.svg";
+import clear from "@Images/close.svg";
 
 import "./LocationSelector.scss";
 
 interface LocationSelectorProps {
   setFieldValue: (name: string, value: string | undefined) => void;
+  countryValue: string;
+  cityValue: string;
+  countryCode: string;
+  setCountryCode: React.Dispatch<React.SetStateAction<string>>;
   handleBlur: (e: React.FocusEvent<HTMLInputElement, Element>) => void;
-  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  errors: FormikErrors<{ [field: string]: string }>;
-  touched: FormikTouched<{ [field: string]: string }>;
-  values: { [field: string]: string | boolean };
 }
 
 const LocationSelector: FC<LocationSelectorProps> = ({
   setFieldValue,
+  countryValue,
+  cityValue,
+  countryCode,
+  setCountryCode,
   handleBlur,
-  handleChange,
-  errors,
-  touched,
-  values,
 }) => {
-  const [countryCode, setCountryCode] = useState<string>("");
+  const [showCountries, setShowCountries] = useState<boolean>(false);
+  const [showCities, setShowCities] = useState<boolean>(false);
 
-  const countries = Country.getAllCountries();
-  const cities = getCitiesByCountry(countryCode);
+  const countriesRef = useRef<HTMLDivElement>(null);
+  const citiesRef = useRef<HTMLDivElement>(null);
 
-  const handleCountryChange = (
-    e: SyntheticEvent<Element, Event>,
-    value: ICountry | null
+  const countries = getCountries(countryValue);
+  const cities = getCitiesByCountry(countryCode, cityValue);
+
+  const handleCountryChose = (country: ICountry) => () => {
+    setFieldValue(ELocation.COUNTRY, country.name);
+    setCountryCode(country.isoCode);
+    setShowCountries(false);
+  };
+
+  const handleCityChose = (city: ICity) => () => {
+    setFieldValue(ELocation.CITY, city.name);
+    setShowCities(false);
+  };
+
+  const handleCountryFocus = () => {
+    setShowCountries(true);
+    setShowCities(false);
+  };
+
+  const handleCityFocus = () => {
+    setShowCities(true);
+    setShowCountries(false);
+  };
+
+  const handleClearCountry = () => {
+    setFieldValue(ELocation.COUNTRY, "");
+    setFieldValue(ELocation.CITY, "");
+    setCountryCode("");
+  };
+
+  const handleClearCity = () => {
+    setFieldValue(ELocation.CITY, "");
+  };
+
+  const handleCountryBlur = (
+    event: React.FocusEvent<HTMLInputElement, Element>
   ) => {
-    setFieldValue(ELocation.COUNTRY, value?.name);
-    setCountryCode(value?.isoCode || "");
+    const isCountryInArray = countries.find(
+      (country) => country.name === countryValue
+    );
+
+    if (!isCountryInArray) {
+      handleClearCountry();
+    }
+    handleBlur(event);
   };
 
-  const handleCityChange = (
-    e: SyntheticEvent<Element, Event>,
-    value: ICity | null
-  ) => {
-    setFieldValue(ELocation.CITY, value?.name || "");
+  const handleOutsideClick = (e: MouseEvent) => {
+    if (
+      countriesRef.current &&
+      !countriesRef.current.contains(e.target as Node)
+    ) {
+      setShowCountries(false);
+    }
+    if (citiesRef.current && !citiesRef.current.contains(e.target as Node)) {
+      setShowCities(false);
+    }
   };
 
-  const autocompleteStyles = {
-    "& .MuiOutlinedInput-notchedOutline": {
-      borderColor: "#d2d2d4",
-    },
-    "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
-      border: "1px solid #d2d2d4",
-    },
-    "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
-      border: "1px solid #6a983c",
-    },
-    "& .MuiAutocomplete-inputRoot": {
-      padding: "0.75rem 2rem 0.75rem 1rem",
-      borderRadius: "12px",
-      background: "#f9f9f9",
-      "& .MuiAutocomplete-input": {
-        padding: "0",
-        fontFamily: "Open Sans",
-        fontSize: "0.875rem",
-        fontWeight: "400",
-        lineHeight: "1.185rem",
-        color: "#a9a9a9",
-        backgroundColor: "transparent",
-      },
-    },
-    "& .Mui-disabled": {
-      backgroundColor: "#a9a9a9",
-      opacity: "0.6",
-    },
-  };
-
-  const textFieldStyles = {
-    input: {
-      "&::placeholder": {
-        color: "#a9a9a9",
-        opacity: 1,
-      },
-    },
-  };
+  useEffect(() => {
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, []);
 
   return (
     <>
-      <label className="dropdown-field" htmlFor={ELocation.COUNTRY}>
-        <p className="dropdown-field__label">State / Country</p>
-        <Autocomplete
-          options={countries}
-          getOptionLabel={(option) => option.name}
-          onChange={handleCountryChange}
-          onBlur={handleBlur}
-          inputValue={values[ELocation.COUNTRY] as string}
-          sx={autocompleteStyles}
-          renderInput={(params) => (
-            <TextField
-              name={ELocation.COUNTRY}
-              sx={textFieldStyles}
-              {...params}
-              placeholder="Choose a state or Country"
-              inputProps={{
-                ...params.inputProps,
-                autoComplete: "new-password",
-              }}
-              value={values[ELocation.COUNTRY]}
-              onChange={handleChange}
+      <div className="dropdown-field__wrapper">
+        <label className="dropdown-field" htmlFor={ELocation.COUNTRY}>
+          <p className="dropdown-field__label">State / Country</p>
+          <Field
+            className="dropdown-field__field"
+            id={ELocation.COUNTRY}
+            name={ELocation.COUNTRY}
+            placeholder="Choose a state or Country"
+            onFocus={handleCountryFocus}
+            onBlur={handleCountryBlur}
+            autoComplete="new-password"
+          />
+          <ErrorMessage
+            component="span"
+            className="dropdown-field__error"
+            name={ELocation.COUNTRY}
+          />
+          {countryValue && (
+            <img
+              className="dropdown-field__clear"
+              src={clear}
+              alt="Down"
+              onClick={handleClearCountry}
             />
           )}
-        />
-        {errors[ELocation.COUNTRY] && touched[ELocation.COUNTRY] && (
-          <p className="dropdown-field__error">{errors[ELocation.COUNTRY]}</p>
+          <img className="dropdown-field__arrow" src={arrowDown} alt="Down" />
+        </label>
+        {showCountries && !!countries.length && (
+          <div ref={countriesRef} className="dropdown-field__dropdown">
+            <ul className="dropdown-field__list">
+              {countries.map((country, index) => (
+                <li
+                  key={`country-${country.name}-${index}`}
+                  className="dropdown-field__item"
+                  onClick={handleCountryChose(country)}>
+                  {country.name}
+                </li>
+              ))}
+            </ul>
+          </div>
         )}
-      </label>
-      <label className="dropdown-field" htmlFor={ELocation.CITY}>
-        <p className="dropdown-field__label">Town / City</p>
-        <Autocomplete
-          options={cities}
-          getOptionLabel={(option) => option.name}
-          onChange={handleCityChange}
-          onBlur={handleBlur}
-          inputValue={values[ELocation.CITY] as string}
-          disabled={!values[ELocation.COUNTRY]}
-          sx={autocompleteStyles}
-          renderOption={(props, option) => {
-            return (
-              <li {...props} key={`city-${option.name}-${option.latitude}`}>
-                {option.name}
-              </li>
-            );
-          }}
-          renderInput={(params) => (
-            <TextField
-              name={ELocation.CITY}
-              sx={textFieldStyles}
-              {...params}
-              placeholder="Town or city"
-              inputProps={{
-                ...params.inputProps,
-                autoComplete: "new-password",
-              }}
-              value={values[ELocation.CITY]}
-              onChange={handleChange}
+      </div>
+      <div className="dropdown-field__wrapper">
+        <label className="dropdown-field" htmlFor={ELocation.CITY}>
+          <p className="dropdown-field__label">Town / City</p>
+          <Field
+            className="dropdown-field__field"
+            id={ELocation.CITY}
+            name={ELocation.CITY}
+            placeholder="Town or city"
+            onFocus={handleCityFocus}
+            autoComplete="new-password"
+          />
+          <ErrorMessage
+            component="span"
+            className="dropdown-field__error"
+            name={ELocation.CITY}
+          />
+          {cityValue && (
+            <img
+              className="dropdown-field__clear"
+              src={clear}
+              alt="Down"
+              onClick={handleClearCity}
             />
           )}
-        />
-        {errors[ELocation.CITY] && touched[ELocation.CITY] && (
-          <p className="dropdown-field__error">{errors[ELocation.CITY]}</p>
+          <img className="dropdown-field__arrow" src={arrowDown} alt="Down" />
+        </label>
+        {showCities && !!cities.length && (
+          <div ref={citiesRef} className="dropdown-field__dropdown">
+            <ul className="dropdown-field__list">
+              {cities.map((city, index) => (
+                <li
+                  key={`country-${city.name}-${index}`}
+                  className="dropdown-field__item"
+                  onClick={handleCityChose(city)}>
+                  {city.name}
+                </li>
+              ))}
+            </ul>
+          </div>
         )}
-      </label>
+      </div>
     </>
   );
 };

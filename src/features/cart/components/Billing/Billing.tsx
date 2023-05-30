@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import { Formik, Form, Field } from "formik";
 
 import { regularBillingFields } from "@/mock/billing";
@@ -25,24 +25,18 @@ const Billing: FC = () => {
     policyCheck: false,
   };
 
+  const [countryCode, setCountryCode] = useState<string>("");
+
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={billingSchema}
       onSubmit={(values, action) => {
         console.log(values);
+        setCountryCode("");
         action.resetForm();
       }}>
-      {({
-        isValid,
-        dirty,
-        setFieldValue,
-        errors,
-        handleBlur,
-        handleChange,
-        touched,
-        values,
-      }) => (
+      {({ isValid, dirty, setFieldValue, values, handleBlur }) => (
         <Form className="billing">
           <div className="billing__header">
             <h3 className="billing__title">Billing info</h3>
@@ -61,11 +55,11 @@ const Billing: FC = () => {
             ))}
             <LocationSelector
               setFieldValue={setFieldValue}
-              errors={errors}
+              countryValue={values.country}
+              cityValue={values.city}
+              countryCode={countryCode}
+              setCountryCode={setCountryCode}
               handleBlur={handleBlur}
-              handleChange={handleChange}
-              touched={touched}
-              values={values}
             />
           </fieldset>
           <div className="billing__header">
