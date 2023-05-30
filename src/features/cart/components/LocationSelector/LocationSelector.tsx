@@ -2,7 +2,7 @@ import React, { FC, useEffect, useRef, useState } from "react";
 import { ICity, ICountry } from "country-state-city";
 import { ErrorMessage, Field } from "formik";
 
-import { getCitiesByCountry, getSortedCountries } from "@/utils/cart";
+import { getCitiesByCountry, getFilteredCountries } from "@/utils/cart";
 import { ELocation } from "@Cart/types/location";
 
 import arrowDown from "@Images/arrow_black.svg";
@@ -33,7 +33,7 @@ const LocationSelector: FC<LocationSelectorProps> = ({
   const countriesRef = useRef<HTMLDivElement>(null);
   const citiesRef = useRef<HTMLDivElement>(null);
 
-  const countries = getSortedCountries(allCountries, countryValue);
+  const countries = getFilteredCountries(allCountries, countryValue);
   const cities = getCitiesByCountry(countryCode, cityValue);
 
   const handleCountryChose = (country: ICountry) => () => {
@@ -88,7 +88,7 @@ const LocationSelector: FC<LocationSelectorProps> = ({
 
   return (
     <>
-      <div className="dropdown-field__wrapper">
+      <div ref={countriesRef} className="dropdown-field__wrapper">
         <label className="dropdown-field" htmlFor={ELocation.COUNTRY}>
           <p className="dropdown-field__label">State / Country</p>
           <Field
@@ -115,21 +115,19 @@ const LocationSelector: FC<LocationSelectorProps> = ({
           <img className="dropdown-field__arrow" src={arrowDown} alt="Down" />
         </label>
         {showCountries && !!countries.length && (
-          <div ref={countriesRef} className="dropdown-field__dropdown">
-            <ul className="dropdown-field__list">
-              {countries.map((country, index) => (
-                <li
-                  key={`country-${country.name}-${index}`}
-                  className="dropdown-field__item"
-                  onClick={handleCountryChose(country)}>
-                  {country.name}
-                </li>
-              ))}
-            </ul>
-          </div>
+          <ul className="dropdown-field__list">
+            {countries.map((country, index) => (
+              <li
+                key={`country-${country.name}-${index}`}
+                className="dropdown-field__item"
+                onClick={handleCountryChose(country)}>
+                {country.name}
+              </li>
+            ))}
+          </ul>
         )}
       </div>
-      <div className="dropdown-field__wrapper">
+      <div ref={citiesRef} className="dropdown-field__wrapper">
         <label className="dropdown-field" htmlFor={ELocation.CITY}>
           <p className="dropdown-field__label">Town / City</p>
           <Field
@@ -153,21 +151,21 @@ const LocationSelector: FC<LocationSelectorProps> = ({
               onClick={handleClearCity}
             />
           )}
-          <img className="dropdown-field__arrow" src={arrowDown} alt="Down" />
+          {!!cities.length && (
+            <img className="dropdown-field__arrow" src={arrowDown} alt="Down" />
+          )}
         </label>
         {showCities && !!cities.length && (
-          <div ref={citiesRef} className="dropdown-field__dropdown">
-            <ul className="dropdown-field__list">
-              {cities.map((city, index) => (
-                <li
-                  key={`country-${city.name}-${index}`}
-                  className="dropdown-field__item"
-                  onClick={handleCityChose(city)}>
-                  {city.name}
-                </li>
-              ))}
-            </ul>
-          </div>
+          <ul className="dropdown-field__list">
+            {cities.map((city, index) => (
+              <li
+                key={`country-${city.name}-${index}`}
+                className="dropdown-field__item"
+                onClick={handleCityChose(city)}>
+                {city.name}
+              </li>
+            ))}
+          </ul>
         )}
       </div>
     </>

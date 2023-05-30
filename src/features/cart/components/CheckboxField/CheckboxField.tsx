@@ -1,5 +1,5 @@
-import { ErrorMessage, Field } from "formik";
 import React, { FC, PropsWithChildren } from "react";
+import { ErrorMessage, Field } from "formik";
 
 import "./CheckboxField.scss";
 

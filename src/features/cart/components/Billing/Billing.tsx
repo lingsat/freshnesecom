@@ -5,6 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 
 import { regularBillingFields } from "@/mock/billing";
 import { billingSchema } from "@Cart/schemas/billing";
+import { MESSAGES_TIMER } from "@/constants";
 import Button, { EBtnStyle } from "@CommonComponents/Button/Button";
 import InputField from "@CartComponents/InputField/InputField";
 import CheckboxField from "@CartComponents/CheckboxField/CheckboxField";
@@ -131,7 +132,7 @@ const Billing: FC = () => {
           </Form>
         )}
       </Formik>
-      <ToastContainer position="bottom-left" autoClose={3000} />
+      <ToastContainer position="bottom-left" autoClose={MESSAGES_TIMER} />
     </>
   );
 };

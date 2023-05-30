@@ -18,7 +18,7 @@ export const getCitiesByCountry = (
   }
 };
 
-export const getSortedCountries = (
+export const getFilteredCountries = (
   allCountries: ICountry[],
   countryValue: string
 ): ICountry[] => {
