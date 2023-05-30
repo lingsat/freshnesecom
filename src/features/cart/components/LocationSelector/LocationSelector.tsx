@@ -1,33 +1,40 @@
 import React, { FC, useState, SyntheticEvent } from "react";
 import { Autocomplete, TextField } from "@mui/material";
 import { Country, ICity, ICountry } from "country-state-city";
+import { FormikErrors, FormikTouched } from "formik";
 
 import { getCitiesByCountry } from "@/utils/cart";
+import { ELocation } from "@Cart/types/location";
 
 import "./LocationSelector.scss";
 
 interface LocationSelectorProps {
   setFieldValue: (name: string, value: string | undefined) => void;
-  countryError: string | undefined;
-  cityError: string | undefined;
+  handleBlur: (e: React.FocusEvent<HTMLInputElement, Element>) => void;
+  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  errors: FormikErrors<{ [field: string]: string }>;
+  touched: FormikTouched<{ [field: string]: string }>;
+  values: { [field: string]: string | boolean };
 }
 
 const LocationSelector: FC<LocationSelectorProps> = ({
   setFieldValue,
-  countryError,
-  cityError,
+  handleBlur,
+  handleChange,
+  errors,
+  touched,
+  values,
 }) => {
   const [countryCode, setCountryCode] = useState<string>("");
 
   const countries = Country.getAllCountries();
-
   const cities = getCitiesByCountry(countryCode);
 
   const handleCountryChange = (
     e: SyntheticEvent<Element, Event>,
     value: ICountry | null
   ) => {
-    setFieldValue("country", value?.name);
+    setFieldValue(ELocation.COUNTRY, value?.name);
     setCountryCode(value?.isoCode || "");
   };
 
@@ -35,7 +42,7 @@ const LocationSelector: FC<LocationSelectorProps> = ({
     e: SyntheticEvent<Element, Event>,
     value: ICity | null
   ) => {
-    setFieldValue("city", value?.name || "");
+    setFieldValue(ELocation.CITY, value?.name || "");
   };
 
   const autocompleteStyles = {
@@ -72,16 +79,18 @@ const LocationSelector: FC<LocationSelectorProps> = ({
 
   return (
     <>
-      <label className="dropdown-field" htmlFor="country">
+      <label className="dropdown-field" htmlFor={ELocation.COUNTRY}>
         <p className="dropdown-field__label">State / Country</p>
         <Autocomplete
           options={countries}
           getOptionLabel={(option) => option.name}
           onChange={handleCountryChange}
+          onBlur={handleBlur}
+          inputValue={values[ELocation.COUNTRY] as string}
           sx={autocompleteStyles}
           renderInput={(params) => (
             <TextField
-              name="country"
+              name={ELocation.COUNTRY}
               sx={textFieldStyles}
               {...params}
               placeholder="Choose a state or Country"
@@ -89,19 +98,24 @@ const LocationSelector: FC<LocationSelectorProps> = ({
                 ...params.inputProps,
                 autoComplete: "new-password",
               }}
+              value={values[ELocation.COUNTRY]}
+              onChange={handleChange}
             />
           )}
         />
-        {countryError && (
-          <p className="dropdown-field__error">{countryError}</p>
+        {errors[ELocation.COUNTRY] && touched[ELocation.COUNTRY] && (
+          <p className="dropdown-field__error">{errors[ELocation.COUNTRY]}</p>
         )}
       </label>
-      <label className="dropdown-field" htmlFor="city">
+      <label className="dropdown-field" htmlFor={ELocation.CITY}>
         <p className="dropdown-field__label">Town / City</p>
         <Autocomplete
           options={cities}
           getOptionLabel={(option) => option.name}
+          noOptionsText={"Chose country first"}
           onChange={handleCityChange}
+          onBlur={handleBlur}
+          inputValue={values[ELocation.CITY] as string}
           sx={autocompleteStyles}
           renderOption={(props, option) => {
             return (
@@ -112,7 +126,7 @@ const LocationSelector: FC<LocationSelectorProps> = ({
           }}
           renderInput={(params) => (
             <TextField
-              name="city"
+              name={ELocation.CITY}
               sx={textFieldStyles}
               {...params}
               placeholder="Town or city"
@@ -120,10 +134,14 @@ const LocationSelector: FC<LocationSelectorProps> = ({
                 ...params.inputProps,
                 autoComplete: "new-password",
               }}
+              value={values[ELocation.CITY]}
+              onChange={handleChange}
             />
           )}
         />
-        {cityError && <p className="dropdown-field__error">{cityError}</p>}
+        {errors[ELocation.CITY] && touched[ELocation.CITY] && (
+          <p className="dropdown-field__error">{errors[ELocation.CITY]}</p>
+        )}
       </label>
     </>
   );

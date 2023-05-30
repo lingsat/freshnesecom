@@ -33,7 +33,16 @@ const Billing: FC = () => {
         console.log(values);
         action.resetForm();
       }}>
-      {({ isValid, dirty, setFieldValue, errors }) => (
+      {({
+        isValid,
+        dirty,
+        setFieldValue,
+        errors,
+        handleBlur,
+        handleChange,
+        touched,
+        values,
+      }) => (
         <Form className="billing">
           <div className="billing__header">
             <h3 className="billing__title">Billing info</h3>
@@ -52,8 +61,11 @@ const Billing: FC = () => {
             ))}
             <LocationSelector
               setFieldValue={setFieldValue}
-              countryError={errors.country}
-              cityError={errors.city}
+              errors={errors}
+              handleBlur={handleBlur}
+              handleChange={handleChange}
+              touched={touched}
+              values={values}
             />
           </fieldset>
           <div className="billing__header">
