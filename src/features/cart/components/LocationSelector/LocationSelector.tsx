@@ -52,6 +52,9 @@ const LocationSelector: FC<LocationSelectorProps> = ({
     "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
       border: "1px solid #d2d2d4",
     },
+    "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+      border: "1px solid #6a983c",
+    },
     "& .MuiAutocomplete-inputRoot": {
       padding: "0.75rem 2rem 0.75rem 1rem",
       borderRadius: "12px",
@@ -65,6 +68,10 @@ const LocationSelector: FC<LocationSelectorProps> = ({
         color: "#a9a9a9",
         backgroundColor: "transparent",
       },
+    },
+    "& .Mui-disabled": {
+      backgroundColor: "#a9a9a9",
+      opacity: "0.6",
     },
   };
 
@@ -112,10 +119,10 @@ const LocationSelector: FC<LocationSelectorProps> = ({
         <Autocomplete
           options={cities}
           getOptionLabel={(option) => option.name}
-          noOptionsText={"Chose country first"}
           onChange={handleCityChange}
           onBlur={handleBlur}
           inputValue={values[ELocation.CITY] as string}
+          disabled={!values[ELocation.COUNTRY]}
           sx={autocompleteStyles}
           renderOption={(props, option) => {
             return (
