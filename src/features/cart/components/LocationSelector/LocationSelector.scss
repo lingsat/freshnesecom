@@ -16,6 +16,13 @@
     @include text-overflow-hide;
     font-family: $font-secondary;
     @include font(600, 0.75rem, 1.125rem);
+
+    &::after {
+      content: "*";
+      margin-left: 5px;
+      font-size: 1rem;
+      color: $color-red;
+    }
   }
 
   &__field {
@@ -82,6 +89,7 @@
     position: absolute;
     right: 15px;
     top: 35px;
+    cursor: pointer;
   }
 
   &__clear {

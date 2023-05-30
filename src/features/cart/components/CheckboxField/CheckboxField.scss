@@ -59,6 +59,13 @@
         color: $color-green;
       }
     }
+
+    &--required::after {
+      content: "*";
+      margin-left: 5px;
+      font-size: 1rem;
+      color: $color-red;
+    }
   }
 
   &__error {

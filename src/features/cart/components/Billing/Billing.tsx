@@ -51,6 +51,7 @@ const Billing: FC = () => {
                 name={field.name}
                 label={field.label}
                 placeholder={field.placeholder}
+                required={field.required}
               />
             ))}
             <LocationSelector
@@ -96,7 +97,7 @@ const Billing: FC = () => {
               I agree with sending an Marketing and newsletter emails. No spam,
               promissed!
             </CheckboxField>
-            <CheckboxField name="policyCheck">
+            <CheckboxField name="policyCheck" required={true}>
               I agree with our <a href="#">terms and conditions</a> and{" "}
               <a href="#">privacy policy</a>.
             </CheckboxField>

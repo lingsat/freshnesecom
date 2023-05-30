@@ -8,6 +8,7 @@ interface InputFieldProps {
   label: string;
   placeholder: string;
   type?: string;
+  required?: boolean;
 }
 
 const InputField: FC<InputFieldProps> = ({
@@ -15,10 +16,16 @@ const InputField: FC<InputFieldProps> = ({
   label,
   placeholder,
   type = "text",
+  required = false,
 }) => {
   return (
     <label className="input-field" htmlFor={name}>
-      <p className="input-field__label">{label}</p>
+      <p
+        className={`input-field__label${
+          required ? " input-field__label--required" : ""
+        }`}>
+        {label}
+      </p>
       <Field
         className="input-field__field"
         type={type}
