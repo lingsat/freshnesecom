@@ -84,7 +84,7 @@ const Billing: FC = () => {
                 />
               ))}
               <label className="billing__label" htmlFor="notes">
-                <p>Phone number</p>
+                <p className="required">Phone number</p>
                 <PhoneInput
                   country="US"
                   name={ELocation.PHONE_NUMBER}

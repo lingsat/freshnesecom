@@ -89,6 +89,13 @@
   }
 }
 
+.required::after {
+  content: "*";
+  margin-left: 5px;
+  font-size: 1rem;
+  color: $color-red;
+}
+
 .PhoneInputCountry {
   display: none;
 }
