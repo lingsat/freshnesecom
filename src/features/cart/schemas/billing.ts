@@ -4,11 +4,11 @@ export const billingSchema = yup.object({
   firstName: yup.string().required("First name is required"),
   lastName: yup.string().required("Last name is required"),
   email: yup.string().email("Invalid email").required("Email is required"),
-  phone: yup
+  phoneNumber: yup
     .string()
     .matches(
       /^(\+?\d{1,3}[-.\s]?)?(\()?\d{3}(\))?[-.\s]?\d{3}[-.\s]?\d{4}$/,
-      "Invalid phone - '+3800951234567'"
+      'Invalid phone - "+380 95 123 4567"'
     )
     .required("Phone number is required"),
   address: yup.string().required("Address is required"),

@@ -32,6 +32,7 @@ const InputField: FC<InputFieldProps> = ({
         id={name}
         name={name}
         placeholder={placeholder}
+        autoComplete="on"
       />
       <ErrorMessage
         component="span"

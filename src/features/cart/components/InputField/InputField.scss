@@ -43,10 +43,6 @@
     border-radius: 12px;
     outline: none;
 
-    &:hover {
-      border-color: $color-black;
-    }
-
     &:focus {
       border: 1px solid $color-green;
     }

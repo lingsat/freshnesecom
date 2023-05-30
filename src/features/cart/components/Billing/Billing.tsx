@@ -1,11 +1,13 @@
 import React, { FC, useState } from "react";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form, Field, FormikHelpers, ErrorMessage } from "formik";
 import { Country } from "country-state-city";
 import { ToastContainer, toast } from "react-toastify";
+import PhoneInput from "react-phone-number-input";
 
 import { regularBillingFields } from "@/mock/billing";
 import { billingSchema } from "@Cart/schemas/billing";
 import { MESSAGES_TIMER } from "@/constants";
+import { ELocation } from "@Cart/types/location";
 import Button, { EBtnStyle } from "@CommonComponents/Button/Button";
 import InputField from "@CartComponents/InputField/InputField";
 import CheckboxField from "@CartComponents/CheckboxField/CheckboxField";
@@ -21,7 +23,7 @@ const Billing: FC = () => {
     firstName: "",
     lastName: "",
     email: "",
-    phone: "",
+    phoneNumber: "",
     address: "",
     city: "",
     country: "",
@@ -38,43 +40,68 @@ const Billing: FC = () => {
 
   const successConfirm = () => toast("Order completed successfully!");
 
+  const handleFormSubmit = (
+    values: typeof initialValues,
+    action: FormikHelpers<typeof initialValues>
+  ) => {
+    const isCountryInArray = countries.find(
+      (country) => country.name === values.country
+    );
+
+    if (isCountryInArray) {
+      setCountryCode("");
+      action.resetForm();
+      successConfirm();
+    } else {
+      action.setErrors({ country: "Choose country from list" });
+      notifyInvalidCountry();
+    }
+    console.log(values);
+  };
+
   return (
     <>
       <Formik
         initialValues={initialValues}
         validationSchema={billingSchema}
-        onSubmit={(values, action) => {
-          const isCountryInArray = countries.find(
-            (country) => country.name === values.country
-          );
-
-          if (isCountryInArray) {
-            setCountryCode("");
-            action.resetForm();
-            successConfirm();
-          } else {
-            action.setErrors({ country: "Choose country from list" });
-            notifyInvalidCountry();
-          }
-        }}>
-        {({ isValid, dirty, setFieldValue, values }) => (
+        onSubmit={handleFormSubmit}>
+        {({ isValid, dirty, setFieldValue, values, handleBlur }) => (
           <Form className="billing">
-            <div className="billing__header">
-              <h3 className="billing__title">Billing info</h3>
-              <p className="billing__description">
-                Please enter your billing info
-              </p>
-            </div>
             <fieldset className="billing__block">
+              <div className="billing__header">
+                <h3 className="billing__title">Billing info</h3>
+                <p className="billing__description">
+                  Please enter your billing info
+                </p>
+              </div>
               {regularBillingFields.map((field, index) => (
                 <InputField
                   key={`field-${field.name}-${index}`}
                   name={field.name}
                   label={field.label}
+                  type={field.type}
                   placeholder={field.placeholder}
                   required={field.required}
                 />
               ))}
+              <label className="billing__label" htmlFor="notes">
+                <p>Phone number</p>
+                <PhoneInput
+                  country="US"
+                  name={ELocation.PHONE_NUMBER}
+                  placeholder="Phone number"
+                  value={values.phoneNumber}
+                  onChange={(value) => {
+                    setFieldValue(ELocation.PHONE_NUMBER, value);
+                  }}
+                  onBlur={handleBlur}
+                />
+                <ErrorMessage
+                  name={ELocation.PHONE_NUMBER}
+                  component="span"
+                  className="billing__error"
+                />
+              </label>
               <LocationSelector
                 allCountries={countries}
                 setFieldValue={setFieldValue}
@@ -84,13 +111,13 @@ const Billing: FC = () => {
                 setCountryCode={setCountryCode}
               />
             </fieldset>
-            <div className="billing__header">
-              <h3 className="billing__title">Additional informations</h3>
-              <p className="billing__description">
-                Need something else? We will make it for you!
-              </p>
-            </div>
             <fieldset className="billing__block">
+              <div className="billing__header">
+                <h3 className="billing__title">Additional informations</h3>
+                <p className="billing__description">
+                  Need something else? We will make it for you!
+                </p>
+              </div>
               <label
                 className="billing__label  billing__label--full"
                 htmlFor="notes">
@@ -106,14 +133,14 @@ const Billing: FC = () => {
                 />
               </label>
             </fieldset>
-            <div className="billing__header">
-              <h3 className="billing__title">Confirmation</h3>
-              <p className="billing__description">
-                We are getting to the end. Just few clicks and your order si
-                ready!
-              </p>
-            </div>
             <fieldset className="billing__block">
+              <div className="billing__header">
+                <h3 className="billing__title">Confirmation</h3>
+                <p className="billing__description">
+                  We are getting to the end. Just few clicks and your order si
+                  ready!
+                </p>
+              </div>
               <CheckboxField name="spamCheck">
                 I agree with sending an Marketing and newsletter emails. No
                 spam, promissed!

@@ -21,13 +21,6 @@ export const regularBillingFields = [
     required: true,
   },
   {
-    label: "Phone number",
-    type: "tel",
-    placeholder: "Phone number",
-    name: "phone",
-    required: true,
-  },
-  {
     label: "Address",
     type: "text",
     placeholder: "Address",
@@ -36,7 +29,7 @@ export const regularBillingFields = [
   },
   {
     label: "ZIP / Postal code",
-    type: "text",
+    type: "number",
     placeholder: "Postal code or ZIP",
     name: "postCode",
     required: true,

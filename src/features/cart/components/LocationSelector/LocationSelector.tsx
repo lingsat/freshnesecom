@@ -137,6 +137,7 @@ const LocationSelector: FC<LocationSelectorProps> = ({
             placeholder="Town or city"
             onFocus={handleCityFocus}
             autoComplete="new-password"
+            disabled={!countryValue}
           />
           <ErrorMessage
             component="span"
