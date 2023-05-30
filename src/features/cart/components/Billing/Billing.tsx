@@ -56,7 +56,6 @@ const Billing: FC = () => {
       action.setErrors({ country: "Choose country from list" });
       notifyInvalidCountry();
     }
-    console.log(values);
   };
 
   return (
