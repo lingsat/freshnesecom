@@ -1,12 +1,12 @@
 import React, { FC } from "react";
 
-import { ICartItem } from "@Cart/types/cart";
+import { ICartItemWithProduct } from "@Cart/types/cart";
 import CartItem from "@CartComponents/CartItem/CartItem";
 
 import "./Order.scss";
 
 interface OrderProps {
-  cartProducts: ICartItem[];
+  cartProducts: ICartItemWithProduct[];
 }
 
 const Order: FC<OrderProps> = ({ cartProducts }) => {
@@ -18,7 +18,7 @@ const Order: FC<OrderProps> = ({ cartProducts }) => {
       </p>
       <ul className="order__list">
         {cartProducts.map((cartItem) => (
-          <CartItem key={`cart-${cartItem.product.id}`} cartItem={cartItem} />
+          <CartItem key={`cart-${cartItem.productId}`} cartItem={cartItem} />
         ))}
       </ul>
       <div className="order__subtotal">

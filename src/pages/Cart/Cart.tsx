@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 
 import { RootState } from "@Store/store";
 import { ICartState, selectCart } from "@Cart/cartSlice";
+import { ICartItemWithProduct } from "@Cart/types/cart";
 import Order from "@CartComponents/Order/Order";
 import Billing from "@CartComponents/Billing/Billing";
 
@@ -10,6 +11,8 @@ import "./Cart.scss";
 
 const Cart = () => {
   const { cart } = useSelector<RootState, ICartState>(selectCart);
+
+  const cartWithProducts: ICartItemWithProduct[] = [];
 
   if (!cart.length) {
     return (
@@ -19,7 +22,7 @@ const Cart = () => {
 
   return (
     <div className="cart">
-      <Order cartProducts={cart} />
+      <Order cartProducts={cartWithProducts} />
       <Billing />
     </div>
   );

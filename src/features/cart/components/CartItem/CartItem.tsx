@@ -1,7 +1,7 @@
 import React, { FC, useState } from "react";
 
 import { ECount } from "@Products/types/product";
-import { ICartItem } from "@Cart/types/cart";
+import { ICartItemWithProduct } from "@Cart/types/cart";
 import FilterStars from "@ProductsComponents/FilterStars/FilterStars";
 import Count from "@ProductsComponents/Count/Count";
 
@@ -11,7 +11,7 @@ import close from "@Images/close.svg";
 import "./CartItem.scss";
 
 interface CartItemProps {
-  cartItem: ICartItem;
+  cartItem: ICartItemWithProduct;
 }
 
 const CartItem: FC<CartItemProps> = ({ cartItem }) => {
