@@ -9,6 +9,8 @@ import Button, { EBtnStyle } from "@CommonComponents/Button/Button";
 import Order from "@CartComponents/Order/Order";
 import Billing from "@CartComponents/Billing/Billing";
 
+import emptyCart from "@Images/empty_cart.webp";
+
 import "./Cart.scss";
 
 const Cart = () => {
@@ -25,8 +27,9 @@ const Cart = () => {
         <p className="cart__message">
           Cart is empty! Try to add some products.
         </p>
+        <img className="cart__image" src={emptyCart} alt="Empty Cart" />
         <Button
-          text="Back to Products"
+          text="Back to Shopping"
           style={EBtnStyle.BIG}
           onCLick={handleNavToProducts}
         />
