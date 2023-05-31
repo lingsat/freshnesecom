@@ -42,8 +42,6 @@
     flex-direction: column;
     position: relative;
 
-    order: 4;
-
     p {
       @include text-overflow-hide;
       font-family: $font-secondary;
@@ -64,6 +62,17 @@
     background: $color-gray-lightest;
     border: 1px solid $color-gray-light;
     border-radius: 12px;
+    outline: none;
+
+    // &::-webkit-outer-spin-button,
+    // &::-webkit-inner-spin-button {
+    //   -webkit-appearance: none;
+    //   margin: 0;
+    // }
+
+    // &[type="number"] {
+    //   -moz-appearance: textfield;
+    // }
 
     &--textarea {
       resize: none;

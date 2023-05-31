@@ -20,18 +20,4 @@ export const regularBillingFields = [
     name: "email",
     required: true,
   },
-  {
-    label: "Address",
-    type: "text",
-    placeholder: "Address",
-    name: "address",
-    required: true,
-  },
-  {
-    label: "ZIP / Postal code",
-    type: "number",
-    placeholder: "Postal code or ZIP",
-    name: "postCode",
-    required: true,
-  },
 ];

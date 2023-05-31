@@ -2,7 +2,6 @@ import React, { FC, useState } from "react";
 import { Formik, Form, Field, FormikHelpers, ErrorMessage } from "formik";
 import { Country } from "country-state-city";
 import { ToastContainer, toast } from "react-toastify";
-import PhoneInput from "react-phone-number-input";
 
 import { regularBillingFields } from "@/mock/billing";
 import { billingSchema } from "@Cart/schemas/billing";
@@ -12,6 +11,8 @@ import Button, { EBtnStyle } from "@CommonComponents/Button/Button";
 import InputField from "@CartComponents/InputField/InputField";
 import CheckboxField from "@CartComponents/CheckboxField/CheckboxField";
 import LocationSelector from "@CartComponents/LocationSelector/LocationSelector";
+import PhoneField from "@CartComponents/PhoneField/PhoneField";
+import PostCodeField from "@CartComponents/PostCodeField/PostCodeField";
 
 import "react-toastify/dist/ReactToastify.css";
 import "./Billing.scss";
@@ -83,24 +84,11 @@ const Billing: FC = () => {
                   required={field.required}
                 />
               ))}
-              <label className="billing__label" htmlFor="notes">
-                <p className="required">Phone number</p>
-                <PhoneInput
-                  country="US"
-                  name={ELocation.PHONE_NUMBER}
-                  placeholder="Phone number"
-                  value={values.phoneNumber}
-                  onChange={(value) => {
-                    setFieldValue(ELocation.PHONE_NUMBER, value);
-                  }}
-                  onBlur={handleBlur}
-                />
-                <ErrorMessage
-                  name={ELocation.PHONE_NUMBER}
-                  component="span"
-                  className="billing__error"
-                />
-              </label>
+              <PhoneField
+                setFieldValue={setFieldValue}
+                handleBlur={handleBlur}
+                phoneValue={values.phoneNumber}
+              />
               <LocationSelector
                 allCountries={countries}
                 setFieldValue={setFieldValue}
@@ -109,6 +97,21 @@ const Billing: FC = () => {
                 countryCode={countryCode}
                 setCountryCode={setCountryCode}
               />
+              <label className="billing__label" htmlFor={ELocation.ADDRESS}>
+                <p className="required">Address</p>
+                <Field
+                  className="billing__field"
+                  id={ELocation.ADDRESS}
+                  name={ELocation.ADDRESS}
+                  placeholder="Address"
+                />
+                <ErrorMessage
+                  name={ELocation.ADDRESS}
+                  component="span"
+                  className="billing__error"
+                />
+              </label>
+              <PostCodeField setFieldValue={setFieldValue} />
             </fieldset>
             <fieldset className="billing__block">
               <div className="billing__header">
