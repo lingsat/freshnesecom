@@ -1,8 +1,10 @@
 import React, { FC, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import { AppDispatch } from "@Store/store";
 import { removeSingleCartItem, setCartItemCount } from "@Cart/cartSlice";
+import { ERoutes } from "@/types/routes";
 import { ECount } from "@Products/types/product";
 import { ICartItem } from "@Cart/types/cart";
 import Stars from "@CommonComponents/Stars/Stars";
@@ -21,6 +23,7 @@ const CartItem: FC<CartItemProps> = ({ cartItem }) => {
   const { product, amount, category } = cartItem;
 
   const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
   const [countCategory, setCountCategory] = useState<string>(category);
   const [count, setCount] = useState<number>(amount);
 
@@ -30,6 +33,10 @@ const CartItem: FC<CartItemProps> = ({ cartItem }) => {
 
   const handleRemoveCartItem = () => {
     dispatch(removeSingleCartItem(product.id));
+  };
+
+  const handleOpenProduct = () => {
+    navigate(`/${ERoutes.PRODUCTS_LIST}/${product.id}`);
   };
 
   useEffect(() => {
@@ -49,6 +56,7 @@ const CartItem: FC<CartItemProps> = ({ cartItem }) => {
           src={product.images[0]}
           alt={product.title}
           className="cart-item__image"
+          onClick={handleOpenProduct}
         />
         <div className="cart-item__buttons">
           <button className="cart-item__btn">
@@ -62,7 +70,9 @@ const CartItem: FC<CartItemProps> = ({ cartItem }) => {
         </div>
       </div>
       <div className="cart-item__right">
-        <h3 className="cart-item__title">{product.title}</h3>
+        <h3 className="cart-item__title" onClick={handleOpenProduct}>
+          {product.title}
+        </h3>
         <ul className="cart-item__list">
           <li className="cart-item__item">
             <p className="cart-item__category">Brand:</p>

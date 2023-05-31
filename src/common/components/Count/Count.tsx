@@ -15,6 +15,7 @@ interface CountProps {
   count: number;
   setCount: React.Dispatch<React.SetStateAction<number>>;
   isCountInvalid: boolean;
+  disabled?: boolean;
 }
 
 const Count: FC<CountProps> = ({
@@ -24,6 +25,7 @@ const Count: FC<CountProps> = ({
   count,
   setCount,
   isCountInvalid,
+  disabled = false,
 }) => {
   const [maxError, setMaxError] = useState<boolean>(false);
   const [showMenu, setShowMenu] = useState<boolean>(false);
@@ -72,7 +74,9 @@ const Count: FC<CountProps> = ({
 
   return (
     <div
-      className={`count${isCountInvalidMax ? " count--error" : ""}`}
+      className={`count${isCountInvalidMax ? " count--error" : ""}${
+        disabled ? " count--disabled" : ""
+      }`}
       onMouseLeave={handleHideMenu}>
       <label className="count__label">
         <button
@@ -85,6 +89,7 @@ const Count: FC<CountProps> = ({
           value={count || ""}
           onChange={handleChangeCount}
           onBlur={handleBlurCount}
+          disabled={disabled}
         />
         <button className="count__changer" onClick={increaseCount}>
           +

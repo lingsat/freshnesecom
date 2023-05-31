@@ -86,6 +86,7 @@ const ProductInfo: FC<ProductInfoProps> = ({ product }) => {
           count={count}
           setCount={setCount}
           isCountInvalid={isCountInvalid}
+          disabled={!!isProductInCart}
         />
         {isProductInCart ? (
           <Button
