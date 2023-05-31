@@ -1,16 +1,14 @@
 import React, { FC } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { getOldPrice, getStarsArrFromNumber } from "@/utils/products";
+import { getOldPrice } from "@/utils/products";
 import { IProduct } from "@Products/types/product";
 import Button, {
   EBtnImage,
   EBtnImagePos,
   EBtnStyle,
 } from "@CommonComponents/Button/Button";
-
-import star from "@Images/star.svg";
-import checkedStar from "@Images/star_checked.svg";
+import Stars, { EStarsColor } from "@CommonComponents/Stars/Stars";
 
 import "./Card.scss";
 
@@ -22,7 +20,6 @@ const Card: FC<CardProps> = ({ product }) => {
   const navigate = useNavigate();
 
   const { mainPrice, mainCountCategory } = product;
-  const starsArr = getStarsArrFromNumber(product.stars);
   const oldPrice = getOldPrice(product.mainPrice, product.discount);
 
   const handleOpenProduct = () => {
@@ -43,13 +40,10 @@ const Card: FC<CardProps> = ({ product }) => {
             {product.title}
           </h3>
           <p className="info__description">{product.shortDescription}</p>
-          <ul className="info__stars">
-            {starsArr.map((item, index) => (
-              <li key={`star-${product.id}-${index}`}>
-                <img src={item ? checkedStar : star} alt="Star" />
-              </li>
-            ))}
-          </ul>
+          <Stars
+            checkedStars={product.stars.toString()}
+            starColor={EStarsColor.BLACK}
+          />
           <ul className="subinfo">
             {product.category === "Food" && (
               <li className="subinfo__row">

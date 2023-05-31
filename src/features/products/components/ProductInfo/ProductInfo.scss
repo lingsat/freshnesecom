@@ -15,26 +15,12 @@
     margin-bottom: 2.5rem;
     display: flex;
     align-items: center;
+    gap: 0.5rem;
 
     p {
       font-size: 0.75rem;
       line-height: 1rem;
       color: $color-gray;
-    }
-  }
-
-  &__stars {
-    margin-right: 0.5rem;
-    display: flex;
-    gap: 4px;
-
-    li {
-      display: flex;
-    }
-
-    img {
-      width: 18px;
-      height: 16px;
     }
   }
 

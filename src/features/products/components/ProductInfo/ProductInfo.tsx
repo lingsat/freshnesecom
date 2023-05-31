@@ -4,11 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import { AppDispatch, RootState } from "@Store/store";
 import { addToCart, ICartState, selectCart } from "@Cart/cartSlice";
-import {
-  getOldPrice,
-  getProductDataList,
-  getStarsArrFromNumber,
-} from "@/utils/products";
+import { getOldPrice, getProductDataList } from "@/utils/products";
 import { ECount, IProduct } from "@Products/types/product";
 import { ERoutes } from "@/types/routes";
 import { ICartItem } from "@Cart/types/cart";
@@ -17,11 +13,9 @@ import Button, {
   EBtnImagePos,
   EBtnStyle,
 } from "@CommonComponents/Button/Button";
-import Count from "@ProductsComponents/Count/Count";
+import Stars, { EStarsColor } from "@CommonComponents/Stars/Stars";
+import Count from "@CommonComponents/Count/Count";
 import Tabs from "@ProductsComponents/Tabs/Tabs";
-
-import star from "@Images/star.svg";
-import checkedStar from "@Images/star_checked.svg";
 
 import "./ProductInfo.scss";
 
@@ -41,16 +35,15 @@ const ProductInfo: FC<ProductInfoProps> = ({ product }) => {
 
   const isCountInvalid =
     count > product.stock[countCategory] || count < ECount.MIN_COUNT_VALUE;
-  const starsArr = getStarsArrFromNumber(product.stars);
   const currentPrice = (product.price[countCategory] * +count).toFixed(2);
   const oldPrice = getOldPrice(+currentPrice, product.discount);
   const datalist = getProductDataList(product, countCategory);
 
-  const isProductInCart = cart.find((item) => item.productId === product.id);
+  const isProductInCart = cart.find((item) => item.product.id === product.id);
 
   const handleAddToCart = () => {
     const newCartItem: ICartItem = {
-      productId: product.id,
+      product,
       amount: count,
       category: countCategory,
     };
@@ -66,13 +59,10 @@ const ProductInfo: FC<ProductInfoProps> = ({ product }) => {
     <div className="product-info">
       <h2 className="product-info__title">{product.title}</h2>
       <div className="product-info__stat">
-        <ul className="product-info__stars">
-          {starsArr.map((item, index) => (
-            <li key={`productStar-${item}-${index}`}>
-              <img src={item ? checkedStar : star} alt="Star" />
-            </li>
-          ))}
-        </ul>
+        <Stars
+          checkedStars={product.stars.toString()}
+          starColor={EStarsColor.BLACK}
+        />
         <p>({product.reviews.length} customers review)</p>
       </div>
       <p className="product-info__description">{product.shortDescription}</p>

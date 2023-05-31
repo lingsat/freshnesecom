@@ -1,11 +1,7 @@
 import { IProduct } from "@Products/types/product";
 
 export interface ICartItem {
-  productId: string;
+  product: IProduct;
   amount: number;
   category: string;
-}
-
-export interface ICartItemWithProduct extends ICartItem {
-  product: IProduct;
 }

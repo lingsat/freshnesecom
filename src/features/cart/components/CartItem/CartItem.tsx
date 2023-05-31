@@ -1,9 +1,9 @@
 import React, { FC, useState } from "react";
 
 import { ECount } from "@Products/types/product";
-import { ICartItemWithProduct } from "@Cart/types/cart";
-import FilterStars from "@ProductsComponents/FilterStars/FilterStars";
-import Count from "@ProductsComponents/Count/Count";
+import { ICartItem } from "@Cart/types/cart";
+import Stars from "@CommonComponents/Stars/Stars";
+import Count from "@CommonComponents/Count/Count";
 
 import heart from "@Images/heart_thin.svg";
 import close from "@Images/close.svg";
@@ -11,7 +11,7 @@ import close from "@Images/close.svg";
 import "./CartItem.scss";
 
 interface CartItemProps {
-  cartItem: ICartItemWithProduct;
+  cartItem: ICartItem;
 }
 
 const CartItem: FC<CartItemProps> = ({ cartItem }) => {
@@ -53,7 +53,7 @@ const CartItem: FC<CartItemProps> = ({ cartItem }) => {
             <p className="cart-item__value">{product.freshness}</p>
           </li>
         </ul>
-        <FilterStars checkedStars={product.stars.toString()} />
+        <Stars checkedStars={product.stars.toString()} />
         <div className="cart-item__controls">
           <p className="cart-item__price">{product.price[category]} USD</p>
           <Count
