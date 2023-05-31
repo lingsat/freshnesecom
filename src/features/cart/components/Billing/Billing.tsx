@@ -1,7 +1,7 @@
 import React, { FC, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { Formik, Form, Field, FormikHelpers, ErrorMessage } from "formik";
+import { Persist } from "formik-persist";
 import { Country } from "country-state-city";
 import { toast } from "react-toastify";
 
@@ -10,7 +10,6 @@ import { clearCart } from "@Cart/cartSlice";
 import { regularBillingFields } from "@/mock/billing";
 import { billingSchema } from "@Cart/schemas/billing";
 import { ELocation } from "@Cart/types/location";
-import { ERoutes } from "@/types/routes";
 import Button, { EBtnStyle } from "@CommonComponents/Button/Button";
 import InputField from "@CartComponents/InputField/InputField";
 import CheckboxField from "@CartComponents/CheckboxField/CheckboxField";
@@ -23,7 +22,6 @@ import "./Billing.scss";
 
 const Billing: FC = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const navigate = useNavigate();
 
   const [countryCode, setCountryCode] = useState<string>("");
 
@@ -61,7 +59,6 @@ const Billing: FC = () => {
       dispatch(clearCart());
       action.resetForm();
       successConfirm();
-      navigate(`/${ERoutes.PRODUCTS_LIST}`);
     } else {
       action.setErrors({ country: "Choose country from list" });
       notifyInvalidCountry();
@@ -73,6 +70,7 @@ const Billing: FC = () => {
       <Formik
         initialValues={initialValues}
         validationSchema={billingSchema}
+        enableReinitialize={true}
         onSubmit={handleFormSubmit}>
         {({ isValid, dirty, setFieldValue, values, handleBlur }) => (
           <Form className="billing">
@@ -167,6 +165,7 @@ const Billing: FC = () => {
               style={EBtnStyle.BIG}
               disabled={!dirty || !isValid}
             />
+            <Persist name="user-data" debounce={0} />
           </Form>
         )}
       </Formik>
