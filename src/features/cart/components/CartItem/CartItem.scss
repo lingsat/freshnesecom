@@ -120,13 +120,43 @@
 
     &__left {
       width: 100%;
+      @include flex-center;
+      flex-direction: column;
+    }
+
+    &__right {
+      width: 100%;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
     }
 
     &__image {
+      width: 180px;
+      height: 180px;
+    }
+
+    &__buttons {
+      margin-bottom: 0.75rem;
+      flex-direction: row;
+      gap: 1rem;
+    }
+
+    &__title {
+      width: 100%;
+      text-align: center;
+    }
+
+    &__value {
       width: auto;
+    }
+
+    &__list {
+      max-width: 250px;
+    }
+
+    &__price {
+      text-align: center;
     }
 
     &__controls {

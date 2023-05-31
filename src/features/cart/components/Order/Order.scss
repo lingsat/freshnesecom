@@ -130,6 +130,14 @@
   .order {
     padding: 1rem 1rem 2.5rem;
 
+    &__description {
+      margin-bottom: 1.5rem;
+    }
+
+    &__list {
+      max-height: 420px;
+    }
+
     &__promo {
       padding: 0.5rem 0.75rem;
     }

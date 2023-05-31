@@ -16,3 +16,11 @@
     row-gap: 4rem;
   }
 }
+
+@media (max-width: 575.98px) {
+  .cart {
+    max-width: 400px;
+    margin: 0 auto;
+    row-gap: 2.5rem;
+  }
+}
