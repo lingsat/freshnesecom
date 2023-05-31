@@ -41,6 +41,14 @@ const Count: FC<CountProps> = ({
     setShowMenu(true);
   };
 
+  const increaseCount = () => {
+    setCount((prev) => prev + 1);
+  };
+
+  const decreaseCount = () => {
+    setCount((prev) => prev - 1);
+  };
+
   const handleChangeCount = (event: ChangeEvent<HTMLInputElement>) => {
     if (+event.target.value > maxCountValue) {
       setMaxError(true);
@@ -67,12 +75,20 @@ const Count: FC<CountProps> = ({
       className={`count${isCountInvalidMax ? " count--error" : ""}`}
       onMouseLeave={handleHideMenu}>
       <label className="count__label">
+        <button
+          className="count__changer count__changer--decrease"
+          onClick={decreaseCount}>
+          -
+        </button>
         <input
           type="number"
           value={count || ""}
           onChange={handleChangeCount}
           onBlur={handleBlurCount}
         />
+        <button className="count__changer" onClick={increaseCount}>
+          +
+        </button>
       </label>
       {isCountInvalidMax && (
         <p className="count__message">{`Min ${ECount.MIN_COUNT_VALUE} / Max ${maxCountValue} ${countCategory}.`}</p>

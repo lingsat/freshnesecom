@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 
 import { AppDispatch } from "@Store/store";
 import { fetchProducts } from "@Products/productsSlice";
@@ -8,16 +8,17 @@ import { ERoutes } from "@/types/routes";
 import Header from "@CoreComponents/Header/Header";
 import BreadCrumbs from "@CoreComponents/BreadCrumbs/BreadCrumbs";
 import Footer from "@CoreComponents/Footer/Footer";
-import Home from "@ProductsPages/Home/Home";
-import ProductsList from "@ProductsPages/ProductsList/ProductsList";
-import ProductItem from "@ProductsPages/ProductItem/ProductItem";
-import Cart from "@ProductsPages/Cart/Cart";
-import NotFound from "@ProductsPages/NotFound/NotFound";
+import Home from "@Pages/Home/Home";
+import ProductsList from "@Pages/ProductsList/ProductsList";
+import ProductItem from "@Pages/ProductItem/ProductItem";
+import Cart from "@Pages/Cart/Cart";
+import NotFound from "@Pages/NotFound/NotFound";
 
 import "./App.scss";
 
 const App = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const { pathname } = useLocation();
 
   useEffect(() => {
     dispatch(fetchProducts());
@@ -36,7 +37,7 @@ const App = () => {
           <Route path={ERoutes.NOT_FOUND} element={<NotFound />} />
         </Routes>
       </main>
-      <Footer />
+      {pathname !== `/${ERoutes.CART}` && <Footer />}
     </div>
   );
 };
