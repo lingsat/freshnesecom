@@ -1,0 +1,136 @@
+@import "@Styles/_variables.scss";
+@import "@Styles/_mixins.scss";
+
+.cart-item {
+  padding-bottom: 1.5rem;
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid $color-gray-lightest;
+
+  &__left {
+    width: 100px;
+  }
+
+  &__right {
+    width: calc(100% - 120px);
+  }
+
+  &__image {
+    margin-bottom: 0.5rem;
+    width: 100%;
+    height: 67px;
+    object-fit: contain;
+    border: 1px solid $color-gray-light;
+    border-radius: 12px;
+  }
+
+  &__buttons {
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.2rem;
+  }
+
+  &__btn {
+    padding: 2px 8px 2px 4px;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: $font-primary;
+    @include font(400, 0.75rem, 1rem);
+    color: $color-gray;
+    border: none;
+    border-radius: 12px;
+    background-color: transparent;
+    cursor: pointer;
+    transition: all 0.1s linear;
+
+    &:hover {
+      background-color: $color-gray-light;
+    }
+
+    img {
+      width: 13px;
+      height: 13px;
+    }
+  }
+
+  &__title {
+    margin-bottom: 0.2em;
+    @include text-overflow-hide;
+    font-family: $font-secondary;
+    @include font(500, 0.95rem, 1.375rem);
+  }
+
+  &__list {
+    margin-bottom: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  &__item {
+    display: flex;
+    font-size: 0.75rem;
+    line-height: 1rem;
+  }
+
+  &__category {
+    @include text-overflow-hide;
+    width: 80px;
+    color: $color-gray;
+  }
+
+  &__value {
+    @include text-overflow-hide;
+    width: calc(100% - 90px);
+  }
+
+  &__controls {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__price {
+    font-family: $font-secondary;
+    @include font(600, 1.125rem, 1.65rem);
+    color: $color-green;
+  }
+}
+
+@media (max-width: 1199.98px) {
+  .cart-item__controls {
+    flex-direction: column;
+    row-gap: 0.5rem;
+  }
+}
+
+@media (max-width: 991.98px) {
+  .cart-item {
+    &__controls {
+      flex-direction: row;
+    }
+  }
+}
+
+@media (max-width: 575.98px) {
+  .cart-item {
+    flex-direction: column;
+
+    &__left {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    &__image {
+      width: auto;
+    }
+
+    &__controls {
+      flex-direction: column;
+    }
+  }
+}

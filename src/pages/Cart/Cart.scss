@@ -1,3 +1,18 @@
 .cart {
-  padding-bottom: 3rem;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  &__message {
+    margin-top: 1rem;
+    text-align: center;
+  }
+}
+
+@media (max-width: 991.98px) {
+  .cart {
+    flex-direction: column;
+    row-gap: 4rem;
+  }
 }

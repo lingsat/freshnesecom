@@ -1,11 +1,17 @@
 import React, { FC, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
+import { AppDispatch, RootState } from "@Store/store";
+import { addToCart, ICartState, selectCart } from "@Cart/cartSlice";
 import {
   getOldPrice,
   getProductDataList,
   getStarsArrFromNumber,
 } from "@/utils/products";
 import { ECount, IProduct } from "@Products/types/product";
+import { ERoutes } from "@/types/routes";
+import { ICartItem } from "@Cart/types/cart";
 import Button, {
   EBtnImage,
   EBtnImagePos,
@@ -24,6 +30,10 @@ interface ProductInfoProps {
 }
 
 const ProductInfo: FC<ProductInfoProps> = ({ product }) => {
+  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
+  const { cart } = useSelector<RootState, ICartState>(selectCart);
+
   const [countCategory, setCountCategory] = useState<string>(
     product.mainCountCategory
   );
@@ -35,6 +45,22 @@ const ProductInfo: FC<ProductInfoProps> = ({ product }) => {
   const currentPrice = (product.price[countCategory] * +count).toFixed(2);
   const oldPrice = getOldPrice(+currentPrice, product.discount);
   const datalist = getProductDataList(product, countCategory);
+
+  const isProductInCart = cart.find((item) => item.product.id === product.id);
+
+  const handleAddToCart = () => {
+    const newCartItem: ICartItem = {
+      product,
+      amount: count,
+      category: countCategory,
+    };
+
+    dispatch(addToCart(newCartItem));
+  };
+
+  const handleOpenCart = () => {
+    navigate(`/${ERoutes.CART}`);
+  };
 
   return (
     <div className="product-info">
@@ -71,12 +97,23 @@ const ProductInfo: FC<ProductInfoProps> = ({ product }) => {
           setCount={setCount}
           isCountInvalid={isCountInvalid}
         />
-        <Button
-          image={EBtnImage.PLUS}
-          imagePosition={EBtnImagePos.LEFT}
-          text="Add to cart"
-          disabled={isCountInvalid}
-        />
+        {isProductInCart ? (
+          <Button
+            style={EBtnStyle.SECONDARY}
+            image={EBtnImage.BASKET}
+            imagePosition={EBtnImagePos.LEFT}
+            text="In Cart"
+            onCLick={handleOpenCart}
+          />
+        ) : (
+          <Button
+            image={EBtnImage.PLUS}
+            imagePosition={EBtnImagePos.LEFT}
+            text="Add to cart"
+            disabled={isCountInvalid}
+            onCLick={handleAddToCart}
+          />
+        )}
       </div>
       <Button
         style={EBtnStyle.SECONDARY}
