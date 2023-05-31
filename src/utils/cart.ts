@@ -1,5 +1,8 @@
 import { City, ICity, ICountry } from "country-state-city";
 
+import { ICartItem } from "@Cart/types/cart";
+import { PROMO_CODE_DISCOUNT, TAX_VALUE } from "@/constants";
+
 export const getCitiesByCountry = (
   countryCode: string,
   cityValue: string
@@ -30,5 +33,26 @@ export const getFilteredCountries = (
     );
   } else {
     return [];
+  }
+};
+
+export const getSubtotalPrice = (cartProducts: ICartItem[]): string => {
+  const subtotal = cartProducts.reduce((acc: number, item) => {
+    const price = item.product.price[item.category];
+    const amount = item.amount;
+    const itemTotal = price * amount;
+    return acc + itemTotal;
+  }, 0);
+
+  return subtotal.toFixed(2);
+};
+
+export const getTotalPrice = (price: string, isPromoAplied: boolean) => {
+  const taxTotalPrice = (+price * TAX_VALUE) / 100;
+  if (isPromoAplied) {
+    const discount = (+price * PROMO_CODE_DISCOUNT) / 100;
+    return (+price - discount + taxTotalPrice).toFixed(2);
+  } else {
+    return (+price + taxTotalPrice).toFixed(2);
   }
 };

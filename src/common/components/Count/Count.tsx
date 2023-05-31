@@ -42,11 +42,11 @@ const Count: FC<CountProps> = ({
   };
 
   const increaseCount = () => {
-    setCount((prev) => prev + 1);
+    setCount((prev) => (prev >= maxCountValue ? prev : prev + 1));
   };
 
   const decreaseCount = () => {
-    setCount((prev) => prev - 1);
+    setCount((prev) => (prev <= 0 ? prev : prev - 1));
   };
 
   const handleChangeCount = (event: ChangeEvent<HTMLInputElement>) => {

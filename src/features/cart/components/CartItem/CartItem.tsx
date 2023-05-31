@@ -1,5 +1,8 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 
+import { AppDispatch } from "@Store/store";
+import { removeSingleCartItem, setCartItemCount } from "@Cart/cartSlice";
 import { ECount } from "@Products/types/product";
 import { ICartItem } from "@Cart/types/cart";
 import Stars from "@CommonComponents/Stars/Stars";
@@ -16,11 +19,28 @@ interface CartItemProps {
 
 const CartItem: FC<CartItemProps> = ({ cartItem }) => {
   const { product, amount, category } = cartItem;
+
+  const dispatch = useDispatch<AppDispatch>();
   const [countCategory, setCountCategory] = useState<string>(category);
   const [count, setCount] = useState<number>(amount);
 
   const isCountInvalid =
     count > product.stock[countCategory] || count < ECount.MIN_COUNT_VALUE;
+  const priceSummary = (product.price[category] * count).toFixed(2);
+
+  const handleRemoveCartItem = () => {
+    dispatch(removeSingleCartItem(product.id));
+  };
+
+  useEffect(() => {
+    dispatch(
+      setCartItemCount({
+        prodId: product.id,
+        amount: count,
+        category: countCategory,
+      })
+    );
+  }, [count, countCategory]);
 
   return (
     <li className="cart-item">
@@ -35,7 +55,7 @@ const CartItem: FC<CartItemProps> = ({ cartItem }) => {
             <img src={heart} alt="Heart" />
             Wishlist
           </button>
-          <button className="cart-item__btn">
+          <button className="cart-item__btn" onClick={handleRemoveCartItem}>
             <img src={close} alt="Close" />
             Remove
           </button>
@@ -55,7 +75,7 @@ const CartItem: FC<CartItemProps> = ({ cartItem }) => {
         </ul>
         <Stars checkedStars={product.stars.toString()} />
         <div className="cart-item__controls">
-          <p className="cart-item__price">{product.price[category]} USD</p>
+          <p className="cart-item__price">{priceSummary} USD</p>
           <Count
             product={product}
             countCategory={countCategory}

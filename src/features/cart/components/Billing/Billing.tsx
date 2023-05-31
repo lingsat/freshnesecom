@@ -1,12 +1,16 @@
 import React, { FC, useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { Formik, Form, Field, FormikHelpers, ErrorMessage } from "formik";
 import { Country } from "country-state-city";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
+import { AppDispatch } from "@Store/store";
+import { clearCart } from "@Cart/cartSlice";
 import { regularBillingFields } from "@/mock/billing";
 import { billingSchema } from "@Cart/schemas/billing";
-import { MESSAGES_TIMER } from "@/constants";
 import { ELocation } from "@Cart/types/location";
+import { ERoutes } from "@/types/routes";
 import Button, { EBtnStyle } from "@CommonComponents/Button/Button";
 import InputField from "@CartComponents/InputField/InputField";
 import CheckboxField from "@CartComponents/CheckboxField/CheckboxField";
@@ -18,6 +22,9 @@ import "react-toastify/dist/ReactToastify.css";
 import "./Billing.scss";
 
 const Billing: FC = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
+
   const [countryCode, setCountryCode] = useState<string>("");
 
   const initialValues = {
@@ -51,8 +58,10 @@ const Billing: FC = () => {
 
     if (isCountryInArray) {
       setCountryCode("");
+      dispatch(clearCart());
       action.resetForm();
       successConfirm();
+      navigate(`/${ERoutes.PRODUCTS_LIST}`);
     } else {
       action.setErrors({ country: "Choose country from list" });
       notifyInvalidCountry();
@@ -161,7 +170,6 @@ const Billing: FC = () => {
           </Form>
         )}
       </Formik>
-      <ToastContainer position="bottom-left" autoClose={MESSAGES_TIMER} />
     </>
   );
 };

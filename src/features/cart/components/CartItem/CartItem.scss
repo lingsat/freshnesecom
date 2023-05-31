@@ -8,6 +8,10 @@
   justify-content: space-between;
   border-bottom: 1px solid $color-gray-lightest;
 
+  &:last-of-type {
+    margin-bottom: 0;
+  }
+
   &__left {
     width: 100px;
   }

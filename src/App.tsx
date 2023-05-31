@@ -1,9 +1,11 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Route, Routes, useLocation } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 
 import { AppDispatch } from "@Store/store";
 import { fetchProducts } from "@Products/productsSlice";
+import { MESSAGES_TIMER } from "@/constants";
 import { ERoutes } from "@/types/routes";
 import Header from "@CoreComponents/Header/Header";
 import BreadCrumbs from "@CoreComponents/BreadCrumbs/BreadCrumbs";
@@ -38,6 +40,7 @@ const App = () => {
         </Routes>
       </main>
       {pathname !== `/${ERoutes.CART}` && <Footer />}
+      <ToastContainer position="bottom-left" autoClose={MESSAGES_TIMER} />
     </div>
   );
 };

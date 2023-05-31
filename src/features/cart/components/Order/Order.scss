@@ -2,10 +2,12 @@
 @import "@Styles/_mixins.scss";
 
 .order {
-  padding: 2rem 1rem;
+  padding: 2rem 2rem 2rem 1rem;
   width: 41%;
   border: 1px solid $color-gray-light;
   border-radius: 12px;
+  max-height: 780px;
+  overflow-y: auto;
 
   &__title {
     @include text-overflow-hide;
@@ -21,10 +23,7 @@
   }
 
   &__list {
-    padding-right: 1rem;
     margin-bottom: 2.5rem;
-    max-height: 400px;
-    overflow-y: auto;
   }
 
   &__subtotal {
@@ -45,31 +44,46 @@
 
   &__promo {
     margin-bottom: 2.5rem;
-    padding: 0.75rem 1rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: $color-gray-lightest;
-    border: 1px solid $color-gray-light;
-    border-radius: 12px;
+    position: relative;
   }
 
   &__code {
-    width: calc(100% - 100px);
+    width: 100%;
+    position: relative;
 
     input {
+      padding: 1rem 110px 1rem 1.2rem;
       width: 100%;
       font-family: $font-primary;
       font-size: 0.875rem;
       line-height: 1.185rem;
-      color: $color-gray;
-      border: none;
+      color: $color-black;
+      border: 1px solid $color-gray-light;
+      border-radius: 12px;
       outline: none;
-      background-color: transparent;
+      background: $color-gray-lightest;
+
+      &:focus {
+        border: 1px solid $color-green;
+      }
+
+      &:disabled {
+        background-color: $color-gray-light;
+        opacity: 0.7;
+      }
+
+      &::placeholder {
+        color: $color-gray;
+      }
     }
   }
 
   &__btn {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    z-index: 1;
+    transform: translateY(-50%);
     width: 95px;
     font-family: $font-secondary;
     @include font(700, 0.95rem, 1.375rem);
@@ -82,12 +96,29 @@
     &:hover {
       color: $color-green;
     }
+
+    &:disabled {
+      color: $color-gray;
+      opacity: 0.7;
+      cursor: auto;
+    }
+  }
+
+  &__message {
+    font-size: 0.75rem;
+    line-height: 1rem;
+    color: $color-green;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1;
   }
 
   &__total {
     display: flex;
     justify-content: space-between;
     position: relative;
+    margin-bottom: 0.5rem;
   }
 }
 
@@ -134,12 +165,16 @@
       margin-bottom: 1.5rem;
     }
 
-    &__list {
-      max-height: 420px;
+    &__code input {
+      padding: 0.5rem 90px 0.5rem 1rem;
+      font-size: 0.75rem;
     }
 
-    &__promo {
-      padding: 0.5rem 0.75rem;
+    &__btn {
+      font-size: 0.75rem;
+      line-height: 1rem;
+      top: 60%;
+      right: 0;
     }
   }
   .total__text {
