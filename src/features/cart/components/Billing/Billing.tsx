@@ -1,7 +1,7 @@
 import React, { FC, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Formik, Form, Field, FormikHelpers, ErrorMessage } from "formik";
-import { Persist } from "formik-persist";
+import { PersistFormikValues } from "formik-persist-values";
 import { Country } from "country-state-city";
 import { toast } from "react-toastify";
 
@@ -58,6 +58,7 @@ const Billing: FC = () => {
       setCountryCode("");
       dispatch(clearCart());
       action.resetForm();
+      localStorage.removeItem("userData");
       successConfirm();
     } else {
       action.setErrors({ country: "Choose country from list" });
@@ -165,7 +166,8 @@ const Billing: FC = () => {
               style={EBtnStyle.BIG}
               disabled={!dirty || !isValid}
             />
-            <Persist name="user-data" debounce={0} />
+            {/* <Persist name="user-data" debounce={0} /> */}
+            <PersistFormikValues name="userData" persistInvalid={true} />
           </Form>
         )}
       </Formik>
