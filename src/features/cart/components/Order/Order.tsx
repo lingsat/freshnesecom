@@ -1,31 +1,42 @@
-import React, { ChangeEvent, FC, useState } from "react";
+import React, { ChangeEvent, FC, useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
 
+import { AppDispatch, RootState } from "@Store/store";
+import { fetchCartProducts, ICartState, selectCart } from "@Cart/cartSlice";
 import { getSubtotalPrice, getTotalPrice } from "@/utils/cart";
 import { getDeliveryDay } from "@/utils/date";
-import { ICartItem } from "@Cart/types/cart";
 import { PROMO_CODE, TAX_VALUE } from "@/constants";
 import CartItem from "@CartComponents/CartItem/CartItem";
+import LoadinSpinner from "@CommonComponents/LoadingSpinner/LoadingSpinner";
 
 import "./Order.scss";
 
-interface OrderProps {
-  cartProducts: ICartItem[];
-}
+const Order: FC = () => {
+  const dispatch = useDispatch<AppDispatch>();
 
-const Order: FC<OrderProps> = ({ cartProducts }) => {
+  const { cart, cartProducts, isCartLoading, cartError } = useSelector<
+    RootState,
+    ICartState
+  >(selectCart);
+  console.log();
+
   const [promoCode, setPromoCode] = useState<string>("");
   const [isPromoAplied, setIsPromoAplied] = useState<boolean>(false);
 
-  const subTotalPrice = getSubtotalPrice(cartProducts);
+  const subTotalPrice = getSubtotalPrice(cart);
   const taxTotalPrice = ((+subTotalPrice * TAX_VALUE) / 100).toFixed(2);
   const totalOrderPrice = getTotalPrice(subTotalPrice, isPromoAplied);
-  const deliveryDate = getDeliveryDay(cartProducts);
+  const deliveryDate = getDeliveryDay(cart);
 
   const notifyInvalidPromo = () => toast('Invalid Promo Code. Try - "promo"');
 
   const handlePromoCodeChange = (event: ChangeEvent<HTMLInputElement>) => {
     setPromoCode(event.target.value);
+  };
+
+  const getCurrentCartData = (id: string) => {
+    return cart.find((item) => item.productId === id);
   };
 
   const handlePromoCodeSubmit = () => {
@@ -37,6 +48,20 @@ const Order: FC<OrderProps> = ({ cartProducts }) => {
     setPromoCode("");
   };
 
+  useEffect(() => {
+    if (cart.length) {
+      dispatch(fetchCartProducts(cart));
+    }
+  }, []);
+
+  if (isCartLoading) {
+    return <LoadinSpinner />;
+  }
+
+  if (!cartProducts || cartError) {
+    return <p className="order__error">Products not Found!</p>;
+  }
+
   return (
     <div className="order">
       <h3 className="order__title">Order Summary</h3>
@@ -44,9 +69,18 @@ const Order: FC<OrderProps> = ({ cartProducts }) => {
         Price can change depending on shipping method and taxes of your state.
       </p>
       <ul className="order__list">
-        {cartProducts.map((cartItem) => (
-          <CartItem key={`cart-${cartItem.product.id}`} cartItem={cartItem} />
-        ))}
+        {cartProducts.map((product) => {
+          const currentCartData = getCurrentCartData(product.id);
+          if (currentCartData) {
+            return (
+              <CartItem
+                key={`cart-${product.id}`}
+                cartProduct={product}
+                cartData={currentCartData}
+              />
+            );
+          }
+        })}
       </ul>
       <div className="order__subtotal">
         <h4>Subtotal</h4>

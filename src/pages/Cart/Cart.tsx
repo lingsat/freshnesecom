@@ -39,7 +39,7 @@ const Cart = () => {
 
   return (
     <div className="cart">
-      <Order cartProducts={cart} />
+      <Order />
       <Billing />
     </div>
   );

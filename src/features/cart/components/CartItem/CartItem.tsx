@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { AppDispatch } from "@Store/store";
 import { removeSingleCartItem, setCartItemCount } from "@Cart/cartSlice";
 import { ERoutes } from "@/types/routes";
-import { ECount } from "@Products/types/product";
+import { ECount, IProduct } from "@Products/types/product";
 import { ICartItem } from "@Cart/types/cart";
 import Stars from "@CommonComponents/Stars/Stars";
 import Count from "@CommonComponents/Count/Count";
@@ -16,11 +16,12 @@ import close from "@Images/close.svg";
 import "./CartItem.scss";
 
 interface CartItemProps {
-  cartItem: ICartItem;
+  cartProduct: IProduct;
+  cartData: ICartItem;
 }
 
-const CartItem: FC<CartItemProps> = ({ cartItem }) => {
-  const { product, amount, category } = cartItem;
+const CartItem: FC<CartItemProps> = ({ cartProduct, cartData }) => {
+  const { productId, amount, category } = cartData;
 
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
