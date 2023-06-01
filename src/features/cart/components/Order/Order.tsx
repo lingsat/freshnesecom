@@ -26,7 +26,10 @@ const Order: FC = () => {
 
   const subTotalPrice = getSubtotalPrice(cartProducts, cart);
   const taxTotalPrice = ((+subTotalPrice * TAX_VALUE) / 100).toFixed(2);
-  const totalOrderPrice = getTotalPrice(subTotalPrice, isPromoAplied);
+  const [totalOrderPrice, promoPriceDiscount] = getTotalPrice(
+    subTotalPrice,
+    isPromoAplied
+  );
   const deliveryDate = getDeliveryDay(cartProducts);
 
   const notifyInvalidPromo = () => toast('Invalid Promo Code. Try - "promo"');
@@ -83,14 +86,14 @@ const Order: FC = () => {
           }
         })}
       </ul>
-      <div className="order__subtotal">
+      <div className="order__row">
         <h4>Subtotal</h4>
         <p>{subTotalPrice} USD</p>
       </div>
-      <div className="order__subtotal">
+      <div className="order__row">
         <h4>Tax</h4>
         <p>
-          {TAX_VALUE}% - {taxTotalPrice} USD
+          +{TAX_VALUE}% + {taxTotalPrice} USD
         </p>
       </div>
       <form className="order__promo" onSubmit={handlePromoCodeSubmit}>
@@ -107,12 +110,18 @@ const Order: FC = () => {
           </button>
         </label>
         {isPromoAplied && (
-          <p className="order__message">
-            Promo code successfully aplied! - {PROMO_CODE_DISCOUNT}%
-          </p>
+          <p className="order__message">Promo code successfully aplied!</p>
         )}
       </form>
       <div className="order__total">
+        {isPromoAplied && (
+          <div className="order__row order__row--promo">
+            <h4>Promo</h4>
+            <p>
+              -{PROMO_CODE_DISCOUNT}% - {promoPriceDiscount} USD
+            </p>
+          </div>
+        )}
         <div>
           <h4 className="total__title">Total Order</h4>
           <p className="total__text">

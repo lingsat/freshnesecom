@@ -59,12 +59,15 @@ export const getSubtotalPrice = (
 export const getTotalPrice = (
   price: string,
   isPromoAplied: boolean
-): string => {
+): [string, string] => {
   const taxTotalPrice = (+price * TAX_VALUE) / 100;
+  const promoPriceDiscount = (+price * PROMO_CODE_DISCOUNT) / 100;
+  let totalPrice = 0;
   if (isPromoAplied) {
-    const discount = (+price * PROMO_CODE_DISCOUNT) / 100;
-    return (+price - discount + taxTotalPrice).toFixed(2);
+    totalPrice = +price - promoPriceDiscount + taxTotalPrice;
   } else {
-    return (+price + taxTotalPrice).toFixed(2);
+    totalPrice = +price + taxTotalPrice;
   }
+
+  return [totalPrice.toFixed(2), promoPriceDiscount.toFixed()];
 };
