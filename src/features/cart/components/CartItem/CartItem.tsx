@@ -25,6 +25,7 @@ const CartItem: FC<CartItemProps> = ({ cartProduct, cartData }) => {
 
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
+
   const [countCategory, setCountCategory] = useState<string>(category);
   const [count, setCount] = useState<number>(amount);
 

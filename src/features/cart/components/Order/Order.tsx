@@ -1,12 +1,12 @@
 import React, { ChangeEvent, FC, FormEvent, useEffect, useState } from "react";
-import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 import { AppDispatch, RootState } from "@Store/store";
 import { fetchCartProducts, ICartState, selectCart } from "@Cart/cartSlice";
 import { getSubtotalPrice, getTotalPrice } from "@/utils/cart";
 import { getDeliveryDay } from "@/utils/date";
-import { PROMO_CODE, TAX_VALUE } from "@/constants";
+import { PROMO_CODE, PROMO_CODE_DISCOUNT, TAX_VALUE } from "@/constants";
 import CartItem from "@CartComponents/CartItem/CartItem";
 import LoadinSpinner from "@CommonComponents/LoadingSpinner/LoadingSpinner";
 
@@ -60,7 +60,7 @@ const Order: FC = () => {
   }
 
   if (!cartProducts || cartError) {
-    return <p className="order__error">Products not Found!</p>;
+    return <p className="order__error">Products not Found! Refresh page!</p>;
   }
 
   return (
@@ -107,7 +107,9 @@ const Order: FC = () => {
           </button>
         </label>
         {isPromoAplied && (
-          <p className="order__message">Promo code successfully aplied!</p>
+          <p className="order__message">
+            Promo code successfully aplied! - {PROMO_CODE_DISCOUNT}%
+          </p>
         )}
       </form>
       <div className="order__total">
