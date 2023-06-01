@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, useEffect, useState } from "react";
+import React, { ChangeEvent, FC, FormEvent, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -39,7 +39,8 @@ const Order: FC = () => {
     return cart.find((item) => item.productId === id);
   };
 
-  const handlePromoCodeSubmit = () => {
+  const handlePromoCodeSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     if (promoCode === PROMO_CODE) {
       setIsPromoAplied(true);
     } else {
