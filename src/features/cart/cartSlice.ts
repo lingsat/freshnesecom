@@ -7,8 +7,13 @@ import {
 import axios from "axios";
 
 import { RootState } from "@Store/store";
-import { ICartItem } from "@Cart/types/cart";
+import { ICartData, ICartItem } from "@Cart/types/cart";
 import { IProduct } from "@Products/types/product";
+import {
+  addProdToCart,
+  getCartAfterRemove,
+  getUpdatedCart,
+} from "@/utils/cart";
 
 export interface ICartState {
   cart: ICartItem[];
@@ -43,29 +48,34 @@ export const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    addToCart(state, action: PayloadAction<ICartItem>) {
-      state.cart = [action.payload, ...state.cart];
+    addToCart(state, action: PayloadAction<ICartData>) {
+      state.cart = addProdToCart(state.cart, action.payload);
     },
-    setCartItemCount(
+    changeCartItem(
       state,
-      action: PayloadAction<{
-        productId: string;
-        amount: number;
-        category: string;
-      }>
+      action: PayloadAction<{ newCartData: ICartData; oldCategory: string }>
     ) {
-      state.cart = state.cart.map((item) => {
-        const { productId } = action.payload;
-        return item.productId === productId ? action.payload : item;
-      });
+      const { newCartData, oldCategory } = action.payload;
+      state.cart = getUpdatedCart(state.cart, newCartData, oldCategory);
     },
-    removeSingleCartItem(state, action: PayloadAction<string>) {
-      state.cart = state.cart.filter(
-        (item) => item.productId !== action.payload
+    removeSingleCartItem(
+      state,
+      action: PayloadAction<{ productId: string; category: string }>
+    ) {
+      const { productId, category } = action.payload;
+
+      const [updatedCart, removeCartProduct] = getCartAfterRemove(
+        state.cart,
+        productId,
+        category
       );
-      state.cartProducts = state.cartProducts.filter(
-        (product) => product.id !== action.payload
-      );
+
+      state.cart = updatedCart;
+      if (removeCartProduct) {
+        state.cartProducts = state.cartProducts.filter(
+          (product) => product.id !== productId
+        );
+      }
     },
     clearCart(state) {
       state.cart = [];
@@ -88,7 +98,7 @@ export const cartSlice = createSlice({
   },
 });
 
-export const { addToCart, removeSingleCartItem, setCartItemCount, clearCart } =
+export const { addToCart, removeSingleCartItem, changeCartItem, clearCart } =
   cartSlice.actions;
 
 export const selectCart = (state: RootState) => state.cart;

@@ -4,7 +4,12 @@ import { toast } from "react-toastify";
 
 import { AppDispatch, RootState } from "@Store/store";
 import { fetchCartProducts, ICartState, selectCart } from "@Cart/cartSlice";
-import { getSubtotalPrice, getTotalPrice } from "@/utils/cart";
+import {
+  getCartItemWithProduct,
+  getInvalidCategories,
+  getSubtotalPrice,
+  getTotalPrice,
+} from "@/utils/cart";
 import { getDeliveryDay } from "@/utils/date";
 import { PROMO_CODE, PROMO_CODE_DISCOUNT, TAX_VALUE } from "@/constants";
 import CartItem from "@CartComponents/CartItem/CartItem";
@@ -19,12 +24,13 @@ const Order: FC = () => {
     RootState,
     ICartState
   >(selectCart);
-  console.log();
 
   const [promoCode, setPromoCode] = useState<string>("");
   const [isPromoAplied, setIsPromoAplied] = useState<boolean>(false);
 
-  const subTotalPrice = getSubtotalPrice(cartProducts, cart);
+  const cartItemsWithProducts = getCartItemWithProduct(cart, cartProducts);
+
+  const subTotalPrice = getSubtotalPrice(cartItemsWithProducts);
   const taxTotalPrice = ((+subTotalPrice * TAX_VALUE) / 100).toFixed(2);
   const [totalOrderPrice, promoPriceDiscount] = getTotalPrice(
     subTotalPrice,
@@ -36,10 +42,6 @@ const Order: FC = () => {
 
   const handlePromoCodeChange = (event: ChangeEvent<HTMLInputElement>) => {
     setPromoCode(event.target.value);
-  };
-
-  const getCurrentCartData = (id: string) => {
-    return cart.find((item) => item.productId === id);
   };
 
   const handlePromoCodeSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -73,18 +75,13 @@ const Order: FC = () => {
         Price can change depending on shipping method and taxes of your state.
       </p>
       <ul className="order__list">
-        {cartProducts.map((product) => {
-          const currentCartData = getCurrentCartData(product.id);
-          if (currentCartData) {
-            return (
-              <CartItem
-                key={`cart-${product.id}`}
-                cartProduct={product}
-                cartData={currentCartData}
-              />
-            );
-          }
-        })}
+        {cartItemsWithProducts.map((itemWithProduct, index) => (
+          <CartItem
+            key={`cart-${itemWithProduct.product.id}-${index}`}
+            itemWithProduct={itemWithProduct}
+            invalidCategories={getInvalidCategories(cart, itemWithProduct)}
+          />
+        ))}
       </ul>
       <div className="order__row">
         <h4>Subtotal</h4>

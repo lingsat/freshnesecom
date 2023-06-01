@@ -1,4 +1,5 @@
 import React, { ChangeEvent, FC, useState } from "react";
+import { toast } from "react-toastify";
 
 import { getCountCategories, getValidPrice } from "@/utils/products";
 import { ECount, IProduct } from "@Products/types/product";
@@ -16,6 +17,7 @@ interface CountProps {
   setCount: React.Dispatch<React.SetStateAction<number>>;
   isCountInvalid: boolean;
   disabled?: boolean;
+  invalidCategories?: string[];
 }
 
 const Count: FC<CountProps> = ({
@@ -26,6 +28,7 @@ const Count: FC<CountProps> = ({
   setCount,
   isCountInvalid,
   disabled = false,
+  invalidCategories = [],
 }) => {
   const [maxError, setMaxError] = useState<boolean>(false);
   const [showMenu, setShowMenu] = useState<boolean>(false);
@@ -66,9 +69,17 @@ const Count: FC<CountProps> = ({
     setMaxError(false);
   };
 
+  const notifyInvalidCategory = (category: string) =>
+    toast(`Count category "${category}" already exist in cart!`);
+
   const handleSetCountCategory = (newCountCategory: string) => {
-    setCountCategory(newCountCategory);
-    setCount(ECount.MIN_COUNT_VALUE);
+    if (invalidCategories.includes(newCountCategory)) {
+      notifyInvalidCategory(newCountCategory);
+    } else {
+      setCountCategory(newCountCategory);
+      setCount(ECount.MIN_COUNT_VALUE);
+    }
+
     handleHideMenu();
   };
 
