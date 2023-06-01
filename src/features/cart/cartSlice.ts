@@ -49,14 +49,14 @@ export const cartSlice = createSlice({
     setCartItemCount(
       state,
       action: PayloadAction<{
-        prodId: string;
+        productId: string;
         amount: number;
         category: string;
       }>
     ) {
       state.cart = state.cart.map((item) => {
-        const { prodId, amount, category } = action.payload;
-        return item.productId === prodId ? { ...item, amount, category } : item;
+        const { productId } = action.payload;
+        return item.productId === productId ? action.payload : item;
       });
     },
     removeSingleCartItem(state, action: PayloadAction<string>) {

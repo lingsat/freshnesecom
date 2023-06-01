@@ -39,11 +39,11 @@ const ProductInfo: FC<ProductInfoProps> = ({ product }) => {
   const oldPrice = getOldPrice(+currentPrice, product.discount);
   const datalist = getProductDataList(product, countCategory);
 
-  const isProductInCart = cart.find((item) => item.product.id === product.id);
+  const isProductInCart = cart.find((item) => item.productId === product.id);
 
   const handleAddToCart = () => {
     const newCartItem: ICartItem = {
-      product,
+      productId: product.id,
       amount: count,
       category: countCategory,
     };

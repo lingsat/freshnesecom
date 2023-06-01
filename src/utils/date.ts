@@ -1,10 +1,10 @@
-import { ICartItem } from "@Cart/types/cart";
+import { IProduct } from "@Products/types/product";
 
-export const getDeliveryDay = (cartProducts: ICartItem[]): string => {
+export const getDeliveryDay = (cartProducts: IProduct[]): string => {
   let maxDay = 0;
-  cartProducts.forEach((item) => {
-    if (item.product.deliveryTime > maxDay) {
-      maxDay = item.product.deliveryTime;
+  cartProducts.forEach((product) => {
+    if (product.deliveryTime > maxDay) {
+      maxDay = product.deliveryTime;
     }
   });
 

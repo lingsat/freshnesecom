@@ -29,21 +29,21 @@ const CartItem: FC<CartItemProps> = ({ cartProduct, cartData }) => {
   const [count, setCount] = useState<number>(amount);
 
   const isCountInvalid =
-    count > product.stock[countCategory] || count < ECount.MIN_COUNT_VALUE;
-  const priceSummary = (product.price[category] * count).toFixed(2);
+    count > cartProduct.stock[countCategory] || count < ECount.MIN_COUNT_VALUE;
+  const priceSummary = (cartProduct.price[category] * count).toFixed(2);
 
   const handleRemoveCartItem = () => {
-    dispatch(removeSingleCartItem(product.id));
+    dispatch(removeSingleCartItem(cartProduct.id));
   };
 
   const handleOpenProduct = () => {
-    navigate(`/${ERoutes.PRODUCTS_LIST}/${product.id}`);
+    navigate(`/${ERoutes.PRODUCTS_LIST}/${cartProduct.id}`);
   };
 
   useEffect(() => {
     dispatch(
       setCartItemCount({
-        prodId: product.id,
+        productId,
         amount: count,
         category: countCategory,
       })
@@ -54,8 +54,8 @@ const CartItem: FC<CartItemProps> = ({ cartProduct, cartData }) => {
     <li className="cart-item">
       <div className="cart-item__left">
         <img
-          src={product.images[0]}
-          alt={product.title}
+          src={cartProduct.images[0]}
+          alt={cartProduct.title}
           className="cart-item__image"
           onClick={handleOpenProduct}
         />
@@ -72,23 +72,23 @@ const CartItem: FC<CartItemProps> = ({ cartProduct, cartData }) => {
       </div>
       <div className="cart-item__right">
         <h3 className="cart-item__title" onClick={handleOpenProduct}>
-          {product.title}
+          {cartProduct.title}
         </h3>
         <ul className="cart-item__list">
           <li className="cart-item__item">
             <p className="cart-item__category">Brand:</p>
-            <p className="cart-item__value">{product.brand}</p>
+            <p className="cart-item__value">{cartProduct.brand}</p>
           </li>
           <li className="cart-item__item">
             <p className="cart-item__category">Freshness:</p>
-            <p className="cart-item__value">{product.freshness}</p>
+            <p className="cart-item__value">{cartProduct.freshness}</p>
           </li>
         </ul>
-        <Stars checkedStars={product.stars.toString()} />
+        <Stars checkedStars={cartProduct.stars.toString()} />
         <div className="cart-item__controls">
           <p className="cart-item__price">{priceSummary} USD</p>
           <Count
-            product={product}
+            product={cartProduct}
             countCategory={countCategory}
             setCountCategory={setCountCategory}
             count={count}

@@ -24,10 +24,10 @@ const Order: FC = () => {
   const [promoCode, setPromoCode] = useState<string>("");
   const [isPromoAplied, setIsPromoAplied] = useState<boolean>(false);
 
-  const subTotalPrice = getSubtotalPrice(cart);
+  const subTotalPrice = getSubtotalPrice(cartProducts, cart);
   const taxTotalPrice = ((+subTotalPrice * TAX_VALUE) / 100).toFixed(2);
   const totalOrderPrice = getTotalPrice(subTotalPrice, isPromoAplied);
-  const deliveryDate = getDeliveryDay(cart);
+  const deliveryDate = getDeliveryDay(cartProducts);
 
   const notifyInvalidPromo = () => toast('Invalid Promo Code. Try - "promo"');
 
