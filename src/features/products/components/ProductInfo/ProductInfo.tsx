@@ -1,10 +1,14 @@
 import React, { FC, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
-import { AppDispatch } from "@Store/store";
-import { addToCart } from "@Cart/cartSlice";
-import { getOldPrice, getProductDataList } from "@/utils/products";
+import { AppDispatch, RootState } from "@Store/store";
+import { addToCart, ICartState, selectCart } from "@Cart/cartSlice";
+import {
+  getOldPrice,
+  getProductDataList,
+  getProductMaxCount,
+} from "@/utils/products";
 import { ECount, IProduct } from "@Products/types/product";
 import { ICartData } from "@Cart/types/cart";
 import Button, {
@@ -24,6 +28,7 @@ interface ProductInfoProps {
 
 const ProductInfo: FC<ProductInfoProps> = ({ product }) => {
   const dispatch = useDispatch<AppDispatch>();
+  const { cart } = useSelector<RootState, ICartState>(selectCart);
 
   const [countCategory, setCountCategory] = useState<string>(
     product.mainCountCategory
@@ -36,7 +41,10 @@ const ProductInfo: FC<ProductInfoProps> = ({ product }) => {
   const oldPrice = getOldPrice(+currentPrice, product.discount);
   const datalist = getProductDataList(product, countCategory);
 
-  const notifyAddToCart = () => toast("Product added to Cart!");
+  const maxCount = getProductMaxCount(product, cart, countCategory);
+
+  const notifyAddToCart = () =>
+    toast.success(`${count} "${countCategory}" added to Cart!`);
 
   const handleAddToCart = () => {
     const newCartItem: ICartData = {
@@ -48,6 +56,7 @@ const ProductInfo: FC<ProductInfoProps> = ({ product }) => {
     };
 
     dispatch(addToCart(newCartItem));
+    setCount(1);
     notifyAddToCart();
   };
 
@@ -82,14 +91,19 @@ const ProductInfo: FC<ProductInfoProps> = ({ product }) => {
           count={count}
           setCount={setCount}
           isCountInvalid={isCountInvalid}
+          maxCount={maxCount}
+          disabled={!maxCount}
         />
         <Button
           image={EBtnImage.PLUS}
           imagePosition={EBtnImagePos.LEFT}
           text="Add to cart"
-          disabled={isCountInvalid}
+          disabled={isCountInvalid || !maxCount}
           onCLick={handleAddToCart}
         />
+        {!maxCount && (
+          <p className="product-info__message">{`All ${product.stock[countCategory]} "${countCategory}" already in Cart!"`}</p>
+        )}
       </div>
       <Button
         style={EBtnStyle.SECONDARY}

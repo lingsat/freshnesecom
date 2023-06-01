@@ -1,6 +1,7 @@
 import { IFilter } from "@Products/productsSlice";
 import { IProduct, ICategory, ESort } from "@Products/types/product";
 import { productCategories } from "@/mock/productCategories";
+import { ICartItem } from "@/features/cart/types/cart";
 
 const getSortedProducts = (
   productsArr: IProduct[],
@@ -185,6 +186,27 @@ export const getProductDataList = (
       value,
     };
   });
+};
+
+export const getProductMaxCount = (
+  product: IProduct,
+  cart: ICartItem[],
+  countCategory: string
+): number => {
+  const productInCart = cart.find(
+    (cartItem) => cartItem.productId === product.id
+  );
+
+  if (productInCart) {
+    const countInCart = productInCart.countArr.reduce((acc, countItem) => {
+      return countItem.category === countCategory
+        ? acc + countItem.amount
+        : acc;
+    }, 0);
+    return product.stock[countCategory] - countInCart;
+  } else {
+    return product.stock[countCategory];
+  }
 };
 
 export const getSortedImages = (imagesArr: string[], index: number) => () => {

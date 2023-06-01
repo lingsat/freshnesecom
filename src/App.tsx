@@ -40,7 +40,7 @@ const App = () => {
         </Routes>
       </main>
       {pathname !== `/${ERoutes.CART}` && <Footer />}
-      <ToastContainer position="bottom-left" autoClose={MESSAGES_TIMER} />
+      <ToastContainer position="bottom-center" autoClose={MESSAGES_TIMER} />
     </div>
   );
 };

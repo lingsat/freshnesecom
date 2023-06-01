@@ -24,6 +24,10 @@ const Header = () => {
 
   const categoriesObj = getCategoriesObj(products);
   const categories = Object.keys(categoriesObj);
+  const cartCount = cart.reduce(
+    (acc, cartItem) => acc + cartItem.countArr.length,
+    0
+  );
 
   const toggleShowCategories = () => {
     setShowCategories((prev) => !prev);
@@ -70,7 +74,7 @@ const Header = () => {
           </button>
           <Link to="/cart" className="controls__btn">
             <img src={cartIcon} alt="Cart" />
-            {!!cart.length && <span>{cart.length}</span>}
+            {!!cartCount && <span>{cartCount}</span>}
           </Link>
         </div>
       </div>

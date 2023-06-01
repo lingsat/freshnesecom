@@ -103,6 +103,7 @@ const CartItem: FC<CartItemProps> = ({
             setCount={setLocalCount}
             isCountInvalid={isCountInvalid}
             invalidCategories={invalidCategories}
+            maxCount={product.stock[countCategory]}
           />
         </div>
       </div>

@@ -42,9 +42,9 @@ const Billing: FC = () => {
   const countries = Country.getAllCountries();
 
   const notifyInvalidCountry = () =>
-    toast("Invalid country name - choose from list");
+    toast.warn("Invalid country name - choose from list");
 
-  const successConfirm = () => toast("Order completed successfully!");
+  const successConfirm = () => toast.success("Order completed successfully!");
 
   const handleFormSubmit = (
     values: typeof initialValues,

@@ -18,6 +18,7 @@ interface CountProps {
   isCountInvalid: boolean;
   disabled?: boolean;
   invalidCategories?: string[];
+  maxCount: number;
 }
 
 const Count: FC<CountProps> = ({
@@ -29,12 +30,12 @@ const Count: FC<CountProps> = ({
   isCountInvalid,
   disabled = false,
   invalidCategories = [],
+  maxCount,
 }) => {
   const [maxError, setMaxError] = useState<boolean>(false);
   const [showMenu, setShowMenu] = useState<boolean>(false);
 
   const countCategoryList = getCountCategories(product.price);
-  const maxCountValue = product.stock[countCategory];
   const isCountInvalidMax = isCountInvalid || maxError;
   const isCountCategorySingle = countCategoryList.length === 1;
 
@@ -47,18 +48,36 @@ const Count: FC<CountProps> = ({
   };
 
   const increaseCount = () => {
-    setCount((prev) => (prev >= maxCountValue ? prev : prev + 1));
+    setCount((prev) => {
+      if (prev >= maxCount) {
+        setMaxError(true);
+        return prev;
+      } else {
+        setMaxError(false);
+        return prev + 1;
+      }
+    });
   };
 
   const decreaseCount = () => {
-    setCount((prev) => (prev <= 0 ? prev : prev - 1));
+    setCount((prev) => {
+      if (prev <= 0) {
+        setMaxError(true);
+        return prev;
+      } else {
+        setMaxError(false);
+        return prev - 1;
+      }
+    });
   };
 
   const handleChangeCount = (event: ChangeEvent<HTMLInputElement>) => {
-    if (+event.target.value > maxCountValue) {
+    if (+event.target.value > maxCount) {
       setMaxError(true);
+    } else {
+      setMaxError(false);
     }
-    const newValidCount = getValidPrice(event.target.value, maxCountValue);
+    const newValidCount = getValidPrice(event.target.value, maxCount);
     setCount(newValidCount);
   };
 
@@ -70,7 +89,7 @@ const Count: FC<CountProps> = ({
   };
 
   const notifyInvalidCategory = (category: string) =>
-    toast(`Count category "${category}" already exist in cart!`);
+    toast.warn(`Such product with "${category}" units already exist in cart!`);
 
   const handleSetCountCategory = (newCountCategory: string) => {
     if (invalidCategories.includes(newCountCategory)) {
@@ -107,7 +126,7 @@ const Count: FC<CountProps> = ({
         </button>
       </label>
       {isCountInvalidMax && (
-        <p className="count__message">{`Min ${ECount.MIN_COUNT_VALUE} / Max ${maxCountValue} ${countCategory}.`}</p>
+        <p className="count__message">{`Min ${ECount.MIN_COUNT_VALUE} / Left ${maxCount} ${countCategory}.`}</p>
       )}
       <div className="count__selector">
         {isCountCategorySingle ? (
