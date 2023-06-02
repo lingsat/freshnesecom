@@ -5,6 +5,7 @@ import {
   SerializedError,
 } from "@reduxjs/toolkit";
 import axios from "axios";
+import axiosRetry from "axios-retry";
 
 import { RootState } from "@Store/store";
 import { ICartData, ICartItem } from "@Cart/types/cart";
@@ -14,6 +15,19 @@ import {
   getUpdatedCart,
   getCartAfterRemove,
 } from "@Cart/utils/store";
+import {
+  AXIOR_RETRY_COUNT,
+  AXIOR_RETRY_DELAY,
+  AXIOR_RETRY_ERROR,
+} from "@/constants";
+
+axiosRetry(axios, {
+  retries: AXIOR_RETRY_COUNT,
+  retryDelay: (retryCount) => retryCount * AXIOR_RETRY_DELAY,
+  retryCondition: (error) => {
+    return error.response?.status === AXIOR_RETRY_ERROR;
+  },
+});
 
 export interface ICartState {
   cart: ICartItem[];
