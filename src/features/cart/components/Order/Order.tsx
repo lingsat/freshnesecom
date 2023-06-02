@@ -57,7 +57,7 @@ const Order: FC = () => {
     }
   }, []);
 
-  if (isCartLoading) {
+  if (isCartLoading && cart.length !== cartProducts.length) {
     return <LoadinSpinner />;
   }
 
