@@ -97,9 +97,9 @@ const CartItem: FC<CartItemProps> = ({
           <p className="cart-item__price">{priceSummary} USD</p>
           <Count
             product={product}
-            countCategory={countCategory}
+            countCategory={count.category}
             setCountCategory={setCountCategory}
-            count={localCount}
+            count={count.amount}
             setCount={setLocalCount}
             isCountInvalid={isCountInvalid}
             invalidCategories={invalidCategories}
