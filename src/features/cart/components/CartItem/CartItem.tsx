@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
@@ -29,13 +29,12 @@ const CartItem: FC<CartItemProps> = ({
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
-  const [countCategory, setCountCategory] = useState<string>(count.category);
-  const [localCount, setLocalCount] = useState<number>(count.amount);
-
   const isCountInvalid =
-    localCount > product.stock[countCategory] ||
-    localCount < ECount.MIN_COUNT_VALUE;
-  const priceSummary = (product.price[countCategory] * localCount).toFixed(2);
+    count.amount > product.stock[count.category] ||
+    count.amount < ECount.MIN_COUNT_VALUE;
+  const priceSummary = (product.price[count.category] * count.amount).toFixed(
+    2
+  );
 
   const handleRemoveCartItem = () => {
     dispatch(
@@ -47,16 +46,27 @@ const CartItem: FC<CartItemProps> = ({
     navigate(`/${ERoutes.PRODUCTS_LIST}/${product.id}`);
   };
 
-  useEffect(() => {
+  const handleChangeCategory = (newCategory: string) => {
     const newCartData = {
       productId: product.id,
       count: {
-        amount: localCount,
-        category: countCategory,
+        amount: count.amount,
+        category: newCategory,
       },
     };
     dispatch(changeCartItem({ newCartData, oldCategory: count.category }));
-  }, [localCount, countCategory]);
+  };
+
+  const handleChangeAmount = (newAmount: number) => {
+    const newCartData = {
+      productId: product.id,
+      count: {
+        amount: newAmount,
+        category: count.category,
+      },
+    };
+    dispatch(changeCartItem({ newCartData, oldCategory: count.category }));
+  };
 
   return (
     <li className="cart-item">
@@ -98,12 +108,12 @@ const CartItem: FC<CartItemProps> = ({
           <Count
             product={product}
             countCategory={count.category}
-            setCountCategory={setCountCategory}
+            handleChangeCategory={handleChangeCategory}
             count={count.amount}
-            setCount={setLocalCount}
+            handleChangeAmount={handleChangeAmount}
             isCountInvalid={isCountInvalid}
             invalidCategories={invalidCategories}
-            maxCount={product.stock[countCategory]}
+            maxCount={product.stock[count.category]}
           />
         </div>
       </div>

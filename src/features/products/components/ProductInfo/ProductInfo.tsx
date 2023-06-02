@@ -44,6 +44,14 @@ const ProductInfo: FC<ProductInfoProps> = ({ product }) => {
   const notifyAddToCart = () =>
     toast.success(`${count} "${countCategory}" added to Cart!`);
 
+  const handleChangeCategory = (newCategory: string) => {
+    setCountCategory(newCategory);
+  };
+
+  const handleChangeAmount = (newAmount: number) => {
+    setCount(newAmount);
+  };
+
   const handleAddToCart = () => {
     const newCartItem: ICartData = {
       productId: product.id,
@@ -85,9 +93,9 @@ const ProductInfo: FC<ProductInfoProps> = ({ product }) => {
         <Count
           product={product}
           countCategory={countCategory}
-          setCountCategory={setCountCategory}
+          handleChangeCategory={handleChangeCategory}
           count={count}
-          setCount={setCount}
+          handleChangeAmount={handleChangeAmount}
           isCountInvalid={isCountInvalid}
           maxCount={maxCount}
           disabled={!maxCount}

@@ -12,9 +12,9 @@ import "./Count.scss";
 interface CountProps {
   product: IProduct;
   countCategory: string;
-  setCountCategory: React.Dispatch<React.SetStateAction<string>>;
+  handleChangeCategory: (newCategory: string) => void;
   count: number;
-  setCount: React.Dispatch<React.SetStateAction<number>>;
+  handleChangeAmount: (newCategory: number) => void;
   isCountInvalid: boolean;
   disabled?: boolean;
   invalidCategories?: string[];
@@ -24,9 +24,9 @@ interface CountProps {
 const Count: FC<CountProps> = ({
   product,
   countCategory,
-  setCountCategory,
+  handleChangeCategory,
   count,
-  setCount,
+  handleChangeAmount,
   isCountInvalid,
   disabled = false,
   invalidCategories = [],
@@ -48,27 +48,27 @@ const Count: FC<CountProps> = ({
   };
 
   const increaseCount = () => {
-    setCount((prev) => {
-      if (prev >= maxCount) {
-        setMaxError(true);
-        return prev;
-      } else {
-        setMaxError(false);
-        return prev + 1;
-      }
-    });
+    // setCount((prev) => {
+    //   if (prev >= maxCount) {
+    //     setMaxError(true);
+    //     return prev;
+    //   } else {
+    //     setMaxError(false);
+    //     return prev + 1;
+    //   }
+    // });
   };
 
   const decreaseCount = () => {
-    setCount((prev) => {
-      if (prev <= 0) {
-        setMaxError(true);
-        return prev;
-      } else {
-        setMaxError(false);
-        return prev - 1;
-      }
-    });
+    // setCount((prev) => {
+    //   if (prev <= 0) {
+    //     setMaxError(true);
+    //     return prev;
+    //   } else {
+    //     setMaxError(false);
+    //     return prev - 1;
+    //   }
+    // });
   };
 
   const handleChangeCount = (event: ChangeEvent<HTMLInputElement>) => {
@@ -78,12 +78,12 @@ const Count: FC<CountProps> = ({
       setMaxError(false);
     }
     const newValidCount = getValidPrice(event.target.value, maxCount);
-    setCount(newValidCount);
+    handleChangeAmount(newValidCount);
   };
 
   const handleBlurCount = (event: ChangeEvent<HTMLInputElement>) => {
     if (+event.target.value < ECount.MIN_COUNT_VALUE) {
-      setCount(ECount.MIN_COUNT_VALUE);
+      handleChangeAmount(ECount.MIN_COUNT_VALUE);
     }
     setMaxError(false);
   };
@@ -95,8 +95,8 @@ const Count: FC<CountProps> = ({
     if (invalidCategories.includes(newCountCategory)) {
       notifyInvalidCategory(newCountCategory);
     } else {
-      setCountCategory(newCountCategory);
-      setCount(ECount.MIN_COUNT_VALUE);
+      handleChangeCategory(newCountCategory);
+      handleChangeAmount(ECount.MIN_COUNT_VALUE);
     }
 
     handleHideMenu();
