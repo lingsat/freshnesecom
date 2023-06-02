@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { getOldPrice } from "@/utils/products";
+import { getOldPrice } from "@Products/utils/products";
 import { IProduct } from "@Products/types/product";
 import { ERoutes } from "@/types/routes";
 import Button, { EBtnStyle } from "@CommonComponents/Button/Button";

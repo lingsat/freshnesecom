@@ -4,13 +4,9 @@ import { toast } from "react-toastify";
 
 import { AppDispatch, RootState } from "@Store/store";
 import { fetchCartProducts, ICartState, selectCart } from "@Cart/cartSlice";
-import {
-  getCartItemWithProduct,
-  getInvalidCategories,
-  getSubtotalPrice,
-  getTotalPrice,
-} from "@/utils/cart";
 import { getDeliveryDay } from "@/utils/date";
+import { getCartItemWithProduct, getInvalidCategories } from "@Cart/utils/cart";
+import { getSubtotalPrice, getTotalPrice } from "@Cart/utils/price";
 import { PROMO_CODE, PROMO_CODE_DISCOUNT, TAX_VALUE } from "@/constants";
 import CartItem from "@CartComponents/CartItem/CartItem";
 import LoadinSpinner from "@CommonComponents/LoadingSpinner/LoadingSpinner";
@@ -38,7 +34,8 @@ const Order: FC = () => {
   );
   const deliveryDate = getDeliveryDay(cartProducts);
 
-  const notifyInvalidPromo = () => toast('Invalid Promo Code. Try - "promo"');
+  const notifyInvalidPromo = () =>
+    toast.warn('Invalid Promo Code. Try - "promo"');
 
   const handlePromoCodeChange = (event: ChangeEvent<HTMLInputElement>) => {
     setPromoCode(event.target.value);
@@ -65,7 +62,12 @@ const Order: FC = () => {
   }
 
   if (!cartProducts || cartError) {
-    return <p className="order__error">Products not Found! Refresh page!</p>;
+    return (
+      <p className="order__error">
+        Server is busy! Please wait for 10 seconds and then try refreshing the
+        page!
+      </p>
+    );
   }
 
   return (

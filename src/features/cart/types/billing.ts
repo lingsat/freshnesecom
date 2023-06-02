@@ -1,4 +1,4 @@
-export enum ELocation {
+export enum EBilling {
   COUNTRY = "country",
   CITY = "city",
   PHONE_NUMBER = "phoneNumber",

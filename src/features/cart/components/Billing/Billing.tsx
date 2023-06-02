@@ -9,7 +9,7 @@ import { AppDispatch } from "@Store/store";
 import { clearCart } from "@Cart/cartSlice";
 import { regularBillingFields } from "@/mock/billing";
 import { billingSchema } from "@Cart/schemas/billing";
-import { ELocation } from "@Cart/types/location";
+import { EBilling } from "@/features/cart/types/billing";
 import Button, { EBtnStyle } from "@CommonComponents/Button/Button";
 import InputField from "@CartComponents/InputField/InputField";
 import CheckboxField from "@CartComponents/CheckboxField/CheckboxField";
@@ -105,16 +105,16 @@ const Billing: FC = () => {
                 countryCode={countryCode}
                 setCountryCode={setCountryCode}
               />
-              <label className="billing__label" htmlFor={ELocation.ADDRESS}>
+              <label className="billing__label" htmlFor={EBilling.ADDRESS}>
                 <p className="required">Address</p>
                 <Field
                   className="billing__field"
-                  id={ELocation.ADDRESS}
-                  name={ELocation.ADDRESS}
+                  id={EBilling.ADDRESS}
+                  name={EBilling.ADDRESS}
                   placeholder="Address"
                 />
                 <ErrorMessage
-                  name={ELocation.ADDRESS}
+                  name={EBilling.ADDRESS}
                   component="span"
                   className="billing__error"
                 />

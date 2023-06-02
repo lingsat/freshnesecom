@@ -11,9 +11,9 @@ import { ICartData, ICartItem } from "@Cart/types/cart";
 import { IProduct } from "@Products/types/product";
 import {
   addProdToCart,
-  getCartAfterRemove,
   getUpdatedCart,
-} from "@/utils/cart";
+  getCartAfterRemove,
+} from "@Cart/utils/store";
 
 export interface ICartState {
   cart: ICartItem[];

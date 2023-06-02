@@ -1,7 +1,6 @@
 import { IFilter } from "@Products/productsSlice";
 import { IProduct, ICategory, ESort } from "@Products/types/product";
-import { productCategories } from "@/mock/productCategories";
-import { ICartItem } from "@/features/cart/types/cart";
+import { ICartItem } from "@Cart/types/cart";
 
 const getSortedProducts = (
   productsArr: IProduct[],
@@ -93,19 +92,6 @@ export const getCategoriesObj = (productsArr: IProduct[]): ICategory => {
   }, {});
 };
 
-export const getBrands = (
-  categoriesObj: ICategory,
-  searchCategory: string
-): string[] => {
-  if (searchCategory) {
-    return categoriesObj[searchCategory].brands;
-  } else {
-    const categories = Object.values(categoriesObj);
-    const brands = categories.map((categoryObj) => categoryObj.brands).flat();
-    return Array.from(new Set(brands));
-  }
-};
-
 export const getTags = (productsArr: IProduct[]): string[] => {
   const allTagsArr = productsArr.reduce((acc: string[], product) => {
     return [...acc, ...product.tags];
@@ -113,79 +99,14 @@ export const getTags = (productsArr: IProduct[]): string[] => {
   return Array.from(new Set(allTagsArr));
 };
 
-export const getMinMaxPrice = (
-  productsArr: IProduct[]
-): { min: number; max: number } => {
-  if (!productsArr.length) {
-    return { min: 0, max: 0 };
-  }
-  return productsArr.reduce(
-    (acc, product) => {
-      const { mainPrice } = product;
-      return {
-        min: Math.min(acc.min, Math.floor(mainPrice)),
-        max: Math.max(acc.max, Math.ceil(mainPrice)),
-      };
-    },
-    {
-      min: productsArr[0].mainPrice,
-      max: productsArr[0].mainPrice,
-    }
-  );
-};
-
 export const getValidPrice = (value: string, max: number, min = 0): number => {
   return Math.max(min, Math.min(max, Number(value)));
-};
-
-export const getOldPrice = (price: number, discount: number): string => {
-  const priceDiscount = (price * discount) / 100;
-  return (price + priceDiscount).toFixed(2);
 };
 
 export const getCountCategories = (priceObj: {
   [key: string]: number;
 }): string[] => {
   return Object.keys(priceObj);
-};
-
-const getValidDataListValue = (
-  product: IProduct,
-  category: string,
-  countCategory: string
-): string => {
-  let value;
-
-  switch (category) {
-    case "deliveryTime":
-      value = `in ${product[category]} days`;
-      break;
-    case "stock":
-      value = `${product.stock[countCategory]} ${countCategory}`;
-      break;
-    case "buyBy":
-      value = getCountCategories(product.price).join(", ");
-      break;
-    default:
-      value = product[category as keyof IProduct];
-      break;
-  }
-
-  return typeof value === "string" ? value : value.toString();
-};
-
-export const getProductDataList = (
-  product: IProduct,
-  countCategory: string
-): { category: string; value: string }[] => {
-  const catArr = Object.keys(productCategories);
-  return catArr.map((category) => {
-    const value = getValidDataListValue(product, category, countCategory);
-    return {
-      category: productCategories[category as keyof typeof productCategories],
-      value,
-    };
-  });
 };
 
 export const getProductMaxCount = (
@@ -207,21 +128,4 @@ export const getProductMaxCount = (
   } else {
     return product.stock[countCategory];
   }
-};
-
-export const getSortedImages = (imagesArr: string[], index: number) => () => {
-  if (!index) {
-    return imagesArr;
-  }
-
-  const clickedImage = imagesArr[index];
-  const firstImage = imagesArr[0];
-  const updatedImagesArr = [
-    clickedImage,
-    ...imagesArr.slice(1, index),
-    firstImage,
-    ...imagesArr.slice(index + 1),
-  ];
-
-  return updatedImagesArr;
 };

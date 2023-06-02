@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 
 import { RootState } from "@Store/store";
 import { IProductsState, selectProducts } from "@Products/productsSlice";
-import { getPaginatedProducts } from "@/utils/pagination";
+import { getPaginatedProducts } from "@Products/utils/pagination";
 import { getFilteredProducts } from "@/utils/products";
 import LoadinSpinner from "@CommonComponents/LoadingSpinner/LoadingSpinner";
 import Filter from "@ProductsComponents/Filter/Filter";

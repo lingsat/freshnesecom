@@ -4,11 +4,9 @@ import { toast } from "react-toastify";
 
 import { AppDispatch, RootState } from "@Store/store";
 import { addToCart, ICartState, selectCart } from "@Cart/cartSlice";
-import {
-  getOldPrice,
-  getProductDataList,
-  getProductMaxCount,
-} from "@/utils/products";
+import { getProductMaxCount } from "@/utils/products";
+import { getOldPrice } from "@Products/utils/products";
+import { getProductDataList } from "@Products/utils/products";
 import { ECount, IProduct } from "@Products/types/product";
 import { ICartData } from "@Cart/types/cart";
 import Button, {

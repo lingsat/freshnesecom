@@ -10,7 +10,8 @@ import {
   toggleBrands,
   toggleStars,
 } from "@Products/productsSlice";
-import { getBrands, getCategoriesObj } from "@/utils/products";
+import { getCategoriesObj } from "@/utils/products";
+import { getBrands } from "@Products/utils/products";
 import { EStars } from "@Products/types/product";
 import Stars from "@CommonComponents/Stars/Stars";
 import FilterPrice from "@ProductsComponents/FilterPrice/FilterPrice";
