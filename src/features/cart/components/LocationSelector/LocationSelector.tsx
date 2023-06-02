@@ -3,7 +3,7 @@ import { ICity, ICountry } from "country-state-city";
 import { ErrorMessage, Field } from "formik";
 
 import { getCitiesByCountry, getFilteredCountries } from "@Cart/utils/cart";
-import { EBilling } from "@/features/cart/types/billing";
+import { EBilling } from "@Cart/types/billing";
 
 import arrowDown from "@Images/arrow_black.svg";
 import clear from "@Images/close.svg";

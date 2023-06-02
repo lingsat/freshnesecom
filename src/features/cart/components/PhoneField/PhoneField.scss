@@ -1,0 +1,32 @@
+@import "@Styles/_variables.scss";
+
+.phone__input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-family: $font-primary;
+  font-size: 0.875rem;
+  line-height: 1.185rem;
+  color: $color-black;
+  background: $color-gray-lightest;
+  border: 1px solid $color-gray-light;
+  border-radius: 12px;
+  outline: none;
+
+  &:focus {
+    border: 1px solid $color-green;
+  }
+
+  &::placeholder {
+    color: $color-gray;
+  }
+}
+
+.phone__container {
+  .special-label {
+    display: none;
+  }
+
+  .flag-dropdown {
+    display: none;
+  }
+}

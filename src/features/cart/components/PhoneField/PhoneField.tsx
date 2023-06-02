@@ -1,8 +1,10 @@
 import React, { FC } from "react";
 import { ErrorMessage } from "formik";
-import PhoneInput from "react-phone-number-input";
+import PhoneInput from "react-phone-input-2";
 
-import { EBilling } from "@/features/cart/types/billing";
+import { EBilling } from "@Cart/types/billing";
+
+import "./PhoneField.scss";
 
 interface PhoneFieldProps {
   setFieldValue: (name: string, value: string | undefined) => void;
@@ -23,12 +25,15 @@ const PhoneField: FC<PhoneFieldProps> = ({
     <label className="billing__label" htmlFor={EBilling.PHONE_NUMBER}>
       <p className="required">Phone number</p>
       <PhoneInput
-        country="US"
-        name={EBilling.PHONE_NUMBER}
-        placeholder="Phone number"
+        inputClass="phone__input"
+        containerClass="phone__container"
+        inputProps={{ name: EBilling.PHONE_NUMBER }}
         value={phoneValue}
         onChange={handlePhoneChange}
         onBlur={handleBlur}
+        disableDropdown
+        autoFormat={false}
+        placeholder="Phone number"
       />
       <ErrorMessage
         name={EBilling.PHONE_NUMBER}
