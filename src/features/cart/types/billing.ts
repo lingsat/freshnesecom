@@ -5,3 +5,17 @@ export enum EBilling {
   ADDRESS = "address",
   POSTAL_CODE = "postCode",
 }
+
+export interface IInitialValues {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phoneNumber: string;
+  address: string;
+  city: string;
+  country: string;
+  postCode: string;
+  notes: string;
+  spamCheck: boolean;
+  policyCheck: boolean;
+}

@@ -50,7 +50,7 @@ const CartItem: FC<CartItemProps> = ({
     const newCartData = {
       productId: product.id,
       count: {
-        amount: count.amount,
+        amount: ECount.MIN_COUNT_VALUE,
         category: newCategory,
       },
     };

@@ -104,7 +104,10 @@ const Order: FC = () => {
             onChange={handlePromoCodeChange}
             disabled={isPromoAplied}
           />
-          <button type="submit" className="order__btn" disabled={isPromoAplied}>
+          <button
+            type="submit"
+            className="order__btn"
+            disabled={isPromoAplied || !promoCode.trim()}>
             Apply now
           </button>
         </label>

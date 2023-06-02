@@ -1,6 +1,13 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import { Formik, Form, Field, FormikHelpers, ErrorMessage } from "formik";
+import {
+  Formik,
+  Form,
+  Field,
+  FormikHelpers,
+  ErrorMessage,
+  FormikProps,
+} from "formik";
 import { PersistFormikValues } from "formik-persist-values";
 import { Country } from "country-state-city";
 import { toast } from "react-toastify";
@@ -9,7 +16,7 @@ import { AppDispatch } from "@Store/store";
 import { clearCart } from "@Cart/cartSlice";
 import { regularBillingFields } from "@/mock/billing";
 import { billingSchema } from "@Cart/schemas/billing";
-import { EBilling } from "@/features/cart/types/billing";
+import { EBilling, IInitialValues } from "@Cart/types/billing";
 import Button, { EBtnStyle } from "@CommonComponents/Button/Button";
 import InputField from "@CartComponents/InputField/InputField";
 import CheckboxField from "@CartComponents/CheckboxField/CheckboxField";
@@ -23,9 +30,10 @@ import "./Billing.scss";
 const Billing: FC = () => {
   const dispatch = useDispatch<AppDispatch>();
 
+  const formikRef = useRef<FormikProps<IInitialValues>>(null);
   const [countryCode, setCountryCode] = useState<string>("");
 
-  const initialValues = {
+  const initialValues: IInitialValues = {
     firstName: "",
     lastName: "",
     email: "",
@@ -66,9 +74,25 @@ const Billing: FC = () => {
     }
   };
 
+  useEffect(() => {
+    if (formikRef.current) {
+      const touchedObj: { [field: string]: boolean } = {};
+
+      const entries = Object.entries(formikRef.current.values);
+      entries.forEach((entrie) => {
+        entrie[1]
+          ? (touchedObj[entrie[0]] = true)
+          : (touchedObj[entrie[0]] = false);
+      });
+
+      formikRef.current.setTouched(touchedObj);
+    }
+  });
+
   return (
     <>
       <Formik
+        innerRef={formikRef}
         initialValues={initialValues}
         validationSchema={billingSchema}
         enableReinitialize={true}
@@ -166,7 +190,6 @@ const Billing: FC = () => {
               style={EBtnStyle.BIG}
               disabled={!dirty || !isValid}
             />
-            {/* <Persist name="user-data" debounce={0} /> */}
             <PersistFormikValues name="userData" persistInvalid={true} />
           </Form>
         )}
