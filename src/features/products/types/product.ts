@@ -56,10 +56,6 @@ export enum EPrice {
   MIN_DISTANCE = 5,
 }
 
-export enum ECount {
-  MIN_COUNT_VALUE = 1,
-}
-
 export enum ESort {
   PRICE_LOW = "Lowest Price",
   PRICE_HIGH = "Highest Price",

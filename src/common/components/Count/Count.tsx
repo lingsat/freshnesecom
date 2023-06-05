@@ -1,7 +1,8 @@
 import React, { ChangeEvent, FC, useState } from "react";
 
-import { getCountCategories, getValidPrice } from "@/utils/products";
-import { ECount, IProduct } from "@Products/types/product";
+import { getCountCategories, getValidNumber } from "@/utils/products";
+import { IProduct } from "@Products/types/product";
+import { ECount } from "@/common/types/count";
 import DropDown from "@CommonComponents/DropDown/DropDown";
 
 import arrowIcon from "@Images/arrow_black.svg";
@@ -11,26 +12,29 @@ import "./Count.scss";
 interface CountProps {
   product: IProduct;
   countCategory: string;
-  setCountCategory: React.Dispatch<React.SetStateAction<string>>;
+  handleChangeCategory: (newCategory: string) => void;
   count: number;
-  setCount: React.Dispatch<React.SetStateAction<number>>;
+  handleChangeAmount: (newCategory: number) => void;
   isCountInvalid: boolean;
+  disabled?: boolean;
+  maxCount: number;
 }
 
 const Count: FC<CountProps> = ({
   product,
   countCategory,
-  setCountCategory,
+  handleChangeCategory,
   count,
-  setCount,
+  handleChangeAmount,
   isCountInvalid,
+  disabled = false,
+  maxCount,
 }) => {
-  const [maxError, setMaxError] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
   const [showMenu, setShowMenu] = useState<boolean>(false);
 
   const countCategoryList = getCountCategories(product.price);
-  const maxCountValue = product.stock[countCategory];
-  const isCountInvalidMax = isCountInvalid || maxError;
+  const isCountInvalidMax = isCountInvalid || error;
   const isCountCategorySingle = countCategoryList.length === 1;
 
   const handleHideMenu = () => {
@@ -41,43 +45,41 @@ const Count: FC<CountProps> = ({
     setShowMenu(true);
   };
 
-  const increaseCount = () => {
-    setCount((prev) => prev + 1);
-  };
-
-  const decreaseCount = () => {
-    setCount((prev) => prev - 1);
+  const handleCountChange = (increment: number) => () => {
+    const newCount = count + increment;
+    const newValidCount = getValidNumber(newCount.toString(), maxCount);
+    handleChangeAmount(newValidCount);
+    setError(newCount > maxCount || newCount < ECount.MIN_COUNT_VALUE);
   };
 
   const handleChangeCount = (event: ChangeEvent<HTMLInputElement>) => {
-    if (+event.target.value > maxCountValue) {
-      setMaxError(true);
-    }
-    const newValidCount = getValidPrice(event.target.value, maxCountValue);
-    setCount(newValidCount);
+    setError(+event.target.value > maxCount);
+    const newValidCount = getValidNumber(event.target.value, maxCount);
+    handleChangeAmount(newValidCount);
   };
 
   const handleBlurCount = (event: ChangeEvent<HTMLInputElement>) => {
     if (+event.target.value < ECount.MIN_COUNT_VALUE) {
-      setCount(ECount.MIN_COUNT_VALUE);
+      handleChangeAmount(ECount.MIN_COUNT_VALUE);
     }
-    setMaxError(false);
+    setError(false);
   };
 
   const handleSetCountCategory = (newCountCategory: string) => {
-    setCountCategory(newCountCategory);
-    setCount(ECount.MIN_COUNT_VALUE);
+    handleChangeCategory(newCountCategory);
     handleHideMenu();
   };
 
   return (
     <div
-      className={`count${isCountInvalidMax ? " count--error" : ""}`}
+      className={`count${isCountInvalidMax ? " count--error" : ""}${
+        disabled ? " count--disabled" : ""
+      }`}
       onMouseLeave={handleHideMenu}>
       <label className="count__label">
         <button
           className="count__changer count__changer--decrease"
-          onClick={decreaseCount}>
+          onClick={handleCountChange(ECount.DECREMENT_VALUE)}>
           -
         </button>
         <input
@@ -85,13 +87,16 @@ const Count: FC<CountProps> = ({
           value={count || ""}
           onChange={handleChangeCount}
           onBlur={handleBlurCount}
+          disabled={disabled}
         />
-        <button className="count__changer" onClick={increaseCount}>
+        <button
+          className="count__changer"
+          onClick={handleCountChange(ECount.MIN_COUNT_VALUE)}>
           +
         </button>
       </label>
       {isCountInvalidMax && (
-        <p className="count__message">{`Min ${ECount.MIN_COUNT_VALUE} / Max ${maxCountValue} ${countCategory}.`}</p>
+        <p className="count__message">{`Min ${ECount.MIN_COUNT_VALUE} / Left ${maxCount} ${countCategory}.`}</p>
       )}
       <div className="count__selector">
         {isCountCategorySingle ? (

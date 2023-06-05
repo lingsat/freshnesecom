@@ -1,13 +1,24 @@
-import React, { FC, useState } from "react";
-import { Formik, Form, Field, FormikHelpers, ErrorMessage } from "formik";
+import React, { FC, useEffect, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
+import {
+  Formik,
+  Form,
+  Field,
+  FormikHelpers,
+  ErrorMessage,
+  FormikProps,
+} from "formik";
+import { PersistFormikValues } from "formik-persist-values";
 import { Country } from "country-state-city";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
+import { AppDispatch } from "@Store/store";
+import { clearCart } from "@Cart/cartSlice";
 import { regularBillingFields } from "@/mock/billing";
 import { billingSchema } from "@Cart/schemas/billing";
-import { MESSAGES_TIMER } from "@/constants";
-import { ELocation } from "@Cart/types/location";
-import Button, { EBtnStyle } from "@CommonComponents/Button/Button";
+import { EBilling, IInitialValues } from "@Cart/types/billing";
+import { EBtnStyle } from "@/common/types/button";
+import Button from "@CommonComponents/Button/Button";
 import InputField from "@CartComponents/InputField/InputField";
 import CheckboxField from "@CartComponents/CheckboxField/CheckboxField";
 import LocationSelector from "@CartComponents/LocationSelector/LocationSelector";
@@ -18,9 +29,12 @@ import "react-toastify/dist/ReactToastify.css";
 import "./Billing.scss";
 
 const Billing: FC = () => {
+  const dispatch = useDispatch<AppDispatch>();
+
+  const formikRef = useRef<FormikProps<IInitialValues>>(null);
   const [countryCode, setCountryCode] = useState<string>("");
 
-  const initialValues = {
+  const initialValues: IInitialValues = {
     firstName: "",
     lastName: "",
     email: "",
@@ -37,9 +51,9 @@ const Billing: FC = () => {
   const countries = Country.getAllCountries();
 
   const notifyInvalidCountry = () =>
-    toast("Invalid country name - choose from list");
+    toast.warn("Invalid country name - choose from list");
 
-  const successConfirm = () => toast("Order completed successfully!");
+  const successConfirm = () => toast.success("Order completed successfully!");
 
   const handleFormSubmit = (
     values: typeof initialValues,
@@ -51,7 +65,9 @@ const Billing: FC = () => {
 
     if (isCountryInArray) {
       setCountryCode("");
+      dispatch(clearCart());
       action.resetForm();
+      localStorage.removeItem("userData");
       successConfirm();
     } else {
       action.setErrors({ country: "Choose country from list" });
@@ -59,11 +75,28 @@ const Billing: FC = () => {
     }
   };
 
+  useEffect(() => {
+    if (formikRef.current) {
+      const touchedObj: { [field: string]: boolean } = {};
+
+      const entries = Object.entries(formikRef.current.values);
+      entries.forEach((entrie) => {
+        entrie[1]
+          ? (touchedObj[entrie[0]] = true)
+          : (touchedObj[entrie[0]] = false);
+      });
+
+      formikRef.current.setTouched(touchedObj);
+    }
+  });
+
   return (
     <>
       <Formik
+        innerRef={formikRef}
         initialValues={initialValues}
         validationSchema={billingSchema}
+        enableReinitialize={true}
         onSubmit={handleFormSubmit}>
         {({ isValid, dirty, setFieldValue, values, handleBlur }) => (
           <Form className="billing">
@@ -97,16 +130,16 @@ const Billing: FC = () => {
                 countryCode={countryCode}
                 setCountryCode={setCountryCode}
               />
-              <label className="billing__label" htmlFor={ELocation.ADDRESS}>
+              <label className="billing__label" htmlFor={EBilling.ADDRESS}>
                 <p className="required">Address</p>
                 <Field
                   className="billing__field"
-                  id={ELocation.ADDRESS}
-                  name={ELocation.ADDRESS}
+                  id={EBilling.ADDRESS}
+                  name={EBilling.ADDRESS}
                   placeholder="Address"
                 />
                 <ErrorMessage
-                  name={ELocation.ADDRESS}
+                  name={EBilling.ADDRESS}
                   component="span"
                   className="billing__error"
                 />
@@ -158,10 +191,10 @@ const Billing: FC = () => {
               style={EBtnStyle.BIG}
               disabled={!dirty || !isValid}
             />
+            <PersistFormikValues name="userData" persistInvalid={true} />
           </Form>
         )}
       </Formik>
-      <ToastContainer position="bottom-left" autoClose={MESSAGES_TIMER} />
     </>
   );
 };

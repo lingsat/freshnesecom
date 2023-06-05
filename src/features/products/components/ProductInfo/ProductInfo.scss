@@ -15,26 +15,12 @@
     margin-bottom: 2.5rem;
     display: flex;
     align-items: center;
+    gap: 0.5rem;
 
     p {
       font-size: 0.75rem;
       line-height: 1rem;
       color: $color-gray;
-    }
-  }
-
-  &__stars {
-    margin-right: 0.5rem;
-    display: flex;
-    gap: 4px;
-
-    li {
-      display: flex;
-    }
-
-    img {
-      width: 18px;
-      height: 16px;
     }
   }
 
@@ -70,6 +56,7 @@
     column-gap: 0.5rem;
     border: 1px solid $color-gray-light;
     border-radius: 12px;
+    position: relative;
 
     .button {
       width: 135px;
@@ -78,6 +65,16 @@
 
   &__price {
     width: 175px;
+  }
+
+  &__message {
+    font-size: 0.75rem;
+    line-height: 1rem;
+    color: $color-red;
+    position: absolute;
+    bottom: 100%;
+    right: 1rem;
+    z-index: 1;
   }
 }
 
@@ -107,8 +104,10 @@
 }
 
 @media (max-width: 1099.98px) {
-  .product-info__price {
-    width: 28%;
+  .product-info {
+    &__price {
+      width: 28%;
+    }
   }
 
   .price__main {
@@ -159,6 +158,12 @@
     &__price {
       width: 100%;
       margin-bottom: 0.5rem;
+    }
+
+    &__message {
+      right: 0;
+      width: 100%;
+      text-align: center;
     }
   }
 

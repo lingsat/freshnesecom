@@ -1,3 +1,39 @@
 .cart {
-  padding-bottom: 3rem;
+  padding-bottom: 2.5rem;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  &__empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  &__image {
+    width: 300px;
+    height: 240px;
+  }
+
+  &__message {
+    margin-top: 1rem;
+    text-align: center;
+  }
+}
+
+@media (max-width: 991.98px) {
+  .cart {
+    flex-direction: column;
+    row-gap: 4rem;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .cart {
+    max-width: 400px;
+    margin: 0 auto;
+    row-gap: 2.5rem;
+  }
 }

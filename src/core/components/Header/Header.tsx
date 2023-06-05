@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 import { RootState } from "@Store/store";
 import { IProductsState, selectProducts } from "@Products/productsSlice";
+import { ICartState, selectCart } from "@Cart/cartSlice";
 import { getCategoriesObj } from "@/utils/products";
 import LinkItem from "@CommonComponents/LInkItem/LinkItem";
 
@@ -18,10 +19,15 @@ import "./Header.scss";
 
 const Header = () => {
   const { products } = useSelector<RootState, IProductsState>(selectProducts);
+  const { cart } = useSelector<RootState, ICartState>(selectCart);
   const [showCategories, setShowCategories] = useState<boolean>(true);
 
   const categoriesObj = getCategoriesObj(products);
   const categories = Object.keys(categoriesObj);
+  const cartCount = cart.reduce(
+    (acc, cartItem) => acc + cartItem.countArr.length,
+    0
+  );
 
   const toggleShowCategories = () => {
     setShowCategories((prev) => !prev);
@@ -68,7 +74,7 @@ const Header = () => {
           </button>
           <Link to="/cart" className="controls__btn">
             <img src={cartIcon} alt="Cart" />
-            <span>4</span>
+            {!!cartCount && <span>{cartCount}</span>}
           </Link>
         </div>
       </div>

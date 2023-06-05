@@ -1,6 +1,6 @@
 import React, { FC, useState } from "react";
 
-import { getTabsData } from "@/utils/tabs";
+import { getTabsData } from "@Products/utils/tabs";
 import { IProduct } from "@Products/types/product";
 import Description from "@ProductsComponents/Description/Description";
 import Reviews from "@ProductsComponents/Reviews/Reviews";

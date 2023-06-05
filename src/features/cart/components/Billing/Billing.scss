@@ -64,16 +64,6 @@
     border-radius: 12px;
     outline: none;
 
-    // &::-webkit-outer-spin-button,
-    // &::-webkit-inner-spin-button {
-    //   -webkit-appearance: none;
-    //   margin: 0;
-    // }
-
-    // &[type="number"] {
-    //   -moz-appearance: textfield;
-    // }
-
     &--textarea {
       resize: none;
       outline: none;
@@ -103,33 +93,6 @@
   margin-left: 5px;
   font-size: 1rem;
   color: $color-red;
-}
-
-.PhoneInputCountry {
-  display: none;
-}
-
-.PhoneInputInput {
-  padding: 0;
-  margin: 0;
-  width: 100%;
-  padding: 0.75rem 1rem;
-  font-family: $font-primary;
-  font-size: 0.875rem;
-  line-height: 1.185rem;
-  color: $color-black;
-  background: $color-gray-lightest;
-  border: 1px solid $color-gray-light;
-  border-radius: 12px;
-  outline: none;
-
-  &:focus {
-    border: 1px solid $color-green;
-  }
-
-  &::placeholder {
-    color: $color-gray;
-  }
 }
 
 @media (max-width: 991.98px) {

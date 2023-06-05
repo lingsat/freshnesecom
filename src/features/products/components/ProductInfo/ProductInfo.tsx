@@ -1,21 +1,22 @@
-import React, { FC, useState } from "react";
+import React, { FC, useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
-import {
-  getOldPrice,
-  getProductDataList,
-  getStarsArrFromNumber,
-} from "@/utils/products";
-import { ECount, IProduct } from "@Products/types/product";
-import Button, {
-  EBtnImage,
-  EBtnImagePos,
-  EBtnStyle,
-} from "@CommonComponents/Button/Button";
-import Count from "@ProductsComponents/Count/Count";
+import { AppDispatch, RootState } from "@Store/store";
+import { addToCart, ICartState, selectCart } from "@Cart/cartSlice";
+import { getProductMaxCount } from "@/utils/products";
+import { getIsUnitInCart, getOldPrice } from "@Products/utils/products";
+import { getProductDataList } from "@Products/utils/products";
+import { IProduct } from "@Products/types/product";
+import { ECount } from "@/common/types/count";
+import { ICartData } from "@Cart/types/cart";
+import { EStarsColor } from "@/common/types/stars";
+import { EBtnStyle, EBtnImage, EBtnImagePos } from "@/common/types/button";
+import Button from "@CommonComponents/Button/Button";
+import Stars from "@CommonComponents/Stars/Stars";
+import Count from "@CommonComponents/Count/Count";
+import Modal from "@CommonComponents/Modal/Modal";
 import Tabs from "@ProductsComponents/Tabs/Tabs";
-
-import star from "@Images/star.svg";
-import checkedStar from "@Images/star_checked.svg";
 
 import "./ProductInfo.scss";
 
@@ -24,29 +25,93 @@ interface ProductInfoProps {
 }
 
 const ProductInfo: FC<ProductInfoProps> = ({ product }) => {
+  const dispatch = useDispatch<AppDispatch>();
+  const { cart } = useSelector<RootState, ICartState>(selectCart);
+
   const [countCategory, setCountCategory] = useState<string>(
     product.mainCountCategory
   );
   const [count, setCount] = useState<number>(1);
+  const [showModal, setShowModal] = useState<boolean>(false);
 
   const isCountInvalid =
     count > product.stock[countCategory] || count < ECount.MIN_COUNT_VALUE;
-  const starsArr = getStarsArrFromNumber(product.stars);
   const currentPrice = (product.price[countCategory] * +count).toFixed(2);
   const oldPrice = getOldPrice(+currentPrice, product.discount);
   const datalist = getProductDataList(product, countCategory);
 
+  const maxCount = getProductMaxCount(product, cart, countCategory);
+
+  const notifyAddToCart = () =>
+    toast.success(`${count} "${countCategory}" added to Cart!`);
+
+  const handleOpenModal = () => {
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
+  const handleChangeCategory = (newCategory: string) => {
+    setCountCategory(newCategory);
+    setCount(ECount.MIN_COUNT_VALUE);
+  };
+
+  const handleChangeAmount = (newAmount: number) => {
+    setCount(newAmount);
+  };
+
+  const handleAddToCart = () => {
+    const newCartItem: ICartData = {
+      productId: product.id,
+      count: {
+        amount: count,
+        category: countCategory,
+      },
+    };
+
+    dispatch(addToCart(newCartItem));
+    setCount(ECount.MIN_COUNT_VALUE);
+    handleCloseModal();
+    notifyAddToCart();
+  };
+
+  const addExistingInCart = () => {
+    const isUnitInCart = getIsUnitInCart(cart, product.id, countCategory);
+
+    if (isUnitInCart) {
+      handleOpenModal();
+    } else {
+      handleAddToCart();
+    }
+  };
+
+  useEffect(() => {
+    if (showModal) {
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = "unset";
+      };
+    }
+  }, [showModal]);
+
   return (
     <div className="product-info">
+      {showModal && (
+        <Modal
+          text={`This product with "${countCategory}" units already in cart. Do you want to add ${count} "${countCategory}" more?`}
+          confirmBtnText="Add to cart"
+          onModalConfirm={handleAddToCart}
+          onModalCancel={handleCloseModal}
+        />
+      )}
       <h2 className="product-info__title">{product.title}</h2>
       <div className="product-info__stat">
-        <ul className="product-info__stars">
-          {starsArr.map((item, index) => (
-            <li key={`productStar-${item}-${index}`}>
-              <img src={item ? checkedStar : star} alt="Star" />
-            </li>
-          ))}
-        </ul>
+        <Stars
+          checkedStars={product.stars.toString()}
+          starColor={EStarsColor.BLACK}
+        />
         <p>({product.reviews.length} customers review)</p>
       </div>
       <p className="product-info__description">{product.shortDescription}</p>
@@ -66,17 +131,23 @@ const ProductInfo: FC<ProductInfoProps> = ({ product }) => {
         <Count
           product={product}
           countCategory={countCategory}
-          setCountCategory={setCountCategory}
+          handleChangeCategory={handleChangeCategory}
           count={count}
-          setCount={setCount}
+          handleChangeAmount={handleChangeAmount}
           isCountInvalid={isCountInvalid}
+          maxCount={maxCount}
+          disabled={!maxCount}
         />
         <Button
           image={EBtnImage.PLUS}
           imagePosition={EBtnImagePos.LEFT}
           text="Add to cart"
-          disabled={isCountInvalid}
+          disabled={isCountInvalid || !maxCount}
+          onCLick={addExistingInCart}
         />
+        {!maxCount && (
+          <p className="product-info__message">{`All ${product.stock[countCategory]} "${countCategory}" already in Cart!"`}</p>
+        )}
       </div>
       <Button
         style={EBtnStyle.SECONDARY}

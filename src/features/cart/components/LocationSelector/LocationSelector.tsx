@@ -2,8 +2,8 @@ import React, { FC, useEffect, useRef, useState } from "react";
 import { ICity, ICountry } from "country-state-city";
 import { ErrorMessage, Field } from "formik";
 
-import { getCitiesByCountry, getFilteredCountries } from "@/utils/cart";
-import { ELocation } from "@Cart/types/location";
+import { getCitiesByCountry, getFilteredCountries } from "@Cart/utils/cart";
+import { EBilling } from "@Cart/types/billing";
 
 import arrowDown from "@Images/arrow_black.svg";
 import clear from "@Images/close.svg";
@@ -37,13 +37,13 @@ const LocationSelector: FC<LocationSelectorProps> = ({
   const cities = getCitiesByCountry(countryCode, cityValue);
 
   const handleCountryChose = (country: ICountry) => () => {
-    setFieldValue(ELocation.COUNTRY, country.name);
+    setFieldValue(EBilling.COUNTRY, country.name);
     setCountryCode(country.isoCode);
     setShowCountries(false);
   };
 
   const handleCityChose = (city: ICity) => () => {
-    setFieldValue(ELocation.CITY, city.name);
+    setFieldValue(EBilling.CITY, city.name);
     setShowCities(false);
   };
 
@@ -58,13 +58,13 @@ const LocationSelector: FC<LocationSelectorProps> = ({
   };
 
   const handleClearCountry = () => {
-    setFieldValue(ELocation.COUNTRY, "");
-    setFieldValue(ELocation.CITY, "");
+    setFieldValue(EBilling.COUNTRY, "");
+    setFieldValue(EBilling.CITY, "");
     setCountryCode("");
   };
 
   const handleClearCity = () => {
-    setFieldValue(ELocation.CITY, "");
+    setFieldValue(EBilling.CITY, "");
   };
 
   const handleOutsideClick = (e: MouseEvent) => {
@@ -89,12 +89,12 @@ const LocationSelector: FC<LocationSelectorProps> = ({
   return (
     <>
       <div ref={countriesRef} className="dropdown-field__wrapper">
-        <label className="dropdown-field" htmlFor={ELocation.COUNTRY}>
+        <label className="dropdown-field" htmlFor={EBilling.COUNTRY}>
           <p className="dropdown-field__label">State / Country</p>
           <Field
             className="dropdown-field__field"
-            id={ELocation.COUNTRY}
-            name={ELocation.COUNTRY}
+            id={EBilling.COUNTRY}
+            name={EBilling.COUNTRY}
             placeholder="Choose a state or Country"
             onFocus={handleCountryFocus}
             autoComplete="new-password"
@@ -102,7 +102,7 @@ const LocationSelector: FC<LocationSelectorProps> = ({
           <ErrorMessage
             component="span"
             className="dropdown-field__error"
-            name={ELocation.COUNTRY}
+            name={EBilling.COUNTRY}
           />
           {countryValue && (
             <img
@@ -128,12 +128,12 @@ const LocationSelector: FC<LocationSelectorProps> = ({
         )}
       </div>
       <div ref={citiesRef} className="dropdown-field__wrapper">
-        <label className="dropdown-field" htmlFor={ELocation.CITY}>
+        <label className="dropdown-field" htmlFor={EBilling.CITY}>
           <p className="dropdown-field__label">Town / City</p>
           <Field
             className="dropdown-field__field"
-            id={ELocation.CITY}
-            name={ELocation.CITY}
+            id={EBilling.CITY}
+            name={EBilling.CITY}
             placeholder="Town or city"
             onFocus={handleCityFocus}
             autoComplete="new-password"
@@ -142,7 +142,7 @@ const LocationSelector: FC<LocationSelectorProps> = ({
           <ErrorMessage
             component="span"
             className="dropdown-field__error"
-            name={ELocation.CITY}
+            name={EBilling.CITY}
           />
           {cityValue && (
             <img

@@ -1,6 +1,6 @@
 import React, { FC, useState } from "react";
 
-import { getSortedImages } from "@/utils/products";
+import { getSortedImages } from "@Products/utils/products";
 
 import "./Images.scss";
 
