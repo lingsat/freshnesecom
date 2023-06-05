@@ -34,6 +34,9 @@ export interface IProductsState {
   sortRule: string;
   pagination: IPaginationState;
   wishlist: string[];
+  wishProducts: IProduct[];
+  isWishloading: boolean;
+  wishError: SerializedError | null;
 }
 
 const initialPagination = {
@@ -61,6 +64,9 @@ const initialState: IProductsState = {
   sortRule: "",
   pagination: initialPagination,
   wishlist: [],
+  wishProducts: [],
+  isWishloading: false,
+  wishError: null,
 };
 
 export const fetchProducts = createAsyncThunk("products/fetchProducts", () => {
@@ -75,6 +81,21 @@ export const fetchSingleProduct = createAsyncThunk(
     return axios
       .get<IProduct>(`${process.env.REACT_APP_API_URL}/products/${productId}`)
       .then((response) => response.data);
+  }
+);
+
+export const fetchCartProducts = createAsyncThunk(
+  "cart/fetchCartProducts",
+  async (cartItemArr: ICartItem[]) => {
+    const responseArr = await axios.all(
+      cartItemArr.map((cartItem) =>
+        axios.get<IProduct>(
+          `${process.env.REACT_APP_API_URL}/products/${cartItem.productId}`
+        )
+      )
+    );
+
+    return responseArr.map((response) => response.data);
   }
 );
 
