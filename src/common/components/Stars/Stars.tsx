@@ -1,17 +1,13 @@
 import React, { FC } from "react";
 
 import { getStarsArrFromNumber } from "@/utils/products";
+import { EStarsColor } from "@/common/types/stars";
 
 import star from "@Images/star.svg";
 import goldStar from "@Images/star_checked_gold.svg";
 import blackStar from "@Images/star_checked.svg";
 
 import "./Stars.scss";
-
-export enum EStarsColor {
-  BLACK = "blackStar",
-  GOLD = "goldStar",
-}
 
 interface StarsProps {
   checkedStars: string;

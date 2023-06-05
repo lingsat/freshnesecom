@@ -1,7 +1,8 @@
 import React, { ChangeEvent, FC, useState } from "react";
 
 import { getCountCategories, getValidNumber } from "@/utils/products";
-import { ECount, IProduct } from "@Products/types/product";
+import { IProduct } from "@Products/types/product";
+import { ECount } from "@/common/types/count";
 import DropDown from "@CommonComponents/DropDown/DropDown";
 
 import arrowIcon from "@Images/arrow_black.svg";
@@ -44,26 +45,15 @@ const Count: FC<CountProps> = ({
     setShowMenu(true);
   };
 
-  const increaseCount = () => {
-    const newCount = count + 1;
+  const handleCountChange = (increment: number) => () => {
+    const newCount = count + increment;
     const newValidCount = getValidNumber(newCount.toString(), maxCount);
     handleChangeAmount(newValidCount);
-    newCount > maxCount ? setError(true) : setError(false);
-  };
-
-  const decreaseCount = () => {
-    const newCount = count - 1;
-    const newValidCount = getValidNumber(newCount.toString(), maxCount);
-    handleChangeAmount(newValidCount);
-    newCount < ECount.MIN_COUNT_VALUE ? setError(true) : setError(false);
+    setError(newCount > maxCount || newCount < ECount.MIN_COUNT_VALUE);
   };
 
   const handleChangeCount = (event: ChangeEvent<HTMLInputElement>) => {
-    if (+event.target.value > maxCount) {
-      setError(true);
-    } else {
-      setError(false);
-    }
+    setError(+event.target.value > maxCount);
     const newValidCount = getValidNumber(event.target.value, maxCount);
     handleChangeAmount(newValidCount);
   };
@@ -89,7 +79,7 @@ const Count: FC<CountProps> = ({
       <label className="count__label">
         <button
           className="count__changer count__changer--decrease"
-          onClick={decreaseCount}>
+          onClick={handleCountChange(ECount.DECREMENT_VALUE)}>
           -
         </button>
         <input
@@ -99,7 +89,9 @@ const Count: FC<CountProps> = ({
           onBlur={handleBlurCount}
           disabled={disabled}
         />
-        <button className="count__changer" onClick={increaseCount}>
+        <button
+          className="count__changer"
+          onClick={handleCountChange(ECount.MIN_COUNT_VALUE)}>
           +
         </button>
       </label>

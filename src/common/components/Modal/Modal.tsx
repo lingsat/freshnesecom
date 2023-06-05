@@ -1,6 +1,7 @@
 import React, { FC } from "react";
 
-import Button, { EBtnStyle } from "../Button/Button";
+import { EBtnStyle } from "@/common/types/button";
+import Button from "@CommonComponents/Button/Button";
 
 import "./Modal.scss";
 

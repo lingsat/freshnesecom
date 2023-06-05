@@ -4,7 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { getOldPrice } from "@Products/utils/products";
 import { IProduct } from "@Products/types/product";
 import { ERoutes } from "@/types/routes";
-import Button, { EBtnStyle } from "@CommonComponents/Button/Button";
+import { EBtnStyle } from "@/common/types/button";
+import Button from "@CommonComponents/Button/Button";
 
 import "./Suggested.scss";
 

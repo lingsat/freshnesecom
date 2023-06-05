@@ -13,7 +13,7 @@ import {
 } from "@Cart/cartSlice";
 import { getNewCountAmount } from "@Cart/utils/cart";
 import { ERoutes } from "@/types/routes";
-import { ECount } from "@Products/types/product";
+import { ECount } from "@/common/types/count";
 import { ICartItemWithProduct } from "@Cart/types/cart";
 import Stars from "@CommonComponents/Stars/Stars";
 import Count from "@CommonComponents/Count/Count";
@@ -74,15 +74,17 @@ const CartItem: FC<CartItemProps> = ({
   };
 
   const handleChangeCategory = (newCategory: string) => {
+    const maxNewCategoryStock = product.stock[newCategory];
     setNextCategory(newCategory);
+
     if (invalidCategories.includes(newCategory)) {
       const nextAmount = getNewCountAmount(cart, product.id, newCategory);
       let amountSum = nextAmount + count.amount;
 
-      if (amountSum > product.stock[newCategory]) {
-        amountSum = product.stock[newCategory];
+      if (amountSum > maxNewCategoryStock) {
+        amountSum = maxNewCategoryStock;
         setModalText(
-          `You already have ${nextAmount} "${newCategory}" in cart. Now you trying to add ${count.amount} "${newCategory}" more, but we have only ${product.stock[newCategory]} "${newCategory}" in stock. Press Cancel to change amount or Confirm - to get ${product.stock[newCategory]} "${newCategory}".`
+          `You already have ${nextAmount} "${newCategory}" in cart. Now you trying to add ${count.amount} "${newCategory}" more, but we have only ${maxNewCategoryStock} "${newCategory}" in stock. Press Cancel to change amount or Confirm - to get ${maxNewCategoryStock} "${newCategory}".`
         );
       } else {
         setModalText(
@@ -100,11 +102,12 @@ const CartItem: FC<CartItemProps> = ({
   };
 
   const handleSetCategory = (newCategory: string) => {
+    const maxNewCategoryStock = product.stock[newCategory];
     let validAmount = count.amount;
 
-    if (count.amount > product.stock[newCategory]) {
-      notifyChangeCountCategory(product.stock[newCategory], newCategory);
-      validAmount = product.stock[newCategory];
+    if (count.amount > maxNewCategoryStock) {
+      notifyChangeCountCategory(maxNewCategoryStock, newCategory);
+      validAmount = maxNewCategoryStock;
     }
 
     const newCartData = {
@@ -118,11 +121,12 @@ const CartItem: FC<CartItemProps> = ({
   };
 
   const handleMergeCategories = () => {
+    const maxNewCategoryStock = product.stock[nextCategory];
     const nextAmount = getNewCountAmount(cart, product.id, nextCategory);
     let amountSum = nextAmount + count.amount;
 
-    if (amountSum > product.stock[nextCategory]) {
-      amountSum = product.stock[nextCategory];
+    if (amountSum > maxNewCategoryStock) {
+      amountSum = maxNewCategoryStock;
     }
 
     const newCartData = {

@@ -7,14 +7,13 @@ import { addToCart, ICartState, selectCart } from "@Cart/cartSlice";
 import { getProductMaxCount } from "@/utils/products";
 import { getIsUnitInCart, getOldPrice } from "@Products/utils/products";
 import { getProductDataList } from "@Products/utils/products";
-import { ECount, IProduct } from "@Products/types/product";
+import { IProduct } from "@Products/types/product";
+import { ECount } from "@/common/types/count";
 import { ICartData } from "@Cart/types/cart";
-import Button, {
-  EBtnImage,
-  EBtnImagePos,
-  EBtnStyle,
-} from "@CommonComponents/Button/Button";
-import Stars, { EStarsColor } from "@CommonComponents/Stars/Stars";
+import { EStarsColor } from "@/common/types/stars";
+import { EBtnStyle, EBtnImage, EBtnImagePos } from "@/common/types/button";
+import Button from "@CommonComponents/Button/Button";
+import Stars from "@CommonComponents/Stars/Stars";
 import Count from "@CommonComponents/Count/Count";
 import Modal from "@CommonComponents/Modal/Modal";
 import Tabs from "@ProductsComponents/Tabs/Tabs";

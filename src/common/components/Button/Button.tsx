@@ -1,35 +1,18 @@
 import React, { FC } from "react";
 
+import {
+  EBtnStyle,
+  EBtnImage,
+  EBtnImagePos,
+  EBtnArrowDir,
+} from "@/common/types/button";
+
 import arrow from "@Images/arrow_right.svg";
 import plus from "@Images/plus.svg";
 import heart from "@Images/heart.svg";
 import basket from "@Images/basket.svg";
 
 import "./Button.scss";
-
-export enum EBtnStyle {
-  PRIMARY = "primary",
-  SECONDARY = "secondary",
-  SMALL = "small",
-  BIG = "big",
-}
-
-export enum EBtnImage {
-  ARROW = "arrow",
-  PLUS = "plus",
-  HEART = "heart",
-  BASKET = "basket",
-}
-
-export enum EBtnImagePos {
-  RIGHT = "right",
-  LEFT = "left",
-}
-
-export enum EBtnArrowDir {
-  RIGHT = "right",
-  BOTTOM = "bottom",
-}
 
 interface ButtonProps {
   text: string;

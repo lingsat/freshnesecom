@@ -3,13 +3,10 @@ import { useNavigate } from "react-router-dom";
 
 import { getOldPrice } from "@Products/utils/products";
 import { IProduct } from "@Products/types/product";
-import Button, {
-  EBtnImage,
-  EBtnImagePos,
-  EBtnStyle,
-} from "@CommonComponents/Button/Button";
-import Stars, { EStarsColor } from "@CommonComponents/Stars/Stars";
-
+import { EStarsColor } from "@/common/types/stars";
+import { EBtnStyle, EBtnImage, EBtnImagePos } from "@/common/types/button";
+import Button from "@CommonComponents/Button/Button";
+import Stars from "@CommonComponents/Stars/Stars";
 import "./Card.scss";
 
 interface CardProps {

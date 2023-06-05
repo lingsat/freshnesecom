@@ -12,7 +12,8 @@ import {
   isPageInActiveRange,
 } from "@Products/utils/pagination";
 import { IPaginationState } from "@Products/types/pagination";
-import Button, { EBtnArrowDir } from "@CommonComponents/Button/Button";
+import { EBtnArrowDir } from "@/common/types/button";
+import Button from "@CommonComponents/Button/Button";
 
 import "./Paging.scss";
 
