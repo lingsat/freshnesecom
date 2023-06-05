@@ -1,29 +1,31 @@
 {
   "files": {
-    "main.css": "/freshnesecom/static/css/main.3ab6e8f3.css",
-    "main.js": "/freshnesecom/static/js/main.5c35ae7b.js",
+    "main.css": "/freshnesecom/static/css/main.6c1ede71.css",
+    "main.js": "/freshnesecom/static/js/main.9536471e.js",
     "static/media/empty_cart.webp": "/freshnesecom/static/media/empty_cart.6ef843cd43b8433d2e76.webp",
+    "static/media/wishlist_empty.svg": "/freshnesecom/static/media/wishlist_empty.57fe4670b9c28c82e42a8168c040f61d.svg",
     "static/media/logo.svg": "/freshnesecom/static/media/logo.b57d9120996d735aac5f2a6415103304.svg",
     "static/media/star.svg": "/freshnesecom/static/media/star.367792338bd1aa4d2b54ab2429ee0ff0.svg",
     "static/media/star_checked.svg": "/freshnesecom/static/media/star_checked.14c252db59ef8f28d7aae764e39e004f.svg",
     "static/media/star_checked_gold.svg": "/freshnesecom/static/media/star_checked_gold.4815e75f7312950fc2d2f001fa9f2b7f.svg",
     "static/media/basket.svg": "/freshnesecom/static/media/basket.f36e95a3d1c8056884aec6eb03b5ee45.svg",
-    "static/media/heart.svg": "/freshnesecom/static/media/heart.b6e2fe31590b497b974ed16a16fb070d.svg",
+    "static/media/heart.svg": "/freshnesecom/static/media/heart.76cf3fe2c206a2c18ae880cf49b8c08e.svg",
     "static/media/heart_thin.svg": "/freshnesecom/static/media/heart_thin.9098556a4cda9ee4012988f3b84bafd7.svg",
     "index.html": "/freshnesecom/index.html",
     "static/media/search.svg": "/freshnesecom/static/media/search.3c2bb39a767a15b43d3ae5c3c7fa19b2.svg",
     "static/media/close.svg": "/freshnesecom/static/media/close.6af010327c10a01672900f26b9d06c67.svg",
     "static/media/user.svg": "/freshnesecom/static/media/user.017ec8163c9bf429444293abcb7bcbd0.svg",
+    "static/media/heart_filled.svg": "/freshnesecom/static/media/heart_filled.50f37c2892b897df164cea186f6d1693.svg",
     "static/media/arrow_down_thin.svg": "/freshnesecom/static/media/arrow_down_thin.8f8d320f7e18d0ea34cd393b345b1b24.svg",
     "static/media/arrow_black.svg": "/freshnesecom/static/media/arrow_black.7982e551e8b9e1aad088741c4de88ef7.svg",
     "static/media/plus.svg": "/freshnesecom/static/media/plus.363d338eebf6f060eaa9b115e315203c.svg",
     "static/media/arrow_down.svg": "/freshnesecom/static/media/arrow_down.dbbcab8d2d7a8c90c435fc9908cb1d03.svg",
     "static/media/arrow_right.svg": "/freshnesecom/static/media/arrow_right.b48712732b6667c106c2d9ea7e7c7de8.svg",
-    "main.3ab6e8f3.css.map": "/freshnesecom/static/css/main.3ab6e8f3.css.map",
-    "main.5c35ae7b.js.map": "/freshnesecom/static/js/main.5c35ae7b.js.map"
+    "main.6c1ede71.css.map": "/freshnesecom/static/css/main.6c1ede71.css.map",
+    "main.9536471e.js.map": "/freshnesecom/static/js/main.9536471e.js.map"
   },
   "entrypoints": [
-    "static/css/main.3ab6e8f3.css",
-    "static/js/main.5c35ae7b.js"
+    "static/css/main.6c1ede71.css",
+    "static/js/main.9536471e.js"
   ]
 }
