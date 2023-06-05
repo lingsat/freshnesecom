@@ -1,7 +1,6 @@
 import React, { ChangeEvent, FC, useState } from "react";
-import { toast } from "react-toastify";
 
-import { getCountCategories, getValidPrice } from "@/utils/products";
+import { getCountCategories, getValidNumber } from "@/utils/products";
 import { ECount, IProduct } from "@Products/types/product";
 import DropDown from "@CommonComponents/DropDown/DropDown";
 
@@ -17,7 +16,6 @@ interface CountProps {
   handleChangeAmount: (newCategory: number) => void;
   isCountInvalid: boolean;
   disabled?: boolean;
-  invalidCategories?: string[];
   maxCount: number;
 }
 
@@ -29,14 +27,13 @@ const Count: FC<CountProps> = ({
   handleChangeAmount,
   isCountInvalid,
   disabled = false,
-  invalidCategories = [],
   maxCount,
 }) => {
-  const [maxError, setMaxError] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
   const [showMenu, setShowMenu] = useState<boolean>(false);
 
   const countCategoryList = getCountCategories(product.price);
-  const isCountInvalidMax = isCountInvalid || maxError;
+  const isCountInvalidMax = isCountInvalid || error;
   const isCountCategorySingle = countCategoryList.length === 1;
 
   const handleHideMenu = () => {
@@ -48,36 +45,26 @@ const Count: FC<CountProps> = ({
   };
 
   const increaseCount = () => {
-    // setCount((prev) => {
-    //   if (prev >= maxCount) {
-    //     setMaxError(true);
-    //     return prev;
-    //   } else {
-    //     setMaxError(false);
-    //     return prev + 1;
-    //   }
-    // });
+    const newCount = count + 1;
+    const newValidCount = getValidNumber(newCount.toString(), maxCount);
+    handleChangeAmount(newValidCount);
+    newCount > maxCount ? setError(true) : setError(false);
   };
 
   const decreaseCount = () => {
-    // setCount((prev) => {
-    //   if (prev <= 0) {
-    //     setMaxError(true);
-    //     return prev;
-    //   } else {
-    //     setMaxError(false);
-    //     return prev - 1;
-    //   }
-    // });
+    const newCount = count - 1;
+    const newValidCount = getValidNumber(newCount.toString(), maxCount);
+    handleChangeAmount(newValidCount);
+    newCount < ECount.MIN_COUNT_VALUE ? setError(true) : setError(false);
   };
 
   const handleChangeCount = (event: ChangeEvent<HTMLInputElement>) => {
     if (+event.target.value > maxCount) {
-      setMaxError(true);
+      setError(true);
     } else {
-      setMaxError(false);
+      setError(false);
     }
-    const newValidCount = getValidPrice(event.target.value, maxCount);
+    const newValidCount = getValidNumber(event.target.value, maxCount);
     handleChangeAmount(newValidCount);
   };
 
@@ -85,20 +72,11 @@ const Count: FC<CountProps> = ({
     if (+event.target.value < ECount.MIN_COUNT_VALUE) {
       handleChangeAmount(ECount.MIN_COUNT_VALUE);
     }
-    setMaxError(false);
+    setError(false);
   };
 
-  const notifyInvalidCategory = (category: string) =>
-    toast.warn(`Such product with "${category}" units already exist in cart!`);
-
   const handleSetCountCategory = (newCountCategory: string) => {
-    if (invalidCategories.includes(newCountCategory)) {
-      notifyInvalidCategory(newCountCategory);
-    } else {
-      handleChangeCategory(newCountCategory);
-      handleChangeAmount(ECount.MIN_COUNT_VALUE);
-    }
-
+    handleChangeCategory(newCountCategory);
     handleHideMenu();
   };
 

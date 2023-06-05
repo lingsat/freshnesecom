@@ -1,14 +1,23 @@
-import React, { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
-import { AppDispatch } from "@Store/store";
-import { removeSingleCartItem, changeCartItem } from "@Cart/cartSlice";
+import { AppDispatch, RootState } from "@Store/store";
+import {
+  removeSingleCartItem,
+  changeCartItemCount,
+  mergeCartItemCategories,
+  ICartState,
+  selectCart,
+} from "@Cart/cartSlice";
+import { getNewCountAmount } from "@Cart/utils/cart";
 import { ERoutes } from "@/types/routes";
 import { ECount } from "@Products/types/product";
 import { ICartItemWithProduct } from "@Cart/types/cart";
 import Stars from "@CommonComponents/Stars/Stars";
 import Count from "@CommonComponents/Count/Count";
+import Modal from "@CommonComponents/Modal/Modal";
 
 import heart from "@Images/heart_thin.svg";
 import close from "@Images/close.svg";
@@ -28,6 +37,11 @@ const CartItem: FC<CartItemProps> = ({
 
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
+  const { cart } = useSelector<RootState, ICartState>(selectCart);
+
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const [modalText, setModalText] = useState<string>("");
+  const [nextCategory, setNextCategory] = useState<string>("");
 
   const isCountInvalid =
     count.amount > product.stock[count.category] ||
@@ -35,6 +49,19 @@ const CartItem: FC<CartItemProps> = ({
   const priceSummary = (product.price[count.category] * count.amount).toFixed(
     2
   );
+
+  const notifyChangeCountCategory = (amount: number, category: string) =>
+    toast.warn(
+      `Amount was decreased! We have only ${amount} "${category}" in stock.`
+    );
+
+  const handleOpenModal = () => {
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
 
   const handleRemoveCartItem = () => {
     dispatch(
@@ -47,14 +74,69 @@ const CartItem: FC<CartItemProps> = ({
   };
 
   const handleChangeCategory = (newCategory: string) => {
+    setNextCategory(newCategory);
+    if (invalidCategories.includes(newCategory)) {
+      const nextAmount = getNewCountAmount(cart, product.id, newCategory);
+      let amountSum = nextAmount + count.amount;
+
+      if (amountSum > product.stock[newCategory]) {
+        amountSum = product.stock[newCategory];
+        setModalText(
+          `You already have ${nextAmount} "${newCategory}" in cart. Now you trying to add ${count.amount} "${newCategory}" more, but we have only ${product.stock[newCategory]} "${newCategory}" in stock. Press Cancel to change amount or Confirm - to get ${product.stock[newCategory]} "${newCategory}".`
+        );
+      } else {
+        setModalText(
+          `You already have ${nextAmount} "${newCategory}" in cart. Now you trying to add ${
+            count.amount
+          } "${newCategory}" more. Press Cancel to change amount or Confirm - to get ${
+            nextAmount + count.amount
+          } "${newCategory}".`
+        );
+      }
+      handleOpenModal();
+    } else {
+      handleSetCategory(newCategory);
+    }
+  };
+
+  const handleSetCategory = (newCategory: string) => {
+    let validAmount = count.amount;
+
+    if (count.amount > product.stock[newCategory]) {
+      notifyChangeCountCategory(product.stock[newCategory], newCategory);
+      validAmount = product.stock[newCategory];
+    }
+
     const newCartData = {
       productId: product.id,
       count: {
-        amount: ECount.MIN_COUNT_VALUE,
+        amount: validAmount,
         category: newCategory,
       },
     };
-    dispatch(changeCartItem({ newCartData, oldCategory: count.category }));
+    dispatch(changeCartItemCount({ newCartData, oldCategory: count.category }));
+  };
+
+  const handleMergeCategories = () => {
+    const nextAmount = getNewCountAmount(cart, product.id, nextCategory);
+    let amountSum = nextAmount + count.amount;
+
+    if (amountSum > product.stock[nextCategory]) {
+      amountSum = product.stock[nextCategory];
+    }
+
+    const newCartData = {
+      productId: product.id,
+      count: {
+        amount: amountSum,
+        category: nextCategory,
+      },
+    };
+
+    dispatch(
+      mergeCartItemCategories({ newCartData, oldCategory: count.category })
+    );
+    handleCloseModal();
   };
 
   const handleChangeAmount = (newAmount: number) => {
@@ -65,11 +147,28 @@ const CartItem: FC<CartItemProps> = ({
         category: count.category,
       },
     };
-    dispatch(changeCartItem({ newCartData, oldCategory: count.category }));
+    dispatch(changeCartItemCount({ newCartData, oldCategory: count.category }));
   };
+
+  useEffect(() => {
+    if (showModal) {
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = "unset";
+      };
+    }
+  }, [showModal]);
 
   return (
     <li className="cart-item">
+      {showModal && (
+        <Modal
+          text={modalText}
+          confirmBtnText="Confirm"
+          onModalConfirm={handleMergeCategories}
+          onModalCancel={handleCloseModal}
+        />
+      )}
       <div className="cart-item__left">
         <img
           src={product.images[0]}
@@ -112,7 +211,6 @@ const CartItem: FC<CartItemProps> = ({
             count={count.amount}
             handleChangeAmount={handleChangeAmount}
             isCountInvalid={isCountInvalid}
-            invalidCategories={invalidCategories}
             maxCount={product.stock[count.category]}
           />
         </div>

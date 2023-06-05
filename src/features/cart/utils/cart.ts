@@ -58,7 +58,7 @@ export const getCartItemWithProduct = (
 export const getInvalidCategories = (
   cart: ICartItem[],
   itemWithProduct: ICartItemWithProduct
-) => {
+): string[] => {
   const allCategories = Object.keys(itemWithProduct.product.price);
   let currentItemCategories: string[] = [];
 
@@ -75,5 +75,25 @@ export const getInvalidCategories = (
     );
   } else {
     return [];
+  }
+};
+
+export const getNewCountAmount = (
+  cart: ICartItem[],
+  prodId: string,
+  nextCategory: string
+): number => {
+  const cartItem = cart.find((item) => item.productId === prodId);
+
+  if (cartItem) {
+    return cartItem.countArr.reduce((acc, countItem) => {
+      if (countItem.category === nextCategory) {
+        return acc + countItem.amount;
+      } else {
+        return acc;
+      }
+    }, 0);
+  } else {
+    return 0;
   }
 };

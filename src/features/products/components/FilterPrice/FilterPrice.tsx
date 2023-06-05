@@ -8,7 +8,7 @@ import {
   IProductsState,
   selectProducts,
 } from "@Products/productsSlice";
-import { getValidPrice } from "@/utils/products";
+import { getValidNumber } from "@/utils/products";
 import { DEBOUNCE_DELAY } from "@/constants";
 import { EPrice } from "@Products/types/product";
 
@@ -27,12 +27,12 @@ const FilterPrice = () => {
     priceValues[0] < minMaxPrice.min || priceValues[0] > priceValues[1];
 
   const handleChangeMin = (event: ChangeEvent<HTMLInputElement>) => {
-    const newMinPrice = getValidPrice(event.target.value, priceValues[1]);
+    const newMinPrice = getValidNumber(event.target.value, priceValues[1]);
     setPriceValues((prevValues) => [newMinPrice, prevValues[1]]);
   };
 
   const handleChangeMax = (event: ChangeEvent<HTMLInputElement>) => {
-    const newMaxPrice = getValidPrice(event.target.value, minMaxPrice.max);
+    const newMaxPrice = getValidNumber(event.target.value, minMaxPrice.max);
     setPriceValues((prevValues) => [prevValues[0], newMaxPrice]);
   };
 

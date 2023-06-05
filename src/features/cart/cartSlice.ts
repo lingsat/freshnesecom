@@ -14,6 +14,7 @@ import {
   addProdToCart,
   getUpdatedCart,
   getCartAfterRemove,
+  getMergedCart,
 } from "@Cart/utils/store";
 import {
   AXIOR_RETRY_COUNT,
@@ -65,25 +66,30 @@ export const cartSlice = createSlice({
     addToCart(state, action: PayloadAction<ICartData>) {
       state.cart = addProdToCart(state.cart, action.payload);
     },
-    changeCartItem(
+    changeCartItemCount(
       state,
       action: PayloadAction<{ newCartData: ICartData; oldCategory: string }>
     ) {
       const { newCartData, oldCategory } = action.payload;
       state.cart = getUpdatedCart(state.cart, newCartData, oldCategory);
     },
+    mergeCartItemCategories(
+      state,
+      action: PayloadAction<{ newCartData: ICartData; oldCategory: string }>
+    ) {
+      const { newCartData, oldCategory } = action.payload;
+      state.cart = getMergedCart(state.cart, newCartData, oldCategory);
+    },
     removeSingleCartItem(
       state,
       action: PayloadAction<{ productId: string; category: string }>
     ) {
       const { productId, category } = action.payload;
-
       const [updatedCart, removeCartProduct] = getCartAfterRemove(
         state.cart,
         productId,
         category
       );
-
       state.cart = updatedCart;
       if (removeCartProduct) {
         state.cartProducts = state.cartProducts.filter(
@@ -112,8 +118,13 @@ export const cartSlice = createSlice({
   },
 });
 
-export const { addToCart, removeSingleCartItem, changeCartItem, clearCart } =
-  cartSlice.actions;
+export const {
+  addToCart,
+  removeSingleCartItem,
+  changeCartItemCount,
+  mergeCartItemCategories,
+  clearCart,
+} = cartSlice.actions;
 
 export const selectCart = (state: RootState) => state.cart;
 

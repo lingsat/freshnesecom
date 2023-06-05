@@ -1,3 +1,4 @@
+import { ICartItem } from "@/features/cart/types/cart";
 import { productCategories } from "@/mock/productCategories";
 import { getCountCategories } from "@/utils/products";
 import { ICategory, IProduct } from "@Products/types/product";
@@ -74,4 +75,20 @@ export const getSortedImages = (imagesArr: string[], index: number) => () => {
   ];
 
   return updatedImagesArr;
+};
+
+export const getIsUnitInCart = (
+  cart: ICartItem[],
+  prodId: string,
+  countCategory: string
+): boolean => {
+  const productInCart = cart.find((cartItem) => cartItem.productId === prodId);
+
+  if (productInCart) {
+    return productInCart.countArr.some(
+      (countItem) => countItem.category === countCategory
+    );
+  } else {
+    return false;
+  }
 };

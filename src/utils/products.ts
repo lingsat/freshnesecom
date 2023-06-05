@@ -99,7 +99,7 @@ export const getTags = (productsArr: IProduct[]): string[] => {
   return Array.from(new Set(allTagsArr));
 };
 
-export const getValidPrice = (value: string, max: number, min = 0): number => {
+export const getValidNumber = (value: string, max: number, min = 0): number => {
   return Math.max(min, Math.min(max, Number(value)));
 };
 

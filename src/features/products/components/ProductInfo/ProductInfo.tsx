@@ -1,11 +1,11 @@
-import React, { FC, useState } from "react";
+import React, { FC, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
 import { AppDispatch, RootState } from "@Store/store";
 import { addToCart, ICartState, selectCart } from "@Cart/cartSlice";
 import { getProductMaxCount } from "@/utils/products";
-import { getOldPrice } from "@Products/utils/products";
+import { getIsUnitInCart, getOldPrice } from "@Products/utils/products";
 import { getProductDataList } from "@Products/utils/products";
 import { ECount, IProduct } from "@Products/types/product";
 import { ICartData } from "@Cart/types/cart";
@@ -16,6 +16,7 @@ import Button, {
 } from "@CommonComponents/Button/Button";
 import Stars, { EStarsColor } from "@CommonComponents/Stars/Stars";
 import Count from "@CommonComponents/Count/Count";
+import Modal from "@CommonComponents/Modal/Modal";
 import Tabs from "@ProductsComponents/Tabs/Tabs";
 
 import "./ProductInfo.scss";
@@ -32,6 +33,7 @@ const ProductInfo: FC<ProductInfoProps> = ({ product }) => {
     product.mainCountCategory
   );
   const [count, setCount] = useState<number>(1);
+  const [showModal, setShowModal] = useState<boolean>(false);
 
   const isCountInvalid =
     count > product.stock[countCategory] || count < ECount.MIN_COUNT_VALUE;
@@ -44,8 +46,17 @@ const ProductInfo: FC<ProductInfoProps> = ({ product }) => {
   const notifyAddToCart = () =>
     toast.success(`${count} "${countCategory}" added to Cart!`);
 
+  const handleOpenModal = () => {
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
   const handleChangeCategory = (newCategory: string) => {
     setCountCategory(newCategory);
+    setCount(ECount.MIN_COUNT_VALUE);
   };
 
   const handleChangeAmount = (newAmount: number) => {
@@ -62,12 +73,40 @@ const ProductInfo: FC<ProductInfoProps> = ({ product }) => {
     };
 
     dispatch(addToCart(newCartItem));
-    setCount(1);
+    setCount(ECount.MIN_COUNT_VALUE);
+    handleCloseModal();
     notifyAddToCart();
   };
 
+  const addExistingInCart = () => {
+    const isUnitInCart = getIsUnitInCart(cart, product.id, countCategory);
+
+    if (isUnitInCart) {
+      handleOpenModal();
+    } else {
+      handleAddToCart();
+    }
+  };
+
+  useEffect(() => {
+    if (showModal) {
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = "unset";
+      };
+    }
+  }, [showModal]);
+
   return (
     <div className="product-info">
+      {showModal && (
+        <Modal
+          text={`This product with "${countCategory}" units already in cart. Do you want to add ${count} "${countCategory}" more?`}
+          confirmBtnText="Add to cart"
+          onModalConfirm={handleAddToCart}
+          onModalCancel={handleCloseModal}
+        />
+      )}
       <h2 className="product-info__title">{product.title}</h2>
       <div className="product-info__stat">
         <Stars
@@ -105,7 +144,7 @@ const ProductInfo: FC<ProductInfoProps> = ({ product }) => {
           imagePosition={EBtnImagePos.LEFT}
           text="Add to cart"
           disabled={isCountInvalid || !maxCount}
-          onCLick={handleAddToCart}
+          onCLick={addExistingInCart}
         />
         {!maxCount && (
           <p className="product-info__message">{`All ${product.stock[countCategory]} "${countCategory}" already in Cart!"`}</p>

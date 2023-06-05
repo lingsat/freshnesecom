@@ -40,12 +40,33 @@ export const getUpdatedCart = (
   cart: ICartItem[],
   newCartData: ICartData,
   oldCategory: string
-) => {
+): ICartItem[] => {
   const { productId, count } = newCartData;
   return cart.map((item) => {
     if (item.productId === productId) {
       const updatedCountArr = item.countArr.map((countItem) => {
         return countItem.category === oldCategory ? count : countItem;
+      });
+      return { ...item, countArr: updatedCountArr };
+    } else {
+      return item;
+    }
+  });
+};
+
+export const getMergedCart = (
+  cart: ICartItem[],
+  newCartData: ICartData,
+  oldCategory: string
+): ICartItem[] => {
+  const { productId, count } = newCartData;
+  return cart.map((item) => {
+    if (item.productId === productId) {
+      const countAfterRemove = item.countArr.filter(
+        (count) => count.category !== oldCategory
+      );
+      const updatedCountArr = countAfterRemove.map((countItem) => {
+        return countItem.category === count.category ? count : countItem;
       });
       return { ...item, countArr: updatedCountArr };
     } else {
