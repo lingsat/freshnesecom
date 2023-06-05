@@ -66,6 +66,13 @@ export const getProductsByCategory = (
   }
 };
 
+export const getWishlistProducts = (
+  products: IProduct[],
+  wishlist: string[]
+): IProduct[] => {
+  return products.filter((product) => wishlist.includes(product.id));
+};
+
 export const getStarsArrFromNumber = (num: number): boolean[] => {
   const arr: boolean[] = Array(5).fill(false);
   return arr.map((_, index) => index < num);

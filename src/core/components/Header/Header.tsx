@@ -4,12 +4,14 @@ import { Link } from "react-router-dom";
 
 import { RootState } from "@Store/store";
 import { IProductsState, selectProducts } from "@Products/productsSlice";
+import { ERoutes } from "@/types/routes";
 import { ICartState, selectCart } from "@Cart/cartSlice";
 import { getCategoriesObj } from "@/utils/products";
 import LinkItem from "@CommonComponents/LInkItem/LinkItem";
 
 import arrowDown from "@Images/arrow_down.svg";
 import cartIcon from "@Images/basket.svg";
+import heartIcon from "@Images/heart.svg";
 import logo from "@Images/logo.svg";
 import userIcon from "@Images/user.svg";
 
@@ -18,7 +20,9 @@ import Search from "./components/Search/Search";
 import "./Header.scss";
 
 const Header = () => {
-  const { products } = useSelector<RootState, IProductsState>(selectProducts);
+  const { products, wishlist } = useSelector<RootState, IProductsState>(
+    selectProducts
+  );
   const { cart } = useSelector<RootState, ICartState>(selectCart);
   const [showCategories, setShowCategories] = useState<boolean>(true);
 
@@ -69,10 +73,16 @@ const Header = () => {
         </Link>
         <Search />
         <div className="controls">
+          {!!wishlist.length && (
+            <Link to={`/${ERoutes.WISHLIST}`} className="controls__btn">
+              <img src={heartIcon} alt="Wishlist" />
+              <span>{wishlist.length}</span>
+            </Link>
+          )}
           <button type="button" className="controls__btn">
             <img src={userIcon} alt="User" />
           </button>
-          <Link to="/cart" className="controls__btn">
+          <Link to={`/${ERoutes.CART}`} className="controls__btn">
             <img src={cartIcon} alt="Cart" />
             {!!cartCount && <span>{cartCount}</span>}
           </Link>

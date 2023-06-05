@@ -12,9 +12,9 @@ import {
 } from "@Products/productsSlice";
 import { getProductsByCategory } from "@/utils/products";
 import LoadinSpinner from "@CommonComponents/LoadingSpinner/LoadingSpinner";
+import SuggestedCard from "@CommonComponents/SuggestedCard/SuggestedCard";
 import Images from "@ProductsComponents/Images/Images";
 import ProductInfo from "@ProductsComponents/ProductInfo/ProductInfo";
-import Suggested from "@ProductsComponents/Suggested/Suggested";
 
 import "swiper/scss";
 import "./ProductItem.scss";
@@ -22,10 +22,8 @@ import "./ProductItem.scss";
 const ProductItem = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { id } = useParams();
-  const { products, singleProduct, isSingleLoading, singleError } = useSelector<
-    RootState,
-    IProductsState
-  >(selectProducts);
+  const { products, singleProduct, isSingleLoading, singleError, wishlist } =
+    useSelector<RootState, IProductsState>(selectProducts);
 
   const categoryProducts = getProductsByCategory(products, singleProduct);
 
@@ -52,7 +50,7 @@ const ProductItem = () => {
           discount={singleProduct.discount}
           freeShipping={singleProduct.freeShipping}
         />
-        <ProductInfo product={singleProduct} />
+        <ProductInfo product={singleProduct} wishlist={wishlist} />
       </div>
       <h3 className="product__subtitle">You will maybe love</h3>
       <div className="product__carousel">
@@ -72,7 +70,7 @@ const ProductItem = () => {
           }}>
           {categoryProducts.map((product) => (
             <SwiperSlide key={`suggested-${product.id}`}>
-              <Suggested product={product} />
+              <SuggestedCard product={product} />
             </SwiperSlide>
           ))}
         </Swiper>

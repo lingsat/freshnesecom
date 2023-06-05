@@ -5,6 +5,11 @@ import { toast } from "react-toastify";
 
 import { AppDispatch, RootState } from "@Store/store";
 import {
+  IProductsState,
+  selectProducts,
+  toggleWishlistItem,
+} from "@Products/productsSlice";
+import {
   removeSingleCartItem,
   changeCartItemCount,
   mergeCartItemCategories,
@@ -20,6 +25,7 @@ import Count from "@CommonComponents/Count/Count";
 import Modal from "@CommonComponents/Modal/Modal";
 
 import heart from "@Images/heart_thin.svg";
+import heartFilled from "@Images/heart_filled.svg";
 import close from "@Images/close.svg";
 
 import "./CartItem.scss";
@@ -43,12 +49,19 @@ const CartItem: FC<CartItemProps> = ({
   const [modalText, setModalText] = useState<string>("");
   const [nextCategory, setNextCategory] = useState<string>("");
 
+  const { wishlist } = useSelector<RootState, IProductsState>(selectProducts);
+
   const isCountInvalid =
     count.amount > product.stock[count.category] ||
     count.amount < ECount.MIN_COUNT_VALUE;
   const priceSummary = (product.price[count.category] * count.amount).toFixed(
     2
   );
+  const isInWishlist = wishlist.includes(product.id);
+
+  const handleToggleWishlist = () => {
+    dispatch(toggleWishlistItem(product.id));
+  };
 
   const notifyChangeCountCategory = (amount: number, category: string) =>
     toast.warn(
@@ -181,9 +194,9 @@ const CartItem: FC<CartItemProps> = ({
           onClick={handleOpenProduct}
         />
         <div className="cart-item__buttons">
-          <button className="cart-item__btn">
-            <img src={heart} alt="Heart" />
-            Wishlist
+          <button className="cart-item__btn" onClick={handleToggleWishlist}>
+            <img src={isInWishlist ? heartFilled : heart} alt="Heart" />
+            {isInWishlist ? "Unwish" : "Wishlist"}
           </button>
           <button className="cart-item__btn" onClick={handleRemoveCartItem}>
             <img src={close} alt="Close" />

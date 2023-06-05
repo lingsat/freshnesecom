@@ -1,6 +1,13 @@
 import React, { FC } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
+import { AppDispatch, RootState } from "@Store/store";
+import {
+  IProductsState,
+  selectProducts,
+  toggleWishlistItem,
+} from "@Products/productsSlice";
 import { getOldPrice } from "@Products/utils/products";
 import { IProduct } from "@Products/types/product";
 import { EStarsColor } from "@/common/types/stars";
@@ -14,13 +21,20 @@ interface CardProps {
 }
 
 const Card: FC<CardProps> = ({ product }) => {
+  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
+  const { wishlist } = useSelector<RootState, IProductsState>(selectProducts);
 
   const { mainPrice, mainCountCategory } = product;
   const oldPrice = getOldPrice(product.mainPrice, product.discount);
+  const isInWishlist = wishlist.includes(product.id);
 
   const handleOpenProduct = () => {
     navigate(product.id);
+  };
+
+  const handleToggleWishlist = () => {
+    dispatch(toggleWishlistItem(product.id));
   };
 
   return (
@@ -85,10 +99,11 @@ const Card: FC<CardProps> = ({ product }) => {
           <div className="info__buttons">
             <Button text="Product Detail" onCLick={handleOpenProduct} />
             <Button
+              text={`${isInWishlist ? "Unwish product" : "Add to wish list"}`}
               style={EBtnStyle.SECONDARY}
-              image={EBtnImage.HEART}
+              image={isInWishlist ? EBtnImage.HEART_FILLED : EBtnImage.HEART}
               imagePosition={EBtnImagePos.LEFT}
-              text="Add to wish list"
+              onCLick={handleToggleWishlist}
             />
           </div>
         </div>

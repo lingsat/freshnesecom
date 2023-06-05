@@ -19,12 +19,14 @@ import Modal from "@CommonComponents/Modal/Modal";
 import Tabs from "@ProductsComponents/Tabs/Tabs";
 
 import "./ProductInfo.scss";
+import { toggleWishlistItem } from "../../productsSlice";
 
 interface ProductInfoProps {
   product: IProduct;
+  wishlist: string[];
 }
 
-const ProductInfo: FC<ProductInfoProps> = ({ product }) => {
+const ProductInfo: FC<ProductInfoProps> = ({ product, wishlist }) => {
   const dispatch = useDispatch<AppDispatch>();
   const { cart } = useSelector<RootState, ICartState>(selectCart);
 
@@ -36,6 +38,7 @@ const ProductInfo: FC<ProductInfoProps> = ({ product }) => {
 
   const isCountInvalid =
     count > product.stock[countCategory] || count < ECount.MIN_COUNT_VALUE;
+  const isInWishlist = wishlist.includes(product.id);
   const currentPrice = (product.price[countCategory] * +count).toFixed(2);
   const oldPrice = getOldPrice(+currentPrice, product.discount);
   const datalist = getProductDataList(product, countCategory);
@@ -85,6 +88,10 @@ const ProductInfo: FC<ProductInfoProps> = ({ product }) => {
     } else {
       handleAddToCart();
     }
+  };
+
+  const handleToggleWishlist = () => {
+    dispatch(toggleWishlistItem(product.id));
   };
 
   useEffect(() => {
@@ -150,10 +157,11 @@ const ProductInfo: FC<ProductInfoProps> = ({ product }) => {
         )}
       </div>
       <Button
+        text={`${isInWishlist ? "Remove from" : "Add to"} my wish list`}
         style={EBtnStyle.SECONDARY}
-        image={EBtnImage.HEART}
+        image={isInWishlist ? EBtnImage.HEART_FILLED : EBtnImage.HEART}
         imagePosition={EBtnImagePos.LEFT}
-        text="Add to my wish list"
+        onCLick={handleToggleWishlist}
       />
       <Tabs product={product} />
     </div>

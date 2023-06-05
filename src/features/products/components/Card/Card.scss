@@ -28,6 +28,10 @@
   width: 270px;
 }
 
+.info__right {
+  min-width: 166px;
+}
+
 .info__title {
   @include text-overflow-hide;
   margin-bottom: 4px;
@@ -241,8 +245,7 @@
   }
 
   .info {
-    &__left,
-    &__right {
+    &__left {
       width: 100%;
       display: flex;
       flex-direction: column;

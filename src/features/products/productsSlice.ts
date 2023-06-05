@@ -33,6 +33,7 @@ export interface IProductsState {
   filter: IFilter;
   sortRule: string;
   pagination: IPaginationState;
+  wishlist: string[];
 }
 
 const initialPagination = {
@@ -59,6 +60,7 @@ const initialState: IProductsState = {
   },
   sortRule: "",
   pagination: initialPagination,
+  wishlist: [],
 };
 
 export const fetchProducts = createAsyncThunk("products/fetchProducts", () => {
@@ -138,6 +140,12 @@ export const productsSlice = createSlice({
     increaseProductsPerPage(state) {
       state.pagination.productsPerPage += EPagination.PRODUCTS_PER_PAGE;
     },
+    toggleWishlistItem(state, action: PayloadAction<string>) {
+      state.wishlist = getToggledArray(state.wishlist, action.payload);
+    },
+    clearWishlist(state) {
+      state.wishlist = [];
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchProducts.pending, (state) => {
@@ -175,6 +183,8 @@ export const {
   changeSortRule,
   changeCurrentPage,
   increaseProductsPerPage,
+  toggleWishlistItem,
+  clearWishlist,
 } = productsSlice.actions;
 
 export const selectProducts = (state: RootState) => state.products;
