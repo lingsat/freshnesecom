@@ -8,6 +8,10 @@ import { ERoutes } from "@/types/routes";
 import { ICartState, selectCart } from "@Cart/cartSlice";
 import { getCategoriesObj } from "@/utils/products";
 import LinkItem from "@CommonComponents/LInkItem/LinkItem";
+import {
+  IWishlistState,
+  selectWishlist,
+} from "@/features/wishlist/wishlistSlice";
 
 import arrowDown from "@Images/arrow_down.svg";
 import cartIcon from "@Images/basket.svg";
@@ -20,10 +24,9 @@ import Search from "./components/Search/Search";
 import "./Header.scss";
 
 const Header = () => {
-  const { products, wishlist } = useSelector<RootState, IProductsState>(
-    selectProducts
-  );
+  const { products } = useSelector<RootState, IProductsState>(selectProducts);
   const { cart } = useSelector<RootState, ICartState>(selectCart);
+  const { wishlist } = useSelector<RootState, IWishlistState>(selectWishlist);
   const [showCategories, setShowCategories] = useState<boolean>(true);
 
   const categoriesObj = getCategoriesObj(products);

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import { AppDispatch } from "@Store/store";
-import { toggleWishlistItem } from "@Products/productsSlice";
+import { toggleWishlistItem } from "@/features/wishlist/wishlistSlice";
 import { getOldPrice } from "@Products/utils/products";
 import { IProduct } from "@Products/types/product";
 import { ERoutes } from "@/types/routes";

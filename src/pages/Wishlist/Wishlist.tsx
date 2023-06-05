@@ -1,20 +1,17 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { AppDispatch, RootState } from "@Store/store";
 import {
   clearWishlist,
-  IProductsState,
-  selectProducts,
-} from "@Products/productsSlice";
-import { getWishlistProducts } from "@/utils/products";
+  fetchWishlistProducts,
+  IWishlistState,
+  selectWishlist,
+} from "@/features/wishlist/wishlistSlice";
 import { ERoutes } from "@/types/routes";
-import Button, {
-  EBtnImage,
-  EBtnImagePos,
-  EBtnStyle,
-} from "@CommonComponents/Button/Button";
+import { EBtnStyle, EBtnImage, EBtnImagePos } from "@/common/types/button";
+import Button from "@CommonComponents/Button/Button";
 import LoadinSpinner from "@CommonComponents/LoadingSpinner/LoadingSpinner";
 import SuggestedCard from "@CommonComponents/SuggestedCard/SuggestedCard";
 
@@ -25,12 +22,8 @@ import "./Wishlist.scss";
 const Wishlist: FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  const { products, loading, wishlist } = useSelector<
-    RootState,
-    IProductsState
-  >(selectProducts);
-
-  const wishlistProducts = getWishlistProducts(products, wishlist);
+  const { wishlist, wishlistProducts, isWishlistLoading, wishlistError } =
+    useSelector<RootState, IWishlistState>(selectWishlist);
 
   const handleNavToProducts = () => {
     navigate(`/${ERoutes.PRODUCTS_LIST}`);
@@ -40,8 +33,23 @@ const Wishlist: FC = () => {
     dispatch(clearWishlist());
   };
 
-  if (loading) {
+  useEffect(() => {
+    if (wishlist.length) {
+      dispatch(fetchWishlistProducts(wishlist));
+    }
+  }, []);
+
+  if (isWishlistLoading && wishlist.length !== wishlistProducts.length) {
     return <LoadinSpinner />;
+  }
+
+  if (wishlistError) {
+    return (
+      <p className="wishlist__message">
+        Server is busy! Please wait for 10 seconds and then try refreshing the
+        page!
+      </p>
+    );
   }
 
   if (!wishlist.length) {
@@ -76,11 +84,6 @@ const Wishlist: FC = () => {
       </div>
       <ul className="wishlist__list">
         {wishlistProducts.map((product, index) => (
-          // <Suggested
-          //   key={`wish-${product.id}-${index}`}
-          //   product={product}
-          //   showRemoveBtn={true}
-          // />
           <SuggestedCard
             key={`wish-${product.id}-${index}`}
             product={product}

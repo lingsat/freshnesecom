@@ -5,11 +5,6 @@ import { toast } from "react-toastify";
 
 import { AppDispatch, RootState } from "@Store/store";
 import {
-  IProductsState,
-  selectProducts,
-  toggleWishlistItem,
-} from "@Products/productsSlice";
-import {
   removeSingleCartItem,
   changeCartItemCount,
   mergeCartItemCategories,
@@ -17,6 +12,11 @@ import {
   selectCart,
 } from "@Cart/cartSlice";
 import { getNewCountAmount } from "@Cart/utils/cart";
+import {
+  IWishlistState,
+  selectWishlist,
+  toggleWishlistItem,
+} from "@/features/wishlist/wishlistSlice";
 import { ERoutes } from "@/types/routes";
 import { ECount } from "@/common/types/count";
 import { ICartItemWithProduct } from "@Cart/types/cart";
@@ -49,7 +49,7 @@ const CartItem: FC<CartItemProps> = ({
   const [modalText, setModalText] = useState<string>("");
   const [nextCategory, setNextCategory] = useState<string>("");
 
-  const { wishlist } = useSelector<RootState, IProductsState>(selectProducts);
+  const { wishlist } = useSelector<RootState, IWishlistState>(selectWishlist);
 
   const isCountInvalid =
     count.amount > product.stock[count.category] ||

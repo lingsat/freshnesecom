@@ -4,10 +4,10 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { AppDispatch, RootState } from "@Store/store";
 import {
-  IProductsState,
-  selectProducts,
+  IWishlistState,
+  selectWishlist,
   toggleWishlistItem,
-} from "@Products/productsSlice";
+} from "@/features/wishlist/wishlistSlice";
 import { getOldPrice } from "@Products/utils/products";
 import { IProduct } from "@Products/types/product";
 import { EStarsColor } from "@/common/types/stars";
@@ -23,7 +23,7 @@ interface CardProps {
 const Card: FC<CardProps> = ({ product }) => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  const { wishlist } = useSelector<RootState, IProductsState>(selectProducts);
+  const { wishlist } = useSelector<RootState, IWishlistState>(selectWishlist);
 
   const { mainPrice, mainCountCategory } = product;
   const oldPrice = getOldPrice(product.mainPrice, product.discount);

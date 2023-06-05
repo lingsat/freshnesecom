@@ -33,10 +33,6 @@ export interface IProductsState {
   filter: IFilter;
   sortRule: string;
   pagination: IPaginationState;
-  wishlist: string[];
-  wishProducts: IProduct[];
-  isWishloading: boolean;
-  wishError: SerializedError | null;
 }
 
 const initialPagination = {
@@ -63,10 +59,6 @@ const initialState: IProductsState = {
   },
   sortRule: "",
   pagination: initialPagination,
-  wishlist: [],
-  wishProducts: [],
-  isWishloading: false,
-  wishError: null,
 };
 
 export const fetchProducts = createAsyncThunk("products/fetchProducts", () => {
@@ -81,21 +73,6 @@ export const fetchSingleProduct = createAsyncThunk(
     return axios
       .get<IProduct>(`${process.env.REACT_APP_API_URL}/products/${productId}`)
       .then((response) => response.data);
-  }
-);
-
-export const fetchCartProducts = createAsyncThunk(
-  "cart/fetchCartProducts",
-  async (cartItemArr: ICartItem[]) => {
-    const responseArr = await axios.all(
-      cartItemArr.map((cartItem) =>
-        axios.get<IProduct>(
-          `${process.env.REACT_APP_API_URL}/products/${cartItem.productId}`
-        )
-      )
-    );
-
-    return responseArr.map((response) => response.data);
   }
 );
 
@@ -161,12 +138,6 @@ export const productsSlice = createSlice({
     increaseProductsPerPage(state) {
       state.pagination.productsPerPage += EPagination.PRODUCTS_PER_PAGE;
     },
-    toggleWishlistItem(state, action: PayloadAction<string>) {
-      state.wishlist = getToggledArray(state.wishlist, action.payload);
-    },
-    clearWishlist(state) {
-      state.wishlist = [];
-    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchProducts.pending, (state) => {
@@ -204,8 +175,6 @@ export const {
   changeSortRule,
   changeCurrentPage,
   increaseProductsPerPage,
-  toggleWishlistItem,
-  clearWishlist,
 } = productsSlice.actions;
 
 export const selectProducts = (state: RootState) => state.products;

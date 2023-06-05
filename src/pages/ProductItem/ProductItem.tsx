@@ -22,8 +22,10 @@ import "./ProductItem.scss";
 const ProductItem = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { id } = useParams();
-  const { products, singleProduct, isSingleLoading, singleError, wishlist } =
-    useSelector<RootState, IProductsState>(selectProducts);
+  const { products, singleProduct, isSingleLoading, singleError } = useSelector<
+    RootState,
+    IProductsState
+  >(selectProducts);
 
   const categoryProducts = getProductsByCategory(products, singleProduct);
 
@@ -50,7 +52,7 @@ const ProductItem = () => {
           discount={singleProduct.discount}
           freeShipping={singleProduct.freeShipping}
         />
-        <ProductInfo product={singleProduct} wishlist={wishlist} />
+        <ProductInfo product={singleProduct} />
       </div>
       <h3 className="product__subtitle">You will maybe love</h3>
       <div className="product__carousel">
