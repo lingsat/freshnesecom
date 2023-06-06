@@ -14,6 +14,7 @@ import Home from "@Pages/Home/Home";
 import ProductsList from "@Pages/ProductsList/ProductsList";
 import ProductItem from "@Pages/ProductItem/ProductItem";
 import Cart from "@Pages/Cart/Cart";
+import Wishlist from "@Pages/Wishlist/Wishlist";
 import NotFound from "@Pages/NotFound/NotFound";
 
 import "./App.scss";
@@ -36,6 +37,7 @@ const App = () => {
           <Route path={ERoutes.PRODUCTS_LIST} element={<ProductsList />} />
           <Route path={ERoutes.PRODUCT_ITEM} element={<ProductItem />} />
           <Route path={ERoutes.CART} element={<Cart />} />
+          <Route path={ERoutes.WISHLIST} element={<Wishlist />} />
           <Route path={ERoutes.NOT_FOUND} element={<NotFound />} />
         </Routes>
       </main>

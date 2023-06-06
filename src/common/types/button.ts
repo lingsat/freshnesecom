@@ -9,7 +9,9 @@ export enum EBtnImage {
   ARROW = "arrow",
   PLUS = "plus",
   HEART = "heart",
+  HEART_FILLED = "heartFilled",
   BASKET = "basket",
+  CLOSE = "close",
 }
 
 export enum EBtnImagePos {

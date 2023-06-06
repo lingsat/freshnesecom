@@ -12,9 +12,9 @@ import {
 } from "@Products/productsSlice";
 import { getProductsByCategory } from "@/utils/products";
 import LoadinSpinner from "@CommonComponents/LoadingSpinner/LoadingSpinner";
+import SuggestedCard from "@CommonComponents/SuggestedCard/SuggestedCard";
 import Images from "@ProductsComponents/Images/Images";
 import ProductInfo from "@ProductsComponents/ProductInfo/ProductInfo";
-import Suggested from "@ProductsComponents/Suggested/Suggested";
 
 import "swiper/scss";
 import "./ProductItem.scss";
@@ -72,7 +72,7 @@ const ProductItem = () => {
           }}>
           {categoryProducts.map((product) => (
             <SwiperSlide key={`suggested-${product.id}`}>
-              <Suggested product={product} />
+              <SuggestedCard product={product} />
             </SwiperSlide>
           ))}
         </Swiper>

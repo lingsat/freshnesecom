@@ -10,7 +10,9 @@ import {
 import arrow from "@Images/arrow_right.svg";
 import plus from "@Images/plus.svg";
 import heart from "@Images/heart.svg";
+import heartFilled from "@Images/heart_filled.svg";
 import basket from "@Images/basket.svg";
+import close from "@Images/close.svg";
 
 import "./Button.scss";
 
@@ -35,7 +37,7 @@ const Button: FC<ButtonProps> = ({
   arrowDirection = EBtnArrowDir.RIGHT,
   disabled = false,
 }) => {
-  const imageRes = { plus, heart, arrow, basket }[image];
+  const imageRes = { plus, heart, heartFilled, arrow, basket, close }[image];
 
   const getBtnClassStr = () => {
     let classStr = "button";

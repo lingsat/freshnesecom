@@ -5,6 +5,11 @@ import { toast } from "react-toastify";
 import { AppDispatch, RootState } from "@Store/store";
 import { addToCart, ICartState, selectCart } from "@Cart/cartSlice";
 import { getProductMaxCount } from "@/utils/products";
+import {
+  IWishlistState,
+  selectWishlist,
+  toggleWishlistItem,
+} from "@/features/wishlist/wishlistSlice";
 import { getIsUnitInCart, getOldPrice } from "@Products/utils/products";
 import { getProductDataList } from "@Products/utils/products";
 import { IProduct } from "@Products/types/product";
@@ -27,6 +32,7 @@ interface ProductInfoProps {
 const ProductInfo: FC<ProductInfoProps> = ({ product }) => {
   const dispatch = useDispatch<AppDispatch>();
   const { cart } = useSelector<RootState, ICartState>(selectCart);
+  const { wishlist } = useSelector<RootState, IWishlistState>(selectWishlist);
 
   const [countCategory, setCountCategory] = useState<string>(
     product.mainCountCategory
@@ -36,6 +42,7 @@ const ProductInfo: FC<ProductInfoProps> = ({ product }) => {
 
   const isCountInvalid =
     count > product.stock[countCategory] || count < ECount.MIN_COUNT_VALUE;
+  const isInWishlist = wishlist.includes(product.id);
   const currentPrice = (product.price[countCategory] * +count).toFixed(2);
   const oldPrice = getOldPrice(+currentPrice, product.discount);
   const datalist = getProductDataList(product, countCategory);
@@ -85,6 +92,10 @@ const ProductInfo: FC<ProductInfoProps> = ({ product }) => {
     } else {
       handleAddToCart();
     }
+  };
+
+  const handleToggleWishlist = () => {
+    dispatch(toggleWishlistItem(product.id));
   };
 
   useEffect(() => {
@@ -150,10 +161,11 @@ const ProductInfo: FC<ProductInfoProps> = ({ product }) => {
         )}
       </div>
       <Button
+        text={`${isInWishlist ? "Unwish product" : "Add to wish list"}`}
         style={EBtnStyle.SECONDARY}
-        image={EBtnImage.HEART}
+        image={isInWishlist ? EBtnImage.HEART_FILLED : EBtnImage.HEART}
         imagePosition={EBtnImagePos.LEFT}
-        text="Add to my wish list"
+        onCLick={handleToggleWishlist}
       />
       <Tabs product={product} />
     </div>
