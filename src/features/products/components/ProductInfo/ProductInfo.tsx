@@ -9,7 +9,8 @@ import {
   IWishlistState,
   selectWishlist,
   toggleWishlistItem,
-} from "@/features/wishlist/wishlistSlice";
+} from "@Features/wishlist/wishlistSlice";
+import { IAuthState, selectAuth, showAuth } from "@Features/auth/authSlice";
 import { getIsUnitInCart, getOldPrice } from "@Products/utils/products";
 import { getProductDataList } from "@Products/utils/products";
 import { IProduct } from "@Products/types/product";
@@ -33,6 +34,7 @@ const ProductInfo: FC<ProductInfoProps> = ({ product }) => {
   const dispatch = useDispatch<AppDispatch>();
   const { cart } = useSelector<RootState, ICartState>(selectCart);
   const { wishlist } = useSelector<RootState, IWishlistState>(selectWishlist);
+  const { user } = useSelector<RootState, IAuthState>(selectAuth);
 
   const [countCategory, setCountCategory] = useState<string>(
     product.mainCountCategory
@@ -51,6 +53,9 @@ const ProductInfo: FC<ProductInfoProps> = ({ product }) => {
 
   const notifyAddToCart = () =>
     toast.success(`${count} "${countCategory}" added to Cart!`);
+
+  const notifyNotLoggedIn = () =>
+    toast.warn("The Wishlist is available only to authorized users");
 
   const handleOpenModal = () => {
     setShowModal(true);
@@ -95,7 +100,12 @@ const ProductInfo: FC<ProductInfoProps> = ({ product }) => {
   };
 
   const handleToggleWishlist = () => {
-    dispatch(toggleWishlistItem(product.id));
+    if (!user) {
+      notifyNotLoggedIn();
+      dispatch(showAuth());
+    } else {
+      dispatch(toggleWishlistItem(product.id));
+    }
   };
 
   useEffect(() => {

@@ -1,17 +1,19 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
-import { RootState } from "@Store/store";
+import { AppDispatch, RootState } from "@Store/store";
 import { IProductsState, selectProducts } from "@Products/productsSlice";
 import { ERoutes } from "@/types/routes";
 import { ICartState, selectCart } from "@Cart/cartSlice";
-import { getCategoriesObj } from "@/utils/products";
-import LinkItem from "@CommonComponents/LInkItem/LinkItem";
+import { IAuthState, selectAuth, showAuth } from "@Features/auth/authSlice";
 import {
   IWishlistState,
   selectWishlist,
-} from "@/features/wishlist/wishlistSlice";
+} from "@Features/wishlist/wishlistSlice";
+import { getCategoriesObj } from "@/utils/products";
+import LinkItem from "@CommonComponents/LInkItem/LinkItem";
 
 import arrowDown from "@Images/arrow_down.svg";
 import cartIcon from "@Images/basket.svg";
@@ -21,12 +23,16 @@ import userIcon from "@Images/user.svg";
 
 import Category from "./components/Category/Category";
 import Search from "./components/Search/Search";
+
 import "./Header.scss";
 
 const Header = () => {
+  const dispatch = useDispatch<AppDispatch>();
+
   const { products } = useSelector<RootState, IProductsState>(selectProducts);
   const { cart } = useSelector<RootState, ICartState>(selectCart);
   const { wishlist } = useSelector<RootState, IWishlistState>(selectWishlist);
+  const { user } = useSelector<RootState, IAuthState>(selectAuth);
   const [showCategories, setShowCategories] = useState<boolean>(true);
 
   const categoriesObj = getCategoriesObj(products);
@@ -36,8 +42,17 @@ const Header = () => {
     0
   );
 
+  const notifyNotLoggedIn = () => toast.warn("Log In first!");
+
   const toggleShowCategories = () => {
     setShowCategories((prev) => !prev);
+  };
+
+  const handleOpenUserPage = () => {
+    if (!user) {
+      notifyNotLoggedIn();
+      dispatch(showAuth());
+    }
   };
 
   return (
@@ -82,7 +97,10 @@ const Header = () => {
               <span>{wishlist.length}</span>
             </Link>
           )}
-          <button type="button" className="controls__btn">
+          <button
+            type="button"
+            className="controls__btn"
+            onClick={handleOpenUserPage}>
             <img src={userIcon} alt="User" />
           </button>
           <Link to={`/${ERoutes.CART}`} className="controls__btn">

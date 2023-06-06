@@ -5,6 +5,7 @@ import storage from "redux-persist/lib/storage";
 import productReducer from "@Products/productsSlice";
 import cartReducer from "@Cart/cartSlice";
 import wishlistReducer from "@/features/wishlist/wishlistSlice";
+import authReducer from "@/features/auth/authSlice";
 
 const cartPersistConfig = {
   key: "cart",
@@ -16,10 +17,16 @@ const wishlistPersistConfig = {
   storage,
 };
 
+const authPersistConfig = {
+  key: "auth",
+  storage,
+};
+
 const rootReducer = combineReducers({
   products: productReducer,
   cart: persistReducer(cartPersistConfig, cartReducer),
   wishlist: persistReducer(wishlistPersistConfig, wishlistReducer),
+  auth: persistReducer(authPersistConfig, authReducer),
 });
 
 export const store = configureStore({
