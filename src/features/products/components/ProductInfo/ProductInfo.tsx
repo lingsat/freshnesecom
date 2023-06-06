@@ -161,7 +161,7 @@ const ProductInfo: FC<ProductInfoProps> = ({ product }) => {
         )}
       </div>
       <Button
-        text={`${isInWishlist ? "Remove from" : "Add to"} my wish list`}
+        text={`${isInWishlist ? "Unwish product" : "Add to wish list"}`}
         style={EBtnStyle.SECONDARY}
         image={isInWishlist ? EBtnImage.HEART_FILLED : EBtnImage.HEART}
         imagePosition={EBtnImagePos.LEFT}
