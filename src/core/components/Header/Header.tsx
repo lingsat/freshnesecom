@@ -30,7 +30,7 @@ import "./Header.scss";
 const Header = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  const { isAuth, user } = useAuth();
+  const { isAuth, userId } = useAuth();
 
   const { products } = useSelector<RootState, IProductsState>(selectProducts);
   const { cart } = useSelector<RootState, ICartState>(selectCart);
@@ -44,7 +44,6 @@ const Header = () => {
     (acc, cartItem) => acc + cartItem.countArr.length,
     0
   );
-  const userId = user ? user.user_id : null;
   const usersWishlist = wishlist.filter((item) => item.userId === userId);
   const showWishlist = !!usersWishlist.length && isAuth;
 

@@ -14,7 +14,7 @@ import {
   AXIOR_RETRY_DELAY,
   AXIOR_RETRY_ERROR,
 } from "@/constants";
-import { getToggledArray } from "@/utils/toggleArrItem";
+import { getToggledWishlist } from "@/utils/toggleArrItem";
 import { IWishlistItem } from "@Features/wishlist/types/wishlist";
 
 axiosRetry(axios, {
@@ -62,13 +62,16 @@ export const wishlistSlice = createSlice({
       state,
       action: PayloadAction<{ userId: string | null; productId: string }>
     ) {
-      state.wishlist = getToggledArray(state.wishlist, action.payload);
+      const { userId, productId } = action.payload;
+      state.wishlist = getToggledWishlist(state.wishlist, userId, productId);
       state.wishlistProducts = state.wishlistProducts.filter(
         (product) => product.id !== action.payload.productId
       );
     },
-    clearWishlist(state) {
-      state.wishlist = [];
+    clearWishlist(state, action: PayloadAction<string | null>) {
+      state.wishlist = state.wishlist.filter(
+        (item) => item.userId !== action.payload
+      );
       state.wishlistProducts = [];
     },
   },

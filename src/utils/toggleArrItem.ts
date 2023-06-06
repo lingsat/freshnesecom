@@ -8,15 +8,17 @@ export const getToggledArray = <T>(arr: T[], item: T): T[] => {
 
 export const getToggledWishlist = (
   wishlist: IWishlistItem[],
-  productId: string,
-  userId: string
+  userId: string | null,
+  productId: string
 ): IWishlistItem[] => {
   const existInWishlist = wishlist.find(
     (item) => item.productId === productId && item.userId === userId
   );
 
   if (existInWishlist) {
-    return wishlist.filter((item) => item.productId !== productId);
+    return wishlist.filter((item) => {
+      return item.productId !== productId || item.userId !== userId;
+    });
   } else {
     return [{ userId, productId }, ...wishlist];
   }

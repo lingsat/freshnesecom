@@ -27,13 +27,12 @@ interface CardProps {
 
 const Card: FC<CardProps> = ({ product }) => {
   const dispatch = useDispatch<AppDispatch>();
-  const { isAuth, user } = useAuth();
+  const { isAuth, userId } = useAuth();
   const navigate = useNavigate();
   const { wishlist } = useSelector<RootState, IWishlistState>(selectWishlist);
 
   const { mainPrice, mainCountCategory } = product;
   const oldPrice = getOldPrice(product.mainPrice, product.discount);
-  const userId = user ? user.user_id : null;
   const isInWishlist =
     findProductInWishlist(wishlist, userId, product.id) && isAuth;
 

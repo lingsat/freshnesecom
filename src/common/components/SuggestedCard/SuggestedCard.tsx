@@ -26,10 +26,9 @@ const SuggestedCard: FC<SuggestedCardProps> = ({
 }) => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  const { user } = useAuth();
+  const { userId } = useAuth();
 
   const oldPrice = getOldPrice(product.mainPrice, product.discount);
-  const userId = user ? user.user_id : null;
 
   const handleOpenProduct = () => {
     navigate(`/${ERoutes.PRODUCTS_LIST}/${product.id}`);

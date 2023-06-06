@@ -33,7 +33,7 @@ interface ProductInfoProps {
 
 const ProductInfo: FC<ProductInfoProps> = ({ product }) => {
   const dispatch = useDispatch<AppDispatch>();
-  const { isAuth, user } = useAuth();
+  const { isAuth, user, userId } = useAuth();
   const { cart } = useSelector<RootState, ICartState>(selectCart);
   const { wishlist } = useSelector<RootState, IWishlistState>(selectWishlist);
 
@@ -45,7 +45,6 @@ const ProductInfo: FC<ProductInfoProps> = ({ product }) => {
 
   const isCountInvalid =
     count > product.stock[countCategory] || count < ECount.MIN_COUNT_VALUE;
-  const userId = user ? user.user_id : null;
   const isInWishlist =
     findProductInWishlist(wishlist, userId, product.id) && isAuth;
   const currentPrice = (product.price[countCategory] * +count).toFixed(2);
@@ -78,7 +77,6 @@ const ProductInfo: FC<ProductInfoProps> = ({ product }) => {
   };
 
   const handleAddToCart = () => {
-    const userId: string | null = user ? user.user_id : null;
     const newCartItem: ICartData = {
       userId,
       productId: product.id,

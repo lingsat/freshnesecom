@@ -24,11 +24,10 @@ import "./Wishlist.scss";
 const Wishlist: FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  const { isAuth, user } = useAuth();
+  const { isAuth, userId } = useAuth();
   const { wishlist, wishlistProducts, isWishlistLoading, wishlistError } =
     useSelector<RootState, IWishlistState>(selectWishlist);
 
-  const userId = user ? user.user_id : null;
   const filteredWishlist = wishlist.filter((item) => item.userId === userId);
 
   const notifyNotLoggedIn = () =>
@@ -39,7 +38,7 @@ const Wishlist: FC = () => {
   };
 
   const handleClearWishlist = () => {
-    dispatch(clearWishlist());
+    dispatch(clearWishlist(userId));
   };
 
   useEffect(() => {
@@ -72,7 +71,7 @@ const Wishlist: FC = () => {
     );
   }
 
-  if (!wishlist.length) {
+  if (!filteredWishlist.length) {
     return (
       <div className="wishlist__empty">
         <p className="wishlist__message">Oops! Your wish list is empty!</p>

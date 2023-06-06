@@ -45,7 +45,7 @@ const CartItem: FC<CartItemProps> = ({
   const { product, count } = itemWithProduct;
 
   const dispatch = useDispatch<AppDispatch>();
-  const { isAuth, user } = useAuth();
+  const { isAuth, userId } = useAuth();
   const navigate = useNavigate();
   const { cart } = useSelector<RootState, ICartState>(selectCart);
 
@@ -61,7 +61,6 @@ const CartItem: FC<CartItemProps> = ({
   const priceSummary = (product.price[count.category] * count.amount).toFixed(
     2
   );
-  const userId = user ? user.user_id : null;
   const isInWishlist =
     findProductInWishlist(wishlist, userId, product.id) && isAuth;
 
