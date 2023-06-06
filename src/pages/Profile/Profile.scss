@@ -1,0 +1,27 @@
+.profile {
+  padding-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+
+  &__image {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+  }
+
+  &__text {
+    font-weight: 700;
+    text-align: center;
+
+    span {
+      font-weight: 400;
+    }
+  }
+
+  &__error {
+    text-align: center;
+  }
+}

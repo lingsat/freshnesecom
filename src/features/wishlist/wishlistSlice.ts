@@ -15,6 +15,7 @@ import {
   AXIOR_RETRY_ERROR,
 } from "@/constants";
 import { getToggledArray } from "@/utils/toggleArrItem";
+import { IWishlistItem } from "@Features/wishlist/types/wishlist";
 
 axiosRetry(axios, {
   retries: AXIOR_RETRY_COUNT,
@@ -25,7 +26,7 @@ axiosRetry(axios, {
 });
 
 export interface IWishlistState {
-  wishlist: string[];
+  wishlist: IWishlistItem[];
   wishlistProducts: IProduct[];
   isWishlistLoading: boolean;
   wishlistError: SerializedError | null;
@@ -40,10 +41,12 @@ const initialState: IWishlistState = {
 
 export const fetchWishlistProducts = createAsyncThunk(
   "wishlist/fetchWishlistProducts",
-  async (idArr: string[]) => {
+  async (wishlist: IWishlistItem[]) => {
     const responseArr = await axios.all(
-      idArr.map((id) =>
-        axios.get<IProduct>(`${process.env.REACT_APP_API_URL}/products/${id}`)
+      wishlist.map((item) =>
+        axios.get<IProduct>(
+          `${process.env.REACT_APP_API_URL}/products/${item.productId}`
+        )
       )
     );
 
@@ -55,10 +58,13 @@ export const wishlistSlice = createSlice({
   name: "wishlist",
   initialState,
   reducers: {
-    toggleWishlistItem(state, action: PayloadAction<string>) {
+    toggleWishlistItem(
+      state,
+      action: PayloadAction<{ userId: string | null; productId: string }>
+    ) {
       state.wishlist = getToggledArray(state.wishlist, action.payload);
       state.wishlistProducts = state.wishlistProducts.filter(
-        (product) => product.id !== action.payload
+        (product) => product.id !== action.payload.productId
       );
     },
     clearWishlist(state) {

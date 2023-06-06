@@ -2,15 +2,17 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { RootState } from "@Store/store";
 
+import { IUser } from "./types/auth";
+
 export interface IAuthState {
   showAuth: boolean;
-  userEmail: string | null;
+  user: IUser | null;
   token: string | null;
 }
 
 const initialState: IAuthState = {
   showAuth: false,
-  userEmail: null,
+  user: null,
   token: null,
 };
 
@@ -26,14 +28,14 @@ export const authSlice = createSlice({
     },
     setUser(
       state,
-      action: PayloadAction<{ userEmail: string | null; token: string | null }>
+      action: PayloadAction<{ user: IUser; token: string | null }>
     ) {
-      state.userEmail = action.payload.userEmail;
+      state.user = action.payload.user;
       state.token = action.payload.token;
       state.showAuth = false;
     },
     removeUser(state) {
-      state.userEmail = null;
+      state.user = null;
       state.token = null;
     },
   },

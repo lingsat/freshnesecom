@@ -25,6 +25,7 @@ import Stars from "@CommonComponents/Stars/Stars";
 import Count from "@CommonComponents/Count/Count";
 import Modal from "@CommonComponents/Modal/Modal";
 import { useAuth } from "@/hooks/useAuth";
+import { findProductInWishlist } from "@/utils/products";
 
 import heart from "@Images/heart_thin.svg";
 import heartFilled from "@Images/heart_filled.svg";
@@ -44,7 +45,7 @@ const CartItem: FC<CartItemProps> = ({
   const { product, count } = itemWithProduct;
 
   const dispatch = useDispatch<AppDispatch>();
-  const { isAuth } = useAuth();
+  const { isAuth, user } = useAuth();
   const navigate = useNavigate();
   const { cart } = useSelector<RootState, ICartState>(selectCart);
 
@@ -60,7 +61,9 @@ const CartItem: FC<CartItemProps> = ({
   const priceSummary = (product.price[count.category] * count.amount).toFixed(
     2
   );
-  const isInWishlist = wishlist.includes(product.id);
+  const userId = user ? user.user_id : null;
+  const isInWishlist =
+    findProductInWishlist(wishlist, userId, product.id) && isAuth;
 
   const notifyChangeCountCategory = (amount: number, category: string) =>
     toast.warn(
@@ -75,7 +78,7 @@ const CartItem: FC<CartItemProps> = ({
       notifyNotLoggedIn();
       dispatch(showAuth());
     } else {
-      dispatch(toggleWishlistItem(product.id));
+      dispatch(toggleWishlistItem({ userId, productId: product.id }));
     }
   };
 
@@ -135,6 +138,7 @@ const CartItem: FC<CartItemProps> = ({
     }
 
     const newCartData = {
+      userId,
       productId: product.id,
       count: {
         amount: validAmount,
@@ -154,6 +158,7 @@ const CartItem: FC<CartItemProps> = ({
     }
 
     const newCartData = {
+      userId,
       productId: product.id,
       count: {
         amount: amountSum,
@@ -169,6 +174,7 @@ const CartItem: FC<CartItemProps> = ({
 
   const handleChangeAmount = (newAmount: number) => {
     const newCartData = {
+      userId,
       productId: product.id,
       count: {
         amount: newAmount,

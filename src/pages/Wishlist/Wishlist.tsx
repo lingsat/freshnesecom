@@ -1,6 +1,7 @@
 import React, { FC, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 import { AppDispatch, RootState } from "@Store/store";
 import {
@@ -8,12 +9,13 @@ import {
   fetchWishlistProducts,
   IWishlistState,
   selectWishlist,
-} from "@/features/wishlist/wishlistSlice";
+} from "@Features/wishlist/wishlistSlice";
 import { ERoutes } from "@/types/routes";
 import { EBtnStyle, EBtnImage, EBtnImagePos } from "@/common/types/button";
 import Button from "@CommonComponents/Button/Button";
 import LoadinSpinner from "@CommonComponents/LoadingSpinner/LoadingSpinner";
 import SuggestedCard from "@CommonComponents/SuggestedCard/SuggestedCard";
+import { useAuth } from "@/hooks/useAuth";
 
 import emptyWishlist from "@Images/wishlist_empty.svg";
 
@@ -22,8 +24,15 @@ import "./Wishlist.scss";
 const Wishlist: FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
+  const { isAuth, user } = useAuth();
   const { wishlist, wishlistProducts, isWishlistLoading, wishlistError } =
     useSelector<RootState, IWishlistState>(selectWishlist);
+
+  const userId = user ? user.user_id : null;
+  const filteredWishlist = wishlist.filter((item) => item.userId === userId);
+
+  const notifyNotLoggedIn = () =>
+    toast.warn("The Wishlist is available only to authorized users");
 
   const handleNavToProducts = () => {
     navigate(`/${ERoutes.PRODUCTS_LIST}`);
@@ -35,9 +44,20 @@ const Wishlist: FC = () => {
 
   useEffect(() => {
     if (wishlist.length) {
-      dispatch(fetchWishlistProducts(wishlist));
+      dispatch(fetchWishlistProducts(filteredWishlist));
+    }
+
+    if (!isAuth) {
+      navigate(`/${ERoutes.PRODUCTS_LIST}`);
+      notifyNotLoggedIn();
     }
   }, []);
+
+  useEffect(() => {
+    if (!isAuth) {
+      navigate(`/${ERoutes.PRODUCTS_LIST}`);
+    }
+  });
 
   if (isWishlistLoading && wishlist.length !== wishlistProducts.length) {
     return <LoadinSpinner />;

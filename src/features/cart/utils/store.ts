@@ -15,7 +15,7 @@ const getCountArray = (countArr: ICount[], newCount: ICount) => {
 };
 
 export const addProdToCart = (cart: ICartItem[], newCartData: ICartData) => {
-  const { productId, count } = newCartData;
+  const { userId, productId, count } = newCartData;
 
   const itemInArr = cart.find(
     (item) => item.productId === newCartData.productId
@@ -29,6 +29,7 @@ export const addProdToCart = (cart: ICartItem[], newCartData: ICartData) => {
     });
   } else {
     const newItem: ICartItem = {
+      userId,
       productId,
       countArr: [{ amount: count.amount, category: count.category }],
     };

@@ -1,6 +1,7 @@
 import { IFilter } from "@Products/productsSlice";
 import { IProduct, ICategory, ESort } from "@Products/types/product";
 import { ICartItem } from "@Cart/types/cart";
+import { IWishlistItem } from "@/features/wishlist/types/wishlist";
 
 const getSortedProducts = (
   productsArr: IProduct[],
@@ -128,4 +129,14 @@ export const getProductMaxCount = (
   } else {
     return product.stock[countCategory];
   }
+};
+
+export const findProductInWishlist = (
+  wishlist: IWishlistItem[],
+  userId: string | null,
+  productId: string
+): boolean => {
+  return wishlist.some(
+    (item) => item.productId === productId && item.userId === userId
+  );
 };

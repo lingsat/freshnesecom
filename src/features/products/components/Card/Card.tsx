@@ -17,6 +17,7 @@ import { EBtnStyle, EBtnImage, EBtnImagePos } from "@/common/types/button";
 import Button from "@CommonComponents/Button/Button";
 import Stars from "@CommonComponents/Stars/Stars";
 import { useAuth } from "@/hooks/useAuth";
+import { findProductInWishlist } from "@/utils/products";
 
 import "./Card.scss";
 
@@ -26,13 +27,15 @@ interface CardProps {
 
 const Card: FC<CardProps> = ({ product }) => {
   const dispatch = useDispatch<AppDispatch>();
-  const { isAuth } = useAuth();
+  const { isAuth, user } = useAuth();
   const navigate = useNavigate();
   const { wishlist } = useSelector<RootState, IWishlistState>(selectWishlist);
 
   const { mainPrice, mainCountCategory } = product;
   const oldPrice = getOldPrice(product.mainPrice, product.discount);
-  const isInWishlist = wishlist.includes(product.id);
+  const userId = user ? user.user_id : null;
+  const isInWishlist =
+    findProductInWishlist(wishlist, userId, product.id) && isAuth;
 
   const notifyNotLoggedIn = () =>
     toast.warn("The Wishlist is available only to authorized users");
@@ -46,7 +49,7 @@ const Card: FC<CardProps> = ({ product }) => {
       notifyNotLoggedIn();
       dispatch(showAuth());
     } else {
-      dispatch(toggleWishlistItem(product.id));
+      dispatch(toggleWishlistItem({ userId, productId: product.id }));
     }
   };
 

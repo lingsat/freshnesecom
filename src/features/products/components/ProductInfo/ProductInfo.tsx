@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 
 import { AppDispatch, RootState } from "@Store/store";
 import { addToCart, ICartState, selectCart } from "@Cart/cartSlice";
-import { getProductMaxCount } from "@/utils/products";
+import { findProductInWishlist, getProductMaxCount } from "@/utils/products";
 import {
   IWishlistState,
   selectWishlist,
@@ -33,7 +33,7 @@ interface ProductInfoProps {
 
 const ProductInfo: FC<ProductInfoProps> = ({ product }) => {
   const dispatch = useDispatch<AppDispatch>();
-  const { isAuth } = useAuth();
+  const { isAuth, user } = useAuth();
   const { cart } = useSelector<RootState, ICartState>(selectCart);
   const { wishlist } = useSelector<RootState, IWishlistState>(selectWishlist);
 
@@ -45,7 +45,9 @@ const ProductInfo: FC<ProductInfoProps> = ({ product }) => {
 
   const isCountInvalid =
     count > product.stock[countCategory] || count < ECount.MIN_COUNT_VALUE;
-  const isInWishlist = wishlist.includes(product.id);
+  const userId = user ? user.user_id : null;
+  const isInWishlist =
+    findProductInWishlist(wishlist, userId, product.id) && isAuth;
   const currentPrice = (product.price[countCategory] * +count).toFixed(2);
   const oldPrice = getOldPrice(+currentPrice, product.discount);
   const datalist = getProductDataList(product, countCategory);
@@ -76,7 +78,9 @@ const ProductInfo: FC<ProductInfoProps> = ({ product }) => {
   };
 
   const handleAddToCart = () => {
+    const userId: string | null = user ? user.user_id : null;
     const newCartItem: ICartData = {
+      userId,
       productId: product.id,
       count: {
         amount: count,
@@ -105,7 +109,7 @@ const ProductInfo: FC<ProductInfoProps> = ({ product }) => {
       notifyNotLoggedIn();
       dispatch(showAuth());
     } else {
-      dispatch(toggleWishlistItem(product.id));
+      dispatch(toggleWishlistItem({ userId, productId: product.id }));
     }
   };
 

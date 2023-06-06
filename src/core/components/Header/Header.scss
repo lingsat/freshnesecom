@@ -62,6 +62,35 @@
   align-items: center;
   gap: 40px;
 
+  &__profile {
+    position: relative;
+  }
+
+  &__dropdown {
+    width: 80px;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    z-index: 5;
+    transform: translateX(-50%);
+    background: $color-gray-lightest;
+    box-shadow: $color-gray-light 0px 2px 8px 0px;
+    border: 1px solid $color-gray-light;
+    border-radius: 5px;
+
+    li {
+      @include text-overflow-hide;
+      padding: 5px;
+      font-size: 1rem;
+      line-height: 1.3rem;
+      cursor: pointer;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
   &__btn {
     padding: 0;
     background: inherit;

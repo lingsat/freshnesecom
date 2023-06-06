@@ -4,5 +4,6 @@ export enum ERoutes {
   PRODUCT_ITEM = "products/:id",
   CART = "cart",
   WISHLIST = "wishlist",
+  PROFILE = "profile",
   NOT_FOUND = "*",
 }

@@ -6,11 +6,13 @@ export interface ICount {
 }
 
 export interface ICartItem {
+  userId: string | null;
   productId: string;
   countArr: ICount[];
 }
 
 export interface ICartData {
+  userId: string | null;
   productId: string;
   count: ICount;
 }

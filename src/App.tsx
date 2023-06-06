@@ -16,6 +16,7 @@ import ProductsList from "@Pages/ProductsList/ProductsList";
 import ProductItem from "@Pages/ProductItem/ProductItem";
 import Cart from "@Pages/Cart/Cart";
 import Wishlist from "@Pages/Wishlist/Wishlist";
+import Profile from "@Pages/Profile/Profile";
 import NotFound from "@Pages/NotFound/NotFound";
 import Auth from "@Features/auth/components/Auth/Auth";
 
@@ -41,6 +42,7 @@ const App = () => {
           <Route path={ERoutes.PRODUCT_ITEM} element={<ProductItem />} />
           <Route path={ERoutes.CART} element={<Cart />} />
           <Route path={ERoutes.WISHLIST} element={<Wishlist />} />
+          <Route path={ERoutes.PROFILE} element={<Profile />} />
           <Route path={ERoutes.NOT_FOUND} element={<NotFound />} />
         </Routes>
       </main>
