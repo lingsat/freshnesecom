@@ -9,13 +9,14 @@ import {
   selectWishlist,
   toggleWishlistItem,
 } from "@Features/wishlist/wishlistSlice";
-import { IAuthState, selectAuth, showAuth } from "@Features/auth/authSlice";
+import { showAuth } from "@Features/auth/authSlice";
 import { getOldPrice } from "@Products/utils/products";
 import { IProduct } from "@Products/types/product";
 import { EStarsColor } from "@/common/types/stars";
 import { EBtnStyle, EBtnImage, EBtnImagePos } from "@/common/types/button";
 import Button from "@CommonComponents/Button/Button";
 import Stars from "@CommonComponents/Stars/Stars";
+import { useAuth } from "@/hooks/useAuth";
 
 import "./Card.scss";
 
@@ -25,9 +26,9 @@ interface CardProps {
 
 const Card: FC<CardProps> = ({ product }) => {
   const dispatch = useDispatch<AppDispatch>();
+  const { isAuth } = useAuth();
   const navigate = useNavigate();
   const { wishlist } = useSelector<RootState, IWishlistState>(selectWishlist);
-  const { user } = useSelector<RootState, IAuthState>(selectAuth);
 
   const { mainPrice, mainCountCategory } = product;
   const oldPrice = getOldPrice(product.mainPrice, product.discount);
@@ -41,7 +42,7 @@ const Card: FC<CardProps> = ({ product }) => {
   };
 
   const handleToggleWishlist = () => {
-    if (!user) {
+    if (!isAuth) {
       notifyNotLoggedIn();
       dispatch(showAuth());
     } else {

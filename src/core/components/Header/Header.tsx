@@ -7,13 +7,14 @@ import { AppDispatch, RootState } from "@Store/store";
 import { IProductsState, selectProducts } from "@Products/productsSlice";
 import { ERoutes } from "@/types/routes";
 import { ICartState, selectCart } from "@Cart/cartSlice";
-import { IAuthState, selectAuth, showAuth } from "@Features/auth/authSlice";
+import { showAuth } from "@Features/auth/authSlice";
 import {
   IWishlistState,
   selectWishlist,
 } from "@Features/wishlist/wishlistSlice";
 import { getCategoriesObj } from "@/utils/products";
 import LinkItem from "@CommonComponents/LInkItem/LinkItem";
+import { useAuth } from "@/hooks/useAuth";
 
 import arrowDown from "@Images/arrow_down.svg";
 import cartIcon from "@Images/basket.svg";
@@ -28,11 +29,11 @@ import "./Header.scss";
 
 const Header = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const { isAuth } = useAuth();
 
   const { products } = useSelector<RootState, IProductsState>(selectProducts);
   const { cart } = useSelector<RootState, ICartState>(selectCart);
   const { wishlist } = useSelector<RootState, IWishlistState>(selectWishlist);
-  const { user } = useSelector<RootState, IAuthState>(selectAuth);
   const [showCategories, setShowCategories] = useState<boolean>(true);
 
   const categoriesObj = getCategoriesObj(products);
@@ -49,7 +50,7 @@ const Header = () => {
   };
 
   const handleOpenUserPage = () => {
-    if (!user) {
+    if (!isAuth) {
       notifyNotLoggedIn();
       dispatch(showAuth());
     }

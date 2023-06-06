@@ -7,6 +7,7 @@ import { store } from "@Store/store";
 import ErrorBoundary from "@Features/error/ErrorBoundary";
 
 import App from "./App";
+import "@/firebase";
 import "./index.scss";
 
 const root = ReactDOM.createRoot(

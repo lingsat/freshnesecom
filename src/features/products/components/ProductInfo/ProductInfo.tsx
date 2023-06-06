@@ -10,7 +10,7 @@ import {
   selectWishlist,
   toggleWishlistItem,
 } from "@Features/wishlist/wishlistSlice";
-import { IAuthState, selectAuth, showAuth } from "@Features/auth/authSlice";
+import { showAuth } from "@Features/auth/authSlice";
 import { getIsUnitInCart, getOldPrice } from "@Products/utils/products";
 import { getProductDataList } from "@Products/utils/products";
 import { IProduct } from "@Products/types/product";
@@ -23,6 +23,7 @@ import Stars from "@CommonComponents/Stars/Stars";
 import Count from "@CommonComponents/Count/Count";
 import Modal from "@CommonComponents/Modal/Modal";
 import Tabs from "@ProductsComponents/Tabs/Tabs";
+import { useAuth } from "@/hooks/useAuth";
 
 import "./ProductInfo.scss";
 
@@ -32,9 +33,9 @@ interface ProductInfoProps {
 
 const ProductInfo: FC<ProductInfoProps> = ({ product }) => {
   const dispatch = useDispatch<AppDispatch>();
+  const { isAuth } = useAuth();
   const { cart } = useSelector<RootState, ICartState>(selectCart);
   const { wishlist } = useSelector<RootState, IWishlistState>(selectWishlist);
-  const { user } = useSelector<RootState, IAuthState>(selectAuth);
 
   const [countCategory, setCountCategory] = useState<string>(
     product.mainCountCategory
@@ -100,7 +101,7 @@ const ProductInfo: FC<ProductInfoProps> = ({ product }) => {
   };
 
   const handleToggleWishlist = () => {
-    if (!user) {
+    if (!isAuth) {
       notifyNotLoggedIn();
       dispatch(showAuth());
     } else {
