@@ -81,9 +81,12 @@ export const getInvalidCategories = (
 export const getNewCountAmount = (
   cart: ICartItem[],
   prodId: string,
-  nextCategory: string
+  nextCategory: string,
+  userId: string | null
 ): number => {
-  const cartItem = cart.find((item) => item.productId === prodId);
+  const cartItem = cart.find(
+    (item) => item.productId === prodId && item.userId === userId
+  );
 
   if (cartItem) {
     return cartItem.countArr.reduce((acc, countItem) => {

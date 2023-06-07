@@ -14,36 +14,63 @@ const getCountArray = (countArr: ICount[], newCount: ICount) => {
   return updatedCountArr;
 };
 
-export const addProdToCart = (cart: ICartItem[], newCartData: ICartData) => {
-  const { userId, productId, count } = newCartData;
+const getDevidedCart = (
+  cart: ICartItem[],
+  userId: string | null
+): { userCart: ICartItem[]; nullCart: ICartItem[] } => {
+  const userCart: ICartItem[] = [];
+  const nullCart: ICartItem[] = [];
 
-  const itemInArr = cart.find(
+  cart.forEach((item) => {
+    if (item.userId === userId) {
+      userCart.push(item);
+    } else {
+      nullCart.push(item);
+    }
+  });
+
+  return { userCart, nullCart };
+};
+
+export const addProdToCart = (
+  cart: ICartItem[],
+  newCartData: ICartData,
+  idOfUser: string | null
+): ICartItem[] => {
+  const { userId, productId, count } = newCartData;
+  const { userCart, nullCart } = getDevidedCart(cart, idOfUser);
+
+  const itemInArr = userCart.find(
     (item) => item.productId === newCartData.productId
   );
 
   if (itemInArr) {
     const newCountArr = getCountArray(itemInArr.countArr, count);
     const newItem: ICartItem = { ...itemInArr, countArr: newCountArr };
-    return cart.map((item) => {
+    const modedUserCart = userCart.map((item) => {
       return item.productId === itemInArr.productId ? newItem : item;
     });
+    return [...modedUserCart, ...nullCart];
   } else {
     const newItem: ICartItem = {
       userId,
       productId,
       countArr: [{ amount: count.amount, category: count.category }],
     };
-    return [newItem, ...cart];
+    return [newItem, ...userCart, ...nullCart];
   }
 };
 
 export const getUpdatedCart = (
   cart: ICartItem[],
   newCartData: ICartData,
-  oldCategory: string
+  oldCategory: string,
+  userId: string | null
 ): ICartItem[] => {
   const { productId, count } = newCartData;
-  return cart.map((item) => {
+  const { userCart, nullCart } = getDevidedCart(cart, userId);
+
+  const updatedCart = userCart.map((item) => {
     if (item.productId === productId) {
       const updatedCountArr = item.countArr.map((countItem) => {
         return countItem.category === oldCategory ? count : countItem;
@@ -53,15 +80,20 @@ export const getUpdatedCart = (
       return item;
     }
   });
+
+  return [...updatedCart, ...nullCart];
 };
 
 export const getMergedCart = (
   cart: ICartItem[],
   newCartData: ICartData,
-  oldCategory: string
+  oldCategory: string,
+  userId: string | null
 ): ICartItem[] => {
   const { productId, count } = newCartData;
-  return cart.map((item) => {
+  const { userCart, nullCart } = getDevidedCart(cart, userId);
+
+  const mergedCart = userCart.map((item) => {
     if (item.productId === productId) {
       const countAfterRemove = item.countArr.filter(
         (count) => count.category !== oldCategory
@@ -74,28 +106,40 @@ export const getMergedCart = (
       return item;
     }
   });
+
+  return [...mergedCart, ...nullCart];
 };
 
 export const getCartAfterRemove = (
   cart: ICartItem[],
   id: string,
-  category: string
-): [ICartItem[], boolean] => {
-  let isCartProductsNeedClear = false;
-  const index = cart.findIndex((cartItem) => cartItem.productId === id);
+  category: string,
+  userId: string | null
+): ICartItem[] => {
+  const { userCart, nullCart } = getDevidedCart(cart, userId);
+  const productInCart = userCart.find((cartItem) => cartItem.productId === id);
 
-  if (index !== -1) {
-    const cartItem = cart[index];
-
-    if (cartItem.countArr.length === 1) {
-      isCartProductsNeedClear = true;
-      cart.splice(index, 1);
+  if (productInCart) {
+    if (productInCart.countArr.length === 1) {
+      const useCartAfterRemove = userCart.filter(
+        (item) => item.productId !== id
+      );
+      return [...useCartAfterRemove, ...nullCart];
     } else {
-      cartItem.countArr = cartItem.countArr.filter(
+      const newCountArr = productInCart.countArr.filter(
         (count) => count.category !== category
       );
+      const newProduct: ICartItem = { ...productInCart, countArr: newCountArr };
+      const updatedUserCart = userCart.map((item) => {
+        if (item.productId === id) {
+          return newProduct;
+        } else {
+          return item;
+        }
+      });
+      return [...updatedUserCart, ...nullCart];
     }
+  } else {
+    return cart;
   }
-
-  return [cart, isCartProductsNeedClear];
 };

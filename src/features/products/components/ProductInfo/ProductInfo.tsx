@@ -33,7 +33,7 @@ interface ProductInfoProps {
 
 const ProductInfo: FC<ProductInfoProps> = ({ product }) => {
   const dispatch = useDispatch<AppDispatch>();
-  const { isAuth, user, userId } = useAuth();
+  const { isAuth, userId } = useAuth();
   const { cart } = useSelector<RootState, ICartState>(selectCart);
   const { wishlist } = useSelector<RootState, IWishlistState>(selectWishlist);
 
@@ -86,14 +86,19 @@ const ProductInfo: FC<ProductInfoProps> = ({ product }) => {
       },
     };
 
-    dispatch(addToCart(newCartItem));
+    dispatch(addToCart({ cartData: newCartItem, userId }));
     setCount(ECount.MIN_COUNT_VALUE);
     handleCloseModal();
     notifyAddToCart();
   };
 
   const addExistingInCart = () => {
-    const isUnitInCart = getIsUnitInCart(cart, product.id, countCategory);
+    const isUnitInCart = getIsUnitInCart(
+      cart,
+      product.id,
+      countCategory,
+      userId
+    );
 
     if (isUnitInCart) {
       handleOpenModal();

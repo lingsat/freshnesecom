@@ -30,7 +30,7 @@ import "./Header.scss";
 const Header = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  const { isAuth, userId } = useAuth();
+  const { isAuth, userId, user } = useAuth();
 
   const { products } = useSelector<RootState, IProductsState>(selectProducts);
   const { cart } = useSelector<RootState, ICartState>(selectCart);
@@ -40,7 +40,8 @@ const Header = () => {
 
   const categoriesObj = getCategoriesObj(products);
   const categories = Object.keys(categoriesObj);
-  const cartCount = cart.reduce(
+  const filteredCart = cart.filter((item) => item.userId === userId);
+  const cartCount = filteredCart.reduce(
     (acc, cartItem) => acc + cartItem.countArr.length,
     0
   );
@@ -126,7 +127,7 @@ const Header = () => {
               type="button"
               className="controls__btn"
               onMouseEnter={handleShowProfileMenu}>
-              <img src={userIcon} alt="User" />
+              <img src={user ? user.picture : userIcon} alt="User" />
             </button>
             {showProfileMenu && (
               <ul className="controls__dropdown">

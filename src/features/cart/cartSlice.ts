@@ -63,42 +63,48 @@ export const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    addToCart(state, action: PayloadAction<ICartData>) {
-      state.cart = addProdToCart(state.cart, action.payload);
+    addToCart(
+      state,
+      action: PayloadAction<{ cartData: ICartData; userId: string | null }>
+    ) {
+      const { cartData, userId } = action.payload;
+      state.cart = addProdToCart(state.cart, cartData, userId);
     },
     changeCartItemCount(
       state,
-      action: PayloadAction<{ newCartData: ICartData; oldCategory: string }>
+      action: PayloadAction<{
+        newCartData: ICartData;
+        oldCategory: string;
+        userId: string | null;
+      }>
     ) {
-      const { newCartData, oldCategory } = action.payload;
-      state.cart = getUpdatedCart(state.cart, newCartData, oldCategory);
+      const { newCartData, oldCategory, userId } = action.payload;
+      state.cart = getUpdatedCart(state.cart, newCartData, oldCategory, userId);
     },
     mergeCartItemCategories(
       state,
-      action: PayloadAction<{ newCartData: ICartData; oldCategory: string }>
+      action: PayloadAction<{
+        newCartData: ICartData;
+        oldCategory: string;
+        userId: string | null;
+      }>
     ) {
-      const { newCartData, oldCategory } = action.payload;
-      state.cart = getMergedCart(state.cart, newCartData, oldCategory);
+      const { newCartData, oldCategory, userId } = action.payload;
+      state.cart = getMergedCart(state.cart, newCartData, oldCategory, userId);
     },
     removeSingleCartItem(
       state,
-      action: PayloadAction<{ productId: string; category: string }>
+      action: PayloadAction<{
+        productId: string;
+        category: string;
+        userId: string | null;
+      }>
     ) {
-      const { productId, category } = action.payload;
-      const [updatedCart, removeCartProduct] = getCartAfterRemove(
-        state.cart,
-        productId,
-        category
-      );
-      state.cart = updatedCart;
-      if (removeCartProduct) {
-        state.cartProducts = state.cartProducts.filter(
-          (product) => product.id !== productId
-        );
-      }
+      const { productId, category, userId } = action.payload;
+      state.cart = getCartAfterRemove(state.cart, productId, category, userId);
     },
-    clearCart(state) {
-      state.cart = [];
+    clearCart(state, action: PayloadAction<string | null>) {
+      state.cart = state.cart.filter((item) => item.userId !== action.payload);
       state.cartProducts = [];
     },
   },

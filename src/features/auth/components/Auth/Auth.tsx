@@ -52,12 +52,14 @@ const Auth: FC = () => {
     <div className="auth" onClick={handleModalClose}>
       <div className="auth__block" onClick={handleModalPropagation}>
         <h2>Log In with:</h2>
-        <div className="auth__buttons">
-          <button className="auth__btn" onClick={handleGoogleAuth}>
-            <img src={googleIcon} alt="Google" />
-            Sign in with Google
-          </button>
-        </div>
+        <button className="auth__btn" onClick={handleGoogleAuth}>
+          <img src={googleIcon} alt="Google" />
+          Sign in with Google
+        </button>
+        <p className="auth__text">
+          Authorized Users can add favorite products to <span>Wishlist </span>
+          and have access to <span>Profile </span>page!
+        </p>
       </div>
     </div>
   );

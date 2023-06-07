@@ -9,6 +9,7 @@ import { EBtnStyle } from "@/common/types/button";
 import Button from "@CommonComponents/Button/Button";
 import Order from "@CartComponents/Order/Order";
 import Billing from "@CartComponents/Billing/Billing";
+import { useAuth } from "@/hooks/useAuth";
 
 import emptyCart from "@Images/empty_cart.webp";
 
@@ -17,12 +18,15 @@ import "./Cart.scss";
 const Cart = () => {
   const navigate = useNavigate();
   const { cart } = useSelector<RootState, ICartState>(selectCart);
+  const { userId } = useAuth();
+
+  const filteredCart = cart.filter((item) => item.userId === userId);
 
   const handleNavToProducts = () => {
     navigate(`/${ERoutes.PRODUCTS_LIST}`);
   };
 
-  if (!cart.length) {
+  if (!filteredCart.length) {
     return (
       <div className="cart__empty">
         <p className="cart__message">

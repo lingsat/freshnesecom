@@ -91,7 +91,11 @@ const CartItem: FC<CartItemProps> = ({
 
   const handleRemoveCartItem = () => {
     dispatch(
-      removeSingleCartItem({ productId: product.id, category: count.category })
+      removeSingleCartItem({
+        productId: product.id,
+        category: count.category,
+        userId,
+      })
     );
   };
 
@@ -104,7 +108,12 @@ const CartItem: FC<CartItemProps> = ({
     setNextCategory(newCategory);
 
     if (invalidCategories.includes(newCategory)) {
-      const nextAmount = getNewCountAmount(cart, product.id, newCategory);
+      const nextAmount = getNewCountAmount(
+        cart,
+        product.id,
+        newCategory,
+        userId
+      );
       let amountSum = nextAmount + count.amount;
 
       if (amountSum > maxNewCategoryStock) {
@@ -144,12 +153,19 @@ const CartItem: FC<CartItemProps> = ({
         category: newCategory,
       },
     };
-    dispatch(changeCartItemCount({ newCartData, oldCategory: count.category }));
+    dispatch(
+      changeCartItemCount({ newCartData, oldCategory: count.category, userId })
+    );
   };
 
   const handleMergeCategories = () => {
     const maxNewCategoryStock = product.stock[nextCategory];
-    const nextAmount = getNewCountAmount(cart, product.id, nextCategory);
+    const nextAmount = getNewCountAmount(
+      cart,
+      product.id,
+      nextCategory,
+      userId
+    );
     let amountSum = nextAmount + count.amount;
 
     if (amountSum > maxNewCategoryStock) {
@@ -166,7 +182,11 @@ const CartItem: FC<CartItemProps> = ({
     };
 
     dispatch(
-      mergeCartItemCategories({ newCartData, oldCategory: count.category })
+      mergeCartItemCategories({
+        newCartData,
+        oldCategory: count.category,
+        userId,
+      })
     );
     handleCloseModal();
   };
@@ -180,7 +200,9 @@ const CartItem: FC<CartItemProps> = ({
         category: count.category,
       },
     };
-    dispatch(changeCartItemCount({ newCartData, oldCategory: count.category }));
+    dispatch(
+      changeCartItemCount({ newCartData, oldCategory: count.category, userId })
+    );
   };
 
   useEffect(() => {
