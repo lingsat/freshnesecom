@@ -1,9 +1,13 @@
 import React, { FC, useEffect, useRef, useState } from "react";
-import { ICity, ICountry } from "country-state-city";
 import { ErrorMessage, Field } from "formik";
 
-import { getCitiesByCountry, getFilteredCountries } from "@Cart/utils/cart";
+import {
+  getFilteredCities,
+  getFilteredCountries,
+  getCities,
+} from "@Cart/utils/location";
 import { EBilling } from "@Cart/types/billing";
+import { ICity, ICountry } from "@Cart/types/location";
 
 import arrowDown from "@Images/arrow_black.svg";
 import clear from "@Images/close.svg";
@@ -32,13 +36,14 @@ const LocationSelector: FC<LocationSelectorProps> = ({
 
   const [showCountries, setShowCountries] = useState<boolean>(false);
   const [showCities, setShowCities] = useState<boolean>(false);
+  const [cities, setCities] = useState<ICity[]>([]);
 
-  const countries = getFilteredCountries(allCountries, countryValue);
-  const cities = getCitiesByCountry(countryCode, cityValue);
+  const filteredCountries = getFilteredCountries(allCountries, countryValue);
+  const filteredCities = getFilteredCities(cities, cityValue);
 
-  const handleCountryChose = (country: ICountry) => () => {
-    setFieldValue(EBilling.COUNTRY, country.name);
-    setCountryCode(country.isoCode);
+  const handleCountryChose = (option: ICountry) => () => {
+    setFieldValue(EBilling.COUNTRY, option.label);
+    setCountryCode(option.value);
     setShowCountries(false);
   };
 
@@ -79,6 +84,15 @@ const LocationSelector: FC<LocationSelectorProps> = ({
     }
   };
 
+  const fetchCities = async () => {
+    const data = await getCities(countryCode);
+    setCities(data);
+  };
+
+  useEffect(() => {
+    fetchCities();
+  }, [countryCode]);
+
   useEffect(() => {
     document.addEventListener("mousedown", handleOutsideClick);
     return () => {
@@ -114,14 +128,14 @@ const LocationSelector: FC<LocationSelectorProps> = ({
           )}
           <img className="dropdown-field__arrow" src={arrowDown} alt="Down" />
         </label>
-        {showCountries && !!countries.length && (
+        {showCountries && !!filteredCountries.length && (
           <ul className="dropdown-field__list">
-            {countries.map((country, index) => (
+            {filteredCountries.map((country, index) => (
               <li
-                key={`country-${country.name}-${index}`}
+                key={`country-${country.value}-${index}`}
                 className="dropdown-field__item"
                 onClick={handleCountryChose(country)}>
-                {country.name}
+                {country.label}
               </li>
             ))}
           </ul>
@@ -152,13 +166,13 @@ const LocationSelector: FC<LocationSelectorProps> = ({
               onClick={handleClearCity}
             />
           )}
-          {!!cities.length && (
+          {!!filteredCities.length && (
             <img className="dropdown-field__arrow" src={arrowDown} alt="Down" />
           )}
         </label>
-        {showCities && !!cities.length && (
+        {showCities && !!filteredCities.length && (
           <ul className="dropdown-field__list">
-            {cities.map((city, index) => (
+            {filteredCities.map((city, index) => (
               <li
                 key={`country-${city.name}-${index}`}
                 className="dropdown-field__item"

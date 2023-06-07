@@ -9,8 +9,8 @@ import {
   FormikProps,
 } from "formik";
 import { PersistFormikValues } from "formik-persist-values";
-import { Country } from "country-state-city";
 import { toast } from "react-toastify";
+import countryList from "react-select-country-list";
 
 import { AppDispatch } from "@Store/store";
 import { clearCart } from "@Cart/cartSlice";
@@ -36,6 +36,10 @@ const Billing: FC = () => {
   const formikRef = useRef<FormikProps<IInitialValues>>(null);
   const [countryCode, setCountryCode] = useState<string>("");
 
+  const [options, setOptions] = useState<{ value: string; label: string }[]>(
+    []
+  );
+
   const initialValues: IInitialValues = {
     firstName: "",
     lastName: "",
@@ -50,8 +54,6 @@ const Billing: FC = () => {
     policyCheck: false,
   };
 
-  const countries = Country.getAllCountries();
-
   const notifyInvalidCountry = () =>
     toast.warn("Invalid country name - choose from list");
 
@@ -61,8 +63,8 @@ const Billing: FC = () => {
     values: typeof initialValues,
     action: FormikHelpers<typeof initialValues>
   ) => {
-    const isCountryInArray = countries.find(
-      (country) => country.name === values.country
+    const isCountryInArray = options.find(
+      (country) => country.label === values.country
     );
 
     if (isCountryInArray) {
@@ -105,6 +107,11 @@ const Billing: FC = () => {
     }
   }, [user]);
 
+  useEffect(() => {
+    const options = countryList().getData();
+    setOptions(options);
+  }, []);
+
   return (
     <>
       <Formik
@@ -138,7 +145,7 @@ const Billing: FC = () => {
                 phoneValue={values.phoneNumber}
               />
               <LocationSelector
-                allCountries={countries}
+                allCountries={options}
                 setFieldValue={setFieldValue}
                 countryValue={values.country}
                 cityValue={values.city}
