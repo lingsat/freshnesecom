@@ -4,24 +4,23 @@ import { toast } from "react-toastify";
 
 import { AppDispatch, RootState } from "@Store/store";
 import { fetchCartProducts, ICartState, selectCart } from "@Cart/cartSlice";
+import { useAuth } from "@/hooks/useAuth";
 import { getDeliveryDay } from "@/utils/date";
 import { getCartItemWithProduct, getInvalidCategories } from "@Cart/utils/cart";
 import { getSubtotalPrice, getTotalPrice } from "@Cart/utils/price";
 import { PROMO_CODE, PROMO_CODE_DISCOUNT, TAX_VALUE } from "@/constants";
 import CartItem from "@CartComponents/CartItem/CartItem";
 import LoadinSpinner from "@CommonComponents/LoadingSpinner/LoadingSpinner";
-import { useAuth } from "@/hooks/useAuth";
 
 import "./Order.scss";
 
 const Order: FC = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { userId } = useAuth();
-
   const { cart, cartProducts, isCartLoading, cartError } = useSelector<
     RootState,
     ICartState
   >(selectCart);
+  const { userId } = useAuth();
 
   const [promoCode, setPromoCode] = useState<string>("");
   const [isPromoAplied, setIsPromoAplied] = useState<boolean>(false);

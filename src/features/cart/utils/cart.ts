@@ -49,9 +49,9 @@ export const getCartItemWithProduct = (
         product,
         count,
       }));
+    } else {
+      return [];
     }
-
-    return [];
   });
 };
 

@@ -27,11 +27,11 @@ const LocationSelector: FC<LocationSelectorProps> = ({
   countryCode,
   setCountryCode,
 }) => {
-  const [showCountries, setShowCountries] = useState<boolean>(false);
-  const [showCities, setShowCities] = useState<boolean>(false);
-
   const countriesRef = useRef<HTMLDivElement>(null);
   const citiesRef = useRef<HTMLDivElement>(null);
+
+  const [showCountries, setShowCountries] = useState<boolean>(false);
+  const [showCities, setShowCities] = useState<boolean>(false);
 
   const countries = getFilteredCountries(allCountries, countryValue);
   const cities = getCitiesByCountry(countryCode, cityValue);

@@ -8,7 +8,7 @@ import axios from "axios";
 
 import { RootState } from "@Store/store";
 import { getMinMaxPrice } from "@Products/utils/store";
-import { getToggledArray } from "@/utils/toggleArrItem";
+import { getToggledArray } from "@/utils/toggle";
 import { IProduct } from "@Products/types/product";
 import { IPaginationState, EPagination } from "@Products/types/pagination";
 

@@ -9,13 +9,13 @@ import {
   fetchWishlistProducts,
   IWishlistState,
   selectWishlist,
-} from "@Features/wishlist/wishlistSlice";
+} from "@Wishlist/wishlistSlice";
+import { useAuth } from "@/hooks/useAuth";
 import { ERoutes } from "@/types/routes";
 import { EBtnStyle, EBtnImage, EBtnImagePos } from "@/common/types/button";
 import Button from "@CommonComponents/Button/Button";
 import LoadinSpinner from "@CommonComponents/LoadingSpinner/LoadingSpinner";
 import SuggestedCard from "@CommonComponents/SuggestedCard/SuggestedCard";
-import { useAuth } from "@/hooks/useAuth";
 
 import emptyWishlist from "@Images/wishlist_empty.svg";
 

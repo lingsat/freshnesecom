@@ -22,10 +22,8 @@
   }
 
   &__label {
+    @include flex-center;
     height: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     border-right: 1px solid $color-gray;
 
     input {
@@ -69,11 +67,9 @@
   }
 
   &__selector {
+    @include flex-center;
     padding: 13px 0;
     height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     position: relative;
   }
 

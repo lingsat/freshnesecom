@@ -3,19 +3,6 @@ import {
   IPaginationState,
   EPagination,
 } from "@Products/types/pagination";
-import { IProduct } from "@Products/types/product";
-
-export const getPaginatedProducts = (
-  productsArr: IProduct[],
-  pagination: IPaginationState
-): IProduct[] => {
-  const { currentPage, productsPerPage } = pagination;
-
-  const indexOfFirstProduct = (currentPage - 1) * EPagination.PRODUCTS_PER_PAGE;
-  const indexOfLastProduct = indexOfFirstProduct + productsPerPage;
-
-  return productsArr.slice(indexOfFirstProduct, indexOfLastProduct);
-};
 
 export const getPaginationData = (
   productsCount: number,

@@ -16,16 +16,16 @@ import {
   IWishlistState,
   selectWishlist,
   toggleWishlistItem,
-} from "@Features/wishlist/wishlistSlice";
-import { showAuth } from "@Features/auth/authSlice";
+} from "@Wishlist/wishlistSlice";
+import { showAuth } from "@Auth/authSlice";
+import { useAuth } from "@/hooks/useAuth";
+import { findProductInWishlist } from "@/utils/products";
 import { ERoutes } from "@/types/routes";
 import { ECount } from "@/common/types/count";
 import { ICartItemWithProduct } from "@Cart/types/cart";
 import Stars from "@CommonComponents/Stars/Stars";
 import Count from "@CommonComponents/Count/Count";
 import Modal from "@CommonComponents/Modal/Modal";
-import { useAuth } from "@/hooks/useAuth";
-import { findProductInWishlist } from "@/utils/products";
 
 import heart from "@Images/heart_thin.svg";
 import heartFilled from "@Images/heart_filled.svg";
@@ -45,15 +45,14 @@ const CartItem: FC<CartItemProps> = ({
   const { product, count } = itemWithProduct;
 
   const dispatch = useDispatch<AppDispatch>();
-  const { isAuth, userId } = useAuth();
   const navigate = useNavigate();
   const { cart } = useSelector<RootState, ICartState>(selectCart);
+  const { wishlist } = useSelector<RootState, IWishlistState>(selectWishlist);
+  const { isAuth, userId } = useAuth();
 
   const [showModal, setShowModal] = useState<boolean>(false);
   const [modalText, setModalText] = useState<string>("");
   const [nextCategory, setNextCategory] = useState<string>("");
-
-  const { wishlist } = useSelector<RootState, IWishlistState>(selectWishlist);
 
   const isCountInvalid =
     count.amount > product.stock[count.category] ||

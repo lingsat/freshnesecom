@@ -1,7 +1,7 @@
 import React, { ChangeEvent, FC } from "react";
 import { Field, ErrorMessage } from "formik";
 
-import { EBilling } from "@/features/cart/types/billing";
+import { EBilling } from "@Cart/types/billing";
 
 interface PostCodeFieldProps {
   setFieldValue: (name: string, value: string | undefined) => void;

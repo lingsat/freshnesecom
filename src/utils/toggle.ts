@@ -1,4 +1,4 @@
-import { IWishlistItem } from "@Features/wishlist/types/wishlist";
+import { IWishlistItem } from "@Wishlist/types/wishlist";
 
 export const getToggledArray = <T>(arr: T[], item: T): T[] => {
   return arr.includes(item)

@@ -3,13 +3,13 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import { AppDispatch } from "@Store/store";
-import { toggleWishlistItem } from "@/features/wishlist/wishlistSlice";
+import { toggleWishlistItem } from "@Wishlist/wishlistSlice";
+import { useAuth } from "@/hooks/useAuth";
 import { getOldPrice } from "@Products/utils/products";
 import { IProduct } from "@Products/types/product";
 import { ERoutes } from "@/types/routes";
 import { EBtnStyle } from "@/common/types/button";
 import Button from "@CommonComponents/Button/Button";
-import { useAuth } from "@/hooks/useAuth";
 
 import close from "@Images/close.svg";
 

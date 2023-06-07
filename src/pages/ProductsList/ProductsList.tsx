@@ -3,8 +3,7 @@ import { useSelector } from "react-redux";
 
 import { RootState } from "@Store/store";
 import { IProductsState, selectProducts } from "@Products/productsSlice";
-import { getPaginatedProducts } from "@Products/utils/pagination";
-import { getFilteredProducts } from "@/utils/products";
+import { getPaginatedProducts } from "@/utils/products";
 import LoadinSpinner from "@CommonComponents/LoadingSpinner/LoadingSpinner";
 import Filter from "@ProductsComponents/Filter/Filter";
 import Paging from "@ProductsComponents/Paging/Paging";
@@ -27,8 +26,12 @@ const ProductsList = () => {
     setShowFIlter((prev) => !prev);
   };
 
-  const filteredProducts = getFilteredProducts(products, filter, sortRule);
-  const paginatedProducts = getPaginatedProducts(filteredProducts, pagination);
+  const { paginatedProducts, filteredLength } = getPaginatedProducts(
+    products,
+    filter,
+    sortRule,
+    pagination
+  );
 
   const handlePageScroll = () => {
     if (listRef.current) {
@@ -67,7 +70,7 @@ const ProductsList = () => {
           <Filter showFilter={showFilter} toggleFilter={toggleFilter} />
           <Products products={paginatedProducts} />
           <Paging
-            productsCount={filteredProducts.length}
+            productsCount={filteredLength}
             pagination={pagination}
             handlePageScroll={handlePageScroll}
           />

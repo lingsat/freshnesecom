@@ -1,5 +1,5 @@
-import { ICartItem } from "@/features/cart/types/cart";
 import { productCategories } from "@/mock/productCategories";
+import { ICartItem } from "@Cart/types/cart";
 import { getCountCategories } from "@/utils/products";
 import { ICategory, IProduct } from "@Products/types/product";
 

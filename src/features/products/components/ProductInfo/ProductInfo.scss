@@ -48,11 +48,9 @@
   }
 
   &__order {
+    @include flex-between-center;
     margin-bottom: 1.5rem;
     padding: 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
     column-gap: 0.5rem;
     border: 1px solid $color-gray-light;
     border-radius: 12px;

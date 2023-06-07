@@ -1,4 +1,4 @@
-import { IProduct } from "@/features/products/types/product";
+import { IProduct } from "@Products/types/product";
 import { ERoutes } from "@/types/routes";
 
 interface IBreadCrumb {

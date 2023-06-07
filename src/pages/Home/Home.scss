@@ -1,0 +1,11 @@
+@import "@Styles/_mixins.scss";
+
+.home {
+  @include flex-center;
+  flex-direction: column;
+  gap: 2rem;
+
+  &__title {
+    text-align: center;
+  }
+}
