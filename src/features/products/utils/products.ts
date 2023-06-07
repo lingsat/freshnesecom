@@ -80,9 +80,13 @@ export const getSortedImages = (imagesArr: string[], index: number) => () => {
 export const getIsUnitInCart = (
   cart: ICartItem[],
   prodId: string,
-  countCategory: string
+  countCategory: string,
+  userId: string | null
 ): boolean => {
-  const productInCart = cart.find((cartItem) => cartItem.productId === prodId);
+  const userCart = cart.filter((item) => item.userId === userId);
+  const productInCart = userCart.find(
+    (cartItem) => cartItem.productId === prodId
+  );
 
   if (productInCart) {
     return productInCart.countArr.some(

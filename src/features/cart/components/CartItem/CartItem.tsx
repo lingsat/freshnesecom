@@ -16,13 +16,16 @@ import {
   IWishlistState,
   selectWishlist,
   toggleWishlistItem,
-} from "@/features/wishlist/wishlistSlice";
+} from "@Features/wishlist/wishlistSlice";
+import { showAuth } from "@Features/auth/authSlice";
 import { ERoutes } from "@/types/routes";
 import { ECount } from "@/common/types/count";
 import { ICartItemWithProduct } from "@Cart/types/cart";
 import Stars from "@CommonComponents/Stars/Stars";
 import Count from "@CommonComponents/Count/Count";
 import Modal from "@CommonComponents/Modal/Modal";
+import { useAuth } from "@/hooks/useAuth";
+import { findProductInWishlist } from "@/utils/products";
 
 import heart from "@Images/heart_thin.svg";
 import heartFilled from "@Images/heart_filled.svg";
@@ -42,6 +45,7 @@ const CartItem: FC<CartItemProps> = ({
   const { product, count } = itemWithProduct;
 
   const dispatch = useDispatch<AppDispatch>();
+  const { isAuth, userId } = useAuth();
   const navigate = useNavigate();
   const { cart } = useSelector<RootState, ICartState>(selectCart);
 
@@ -57,16 +61,25 @@ const CartItem: FC<CartItemProps> = ({
   const priceSummary = (product.price[count.category] * count.amount).toFixed(
     2
   );
-  const isInWishlist = wishlist.includes(product.id);
-
-  const handleToggleWishlist = () => {
-    dispatch(toggleWishlistItem(product.id));
-  };
+  const isInWishlist =
+    findProductInWishlist(wishlist, userId, product.id) && isAuth;
 
   const notifyChangeCountCategory = (amount: number, category: string) =>
     toast.warn(
       `Amount was decreased! We have only ${amount} "${category}" in stock.`
     );
+
+  const notifyNotLoggedIn = () =>
+    toast.warn("The Wishlist is available only to authorized users");
+
+  const handleToggleWishlist = () => {
+    if (!isAuth) {
+      notifyNotLoggedIn();
+      dispatch(showAuth());
+    } else {
+      dispatch(toggleWishlistItem({ userId, productId: product.id }));
+    }
+  };
 
   const handleOpenModal = () => {
     setShowModal(true);
@@ -78,7 +91,11 @@ const CartItem: FC<CartItemProps> = ({
 
   const handleRemoveCartItem = () => {
     dispatch(
-      removeSingleCartItem({ productId: product.id, category: count.category })
+      removeSingleCartItem({
+        productId: product.id,
+        category: count.category,
+        userId,
+      })
     );
   };
 
@@ -91,7 +108,12 @@ const CartItem: FC<CartItemProps> = ({
     setNextCategory(newCategory);
 
     if (invalidCategories.includes(newCategory)) {
-      const nextAmount = getNewCountAmount(cart, product.id, newCategory);
+      const nextAmount = getNewCountAmount(
+        cart,
+        product.id,
+        newCategory,
+        userId
+      );
       let amountSum = nextAmount + count.amount;
 
       if (amountSum > maxNewCategoryStock) {
@@ -124,18 +146,26 @@ const CartItem: FC<CartItemProps> = ({
     }
 
     const newCartData = {
+      userId,
       productId: product.id,
       count: {
         amount: validAmount,
         category: newCategory,
       },
     };
-    dispatch(changeCartItemCount({ newCartData, oldCategory: count.category }));
+    dispatch(
+      changeCartItemCount({ newCartData, oldCategory: count.category, userId })
+    );
   };
 
   const handleMergeCategories = () => {
     const maxNewCategoryStock = product.stock[nextCategory];
-    const nextAmount = getNewCountAmount(cart, product.id, nextCategory);
+    const nextAmount = getNewCountAmount(
+      cart,
+      product.id,
+      nextCategory,
+      userId
+    );
     let amountSum = nextAmount + count.amount;
 
     if (amountSum > maxNewCategoryStock) {
@@ -143,6 +173,7 @@ const CartItem: FC<CartItemProps> = ({
     }
 
     const newCartData = {
+      userId,
       productId: product.id,
       count: {
         amount: amountSum,
@@ -151,20 +182,27 @@ const CartItem: FC<CartItemProps> = ({
     };
 
     dispatch(
-      mergeCartItemCategories({ newCartData, oldCategory: count.category })
+      mergeCartItemCategories({
+        newCartData,
+        oldCategory: count.category,
+        userId,
+      })
     );
     handleCloseModal();
   };
 
   const handleChangeAmount = (newAmount: number) => {
     const newCartData = {
+      userId,
       productId: product.id,
       count: {
         amount: newAmount,
         category: count.category,
       },
     };
-    dispatch(changeCartItemCount({ newCartData, oldCategory: count.category }));
+    dispatch(
+      changeCartItemCount({ newCartData, oldCategory: count.category, userId })
+    );
   };
 
   useEffect(() => {

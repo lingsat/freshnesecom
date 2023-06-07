@@ -10,11 +10,13 @@ import { getSubtotalPrice, getTotalPrice } from "@Cart/utils/price";
 import { PROMO_CODE, PROMO_CODE_DISCOUNT, TAX_VALUE } from "@/constants";
 import CartItem from "@CartComponents/CartItem/CartItem";
 import LoadinSpinner from "@CommonComponents/LoadingSpinner/LoadingSpinner";
+import { useAuth } from "@/hooks/useAuth";
 
 import "./Order.scss";
 
 const Order: FC = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const { userId } = useAuth();
 
   const { cart, cartProducts, isCartLoading, cartError } = useSelector<
     RootState,
@@ -24,7 +26,11 @@ const Order: FC = () => {
   const [promoCode, setPromoCode] = useState<string>("");
   const [isPromoAplied, setIsPromoAplied] = useState<boolean>(false);
 
-  const cartItemsWithProducts = getCartItemWithProduct(cart, cartProducts);
+  const filteredCart = cart.filter((item) => item.userId === userId);
+  const cartItemsWithProducts = getCartItemWithProduct(
+    filteredCart,
+    cartProducts
+  );
 
   const subTotalPrice = getSubtotalPrice(cartItemsWithProducts);
   const taxTotalPrice = ((+subTotalPrice * TAX_VALUE) / 100).toFixed(2);
@@ -52,12 +58,12 @@ const Order: FC = () => {
   };
 
   useEffect(() => {
-    if (cart.length) {
+    if (filteredCart.length) {
       dispatch(fetchCartProducts(cart));
     }
   }, []);
 
-  if (isCartLoading && cart.length !== cartProducts.length) {
+  if (isCartLoading && filteredCart.length !== cartProducts.length) {
     return <LoadinSpinner />;
   }
 

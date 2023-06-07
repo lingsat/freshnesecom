@@ -1,17 +1,20 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
-import { RootState } from "@Store/store";
+import { AppDispatch, RootState } from "@Store/store";
 import { IProductsState, selectProducts } from "@Products/productsSlice";
 import { ERoutes } from "@/types/routes";
 import { ICartState, selectCart } from "@Cart/cartSlice";
-import { getCategoriesObj } from "@/utils/products";
-import LinkItem from "@CommonComponents/LInkItem/LinkItem";
+import { removeUser, showAuth } from "@Features/auth/authSlice";
 import {
   IWishlistState,
   selectWishlist,
-} from "@/features/wishlist/wishlistSlice";
+} from "@Features/wishlist/wishlistSlice";
+import { getCategoriesObj } from "@/utils/products";
+import LinkItem from "@CommonComponents/LInkItem/LinkItem";
+import { useAuth } from "@/hooks/useAuth";
 
 import arrowDown from "@Images/arrow_down.svg";
 import cartIcon from "@Images/basket.svg";
@@ -21,23 +24,59 @@ import userIcon from "@Images/user.svg";
 
 import Category from "./components/Category/Category";
 import Search from "./components/Search/Search";
+
 import "./Header.scss";
 
 const Header = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
+  const { isAuth, userId, user } = useAuth();
+
   const { products } = useSelector<RootState, IProductsState>(selectProducts);
   const { cart } = useSelector<RootState, ICartState>(selectCart);
   const { wishlist } = useSelector<RootState, IWishlistState>(selectWishlist);
   const [showCategories, setShowCategories] = useState<boolean>(true);
+  const [showProfileMenu, setShowProfileMenu] = useState<boolean>(false);
 
   const categoriesObj = getCategoriesObj(products);
   const categories = Object.keys(categoriesObj);
-  const cartCount = cart.reduce(
+  const filteredCart = cart.filter((item) => item.userId === userId);
+  const cartCount = filteredCart.reduce(
     (acc, cartItem) => acc + cartItem.countArr.length,
     0
   );
+  const usersWishlist = wishlist.filter((item) => item.userId === userId);
+  const showWishlist = !!usersWishlist.length && isAuth;
+
+  const notifyLogOut = () => toast.warn("Logged Out successfully!");
 
   const toggleShowCategories = () => {
     setShowCategories((prev) => !prev);
+  };
+
+  const handleHideProfileMenu = () => {
+    setShowProfileMenu(false);
+  };
+
+  const handleShowProfileMenu = () => {
+    setShowProfileMenu(true);
+  };
+
+  const handleChoseProfile = () => {
+    navigate(`/${ERoutes.PROFILE}`);
+    handleHideProfileMenu();
+  };
+
+  const handleLogIn = () => {
+    dispatch(showAuth());
+    handleHideProfileMenu();
+  };
+
+  const handleLogOut = () => {
+    dispatch(removeUser());
+    handleHideProfileMenu();
+    notifyLogOut();
+    localStorage.removeItem("userData");
   };
 
   return (
@@ -76,15 +115,34 @@ const Header = () => {
         </Link>
         <Search />
         <div className="controls">
-          {!!wishlist.length && (
+          {showWishlist && (
             <Link to={`/${ERoutes.WISHLIST}`} className="controls__btn">
               <img src={heartIcon} alt="Wishlist" />
-              <span>{wishlist.length}</span>
+              <span>{usersWishlist.length}</span>
             </Link>
           )}
-          <button type="button" className="controls__btn">
-            <img src={userIcon} alt="User" />
-          </button>
+          <div
+            className="controls__profile"
+            onMouseLeave={handleHideProfileMenu}>
+            <button
+              type="button"
+              className="controls__btn"
+              onMouseEnter={handleShowProfileMenu}>
+              <img src={user ? user.picture : userIcon} alt="User" />
+            </button>
+            {showProfileMenu && (
+              <ul className="controls__dropdown">
+                {isAuth ? (
+                  <>
+                    <li onClick={handleChoseProfile}>Profile</li>
+                    <li onClick={handleLogOut}>Log Out</li>
+                  </>
+                ) : (
+                  <li onClick={handleLogIn}>Log In</li>
+                )}
+              </ul>
+            )}
+          </div>
           <Link to={`/${ERoutes.CART}`} className="controls__btn">
             <img src={cartIcon} alt="Cart" />
             {!!cartCount && <span>{cartCount}</span>}

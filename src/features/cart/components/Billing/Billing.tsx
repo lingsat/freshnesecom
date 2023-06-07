@@ -14,6 +14,7 @@ import { toast } from "react-toastify";
 
 import { AppDispatch } from "@Store/store";
 import { clearCart } from "@Cart/cartSlice";
+import { useAuth } from "@/hooks/useAuth";
 import { regularBillingFields } from "@/mock/billing";
 import { billingSchema } from "@Cart/schemas/billing";
 import { EBilling, IInitialValues } from "@Cart/types/billing";
@@ -30,6 +31,7 @@ import "./Billing.scss";
 
 const Billing: FC = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const { userId, user, userFirstName, userLastName } = useAuth();
 
   const formikRef = useRef<FormikProps<IInitialValues>>(null);
   const [countryCode, setCountryCode] = useState<string>("");
@@ -65,7 +67,7 @@ const Billing: FC = () => {
 
     if (isCountryInArray) {
       setCountryCode("");
-      dispatch(clearCart());
+      dispatch(clearCart(userId));
       action.resetForm();
       localStorage.removeItem("userData");
       successConfirm();
@@ -89,6 +91,19 @@ const Billing: FC = () => {
       formikRef.current.setTouched(touchedObj);
     }
   });
+
+  useEffect(() => {
+    if (user) {
+      formikRef.current?.setValues({
+        ...initialValues,
+        email: user.email,
+        firstName: userFirstName,
+        lastName: userLastName,
+      });
+    } else {
+      formikRef.current?.setValues(initialValues);
+    }
+  }, [user]);
 
   return (
     <>

@@ -1,19 +1,24 @@
 import React, { FC } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 import { AppDispatch, RootState } from "@Store/store";
 import {
   IWishlistState,
   selectWishlist,
   toggleWishlistItem,
-} from "@/features/wishlist/wishlistSlice";
+} from "@Features/wishlist/wishlistSlice";
+import { showAuth } from "@Features/auth/authSlice";
 import { getOldPrice } from "@Products/utils/products";
 import { IProduct } from "@Products/types/product";
 import { EStarsColor } from "@/common/types/stars";
 import { EBtnStyle, EBtnImage, EBtnImagePos } from "@/common/types/button";
 import Button from "@CommonComponents/Button/Button";
 import Stars from "@CommonComponents/Stars/Stars";
+import { useAuth } from "@/hooks/useAuth";
+import { findProductInWishlist } from "@/utils/products";
+
 import "./Card.scss";
 
 interface CardProps {
@@ -22,19 +27,29 @@ interface CardProps {
 
 const Card: FC<CardProps> = ({ product }) => {
   const dispatch = useDispatch<AppDispatch>();
+  const { isAuth, userId } = useAuth();
   const navigate = useNavigate();
   const { wishlist } = useSelector<RootState, IWishlistState>(selectWishlist);
 
   const { mainPrice, mainCountCategory } = product;
   const oldPrice = getOldPrice(product.mainPrice, product.discount);
-  const isInWishlist = wishlist.includes(product.id);
+  const isInWishlist =
+    findProductInWishlist(wishlist, userId, product.id) && isAuth;
+
+  const notifyNotLoggedIn = () =>
+    toast.warn("The Wishlist is available only to authorized users");
 
   const handleOpenProduct = () => {
     navigate(product.id);
   };
 
   const handleToggleWishlist = () => {
-    dispatch(toggleWishlistItem(product.id));
+    if (!isAuth) {
+      notifyNotLoggedIn();
+      dispatch(showAuth());
+    } else {
+      dispatch(toggleWishlistItem({ userId, productId: product.id }));
+    }
   };
 
   return (

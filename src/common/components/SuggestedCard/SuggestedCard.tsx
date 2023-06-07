@@ -9,6 +9,7 @@ import { IProduct } from "@Products/types/product";
 import { ERoutes } from "@/types/routes";
 import { EBtnStyle } from "@/common/types/button";
 import Button from "@CommonComponents/Button/Button";
+import { useAuth } from "@/hooks/useAuth";
 
 import close from "@Images/close.svg";
 
@@ -25,6 +26,7 @@ const SuggestedCard: FC<SuggestedCardProps> = ({
 }) => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
+  const { userId } = useAuth();
 
   const oldPrice = getOldPrice(product.mainPrice, product.discount);
 
@@ -33,7 +35,7 @@ const SuggestedCard: FC<SuggestedCardProps> = ({
   };
 
   const handleToggleWishlist = () => {
-    dispatch(toggleWishlistItem(product.id));
+    dispatch(toggleWishlistItem({ userId, productId: product.id }));
   };
 
   return (

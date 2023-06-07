@@ -1,0 +1,70 @@
+@import "@Styles/_variables.scss";
+@import "@Styles/_mixins.scss";
+
+.auth {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 3;
+  backdrop-filter: blur(5px);
+
+  &__block {
+    padding: 1.5rem 1rem;
+    width: 90%;
+    max-width: 300px;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    text-align: center;
+    color: $color-white;
+    background-color: $color-gray-dark;
+    border-radius: 12px;
+    box-shadow: $color-gray 0px 2px 8px 0px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 5;
+    transform: translate(-50%, -50%);
+  }
+
+  &__text {
+    font-size: 0.8rem;
+    line-height: 1rem;
+
+    span {
+      font-weight: 700;
+      color: $color-green;
+    }
+  }
+
+  &__btn {
+    margin: 1rem 0;
+    display: block;
+    width: 100%;
+    position: relative;
+    padding: 10px 5px;
+    text-align: center;
+    font-family: $font-secondary;
+    @include font(600, 1rem, 1.375rem);
+    color: $color-gray-dark;
+    background-color: $color-white;
+    border: none;
+    cursor: pointer;
+    transition: all 0.1s linear;
+
+    &:hover {
+      background-color: $color-gray-light;
+    }
+
+    img {
+      width: 30px;
+      height: 30px;
+      position: absolute;
+      top: 50%;
+      left: 5px;
+      z-index: 1;
+      transform: translateY(-50%);
+    }
+  }
+}
