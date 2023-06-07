@@ -10,13 +10,14 @@ import {
 } from "formik";
 import { PersistFormikValues } from "formik-persist-values";
 import { toast } from "react-toastify";
-import countryList from "react-select-country-list";
 
 import { AppDispatch } from "@Store/store";
 import { clearCart } from "@Cart/cartSlice";
 import { useAuth } from "@/hooks/useAuth";
+import { getCountries } from "@Cart/utils/location";
 import { regularBillingFields } from "@/mock/billing";
 import { billingSchema } from "@Cart/schemas/billing";
+import { ICountry } from "@Cart/types/location";
 import { EBilling, IInitialValues } from "@Cart/types/billing";
 import { EBtnStyle } from "@/common/types/button";
 import { LOCAL_STORAGE_COUNTRY, LOCAL_STORAGE_USER } from "@/constants";
@@ -38,10 +39,7 @@ const Billing: FC = () => {
   const [countryCode, setCountryCode] = useState<string>(
     localStorage.getItem(LOCAL_STORAGE_COUNTRY) || ""
   );
-
-  const [options, setOptions] = useState<{ value: string; label: string }[]>(
-    []
-  );
+  const [countries, setCountries] = useState<ICountry[]>([]);
 
   const initialValues: IInitialValues = {
     firstName: "",
@@ -66,8 +64,8 @@ const Billing: FC = () => {
     values: typeof initialValues,
     action: FormikHelpers<typeof initialValues>
   ) => {
-    const isCountryInArray = options.find(
-      (country) => country.label === values.country
+    const isCountryInArray = countries.find(
+      (country) => country.country === values.country
     );
 
     if (isCountryInArray) {
@@ -111,9 +109,17 @@ const Billing: FC = () => {
     }
   }, [user]);
 
+  const fetchCountries = async () => {
+    const data = await getCountries();
+    setCountries(data);
+  };
+
   useEffect(() => {
-    const options = countryList().getData();
-    setOptions(options);
+    localStorage.setItem(LOCAL_STORAGE_COUNTRY, countryCode);
+  }, [countryCode]);
+
+  useEffect(() => {
+    fetchCountries();
   }, []);
 
   return (
@@ -149,7 +155,7 @@ const Billing: FC = () => {
                 phoneValue={values.phoneNumber}
               />
               <LocationSelector
-                allCountries={options}
+                allCountries={countries}
                 setFieldValue={setFieldValue}
                 countryValue={values.country}
                 cityValue={values.city}

@@ -1,30 +1,39 @@
-import { fetchCitiesByCountrieCode } from "@Cart/services/cities";
-import { ICity } from "@Cart/types/location";
+import { ICountry } from "@Cart/types/location";
 
-export const getCities = async (countryCode: string): Promise<ICity[]> => {
-  if (!countryCode) {
-    return [];
-  } else {
-    const citiesAll = await fetchCitiesByCountrieCode(countryCode);
+import { fetchCountries } from "../services/countries";
 
-    if (citiesAll) {
-      const validCities: ICity[] = citiesAll.map((city) => ({
-        label: city.name,
-      }));
-      return validCities.sort((a, b) => a.label.localeCompare(b.label));
-    } else {
-      return [];
-    }
-  }
+export const getCountries = async (): Promise<ICountry[]> => {
+  const countries = await fetchCountries();
+  return countries ? countries : [];
 };
 
-export const getFilteredLocations = <T extends { label: string }>(
-  locationsArr: T[],
+export const getFilteredCountries = (
+  countries: ICountry[],
   value: string
-): T[] => {
+): ICountry[] => {
   const validValue = value.trim().toLowerCase();
 
-  return locationsArr.filter((item) =>
-    item.label.toLowerCase().includes(validValue)
+  return countries.filter((countrie) =>
+    countrie.country.toLowerCase().includes(validValue)
   );
+};
+
+export const getFilteredCities = (
+  countries: ICountry[],
+  value: string,
+  countrieCode: string
+): string[] => {
+  const validValue = value.trim().toLowerCase();
+
+  const currentCountry = countries.find(
+    (country) => country.iso2 === countrieCode
+  );
+
+  if (currentCountry) {
+    return currentCountry.cities.filter((city) =>
+      city.toLowerCase().includes(validValue)
+    );
+  } else {
+    return [];
+  }
 };

@@ -1,10 +1,9 @@
 import React, { FC, useEffect, useRef, useState } from "react";
 import { ErrorMessage, Field } from "formik";
 
-import { getCities, getFilteredLocations } from "@Cart/utils/location";
+import { getFilteredCities, getFilteredCountries } from "@Cart/utils/location";
 import { EBilling } from "@Cart/types/billing";
-import { ICity, ICountry } from "@Cart/types/location";
-import { LOCAL_STORAGE_COUNTRY } from "@/constants";
+import { ICountry } from "@Cart/types/location";
 
 import arrowDown from "@Images/arrow_black.svg";
 import clear from "@Images/close.svg";
@@ -33,20 +32,22 @@ const LocationSelector: FC<LocationSelectorProps> = ({
 
   const [showCountries, setShowCountries] = useState<boolean>(false);
   const [showCities, setShowCities] = useState<boolean>(false);
-  const [cities, setCities] = useState<ICity[]>([]);
-  const [citiesLoading, setCitiesLoading] = useState<boolean>(false);
 
-  const filteredCountries = getFilteredLocations(allCountries, countryValue);
-  const filteredCities = getFilteredLocations(cities, cityValue);
+  const filteredCountries = getFilteredCountries(allCountries, countryValue);
+  const filteredCities = getFilteredCities(
+    allCountries,
+    cityValue,
+    countryCode
+  );
 
-  const handleCountryChose = (option: ICountry) => () => {
-    setFieldValue(EBilling.COUNTRY, option.label);
-    setCountryCode(option.value);
+  const handleCountryChose = (country: ICountry) => () => {
+    setFieldValue(EBilling.COUNTRY, country.country);
+    setCountryCode(country.iso2);
     setShowCountries(false);
   };
 
-  const handleCityChose = (city: ICity) => () => {
-    setFieldValue(EBilling.CITY, city.label);
+  const handleCityChose = (city: string) => () => {
+    setFieldValue(EBilling.CITY, city);
     setShowCities(false);
   };
 
@@ -81,18 +82,6 @@ const LocationSelector: FC<LocationSelectorProps> = ({
       setShowCities(false);
     }
   };
-
-  const fetchCities = async () => {
-    setCitiesLoading(true);
-    const data = await getCities(countryCode);
-    setCities(data);
-    setCitiesLoading(false);
-  };
-
-  useEffect(() => {
-    fetchCities();
-    localStorage.setItem(LOCAL_STORAGE_COUNTRY, countryCode);
-  }, [countryCode]);
 
   useEffect(() => {
     document.addEventListener("mousedown", handleOutsideClick);
@@ -133,10 +122,10 @@ const LocationSelector: FC<LocationSelectorProps> = ({
           <ul className="dropdown-field__list">
             {filteredCountries.map((country, index) => (
               <li
-                key={`country-${country.value}-${index}`}
+                key={`country-${country.country}-${index}`}
                 className="dropdown-field__item"
                 onClick={handleCountryChose(country)}>
-                {country.label}
+                {country.country}
               </li>
             ))}
           </ul>
@@ -170,18 +159,15 @@ const LocationSelector: FC<LocationSelectorProps> = ({
           {!!filteredCities.length && (
             <img className="dropdown-field__arrow" src={arrowDown} alt="Down" />
           )}
-          {citiesLoading && (
-            <p className="dropdown-field__loading">Loading Cities...</p>
-          )}
         </label>
         {showCities && !!filteredCities.length && (
           <ul className="dropdown-field__list">
             {filteredCities.map((city, index) => (
               <li
-                key={`country-${city.label}-${index}`}
+                key={`country-${city}-${index}`}
                 className="dropdown-field__item"
                 onClick={handleCityChose(city)}>
-                {city.label}
+                {city}
               </li>
             ))}
           </ul>
