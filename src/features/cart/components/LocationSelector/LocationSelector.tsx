@@ -4,6 +4,7 @@ import { ErrorMessage, Field } from "formik";
 import { getCities, getFilteredLocations } from "@Cart/utils/location";
 import { EBilling } from "@Cart/types/billing";
 import { ICity, ICountry } from "@Cart/types/location";
+import { LOCAL_STORAGE_COUNTRY } from "@/constants";
 
 import arrowDown from "@Images/arrow_black.svg";
 import clear from "@Images/close.svg";
@@ -87,6 +88,7 @@ const LocationSelector: FC<LocationSelectorProps> = ({
 
   useEffect(() => {
     fetchCities();
+    localStorage.setItem(LOCAL_STORAGE_COUNTRY, countryCode);
   }, [countryCode]);
 
   useEffect(() => {

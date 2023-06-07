@@ -6,3 +6,5 @@ export const PROMO_CODE_DISCOUNT = 5;
 export const AXIOR_RETRY_COUNT = 3;
 export const AXIOR_RETRY_DELAY = 1000;
 export const AXIOR_RETRY_ERROR = 429;
+export const LOCAL_STORAGE_USER = "userData";
+export const LOCAL_STORAGE_COUNTRY = "countryCode";

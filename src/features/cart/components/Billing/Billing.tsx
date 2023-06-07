@@ -19,6 +19,7 @@ import { regularBillingFields } from "@/mock/billing";
 import { billingSchema } from "@Cart/schemas/billing";
 import { EBilling, IInitialValues } from "@Cart/types/billing";
 import { EBtnStyle } from "@/common/types/button";
+import { LOCAL_STORAGE_COUNTRY, LOCAL_STORAGE_USER } from "@/constants";
 import Button from "@CommonComponents/Button/Button";
 import InputField from "@CartComponents/InputField/InputField";
 import CheckboxField from "@CartComponents/CheckboxField/CheckboxField";
@@ -34,7 +35,9 @@ const Billing: FC = () => {
   const { userId, user, userFirstName, userLastName } = useAuth();
 
   const formikRef = useRef<FormikProps<IInitialValues>>(null);
-  const [countryCode, setCountryCode] = useState<string>("");
+  const [countryCode, setCountryCode] = useState<string>(
+    localStorage.getItem(LOCAL_STORAGE_COUNTRY) || ""
+  );
 
   const [options, setOptions] = useState<{ value: string; label: string }[]>(
     []
@@ -71,7 +74,8 @@ const Billing: FC = () => {
       setCountryCode("");
       dispatch(clearCart(userId));
       action.resetForm();
-      localStorage.removeItem("userData");
+      localStorage.removeItem(LOCAL_STORAGE_USER);
+      localStorage.removeItem(LOCAL_STORAGE_COUNTRY);
       successConfirm();
     } else {
       action.setErrors({ country: "Choose country from list" });
@@ -213,7 +217,10 @@ const Billing: FC = () => {
               style={EBtnStyle.BIG}
               disabled={!dirty || !isValid}
             />
-            <PersistFormikValues name="userData" persistInvalid={true} />
+            <PersistFormikValues
+              name={LOCAL_STORAGE_USER}
+              persistInvalid={true}
+            />
           </Form>
         )}
       </Formik>
