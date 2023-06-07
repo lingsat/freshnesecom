@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { ICity } from "@Cart/types/location";
+import { ICityRes } from "@Cart/types/location";
 
 const config = {
   headers: {
@@ -10,9 +10,9 @@ const config = {
 
 export const fetchCitiesByCountrieCode = async (
   countrieCode: string
-): Promise<ICity[] | undefined> => {
+): Promise<ICityRes[] | undefined> => {
   try {
-    const cities = await axios.get<ICity[]>(
+    const cities = await axios.get<ICityRes[]>(
       `${process.env.REACT_APP_CITIES_API_URL}/${countrieCode}`,
       config
     );

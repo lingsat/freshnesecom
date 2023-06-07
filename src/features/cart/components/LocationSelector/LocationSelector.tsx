@@ -1,11 +1,7 @@
 import React, { FC, useEffect, useRef, useState } from "react";
 import { ErrorMessage, Field } from "formik";
 
-import {
-  getFilteredCities,
-  getFilteredCountries,
-  getCities,
-} from "@Cart/utils/location";
+import { getCities, getFilteredLocations } from "@Cart/utils/location";
 import { EBilling } from "@Cart/types/billing";
 import { ICity, ICountry } from "@Cart/types/location";
 
@@ -38,8 +34,8 @@ const LocationSelector: FC<LocationSelectorProps> = ({
   const [showCities, setShowCities] = useState<boolean>(false);
   const [cities, setCities] = useState<ICity[]>([]);
 
-  const filteredCountries = getFilteredCountries(allCountries, countryValue);
-  const filteredCities = getFilteredCities(cities, cityValue);
+  const filteredCountries = getFilteredLocations(allCountries, countryValue);
+  const filteredCities = getFilteredLocations(cities, cityValue);
 
   const handleCountryChose = (option: ICountry) => () => {
     setFieldValue(EBilling.COUNTRY, option.label);
@@ -48,7 +44,7 @@ const LocationSelector: FC<LocationSelectorProps> = ({
   };
 
   const handleCityChose = (city: ICity) => () => {
-    setFieldValue(EBilling.CITY, city.name);
+    setFieldValue(EBilling.CITY, city.label);
     setShowCities(false);
   };
 
@@ -174,10 +170,10 @@ const LocationSelector: FC<LocationSelectorProps> = ({
           <ul className="dropdown-field__list">
             {filteredCities.map((city, index) => (
               <li
-                key={`country-${city.name}-${index}`}
+                key={`country-${city.label}-${index}`}
                 className="dropdown-field__item"
                 onClick={handleCityChose(city)}>
-                {city.name}
+                {city.label}
               </li>
             ))}
           </ul>

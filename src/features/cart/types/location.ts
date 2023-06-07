@@ -3,6 +3,10 @@ export interface ICountry {
   label: string;
 }
 
-export interface ICity {
+export interface ICityRes {
   name: string;
+}
+
+export interface ICity {
+  label: string;
 }
