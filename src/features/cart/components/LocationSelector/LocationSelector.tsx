@@ -34,6 +34,7 @@ const LocationSelector: FC<LocationSelectorProps> = ({
   const [showCountries, setShowCountries] = useState<boolean>(false);
   const [showCities, setShowCities] = useState<boolean>(false);
   const [cities, setCities] = useState<ICity[]>([]);
+  const [citiesLoading, setCitiesLoading] = useState<boolean>(false);
 
   const filteredCountries = getFilteredLocations(allCountries, countryValue);
   const filteredCities = getFilteredLocations(cities, cityValue);
@@ -82,8 +83,10 @@ const LocationSelector: FC<LocationSelectorProps> = ({
   };
 
   const fetchCities = async () => {
+    setCitiesLoading(true);
     const data = await getCities(countryCode);
     setCities(data);
+    setCitiesLoading(false);
   };
 
   useEffect(() => {
@@ -166,6 +169,9 @@ const LocationSelector: FC<LocationSelectorProps> = ({
           )}
           {!!filteredCities.length && (
             <img className="dropdown-field__arrow" src={arrowDown} alt="Down" />
+          )}
+          {citiesLoading && (
+            <p className="dropdown-field__loading">Loading Cities...</p>
           )}
         </label>
         {showCities && !!filteredCities.length && (
