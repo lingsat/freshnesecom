@@ -17,13 +17,14 @@ const Profile: FC = () => {
   const { isAuth, user } = useAuth();
 
   const notifyNotLoggedIn = () =>
-    toast.warn("The Profile page is available only to authorized users");
+    toast.warn("The Profile is available only to authorized users");
   const notifyLogOut = () => toast.warn("Logged Out successfully!");
 
   const handleLogOut = () => {
     dispatch(removeUser());
     navigate(`/${ERoutes.PRODUCTS_LIST}`);
     notifyLogOut();
+    localStorage.removeItem("userData");
   };
 
   useEffect(() => {

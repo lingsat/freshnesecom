@@ -76,6 +76,7 @@ const Header = () => {
     dispatch(removeUser());
     handleHideProfileMenu();
     notifyLogOut();
+    localStorage.removeItem("userData");
   };
 
   return (
