@@ -13,17 +13,14 @@ import Button from "@CommonComponents/Button/Button";
 
 import close from "@Images/close.svg";
 
-import "./SuggestedCard.scss";
+import "./Suggested.scss";
 
-interface SuggestedCardProps {
+interface SuggestedProps {
   product: IProduct;
   showRemoveBtn?: boolean;
 }
 
-const SuggestedCard: FC<SuggestedCardProps> = ({
-  product,
-  showRemoveBtn = false,
-}) => {
+const Suggested: FC<SuggestedProps> = ({ product, showRemoveBtn = false }) => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const { userId } = useAuth();
@@ -72,4 +69,4 @@ const SuggestedCard: FC<SuggestedCardProps> = ({
   );
 };
 
-export default SuggestedCard;
+export default Suggested;

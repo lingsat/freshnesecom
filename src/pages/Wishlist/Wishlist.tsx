@@ -15,7 +15,7 @@ import { ERoutes } from "@/types/routes";
 import { EBtnStyle, EBtnImage, EBtnImagePos } from "@/common/types/button";
 import Button from "@CommonComponents/Button/Button";
 import LoadinSpinner from "@CommonComponents/LoadingSpinner/LoadingSpinner";
-import SuggestedCard from "@CommonComponents/SuggestedCard/SuggestedCard";
+import Suggested from "@CommonComponents/Suggested/Suggested";
 
 import emptyWishlist from "@Images/wishlist_empty.svg";
 
@@ -103,7 +103,7 @@ const Wishlist: FC = () => {
       </div>
       <ul className="wishlist__list">
         {wishlistProducts.map((product, index) => (
-          <SuggestedCard
+          <Suggested
             key={`wish-${product.id}-${index}`}
             product={product}
             showRemoveBtn={true}

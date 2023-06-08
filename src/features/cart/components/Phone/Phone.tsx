@@ -4,19 +4,15 @@ import PhoneInput from "react-phone-input-2";
 
 import { EBilling } from "@Cart/types/billing";
 
-import "./PhoneField.scss";
+import "./Phone.scss";
 
-interface PhoneFieldProps {
+interface PhoneProps {
   setFieldValue: (name: string, value: string | undefined) => void;
   phoneValue: string;
   handleBlur: (e: React.FocusEvent<HTMLInputElement, Element>) => void;
 }
 
-const PhoneField: FC<PhoneFieldProps> = ({
-  setFieldValue,
-  phoneValue,
-  handleBlur,
-}) => {
+const Phone: FC<PhoneProps> = ({ setFieldValue, phoneValue, handleBlur }) => {
   const handlePhoneChange = (value: string | undefined) => {
     setFieldValue(EBilling.PHONE_NUMBER, value);
   };
@@ -44,4 +40,4 @@ const PhoneField: FC<PhoneFieldProps> = ({
   );
 };
 
-export default PhoneField;
+export default Phone;

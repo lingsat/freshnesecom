@@ -22,11 +22,11 @@ import { EBilling, IInitialValues } from "@Cart/types/billing";
 import { EBtnStyle } from "@/common/types/button";
 import { LOCAL_STORAGE_COUNTRY, LOCAL_STORAGE_USER } from "@/constants";
 import Button from "@CommonComponents/Button/Button";
-import InputField from "@CartComponents/InputField/InputField";
-import CheckboxField from "@CartComponents/CheckboxField/CheckboxField";
-import LocationSelector from "@CartComponents/LocationSelector/LocationSelector";
-import PhoneField from "@CartComponents/PhoneField/PhoneField";
-import PostCodeField from "@CartComponents/PostCodeField/PostCodeField";
+import Input from "@CartComponents/Input/Input";
+import Checkbox from "@CartComponents/Checkbox/Checkbox";
+import Location from "@CartComponents/Location/Location";
+import Phone from "@CartComponents/Phone/Phone";
+import PostCode from "@CartComponents/PostCode/PostCode";
 
 import "react-toastify/dist/ReactToastify.css";
 import "./Billing.scss";
@@ -140,7 +140,7 @@ const Billing: FC = () => {
                 </p>
               </div>
               {regularBillingFields.map((field, index) => (
-                <InputField
+                <Input
                   key={`field-${field.name}-${index}`}
                   name={field.name}
                   label={field.label}
@@ -149,12 +149,12 @@ const Billing: FC = () => {
                   required={field.required}
                 />
               ))}
-              <PhoneField
+              <Phone
                 setFieldValue={setFieldValue}
                 handleBlur={handleBlur}
                 phoneValue={values.phoneNumber}
               />
-              <LocationSelector
+              <Location
                 allCountries={countries}
                 setFieldValue={setFieldValue}
                 countryValue={values.country}
@@ -176,7 +176,7 @@ const Billing: FC = () => {
                   className="billing__error"
                 />
               </label>
-              <PostCodeField setFieldValue={setFieldValue} />
+              <PostCode setFieldValue={setFieldValue} />
             </fieldset>
             <fieldset className="billing__block">
               <div className="billing__header">
@@ -208,14 +208,14 @@ const Billing: FC = () => {
                   ready!
                 </p>
               </div>
-              <CheckboxField name="spamCheck">
+              <Checkbox name="spamCheck">
                 I agree with sending an Marketing and newsletter emails. No
                 spam, promissed!
-              </CheckboxField>
-              <CheckboxField name="policyCheck" required={true}>
+              </Checkbox>
+              <Checkbox name="policyCheck" required={true}>
                 I agree with our <a href="#">terms and conditions</a> and{" "}
                 <a href="#">privacy policy</a>.
-              </CheckboxField>
+              </Checkbox>
             </fieldset>
             <Button
               type="submit"

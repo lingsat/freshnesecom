@@ -44,10 +44,7 @@
     border-radius: 3px;
     outline: none;
     cursor: pointer;
-    position: absolute;
-    top: 50%;
-    left: 2px;
-    z-index: 3;
+    @include position-absolute(50%, 2px, 3);
     transform: translateY(-50%);
 
     &:hover {
