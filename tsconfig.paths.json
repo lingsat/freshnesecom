@@ -8,6 +8,8 @@
       "@Pages/*": ["./pages/*"],
       "@Products/*": ["./features/products/*"],
       "@Cart/*": ["./features/cart/*"],
+      "@Auth/*": ["./features/auth/*"],
+      "@Wishlist/*": ["./features/wishlist/*"],
       "@CartComponents/*": ["./features/cart/components/*"],
       "@ProductsComponents/*": ["./features/products/components/*"],
       "@CoreComponents/*": ["./core/components/*"],

@@ -1,16 +1,9 @@
 import React, { FC, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import jwt_decode from "jwt-decode";
 
-import { IUser } from "@Features/auth/types/auth";
 import { AppDispatch, RootState } from "@Store/store";
-import {
-  hideAuth,
-  IAuthState,
-  selectAuth,
-  setUser,
-} from "@Features/auth/authSlice";
-import { signInWithGoogle } from "@Features/auth/services/auth";
+import { hideAuth, IAuthState, selectAuth, setUser } from "@Auth/authSlice";
+import { signInWithGoogle } from "@Auth/services/auth";
 
 import googleIcon from "@Images/google.svg";
 
@@ -30,9 +23,7 @@ const Auth: FC = () => {
 
   const handleGoogleAuth = async () => {
     try {
-      const userData = await signInWithGoogle();
-      const token = await userData.user.getIdToken();
-      const user: IUser = jwt_decode(token);
+      const { user, token } = await signInWithGoogle();
       dispatch(setUser({ user, token }));
     } catch (error) {
       console.log(error);

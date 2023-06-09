@@ -1,3 +1,7 @@
-.error {
-  text-align: center;
+@import "@Styles/_mixins.scss";
+
+.not-found {
+  @include flex-center;
+  flex-direction: column;
+  gap: 2rem;
 }

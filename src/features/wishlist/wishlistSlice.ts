@@ -14,8 +14,8 @@ import {
   AXIOR_RETRY_DELAY,
   AXIOR_RETRY_ERROR,
 } from "@/constants";
-import { getToggledWishlist } from "@/utils/toggleArrItem";
-import { IWishlistItem } from "@Features/wishlist/types/wishlist";
+import { getToggledWishlist } from "@/utils/toggle";
+import { IWishlistItem } from "@Wishlist/types/wishlist";
 
 axiosRetry(axios, {
   retries: AXIOR_RETRY_COUNT,

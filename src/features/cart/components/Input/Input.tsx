@@ -1,9 +1,9 @@
-import { ErrorMessage, Field } from "formik";
 import React, { FC } from "react";
+import { ErrorMessage, Field } from "formik";
 
-import "./InputField.scss";
+import "./Input.scss";
 
-interface InputFieldProps {
+interface InputProps {
   name: string;
   label: string;
   placeholder: string;
@@ -11,7 +11,7 @@ interface InputFieldProps {
   required?: boolean;
 }
 
-const InputField: FC<InputFieldProps> = ({
+const Input: FC<InputProps> = ({
   name,
   label,
   placeholder,
@@ -43,4 +43,4 @@ const InputField: FC<InputFieldProps> = ({
   );
 };
 
-export default InputField;
+export default Input;

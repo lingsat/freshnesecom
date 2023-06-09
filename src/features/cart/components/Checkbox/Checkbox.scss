@@ -22,10 +22,7 @@
     border-radius: 3px;
     outline: none;
     cursor: pointer;
-    position: absolute;
-    top: 50%;
-    left: 1rem;
-    z-index: 3;
+    @include position-absolute(50%, 1rem, 3);
     transform: translateY(-50%);
 
     &:hover {
@@ -69,10 +66,7 @@
   }
 
   &__error {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    z-index: 1;
+    @include position-absolute(100%, 0, 1);
     @include font(400, 0.75rem, 1.125rem);
     color: $color-red;
   }

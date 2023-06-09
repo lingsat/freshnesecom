@@ -1,16 +1,16 @@
 import React, { FC, useEffect, useRef, useState } from "react";
-import { ICity, ICountry } from "country-state-city";
 import { ErrorMessage, Field } from "formik";
 
-import { getCitiesByCountry, getFilteredCountries } from "@Cart/utils/cart";
+import { getFilteredCities, getFilteredCountries } from "@Cart/utils/location";
 import { EBilling } from "@Cart/types/billing";
+import { ICountry } from "@Cart/types/location";
 
 import arrowDown from "@Images/arrow_black.svg";
 import clear from "@Images/close.svg";
 
-import "./LocationSelector.scss";
+import "./Location.scss";
 
-interface LocationSelectorProps {
+interface LocationProps {
   allCountries: ICountry[];
   setFieldValue: (name: string, value: string | undefined) => void;
   countryValue: string;
@@ -19,7 +19,7 @@ interface LocationSelectorProps {
   setCountryCode: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const LocationSelector: FC<LocationSelectorProps> = ({
+const Location: FC<LocationProps> = ({
   allCountries,
   setFieldValue,
   countryValue,
@@ -27,23 +27,27 @@ const LocationSelector: FC<LocationSelectorProps> = ({
   countryCode,
   setCountryCode,
 }) => {
-  const [showCountries, setShowCountries] = useState<boolean>(false);
-  const [showCities, setShowCities] = useState<boolean>(false);
-
   const countriesRef = useRef<HTMLDivElement>(null);
   const citiesRef = useRef<HTMLDivElement>(null);
 
-  const countries = getFilteredCountries(allCountries, countryValue);
-  const cities = getCitiesByCountry(countryCode, cityValue);
+  const [showCountries, setShowCountries] = useState<boolean>(false);
+  const [showCities, setShowCities] = useState<boolean>(false);
+
+  const filteredCountries = getFilteredCountries(allCountries, countryValue);
+  const filteredCities = getFilteredCities(
+    allCountries,
+    cityValue,
+    countryCode
+  );
 
   const handleCountryChose = (country: ICountry) => () => {
-    setFieldValue(EBilling.COUNTRY, country.name);
-    setCountryCode(country.isoCode);
+    setFieldValue(EBilling.COUNTRY, country.country);
+    setCountryCode(country.iso2);
     setShowCountries(false);
   };
 
-  const handleCityChose = (city: ICity) => () => {
-    setFieldValue(EBilling.CITY, city.name);
+  const handleCityChose = (city: string) => () => {
+    setFieldValue(EBilling.CITY, city);
     setShowCities(false);
   };
 
@@ -88,11 +92,11 @@ const LocationSelector: FC<LocationSelectorProps> = ({
 
   return (
     <>
-      <div ref={countriesRef} className="dropdown-field__wrapper">
-        <label className="dropdown-field" htmlFor={EBilling.COUNTRY}>
-          <p className="dropdown-field__label">State / Country</p>
+      <div ref={countriesRef} className="location__wrapper">
+        <label className="location" htmlFor={EBilling.COUNTRY}>
+          <p className="location__label">State / Country</p>
           <Field
-            className="dropdown-field__field"
+            className="location__field"
             id={EBilling.COUNTRY}
             name={EBilling.COUNTRY}
             placeholder="Choose a state or Country"
@@ -101,37 +105,37 @@ const LocationSelector: FC<LocationSelectorProps> = ({
           />
           <ErrorMessage
             component="span"
-            className="dropdown-field__error"
+            className="location__error"
             name={EBilling.COUNTRY}
           />
           {countryValue && (
             <img
-              className="dropdown-field__clear"
+              className="location__clear"
               src={clear}
               alt="Down"
               onClick={handleClearCountry}
             />
           )}
-          <img className="dropdown-field__arrow" src={arrowDown} alt="Down" />
+          <img className="location__arrow" src={arrowDown} alt="Down" />
         </label>
-        {showCountries && !!countries.length && (
-          <ul className="dropdown-field__list">
-            {countries.map((country, index) => (
+        {showCountries && !!filteredCountries.length && (
+          <ul className="location__list">
+            {filteredCountries.map((country, index) => (
               <li
-                key={`country-${country.name}-${index}`}
-                className="dropdown-field__item"
+                key={`country-${country.country}-${index}`}
+                className="location__item"
                 onClick={handleCountryChose(country)}>
-                {country.name}
+                {country.country}
               </li>
             ))}
           </ul>
         )}
       </div>
-      <div ref={citiesRef} className="dropdown-field__wrapper">
-        <label className="dropdown-field" htmlFor={EBilling.CITY}>
-          <p className="dropdown-field__label">Town / City</p>
+      <div ref={citiesRef} className="location__wrapper">
+        <label className="location" htmlFor={EBilling.CITY}>
+          <p className="location__label">Town / City</p>
           <Field
-            className="dropdown-field__field"
+            className="location__field"
             id={EBilling.CITY}
             name={EBilling.CITY}
             placeholder="Town or city"
@@ -141,29 +145,29 @@ const LocationSelector: FC<LocationSelectorProps> = ({
           />
           <ErrorMessage
             component="span"
-            className="dropdown-field__error"
+            className="location__error"
             name={EBilling.CITY}
           />
           {cityValue && (
             <img
-              className="dropdown-field__clear"
+              className="location__clear"
               src={clear}
               alt="Down"
               onClick={handleClearCity}
             />
           )}
-          {!!cities.length && (
-            <img className="dropdown-field__arrow" src={arrowDown} alt="Down" />
+          {!!filteredCities.length && (
+            <img className="location__arrow" src={arrowDown} alt="Down" />
           )}
         </label>
-        {showCities && !!cities.length && (
-          <ul className="dropdown-field__list">
-            {cities.map((city, index) => (
+        {showCities && !!filteredCities.length && (
+          <ul className="location__list">
+            {filteredCities.map((city, index) => (
               <li
-                key={`country-${city.name}-${index}`}
-                className="dropdown-field__item"
+                key={`country-${city}-${index}`}
+                className="location__item"
                 onClick={handleCityChose(city)}>
-                {city.name}
+                {city}
               </li>
             ))}
           </ul>
@@ -173,4 +177,4 @@ const LocationSelector: FC<LocationSelectorProps> = ({
   );
 };
 
-export default LocationSelector;
+export default Location;

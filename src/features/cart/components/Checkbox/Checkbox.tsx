@@ -1,14 +1,14 @@
 import React, { FC, PropsWithChildren } from "react";
 import { ErrorMessage, Field } from "formik";
 
-import "./CheckboxField.scss";
+import "./Checkbox.scss";
 
-interface CheckboxFieldProps {
+interface CheckboxProps {
   name: string;
   required?: boolean;
 }
 
-const CheckboxField: FC<PropsWithChildren<CheckboxFieldProps>> = ({
+const Checkbox: FC<PropsWithChildren<CheckboxProps>> = ({
   name,
   required = false,
   children,
@@ -32,4 +32,4 @@ const CheckboxField: FC<PropsWithChildren<CheckboxFieldProps>> = ({
   );
 };
 
-export default CheckboxField;
+export default Checkbox;

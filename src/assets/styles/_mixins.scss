@@ -28,3 +28,10 @@
   font-size: $size;
   line-height: $lineHeight;
 }
+
+@mixin position-absolute($top, $left, $index) {
+  position: absolute;
+  top: $top;
+  left: $left;
+  z-index: $index;
+}

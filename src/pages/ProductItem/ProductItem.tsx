@@ -12,7 +12,7 @@ import {
 } from "@Products/productsSlice";
 import { getProductsByCategory } from "@/utils/products";
 import LoadinSpinner from "@CommonComponents/LoadingSpinner/LoadingSpinner";
-import SuggestedCard from "@CommonComponents/SuggestedCard/SuggestedCard";
+import Suggested from "@CommonComponents/Suggested/Suggested";
 import Images from "@ProductsComponents/Images/Images";
 import ProductInfo from "@ProductsComponents/ProductInfo/ProductInfo";
 
@@ -72,7 +72,7 @@ const ProductItem = () => {
           }}>
           {categoryProducts.map((product) => (
             <SwiperSlide key={`suggested-${product.id}`}>
-              <SuggestedCard product={product} />
+              <Suggested product={product} />
             </SwiperSlide>
           ))}
         </Swiper>

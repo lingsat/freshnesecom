@@ -1,4 +1,5 @@
 @import "@Styles/_variables.scss";
+@import "@Styles/_mixins.scss";
 
 .modal {
   position: fixed;
@@ -28,10 +29,8 @@
   }
 
   &__buttons {
+    @include flex-center;
     margin-top: 1rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     gap: 1rem;
   }
 }

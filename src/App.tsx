@@ -5,7 +5,7 @@ import { ToastContainer } from "react-toastify";
 
 import { AppDispatch, RootState } from "@Store/store";
 import { fetchProducts } from "@Products/productsSlice";
-import { IAuthState, selectAuth } from "@Features/auth/authSlice";
+import { IAuthState, selectAuth } from "@Auth/authSlice";
 import { MESSAGES_TIMER } from "@/constants";
 import { ERoutes } from "@/types/routes";
 import Header from "@CoreComponents/Header/Header";
@@ -18,7 +18,7 @@ import Cart from "@Pages/Cart/Cart";
 import Wishlist from "@Pages/Wishlist/Wishlist";
 import Profile from "@Pages/Profile/Profile";
 import NotFound from "@Pages/NotFound/NotFound";
-import Auth from "@Features/auth/components/Auth/Auth";
+import Auth from "@Auth/components/Auth/Auth";
 
 import "./App.scss";
 

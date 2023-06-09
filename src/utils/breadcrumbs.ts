@@ -1,10 +1,21 @@
-import { IProduct } from "@/features/products/types/product";
+import { IProduct } from "@Products/types/product";
 import { ERoutes } from "@/types/routes";
+import { IBreadCrumb } from "@/types/breadCrumb";
 
-interface IBreadCrumb {
-  path: string;
-  text: string;
-}
+const getMiddleCrumb = (route: string): IBreadCrumb => {
+  const lowerRoute = route.toLowerCase();
+  const validText = lowerRoute[0].toUpperCase() + lowerRoute.slice(1);
+  const breadCrumb = { path: `/${lowerRoute}`, text: validText };
+  switch (lowerRoute) {
+    case ERoutes.PRODUCTS_LIST:
+      breadCrumb.text = "All products";
+      break;
+    case ERoutes.CART:
+      breadCrumb.text = "Checkout page";
+      break;
+  }
+  return breadCrumb;
+};
 
 export const generateBreadcrumbs = (
   pathName: string,
@@ -27,19 +38,4 @@ export const generateBreadcrumbs = (
   }
 
   return breadcrumbsArr;
-};
-
-const getMiddleCrumb = (route: string): IBreadCrumb => {
-  const lowerRoute = route.toLowerCase();
-  const validText = lowerRoute[0].toUpperCase() + lowerRoute.slice(1);
-  const breadCrumb = { path: `/${lowerRoute}`, text: validText };
-  switch (lowerRoute) {
-    case ERoutes.PRODUCTS_LIST:
-      breadCrumb.text = "All products";
-      break;
-    case ERoutes.CART:
-      breadCrumb.text = "Checkout page";
-      break;
-  }
-  return breadCrumb;
 };

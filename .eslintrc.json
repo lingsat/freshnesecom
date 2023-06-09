@@ -50,6 +50,14 @@
             "group": "internal"
           },
           {
+            "pattern": "@Wishlist/**",
+            "group": "internal"
+          },
+          {
+            "pattern": "@Auth/**",
+            "group": "internal"
+          },
+          {
             "pattern": "@Pages/**",
             "group": "internal"
           },

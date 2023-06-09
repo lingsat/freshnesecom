@@ -4,9 +4,9 @@ import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 
 import { AppDispatch } from "@Store/store";
-import { removeUser } from "@Features/auth/authSlice";
-import { ERoutes } from "@/types/routes";
+import { removeUser } from "@Auth/authSlice";
 import { useAuth } from "@/hooks/useAuth";
+import { ERoutes } from "@/types/routes";
 import Button from "@CommonComponents/Button/Button";
 
 import "./Profile.scss";

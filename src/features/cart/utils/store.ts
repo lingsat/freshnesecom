@@ -22,11 +22,7 @@ const getDevidedCart = (
   const nullCart: ICartItem[] = [];
 
   cart.forEach((item) => {
-    if (item.userId === userId) {
-      userCart.push(item);
-    } else {
-      nullCart.push(item);
-    }
+    item.userId === userId ? userCart.push(item) : nullCart.push(item);
   });
 
   return { userCart, nullCart };
@@ -130,13 +126,9 @@ export const getCartAfterRemove = (
         (count) => count.category !== category
       );
       const newProduct: ICartItem = { ...productInCart, countArr: newCountArr };
-      const updatedUserCart = userCart.map((item) => {
-        if (item.productId === id) {
-          return newProduct;
-        } else {
-          return item;
-        }
-      });
+      const updatedUserCart = userCart.map((item) =>
+        item.productId === id ? newProduct : item
+      );
       return [...updatedUserCart, ...nullCart];
     }
   } else {

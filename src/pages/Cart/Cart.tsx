@@ -4,12 +4,12 @@ import { useNavigate } from "react-router-dom";
 
 import { RootState } from "@Store/store";
 import { ICartState, selectCart } from "@Cart/cartSlice";
+import { useAuth } from "@/hooks/useAuth";
 import { ERoutes } from "@/types/routes";
 import { EBtnStyle } from "@/common/types/button";
 import Button from "@CommonComponents/Button/Button";
 import Order from "@CartComponents/Order/Order";
 import Billing from "@CartComponents/Billing/Billing";
-import { useAuth } from "@/hooks/useAuth";
 
 import emptyCart from "@Images/empty_cart.webp";
 

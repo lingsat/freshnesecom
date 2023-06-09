@@ -5,16 +5,13 @@ import { toast } from "react-toastify";
 
 import { AppDispatch, RootState } from "@Store/store";
 import { IProductsState, selectProducts } from "@Products/productsSlice";
-import { ERoutes } from "@/types/routes";
 import { ICartState, selectCart } from "@Cart/cartSlice";
-import { removeUser, showAuth } from "@Features/auth/authSlice";
-import {
-  IWishlistState,
-  selectWishlist,
-} from "@Features/wishlist/wishlistSlice";
-import { getCategoriesObj } from "@/utils/products";
-import LinkItem from "@CommonComponents/LInkItem/LinkItem";
+import { removeUser, showAuth } from "@Auth/authSlice";
+import { IWishlistState, selectWishlist } from "@Wishlist/wishlistSlice";
 import { useAuth } from "@/hooks/useAuth";
+import { getCategoriesObj } from "@/utils/products";
+import { ERoutes } from "@/types/routes";
+import LinkItem from "@CommonComponents/LInkItem/LinkItem";
 
 import arrowDown from "@Images/arrow_down.svg";
 import cartIcon from "@Images/basket.svg";

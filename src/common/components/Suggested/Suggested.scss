@@ -11,10 +11,7 @@
     color: $color-green-dark;
     background: $color-gray-lightest;
     border-radius: 12px;
-    position: absolute;
-    top: 12px;
-    left: 12px;
-    z-index: 1;
+    @include position-absolute(12px, 12px, 1);
   }
 
   &__remove {

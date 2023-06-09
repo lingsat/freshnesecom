@@ -1,13 +1,13 @@
 import React, { ChangeEvent, FC } from "react";
 import { Field, ErrorMessage } from "formik";
 
-import { EBilling } from "@/features/cart/types/billing";
+import { EBilling } from "@Cart/types/billing";
 
-interface PostCodeFieldProps {
+interface PostCodeProps {
   setFieldValue: (name: string, value: string | undefined) => void;
 }
 
-const PostCodeField: FC<PostCodeFieldProps> = ({ setFieldValue }) => {
+const PostCode: FC<PostCodeProps> = ({ setFieldValue }) => {
   const handlePostalCodeChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     const numericValue = value.replace(/\D/g, "");
@@ -33,4 +33,4 @@ const PostCodeField: FC<PostCodeFieldProps> = ({ setFieldValue }) => {
   );
 };
 
-export default PostCodeField;
+export default PostCode;

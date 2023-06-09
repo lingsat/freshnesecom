@@ -1,13 +1,12 @@
 import { useSelector } from "react-redux";
 
-import { selectAuth } from "@Features/auth/authSlice";
+import { selectAuth } from "@Auth/authSlice";
 
 export const useAuth = () => {
   const { user, token } = useSelector(selectAuth);
 
   const userId = user ? user.user_id : null;
-  const userFirstName = user ? user.name.split(" ")[0] : "";
-  const userLastName = user ? user.name.split(" ")[1] : "";
+  const [userFirstName, userLastName] = (user?.name || "").split(" ");
 
   return { isAuth: !!token, user, token, userId, userFirstName, userLastName };
 };

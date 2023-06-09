@@ -9,22 +9,24 @@ import {
   FormikProps,
 } from "formik";
 import { PersistFormikValues } from "formik-persist-values";
-import { Country } from "country-state-city";
 import { toast } from "react-toastify";
 
 import { AppDispatch } from "@Store/store";
 import { clearCart } from "@Cart/cartSlice";
 import { useAuth } from "@/hooks/useAuth";
+import { getCountries } from "@Cart/utils/location";
 import { regularBillingFields } from "@/mock/billing";
 import { billingSchema } from "@Cart/schemas/billing";
+import { ICountry } from "@Cart/types/location";
 import { EBilling, IInitialValues } from "@Cart/types/billing";
 import { EBtnStyle } from "@/common/types/button";
+import { LOCAL_STORAGE_COUNTRY, LOCAL_STORAGE_USER } from "@/constants";
 import Button from "@CommonComponents/Button/Button";
-import InputField from "@CartComponents/InputField/InputField";
-import CheckboxField from "@CartComponents/CheckboxField/CheckboxField";
-import LocationSelector from "@CartComponents/LocationSelector/LocationSelector";
-import PhoneField from "@CartComponents/PhoneField/PhoneField";
-import PostCodeField from "@CartComponents/PostCodeField/PostCodeField";
+import Input from "@CartComponents/Input/Input";
+import Checkbox from "@CartComponents/Checkbox/Checkbox";
+import Location from "@CartComponents/Location/Location";
+import Phone from "@CartComponents/Phone/Phone";
+import PostCode from "@CartComponents/PostCode/PostCode";
 
 import "react-toastify/dist/ReactToastify.css";
 import "./Billing.scss";
@@ -34,7 +36,10 @@ const Billing: FC = () => {
   const { userId, user, userFirstName, userLastName } = useAuth();
 
   const formikRef = useRef<FormikProps<IInitialValues>>(null);
-  const [countryCode, setCountryCode] = useState<string>("");
+  const [countryCode, setCountryCode] = useState<string>(
+    localStorage.getItem(LOCAL_STORAGE_COUNTRY) || ""
+  );
+  const [countries, setCountries] = useState<ICountry[]>([]);
 
   const initialValues: IInitialValues = {
     firstName: "",
@@ -50,8 +55,6 @@ const Billing: FC = () => {
     policyCheck: false,
   };
 
-  const countries = Country.getAllCountries();
-
   const notifyInvalidCountry = () =>
     toast.warn("Invalid country name - choose from list");
 
@@ -62,14 +65,15 @@ const Billing: FC = () => {
     action: FormikHelpers<typeof initialValues>
   ) => {
     const isCountryInArray = countries.find(
-      (country) => country.name === values.country
+      (country) => country.country === values.country
     );
 
     if (isCountryInArray) {
       setCountryCode("");
       dispatch(clearCart(userId));
       action.resetForm();
-      localStorage.removeItem("userData");
+      localStorage.removeItem(LOCAL_STORAGE_USER);
+      localStorage.removeItem(LOCAL_STORAGE_COUNTRY);
       successConfirm();
     } else {
       action.setErrors({ country: "Choose country from list" });
@@ -105,6 +109,19 @@ const Billing: FC = () => {
     }
   }, [user]);
 
+  const fetchCountries = async () => {
+    const data = await getCountries();
+    setCountries(data);
+  };
+
+  useEffect(() => {
+    localStorage.setItem(LOCAL_STORAGE_COUNTRY, countryCode);
+  }, [countryCode]);
+
+  useEffect(() => {
+    fetchCountries();
+  }, []);
+
   return (
     <>
       <Formik
@@ -123,7 +140,7 @@ const Billing: FC = () => {
                 </p>
               </div>
               {regularBillingFields.map((field, index) => (
-                <InputField
+                <Input
                   key={`field-${field.name}-${index}`}
                   name={field.name}
                   label={field.label}
@@ -132,12 +149,12 @@ const Billing: FC = () => {
                   required={field.required}
                 />
               ))}
-              <PhoneField
+              <Phone
                 setFieldValue={setFieldValue}
                 handleBlur={handleBlur}
                 phoneValue={values.phoneNumber}
               />
-              <LocationSelector
+              <Location
                 allCountries={countries}
                 setFieldValue={setFieldValue}
                 countryValue={values.country}
@@ -159,7 +176,7 @@ const Billing: FC = () => {
                   className="billing__error"
                 />
               </label>
-              <PostCodeField setFieldValue={setFieldValue} />
+              <PostCode setFieldValue={setFieldValue} />
             </fieldset>
             <fieldset className="billing__block">
               <div className="billing__header">
@@ -191,14 +208,14 @@ const Billing: FC = () => {
                   ready!
                 </p>
               </div>
-              <CheckboxField name="spamCheck">
+              <Checkbox name="spamCheck">
                 I agree with sending an Marketing and newsletter emails. No
                 spam, promissed!
-              </CheckboxField>
-              <CheckboxField name="policyCheck" required={true}>
+              </Checkbox>
+              <Checkbox name="policyCheck" required={true}>
                 I agree with our <a href="#">terms and conditions</a> and{" "}
                 <a href="#">privacy policy</a>.
-              </CheckboxField>
+              </Checkbox>
             </fieldset>
             <Button
               type="submit"
@@ -206,7 +223,10 @@ const Billing: FC = () => {
               style={EBtnStyle.BIG}
               disabled={!dirty || !isValid}
             />
-            <PersistFormikValues name="userData" persistInvalid={true} />
+            <PersistFormikValues
+              name={LOCAL_STORAGE_USER}
+              persistInvalid={true}
+            />
           </Form>
         )}
       </Formik>

@@ -1,7 +1,8 @@
 import { IFilter } from "@Products/productsSlice";
 import { IProduct, ICategory, ESort } from "@Products/types/product";
 import { ICartItem } from "@Cart/types/cart";
-import { IWishlistItem } from "@/features/wishlist/types/wishlist";
+import { IWishlistItem } from "@Wishlist/types/wishlist";
+import { EPagination, IPaginationState } from "@Products/types/pagination";
 
 const getSortedProducts = (
   productsArr: IProduct[],
@@ -29,7 +30,7 @@ const getSortedProducts = (
   }
 };
 
-export const getFilteredProducts = (
+const getFilteredProducts = (
   productsArr: IProduct[],
   filter: IFilter,
   sortRule: string
@@ -50,6 +51,27 @@ export const getFilteredProducts = (
   });
 
   return getSortedProducts(filteredArr, sortRule);
+};
+
+export const getPaginatedProducts = (
+  productsArr: IProduct[],
+  filter: IFilter,
+  sortRule: string,
+  pagination: IPaginationState
+): { paginatedProducts: IProduct[]; filteredLength: number } => {
+  const { currentPage, productsPerPage } = pagination;
+
+  const indexOfFirstProduct = (currentPage - 1) * EPagination.PRODUCTS_PER_PAGE;
+  const indexOfLastProduct = indexOfFirstProduct + productsPerPage;
+
+  const filteredProducts = getFilteredProducts(productsArr, filter, sortRule);
+
+  const paginatedProducts = filteredProducts.slice(
+    indexOfFirstProduct,
+    indexOfLastProduct
+  );
+
+  return { paginatedProducts, filteredLength: filteredProducts.length };
 };
 
 export const getProductsByCategory = (
